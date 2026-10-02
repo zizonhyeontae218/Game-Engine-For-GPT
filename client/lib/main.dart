@@ -633,7 +633,7 @@ class _ClientHomeState extends State<ClientHome>
         onFocusChange: (hasFocus) {
           if (!hasFocus) player?.release();
         },
-        child: !ready
+        child: !ready || (player?.loading ?? false)
             ? const Center(child: CircularProgressIndicator())
             : player?.session != null
             ? playView()

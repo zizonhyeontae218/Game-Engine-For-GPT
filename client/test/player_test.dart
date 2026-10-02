@@ -69,6 +69,19 @@ void main() {
       player.tick(const Duration(hours: 1));
       player.tick(const Duration(hours: 1, microseconds: 16667));
       expect(player.status['tick'], 2);
+      final pendingFrame = player.refreshFrame();
+      final restarted = player.open(game);
+      expect(player.loading, true);
+      expect(player.session, isNull);
+      await restarted;
+      await pendingFrame;
+      expect(player.loading, false);
+      expect(player.status['tick'], 0);
+      expect(player.image, isNotNull);
+      player.setPaused(true);
+      player.tick(const Duration(hours: 2));
+      expect(player.image, isNotNull);
+      expect(player.error, isNull);
     } finally {
       player.dispose();
       // Allow an already-decoding frame to be disposed without publishing to a closed player.

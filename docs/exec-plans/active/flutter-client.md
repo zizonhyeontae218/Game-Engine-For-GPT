@@ -29,7 +29,8 @@ Rust regressions and ABI/frame equivalence, package import/identity/path validat
 - Completed: authoritative Rust ABI; versioned validated `.ge4g` import; Flutter player/library; digital brutalism; joystick/Z/X/C/Space; live profiles and JSON editing; separate game controls/saves; desktop embedded bundles; platform build workflow; permanent launcher docs.
 - Completed locally: 24 Rust tests, strict Clippy/fmt, authored demo acceptance, 8 Flutter behavioral tests including actual native FFI, Linux release build.
 - Completed: packaged Flutter replay/frame smoke; complete snapshot equals CLI, exact golden RGBA; real running window visually inspected.
-- Next: publish and inspect native-host platform CI.
+- Completed: published to main; native-host run 37020424545 passed Linux, Windows, Android and iOS and produced all four artifacts. Downloaded Windows, Android and iOS artifacts were inspected for actual embedded runtime libraries.
+- Next: verify final platform run after session-restart/codec cleanup, then close the plan.
 - Limit: local executor is Linux; iOS signing/device and actual Arch installation require their platforms and owner credentials.
 
 ## Verification log
@@ -38,6 +39,8 @@ Rust regressions and ABI/frame equivalence, package import/identity/path validat
 - `flutter test`: 8 pass, including FFI imported-demo replay at tick160 room_b, canonical RGBA golden and real save/reload.
 - `flutter build linux --release`: complete Flutter/native runtime bundle produced.
 - Temporary GCC/GTK/Clang tools extracted into workspace because no administrative package installation is available. These are executor dependencies, never checked in or shipped as engine code.
+
+- Final repair: loading-state publication during restart, waiting for in-flight codec disposal and cleanup on decode errors. Eight Flutter tests and rebuilt packaged Linux smoke pass.
 
 ## Handoff
 Repository `/workspace/Game-Engine-For-GPT`. Keep saves, touch layouts and game mappings separate. Never claim device tests that were not performed. Native code-assets hooks build Rust automatically. Platform CI is `.github/workflows/client.yml`. Before final publication synchronize this plan, release notes and filetree.

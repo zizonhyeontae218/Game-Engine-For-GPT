@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:ui' as ui;
 
 import 'package:flutter/foundation.dart';
@@ -30,7 +31,12 @@ class Player extends ChangeNotifier {
   int? session;
   Map<String, dynamic> status = {};
   ui.Image? image;
-  bool paused = false, debug = false, _decoding = false, _disposed = false;
+  bool paused = false,
+      debug = false,
+      loading = false,
+      _decoding = false,
+      _disposed = false;
+  Completer<void>? _frameIdle;
   String? error, message;
   int _generation = 0;
   Duration? _lastElapsed;
@@ -38,6 +44,8 @@ class Player extends ChangeNotifier {
   Player(this.engine, this.library);
   Future<void> open(InstalledGame candidate, {bool load = false}) async {
     close();
+    loading = true;
+    notifyListeners();
     final generation = _generation;
     final controls = ControlStore(library.controls(candidate.id), candidate.id);
     try {
@@ -50,10 +58,15 @@ class Player extends ChangeNotifier {
         return;
       }
       final save = library.save(candidate.id);
+      final loadSave = load && await save.exists();
+      if (_disposed || generation != _generation) {
+        controls.dispose();
+        return;
+      }
       final opened = engine.request({
         'op': 'open',
         'project': candidate.project,
-        if (load && await save.exists()) 'load': save.path,
+        if (loadSave) 'load': save.path,
       });
       game = candidate;
       store = controls;
@@ -63,10 +76,16 @@ class Player extends ChangeNotifier {
       paused = false;
       error = null;
       store!.addListener(_controlsChanged);
+      final pending = _frameIdle;
+      if (pending != null) await pending.future;
+      if (_disposed || generation != _generation) return;
       await refreshFrame();
+      if (_disposed || generation != _generation) return;
+      loading = false;
       notifyListeners();
     } catch (failure) {
       controls.dispose();
+      loading = false;
       error = '게임을 열 수 없습니다: $failure';
       notifyListeners();
     }
@@ -134,22 +153,24 @@ class Player extends ChangeNotifier {
   Future<void> refreshFrame() async {
     if (_decoding || session == null) return;
     _decoding = true;
+    final ready = Completer<void>();
+    _frameIdle = ready;
     final generation = _generation;
     final width = status['width'] as int, height = status['height'] as int;
+    ui.ImmutableBuffer? buffer;
+    ui.ImageDescriptor? descriptor;
+    ui.Codec? codec;
     try {
       final pixels = engine.frame(session!, status['frame_bytes'] as int);
-      final buffer = await ui.ImmutableBuffer.fromUint8List(pixels);
-      final descriptor = ui.ImageDescriptor.raw(
+      buffer = await ui.ImmutableBuffer.fromUint8List(pixels);
+      descriptor = ui.ImageDescriptor.raw(
         buffer,
         width: width,
         height: height,
         pixelFormat: ui.PixelFormat.rgba8888,
       );
-      final codec = await descriptor.instantiateCodec();
+      codec = await descriptor.instantiateCodec();
       final frame = await codec.getNextFrame();
-      codec.dispose();
-      descriptor.dispose();
-      buffer.dispose();
       if (_disposed || generation != _generation) {
         frame.image.dispose();
         return;
@@ -164,7 +185,12 @@ class Player extends ChangeNotifier {
         notifyListeners();
       }
     } finally {
+      codec?.dispose();
+      descriptor?.dispose();
+      buffer?.dispose();
       _decoding = false;
+      _frameIdle = null;
+      ready.complete();
     }
   }
 
@@ -219,12 +245,14 @@ class Player extends ChangeNotifier {
     status = {};
     debug = false;
     paused = false;
+    loading = false;
+    if (!_disposed) notifyListeners();
   }
 
   @override
   void dispose() {
-    close();
     _disposed = true;
+    close();
     super.dispose();
   }
 }

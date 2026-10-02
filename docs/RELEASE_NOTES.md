@@ -31,7 +31,7 @@ Implementation commit: `ad339f1d9152c2d68035ff387e251af7212c4a5a`. [Hosted accep
 
 ## Scope and remaining acceptance
 
-The engine implements declarative behaviors; Lua was optional in the instructions and is omitted. Audio cues are logged with a silent adapter; sound playback is omitted. There is no GUI editor, 3D, network gameplay or general physics. Saved data contains declared persistent keys, not a whole-world resume point.
+The engine implements declarative behaviors; Lua was optional in the instructions and is omitted. Audio cues are logged with a silent adapter; sound playback is omitted. There is no game-authoring GUI editor, 3D, network gameplay or general physics. Saved data contains declared persistent keys, not a whole-world resume point.
 
 Automated engineering acceptance is implemented and tested. **Actual human execution is pending:** no person has yet played the demo in this session, tested the keyboard controls and F5/F9 workflow, or signed off on the experience. The Xvfb run is automated adapter evidence only. Therefore the instruction set's final human-inclusive definition of done and ILCX™ human contribution evaluation remain pending.
 
@@ -43,4 +43,6 @@ GE4G / GameEngineForGPT now includes Flutter Android/iOS, Windows and Linux proj
 
 Locally verified: 24 Rust tests and strict Clippy/fmt; authored deterministic demo; 8 Flutter tests including actual FFI replay/pixels/save/load, invalid imports, game isolation and touch chords/cancellation; Linux release build; a real packaged Flutter window at tick160 room_b with its full snapshot equal to headless and canonical RGBA hash unchanged (`38cc4352e7160dcf9104cbe19acd709e36d8165989b3c99d8b6611f0f76e932b`). The actual running client window was captured and visually inspected. Evidence files are local `artifacts/client-smoke/` and uploaded by hosted Linux client CI.
 
-Platform build workflow produces Windows embedded ZIP, Linux embedded tarball, `.ge4g` demo, Android APK (development-signed) and unsigned iOS app. Hosted result is recorded after the publication run. No physical mobile touch-device, Windows interactive, Arch `makepkg`/Wayland or Apple signing acceptance is claimed by these automated checks.
+Platform build workflow produces Windows embedded ZIP, Linux embedded tarball, `.ge4g` demo, Android APK (development-signed) and unsigned iOS app. Native-host [client run 37020424545](https://github.com/zizonhyeontae218/Game-Engine-For-GPT/actions/runs/37020424545) passed all four platform jobs; Windows/Linux bundles, the APK and unsigned iOS app were uploaded. Downloaded Android artifacts contain the actual Rust runtime for arm64-v8a, armeabi-v7a and x86_64; the downloaded iOS app contains ge4g_client.framework. The Windows bundle contains all four ABI exports, Flutter assets and embedded game configuration. No physical mobile touch-device, Windows interactive, Arch `makepkg`/Wayland or Apple signing acceptance is claimed by these automated checks.
+
+A final client repair serializes restart against an in-flight frame decode, shows loading while replacing a session, frees codec resources on failures and keeps paused restarts visible. All eight Flutter tests and the rebuilt packaged Linux replay/frame smoke pass after this repair. The native-host platform workflow also repackages unsigned iOS with its Runner.app directory preserved.

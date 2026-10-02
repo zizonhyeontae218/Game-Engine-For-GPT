@@ -1,10 +1,15 @@
 name: GE4G Flutter clients
 on:
   push:
+    paths: ['client/**', 'crates/**', 'Cargo.*', 'packaging/**', 'scripts/pack_game.py', 'scripts/bundle_desktop.py', 'scripts/client_icons.py', 'scripts/client_smoke.py', '.github/workflows/client.yml']
   pull_request:
+    paths: ['client/**', 'crates/**', 'Cargo.*', 'packaging/**', 'scripts/pack_game.py', 'scripts/bundle_desktop.py', 'scripts/client_icons.py', 'scripts/client_smoke.py', '.github/workflows/client.yml']
   workflow_dispatch:
 permissions:
   contents: read
+concurrency:
+  group: ge4g-clients-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   linux:
     runs-on: ubuntu-24.04
@@ -97,7 +102,8 @@ jobs:
         working-directory: client
       - run: flutter build ios --release --no-codesign
         working-directory: client
+      - run: mkdir -p dist && ditto -c -k --keepParent client/build/ios/iphoneos/Runner.app dist/GE4G-iOS-unsigned.zip
       - uses: actions/upload-artifact@v4
         with:
           name: ge4g-ios-unsigned
-          path: client/build/ios/iphoneos/Runner.app
+          path: dist/GE4G-iOS-unsigned.zip
