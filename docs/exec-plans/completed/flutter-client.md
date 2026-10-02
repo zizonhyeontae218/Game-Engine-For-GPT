@@ -30,7 +30,7 @@ Rust regressions and ABI/frame equivalence, package import/identity/path validat
 - Completed locally: 24 Rust tests, strict Clippy/fmt, authored demo acceptance, 8 Flutter behavioral tests including actual native FFI, Linux release build.
 - Completed: packaged Flutter replay/frame smoke; complete snapshot equals CLI, exact golden RGBA; real running window visually inspected.
 - Completed: published to main; native-host run 37020424545 passed Linux, Windows, Android and iOS and produced all four artifacts. Downloaded Windows, Android and iOS artifacts were inspected for actual embedded runtime libraries.
-- Next: verify final platform run after the loading-clock regression repair, then close the plan.
+- Completed: final source e1497ce passed all four native-host platform builds (run 37022204555) and full Basement acceptance (37022204025). Final artifacts were downloaded and the iOS Runner.app directory/native framework verified. No implementation work remains.
 - Limit: local executor is Linux; iOS signing/device and actual Arch installation require their platforms and owner credentials.
 
 ## Verification log
@@ -46,3 +46,5 @@ Rust regressions and ABI/frame equivalence, package import/identity/path validat
 Repository `/workspace/Game-Engine-For-GPT`. Keep saves, touch layouts and game mappings separate. Never claim device tests that were not performed. Native code-assets hooks build Rust automatically. Platform CI is `.github/workflows/client.yml`. Before final publication synchronize this plan, release notes and filetree.
 
 Final hosted smoke caught a tick advancing while awaiting the loading codec (tick161 rather than160). The host now suspends simulation while loading; the regression test attempts explicit ticks from the loading frame callback. Exact replay assertions are retained.
+
+Final verification: all 24 Rust tests, strict Clippy/fmt, all 8 Flutter tests, real packaged Linux replay/frame equality and four native-host platform builds pass. Plan completed 2026-10-02. Physical-device/human and Arch-install acceptance are distinct future checks, not claimed by automated builds.

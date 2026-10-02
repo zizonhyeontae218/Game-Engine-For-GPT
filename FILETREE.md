@@ -161,9 +161,9 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `docs/RESEARCH_BASIS.md` — Research basis for the agent setup.
 - `docs/TESTPLAN.md` — Acceptance and deterministic verification plan.
 - `docs/exec-plans/active/.gitkeep` — Repository file; inspect only when relevant to the task.
-- `docs/exec-plans/active/flutter-client.md` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/completed/.gitkeep` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/completed/basement.md` — Repository file; inspect only when relevant to the task.
+- `docs/exec-plans/completed/flutter-client.md` — Repository file; inspect only when relevant to the task.
 - `examples/basement_demo/ge4g.toml` — Playable reference demo data, replay or inspected framebuffer golden.
 - `examples/basement_demo/golden/room_b.png` — Playable reference demo data, replay or inspected framebuffer golden.
 - `examples/basement_demo/replays/journey.json` — Playable reference demo data, replay or inspected framebuffer golden.
