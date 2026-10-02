@@ -69,12 +69,24 @@ void main() {
       player.tick(const Duration(hours: 1));
       player.tick(const Duration(hours: 1, microseconds: 16667));
       expect(player.status['tick'], 2);
+      var attemptedLoadingTick = false;
+      void duringLoading() {
+        if (player.loading && player.session != null && !attemptedLoadingTick) {
+          attemptedLoadingTick = true;
+          player.tick(const Duration(hours: 3));
+          player.tick(const Duration(hours: 3, microseconds: 16667));
+        }
+      }
+
+      player.addListener(duringLoading);
       final pendingFrame = player.refreshFrame();
       final restarted = player.open(game);
       expect(player.loading, true);
       expect(player.session, isNull);
       await restarted;
       await pendingFrame;
+      player.removeListener(duringLoading);
+      expect(attemptedLoadingTick, true);
       expect(player.loading, false);
       expect(player.status['tick'], 0);
       expect(player.image, isNotNull);

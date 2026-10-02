@@ -30,7 +30,7 @@ Rust regressions and ABI/frame equivalence, package import/identity/path validat
 - Completed locally: 24 Rust tests, strict Clippy/fmt, authored demo acceptance, 8 Flutter behavioral tests including actual native FFI, Linux release build.
 - Completed: packaged Flutter replay/frame smoke; complete snapshot equals CLI, exact golden RGBA; real running window visually inspected.
 - Completed: published to main; native-host run 37020424545 passed Linux, Windows, Android and iOS and produced all four artifacts. Downloaded Windows, Android and iOS artifacts were inspected for actual embedded runtime libraries.
-- Next: verify final platform run after session-restart/codec cleanup, then close the plan.
+- Next: verify final platform run after the loading-clock regression repair, then close the plan.
 - Limit: local executor is Linux; iOS signing/device and actual Arch installation require their platforms and owner credentials.
 
 ## Verification log
@@ -44,3 +44,5 @@ Rust regressions and ABI/frame equivalence, package import/identity/path validat
 
 ## Handoff
 Repository `/workspace/Game-Engine-For-GPT`. Keep saves, touch layouts and game mappings separate. Never claim device tests that were not performed. Native code-assets hooks build Rust automatically. Platform CI is `.github/workflows/client.yml`. Before final publication synchronize this plan, release notes and filetree.
+
+Final hosted smoke caught a tick advancing while awaiting the loading codec (tick161 rather than160). The host now suspends simulation while loading; the regression test attempts explicit ticks from the loading frame callback. Exact replay assertions are retained.

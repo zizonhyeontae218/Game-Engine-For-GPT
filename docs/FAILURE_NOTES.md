@@ -21,3 +21,7 @@ Record only non-obvious failures that are costly to rediscover. Do not log trans
 **Fix used in this session:** Publish through the authorized GitHub connector. Initialize the empty repository using the contents API, create the binary blob and complete Git tree, compare its SHA with the local verified tree, create a commit and fast-forward main. Fetch and align the local checkout with the published commit. Do not inspect or replace injected credentials.
 
 **Applies to:** This managed executor transport on 2026-10-02; an ordinary developer checkout may support normal Git push.
+
+## Flutter loading clock
+
+A real hosted packaged-client smoke exposed tick161 after a nominal 160-step replay when the display was slower than local tests. Session open reset pause before awaiting an in-flight image codec; the host ticker could advance a tick while the loading spinner was visible. `Player.tick` now treats loading as suspended, tracks the elapsed baseline without stepping and does not accumulate hidden time. A native-player regression attempts ticks from the loading frame callback. The embedded smoke must continue asserting exactly tick160 and complete snapshot equality; do not weaken it or subtract a tick.

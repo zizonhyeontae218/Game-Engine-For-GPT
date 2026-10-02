@@ -121,7 +121,7 @@ class Player extends ChangeNotifier {
 
   /// Fixed 60 Hz authoritative ticks; background gaps never advance the game.
   void tick(Duration elapsed) {
-    if (session == null || paused || error != null) {
+    if (session == null || loading || paused || error != null) {
       _lastElapsed = elapsed;
       return;
     }
