@@ -28,7 +28,8 @@ Format, strict Clippy, workspace tests, demo validate/test, repeat replay compar
 - Completed: all six populated crates, versioned CLI, playable two-room demo, swept collisions/triggers, typed atomic save/load, CPU renderer and PNG capture, optional window adapter, schema/inspection/trace/diagnostics, 22 tests, documentation and CI.
 - Completed: strict default/headless-only checks, seven demo checkpoints, exact frame golden, repeated event/state comparison, real Xvfb window/headless equivalence.
 - Completed: clean-checkout format/Clippy/22 tests/demo validate/demo test/filetree lint and real window equivalence. Extracted release bundle executes the demo test successfully.
-- Publication: initial main commit is ready; remote CI will run after push.
+- Completed: published to GitHub main through the connected GitHub API after Git push returned HTTP 401. Remote tree `ca79dfba875e0f613dbec33e1c6681307721d6a0` exactly matched the locally verified source tree.
+- Completed: hosted CI passed for implementation commit `ad339f1d9152c2d68035ff387e251af7212c4a5a`, including window equivalence, headless-only build/tests and executable/demo artifact upload.
 - Blocked: no engineering blocker. Actual human play remains pending and is explicitly unclaimed.
 
 ## Verification log
@@ -44,6 +45,9 @@ Format, strict Clippy, workspace tests, demo validate/test, repeat replay compar
 - Clean checkout `/tmp/ge4g-verify`: full canonical command sequence passed with a fresh target directory; Xvfb adapter comparison also passed.
 - `cargo build --locked --release -p ge4g-cli`, `python3 scripts/package.py`, extracted binary `ge4g test … --json`: passed with exact reference hashes.
 - Local engineering milestone complete; human-inclusive final acceptance remains pending.
+
+- Hosted CI: https://github.com/zizonhyeontae218/Game-Engine-For-GPT/actions/runs/36986830491 — all steps passed.
+- Linux bundle: `ge4g-basement-linux-x86_64`, artifact id `11218325229`, uploaded successfully.
 
 ## Handoff
 Work in `/workspace/Game-Engine-For-GPT`. Preserve versioned formats. Run `python scripts/filetree.py update` after final edits. Rebuild the default CLI before window checks after headless-only tests, which share the executable path. Actual human acceptance is the remaining external sign-off; follow TESTPLAN and record its result honestly.

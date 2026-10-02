@@ -23,6 +23,12 @@ The reference journey has seven checkpoints across 160 ticks. It moves the playe
 - Optimized release build and extracted executable/demo package test passed.
 - Detailed command evidence is recorded in `docs/exec-plans/completed/basement.md`.
 
+## Publication
+
+Implementation commit: `ad339f1d9152c2d68035ff387e251af7212c4a5a`. [Hosted acceptance CI](https://github.com/zizonhyeontae218/Game-Engine-For-GPT/actions/runs/36986830491) passed every step, including the real window comparison, headless-only checks and release bundle build/upload. The published Git tree was checked against the locally verified tree.
+
+[Download the Linux x86_64 executable and demo bundle](https://github.com/zizonhyeontae218/Game-Engine-For-GPT/actions/runs/36986830491/artifacts/11218325229). Extract the nested tar.gz, enter `ge4g-basement`, and run `./ge4g run examples/basement_demo`. Linux X11/XWayland runtime libraries are required for a window; `--headless` needs no display.
+
 ## Scope and remaining acceptance
 
 The engine implements declarative behaviors; Lua was optional in the instructions and is omitted. Audio cues are logged with a silent adapter; sound playback is omitted. There is no GUI editor, 3D, network gameplay or general physics. Saved data contains declared persistent keys, not a whole-world resume point.
