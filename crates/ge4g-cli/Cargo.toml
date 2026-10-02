@@ -1,0 +1,29 @@
+[package]
+name = "ge4g-cli"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[[bin]]
+name = "ge4g"
+path = "src/main.rs"
+
+[features]
+default = ["interactive"]
+interactive = ["ge4g-platform/window"]
+
+[dependencies]
+schemars = "0.8"
+tempfile = "3.15"
+ge4g-core = { path = "../ge4g-core" }
+ge4g-project = { path = "../ge4g-project" }
+ge4g-runtime = { path = "../ge4g-runtime" }
+ge4g-render2d = { path = "../ge4g-render2d" }
+ge4g-platform = { path = "../ge4g-platform", default-features = false }
+serde.workspace = true
+serde_json.workspace = true
+clap = { version = "4.5", features = ["derive"] }
+
+[dev-dependencies]
+png = "0.17"
+tempfile = "3.15"

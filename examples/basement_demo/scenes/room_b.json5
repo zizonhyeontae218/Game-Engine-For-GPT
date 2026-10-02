@@ -1,0 +1,17 @@
+{
+  schema_version: 1,
+  id: 'room_b',
+  background: [18, 39, 38, 255],
+  spawns: { entry: [24, 40] },
+  on_enter: { 'demo.room_b.entered': true },
+  entities: [
+    { id: 'floor', position: [8, 8], size: [304, 184], sprite: { color: [28, 59, 54, 255], layer: -10 } },
+    { id: 'top', position: [0, 0], size: [320, 8], sprite: { color: [71, 117, 101, 255] }, collider: { blocking: true } },
+    { id: 'bottom', position: [0, 192], size: [320, 8], sprite: { color: [71, 117, 101, 255] }, collider: { blocking: true } },
+    { id: 'left', position: [0, 8], size: [8, 184], sprite: { color: [71, 117, 101, 255] }, collider: { blocking: true } },
+    { id: 'right', position: [312, 8], size: [8, 184], sprite: { color: [71, 117, 101, 255] }, collider: { blocking: true } },
+    { id: 'beacon', position: [148, 72], size: [24, 24], sprite: { color: [143, 235, 178, 255] }, interaction: { range: 16, dialogue: 'Room B reached. F5 saves your progress; F9 reloads it.' } },
+    { id: 'return_door', position: [240, 120], size: [24, 40], sprite: { color: [70, 180, 220, 255] }, trigger: { scene: 'room_a', spawn: 'entry' } },
+    { id: 'player', position: [24, 40], size: [16, 16], sprite: { color: [99, 191, 255, 255], layer: 2 }, collider: { blocking: true }, player: { speed: 120 }, tags: ['controllable'] },
+  ],
+}

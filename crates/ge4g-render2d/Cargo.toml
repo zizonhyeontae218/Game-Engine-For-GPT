@@ -1,0 +1,10 @@
+[package]
+name = "ge4g-render2d"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+ge4g-core = { path = "../ge4g-core" }
+ge4g-project = { path = "../ge4g-project" }
+png = "0.17"

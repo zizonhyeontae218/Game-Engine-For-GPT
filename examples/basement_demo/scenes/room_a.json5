@@ -1,0 +1,20 @@
+// Top-left positions and sizes are integer pixels. One simulation tick is 1/60 s.
+{
+  schema_version: 1,
+  id: 'room_a',
+  background: [19, 26, 43, 255],
+  camera: [0, 0],
+  spawns: { entry: [24, 40] },
+  entities: [
+    { id: 'floor', position: [8, 8], size: [304, 184], sprite: { color: [29, 40, 59, 255], layer: -10 } },
+    { id: 'top', position: [0, 0], size: [320, 8], sprite: { color: [91, 108, 132, 255] }, collider: { blocking: true } },
+    { id: 'bottom', position: [0, 192], size: [320, 8], sprite: { color: [91, 108, 132, 255] }, collider: { blocking: true } },
+    { id: 'left', position: [0, 8], size: [8, 184], sprite: { color: [91, 108, 132, 255] }, collider: { blocking: true } },
+    { id: 'right', position: [312, 8], size: [8, 184], sprite: { color: [91, 108, 132, 255] }, collider: { blocking: true } },
+    { id: 'wall', position: [100, 8], size: [16, 100], sprite: { color: [143, 157, 176, 255] }, collider: { blocking: true }, tags: ['obstacle'] },
+    { id: 'npc', position: [60, 132], size: [16, 16], sprite: { color: [247, 179, 91, 255], layer: 1 }, interaction: { range: 12, dialogue: 'Welcome to Basement! The green door leads to room B.', set_state: { 'demo.npc.spoken': true } }, tags: ['npc'] },
+    { id: 'door', position: [200, 120], size: [24, 40], sprite: { color: [70, 200, 151, 255] }, trigger: { scene: 'room_b', spawn: 'entry' }, tags: ['exit'] },
+    { id: 'path_1', position: [34, 115], size: [150, 2], sprite: { color: [61, 88, 111, 255], layer: -1 } },
+    { id: 'player', position: [24, 40], size: [16, 16], sprite: { color: [99, 191, 255, 255], layer: 2 }, collider: { blocking: true }, player: { speed: 120 }, tags: ['controllable'], metadata: { role: 'player', controls: 'WASD / arrows; E to interact' } },
+  ],
+}

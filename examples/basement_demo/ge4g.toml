@@ -1,0 +1,35 @@
+schema_version = 1
+name = "GE4G Basement Demo"
+start_scene = "room_a"
+
+[window]
+width = 320
+height = 200
+
+[scenes]
+room_a = "scenes/room_a.json5"
+room_b = "scenes/room_b.json5"
+
+[state."demo.npc.spoken"]
+kind = "bool"
+default = false
+persistent = true
+
+[state."demo.room_b.entered"]
+kind = "bool"
+default = false
+persistent = true
+
+[[tests]]
+name = "basement_journey"
+golden_rgba_sha256 = "38cc4352e7160dcf9104cbe19acd709e36d8165989b3c99d8b6611f0f76e932b"
+replay = "replays/journey.json"
+assertions = [
+  { tick = 0, scene = "room_a", entity = { id = "player", position = [24, 40] } },
+  { tick = 20, entity = { id = "player", position = [64, 40] } },
+  { tick = 50, entity = { id = "player", position = [84, 40], max_x = 84 }, event = { kind = "collision_started", entity = "player", target = "wall" } },
+  { tick = 95, entity = { id = "player", position = [84, 130] } },
+  { tick = 96, state = { "demo.npc.spoken" = true }, event = { kind = "interaction", entity = "player", target = "npc" } },
+  { tick = 147, scene = "room_b", entity = { id = "player", position = [24, 40] }, state = { "demo.room_b.entered" = true }, event = { kind = "trigger_entered", entity = "player", target = "door" } },
+  { tick = 160, scene = "room_b", state = { "demo.npc.spoken" = true, "demo.room_b.entered" = true }, event = { kind = "scene_transition", entity = "player" } },
+]

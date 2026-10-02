@@ -1,0 +1,14 @@
+[package]
+name = "ge4g-runtime"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+schemars = "0.8"
+ge4g-core = { path = "../ge4g-core" }
+ge4g-project = { path = "../ge4g-project" }
+serde.workspace = true
+serde_json.workspace = true
+sha2.workspace = true
+tempfile = "3.15"

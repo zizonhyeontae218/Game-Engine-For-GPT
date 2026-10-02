@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "ticks": 160,
+  "inputs": [
+    { "start": 0, "end": 50, "actions": ["right"] },
+    { "start": 50, "end": 95, "actions": ["down"] },
+    { "start": 95, "end": 96, "actions": ["interact"] },
+    { "start": 96, "end": 147, "actions": ["right"] }
+  ]
+}
