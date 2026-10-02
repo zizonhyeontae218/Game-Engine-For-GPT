@@ -1,0 +1,6 @@
+/target/
+/artifacts/
+/dist/
+*.tmp
+.DS_Store
+examples/**/save.json
