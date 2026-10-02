@@ -113,6 +113,7 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `client/pubspec.yaml` — Repository file; inspect only when relevant to the task.
 - `client/test/controls_test.dart` — Repository file; inspect only when relevant to the task.
 - `client/test/library_test.dart` — Repository file; inspect only when relevant to the task.
+- `client/test/player_test.dart` — Repository file; inspect only when relevant to the task.
 - `client/test/widget_test.dart` — Repository file; inspect only when relevant to the task.
 - `client/windows/.gitignore` — Repository file; inspect only when relevant to the task.
 - `client/windows/CMakeLists.txt` — Repository file; inspect only when relevant to the task.

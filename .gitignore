@@ -4,3 +4,5 @@
 *.tmp
 .DS_Store
 examples/**/save.json
+__pycache__/
+*.pyc

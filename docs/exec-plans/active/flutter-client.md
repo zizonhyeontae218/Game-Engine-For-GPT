@@ -27,7 +27,7 @@ Rust regressions and ABI/frame equivalence, package import/identity/path validat
 
 ## Progress
 - Completed: authoritative Rust ABI; versioned validated `.ge4g` import; Flutter player/library; digital brutalism; joystick/Z/X/C/Space; live profiles and JSON editing; separate game controls/saves; desktop embedded bundles; platform build workflow; permanent launcher docs.
-- Completed locally: 24 Rust tests, strict Clippy/fmt, authored demo acceptance, 7 Flutter behavioral tests including actual native FFI, Linux release build.
+- Completed locally: 24 Rust tests, strict Clippy/fmt, authored demo acceptance, 8 Flutter behavioral tests including actual native FFI, Linux release build.
 - Completed: packaged Flutter replay/frame smoke; complete snapshot equals CLI, exact golden RGBA; real running window visually inspected.
 - Next: publish and inspect native-host platform CI.
 - Limit: local executor is Linux; iOS signing/device and actual Arch installation require their platforms and owner credentials.
@@ -35,7 +35,7 @@ Rust regressions and ABI/frame equivalence, package import/identity/path validat
 ## Verification log
 - Starting commit `ff5d7fc`; Flutter 3.47.6/Dart 3.13.5 installed.
 - `cargo fmt --all --check`, strict workspace Clippy, all 24 tests and demo test pass; original deterministic hash and frame golden unchanged.
-- `flutter test`: 7 pass, including FFI imported-demo replay at tick160 room_b, canonical RGBA golden and real save/reload.
+- `flutter test`: 8 pass, including FFI imported-demo replay at tick160 room_b, canonical RGBA golden and real save/reload.
 - `flutter build linux --release`: complete Flutter/native runtime bundle produced.
 - Temporary GCC/GTK/Clang tools extracted into workspace because no administrative package installation is available. These are executor dependencies, never checked in or shipped as engine code.
 
