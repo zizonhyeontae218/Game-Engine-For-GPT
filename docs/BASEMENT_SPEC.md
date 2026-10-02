@@ -120,3 +120,7 @@ The reference demo must support this deterministic sequence:
 ## Definition of done
 
 Basement is done only when the acceptance matrix in `TESTPLAN.md` passes from a clean checkout and the demo is locally playable through the interactive adapter.
+
+## Required client extension (2026-10-02)
+
+The user extended Basement with Flutter mobile/Windows/Arch runtime clients. Mobile uses import→play; desktop games embed the client at distribution time. This supersedes any earlier mobile-packaging exclusion. Game-authoring editor GUI stays out of scope; runtime touch-control editing is supported. See [CLIENT](CLIENT.md) and [LAUNCHER_PHILOSOPHY](LAUNCHER_PHILOSOPHY.md).

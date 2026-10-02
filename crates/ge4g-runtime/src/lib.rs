@@ -68,6 +68,7 @@ pub struct World {
     contacts: BTreeSet<String>,
     triggers: BTreeSet<String>,
     interact_held: bool,
+    held_actions: BTreeSet<String>,
 }
 impl World {
     pub fn new(project: Project) -> Result<Self> {
@@ -90,6 +91,7 @@ impl World {
             contacts: BTreeSet::new(),
             triggers: BTreeSet::new(),
             interact_held: false,
+            held_actions: BTreeSet::new(),
         };
         if save.is_some() {
             world.emit(
@@ -196,6 +198,48 @@ impl World {
             state: self.state.values.clone(),
             events: self.events.iter().cloned().collect(),
             events_dropped: self.events_dropped,
+        }
+    }
+    /// Versioned client adapters may also send named buttons. Standard Basement
+    /// Input is unchanged; extra actions are observable and never mutate gameplay
+    /// through a separate simulation implementation.
+    pub fn step_actions(&mut self, input: &Input, actions: &BTreeSet<String>) -> Result<()> {
+        if actions.len() > 32
+            || actions.iter().any(|action| {
+                action.is_empty()
+                    || action.len() > 64
+                    || !action
+                        .bytes()
+                        .all(|c| c.is_ascii_alphanumeric() || b"_.-".contains(&c))
+            })
+        {
+            return Err(Error(
+                "client actions require at most 32 valid names of 1..64 ASCII characters".into(),
+            ));
+        }
+        self.step(input)?;
+        for action in self
+            .held_actions
+            .difference(actions)
+            .cloned()
+            .collect::<Vec<_>>()
+        {
+            self.emit("action_released", None, json!({"action": action}));
+        }
+        for action in actions
+            .difference(&self.held_actions)
+            .cloned()
+            .collect::<Vec<_>>()
+        {
+            self.emit("action_pressed", None, json!({"action": action}));
+        }
+        self.held_actions = actions.clone();
+        Ok(())
+    }
+    pub fn release_inputs(&mut self) {
+        self.interact_held = false;
+        for action in std::mem::take(&mut self.held_actions) {
+            self.emit("action_released", None, json!({"action": action}));
         }
     }
     /// Advance exactly one tick; event timestamps describe the resulting tick.

@@ -36,3 +36,11 @@ The engine implements declarative behaviors; Lua was optional in the instruction
 Automated engineering acceptance is implemented and tested. **Actual human execution is pending:** no person has yet played the demo in this session, tested the keyboard controls and F5/F9 workflow, or signed off on the experience. The Xvfb run is automated adapter evidence only. Therefore the instruction set's final human-inclusive definition of done and ILCX™ human contribution evaluation remain pending.
 
 Human acceptance record: tester **pending**, date **pending**, result **pending**. Follow `docs/TESTPLAN.md` when conducting it.
+
+## Flutter Basement client extension — 2026-10-02
+
+GE4G / GameEngineForGPT now includes Flutter Android/iOS, Windows and Linux projects, the bundled authoritative Rust client ABI, validated portable `.ge4g` imports, digital-brutalist library/player screens, joystick and Z/X/C/Space controls, live profile switching/editing, separate per-game layout/mapping JSON and game save files. Windows/Arch game distributions embed the full client and game and open directly. AGENTS and product/architecture docs record this as the standing launcher philosophy.
+
+Locally verified: 24 Rust tests and strict Clippy/fmt; authored deterministic demo; 7 Flutter tests including actual FFI replay/pixels/save/load, invalid imports, game isolation and touch chords/cancellation; Linux release build; a real packaged Flutter window at tick160 room_b with its full snapshot equal to headless and canonical RGBA hash unchanged (`38cc4352e7160dcf9104cbe19acd709e36d8165989b3c99d8b6611f0f76e932b`). The actual running client window was captured and visually inspected. Evidence files are local `artifacts/client-smoke/` and uploaded by hosted Linux client CI.
+
+Platform build workflow produces Windows embedded ZIP, Linux embedded tarball, `.ge4g` demo, Android APK (development-signed) and unsigned iOS app. Hosted result is recorded after the publication run. No physical mobile touch-device, Windows interactive, Arch `makepkg`/Wayland or Apple signing acceptance is claimed by these automated checks.

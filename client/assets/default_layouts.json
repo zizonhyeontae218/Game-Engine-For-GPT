@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "active_profile": "default",
+  "profiles": [
+    {
+      "id": "default", "name": "기본 / RIGHT HANDED",
+      "joystick": {"x": 0.18, "y": 0.76, "size": 0.38, "dead_zone": 0.18},
+      "buttons": [
+        {"id": "z", "label": "Z", "x": 0.77, "y": 0.73, "width": 0.19, "height": 0.17},
+        {"id": "x", "label": "X", "x": 0.9, "y": 0.61, "width": 0.19, "height": 0.17},
+        {"id": "c", "label": "C", "x": 0.9, "y": 0.85, "width": 0.19, "height": 0.17},
+        {"id": "space", "label": "SPACE", "x": 0.56, "y": 0.87, "width": 0.3, "height": 0.17}
+      ]
+    },
+    {
+      "id": "left_handed", "name": "왼손 / LEFT HANDED",
+      "joystick": {"x": 0.82, "y": 0.76, "size": 0.38, "dead_zone": 0.18},
+      "buttons": [
+        {"id": "z", "label": "Z", "x": 0.23, "y": 0.73, "width": 0.19, "height": 0.17},
+        {"id": "x", "label": "X", "x": 0.1, "y": 0.61, "width": 0.19, "height": 0.17},
+        {"id": "c", "label": "C", "x": 0.1, "y": 0.85, "width": 0.19, "height": 0.17},
+        {"id": "space", "label": "SPACE", "x": 0.44, "y": 0.87, "width": 0.3, "height": 0.17}
+      ]
+    }
+  ]
+}

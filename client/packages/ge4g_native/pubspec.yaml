@@ -1,0 +1,12 @@
+name: ge4g_native
+description: Versioned Rust Basement runtime via native code assets.
+publish_to: none
+version: 0.1.0
+environment:
+  sdk: '>=3.13.0 <4.0.0'
+dependencies:
+  code_assets: ^1.1.0
+  hooks: ^2.0.0
+  ffi: ^2.1.4
+dev_dependencies:
+  flutter_lints: ^6.0.0

@@ -1,0 +1,22 @@
+# Build after creating dist/ge4g-basement-linux.tar.gz with bundle_desktop.py.
+# Copy this file beside that archive, then run makepkg -si on Arch Linux.
+pkgname=ge4g-basement
+pkgver=0.1.0
+pkgrel=1
+pkgdesc='GE4G Basement demo with its embedded Flutter client and Rust runtime'
+arch=('x86_64')
+url='https://github.com/zizonhyeontae218/Game-Engine-For-GPT'
+license=('MIT')
+depends=('gtk3' 'glibc' 'gcc-libs')
+source=('ge4g-basement-linux.tar.gz')
+# This is a locally produced artifact, not an unchecked remote download.
+sha256sums=('SKIP')
+package() {
+  install -d "$pkgdir/opt/ge4g-basement" "$pkgdir/usr/bin" "$pkgdir/usr/share/applications" "$pkgdir/usr/share/icons/hicolor/256x256/apps" "$pkgdir/usr/share/licenses/$pkgname"
+  cp -a "$srcdir/ge4g-basement-linux/." "$pkgdir/opt/ge4g-basement/"
+  printf '#!/bin/sh\nexec /opt/ge4g-basement/ge4g_client "$@"\n' > "$pkgdir/usr/bin/ge4g-basement"
+  install -m644 "$pkgdir/opt/ge4g-basement/ge4g.png" "$pkgdir/usr/share/icons/hicolor/256x256/apps/ge4g.png"
+  install -m644 "$pkgdir/opt/ge4g-basement/LICENSE" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+  chmod 755 "$pkgdir/usr/bin/ge4g-basement"
+  sed 's/Exec=ge4g_client/Exec=ge4g-basement/' "$pkgdir/opt/ge4g-basement/ge4g.desktop" > "$pkgdir/usr/share/applications/ge4g-basement.desktop"
+}

@@ -1,0 +1,19 @@
+[package]
+name = "ge4g-client"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[lib]
+crate-type = ["cdylib", "staticlib", "rlib"]
+
+[dependencies]
+ge4g-core = { path = "../ge4g-core" }
+ge4g-project = { path = "../ge4g-project" }
+ge4g-runtime = { path = "../ge4g-runtime" }
+ge4g-render2d = { path = "../ge4g-render2d" }
+serde.workspace = true
+serde_json.workspace = true
+
+[dev-dependencies]
+tempfile = "3.15"

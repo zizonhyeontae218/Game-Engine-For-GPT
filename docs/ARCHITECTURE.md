@@ -1,6 +1,6 @@
 # GE4G Basement architecture
 
-Stable Rust, edition 2024. Six populated workspace packages implement the current boundaries; no ECS framework or complete external game engine is imported.
+Stable Rust, edition 2024. Seven populated workspace packages implement the current boundaries; no ECS framework or complete external game engine is imported.
 
 | Package | Responsibility | Engine dependencies |
 | --- | --- | --- |
@@ -9,6 +9,7 @@ Stable Rust, edition 2024. Six populated workspace packages implement the curren
 | `ge4g-runtime` | Authoritative world, fixed-step systems, scenes, saves, assertions and hashes | Core, project |
 | `ge4g-render2d` | CPU frame construction and PNG output | Core, project |
 | `ge4g-platform` | Optional minifb window, keyboard input and wall-clock scheduling | Core, project, runtime, render2d |
+| `ge4g-client` | Version 1 C/JSON ABI, owned sessions and copied CPU frames for Flutter | Core, project, runtime, render2d |
 | `ge4g-cli` | Commands, JSON presentation, project replay test orchestration | All above |
 
 ## Simulation and coordinates
@@ -52,3 +53,9 @@ Artifact writes use a unique temporary file in the destination directory, flush 
 Errors include operation and source file/entity/tick when relevant. Unknown fields and schema versions are rejected. Project-local asset/replay/scene references cannot leave the project root, including through symlinks. External replay/save/output paths supplied on the CLI are explicit user selections.
 
 File text is limited to 16 MiB, frame and texture dimensions to 2048, scenes to 128, entities per scene to 4096, authored coordinates to ±1,000,000 pixels, player speed to 60,000 pixels/second, and runtime/replay duration to 1,000,000 ticks. Generated schemas cover structure; `validate` enforces these semantic limits and references.
+
+## Flutter runtime adapter
+
+`client/` owns native-platform presentation, import/library storage, keyboard/touch routing, fixed 60 Hz scheduling and live JSON control editing. `ge4g_native` builds the Rust ABI as a bundled code asset. `World::step_actions` wraps the unchanged deterministic step and adds sorted named action edge events. `release_inputs` releases held actions/interact without a simulation tick. The ABI holds at most eight opaque sessions and copies frame bytes into caller-owned buffers; C strings have an explicit free function. Each ABI response identifies version 1. Mobile never spawns the CLI and imported data never supplies executable code.
+
+Game packages, layout profiles, per-game bindings and saves are separate durable surfaces; see [CLIENT](CLIENT.md). Desktop distributions set embedded mode alongside their executable, include the full Flutter bundle and open their game directly.

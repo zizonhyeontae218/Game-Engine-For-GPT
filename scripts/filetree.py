@@ -7,6 +7,7 @@ import hashlib
 import json
 import sys
 import os
+import subprocess
 
 ROOT = Path(__file__).resolve().parents[1]
 TREE = ROOT / "FILETREE.md"
@@ -43,13 +44,9 @@ PURPOSE = {
 }
 
 def relpaths():
-    out = []
-    for directory, dirs, files in os.walk(ROOT):
-        dirs[:] = sorted(d for d in dirs if d not in IGNORE_DIRS)
-        for name in files:
-            if name not in IGNORE_FILES:
-                out.append((Path(directory) / name).relative_to(ROOT).as_posix())
-    return sorted(out)
+    # Git's ignore rules also exclude platform-generated Flutter/Gradle/Xcode caches.
+    result = subprocess.run(["git", "ls-files", "--cached", "--others", "--exclude-standard", "-z"], cwd=ROOT, check=True, capture_output=True)
+    return sorted({path for path in result.stdout.decode().split("\0") if path and Path(path).name not in IGNORE_FILES and (ROOT / path).is_file()})
 
 def digest(path: Path) -> str:
     h = hashlib.sha256()

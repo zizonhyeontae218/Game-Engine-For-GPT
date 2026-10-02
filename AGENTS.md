@@ -13,6 +13,7 @@ Use only the document relevant to the current work:
 - Known non-obvious failures → `docs/FAILURE_NOTES.md`
 - Long or multi-stage work → `.agent/PLANS.md`
 - Repository navigation → `FILETREE.md`
+- Runtime clients / packaging / input profiles → `docs/LAUNCHER_PHILOSOPHY.md`, `docs/CLIENT.md`
 
 Do not read every document before every edit.
 
@@ -23,11 +24,21 @@ Do not read every document before every edit.
 3. Agent-facing observation must be structured and stable. Prefer machine-readable JSON plus concise human text.
 4. Interactive rendering and audio are adapters around the same simulation used by headless tests.
 5. Keep deterministic behavior deterministic: fixed-step simulation, seeded randomness when randomness is necessary, replayable input traces.
-6. No editor GUI in 0.1.
+6. No game-authoring editor GUI in 0.1. Runtime clients and their touch-control editors are supported product surfaces.
 7. No 3D, networking, plugin marketplace, visual scripting, or general-purpose physics engine in 0.1.
 8. Do not add abstractions for hypothetical future features unless current Basement code needs them.
 9. Prefer inspectable in-repo code over opaque framework behavior. Low-level libraries are allowed; importing another full game engine is not.
 10. Never silently change a public CLI/scene/save schema. Version or migrate it.
+
+## Launcher philosophy — all future runners
+
+- Mobile: install the Flutter client, choose **Import**, load a portable Basement game package, then play. Imported games are data; the client owns the native runtime.
+- Desktop (Windows and Arch Linux): distribute each game with its client and native runtime already embedded. A shipped game must start directly without asking the player to install an engine or locate a CLI.
+- Every runtime adapter calls the authoritative Rust simulation and presents its canonical CPU framebuffer. Do not reimplement gameplay in Dart or spawn the development CLI as a mobile runtime.
+- Use digital brutalism for the client: flat strong contrast, hard borders, explicit typography and direct controls.
+- Mobile default controls are a joystick and Z, X, C, Space. Touch layouts are versioned JSON with live profile switching/editing. Game-specific mappings are persisted separately from layout JSON and game save state.
+- A valid live profile change releases held inputs before applying it; an invalid edit retains the last valid profile and reports the error. Backgrounding, focus loss and touch cancellation release inputs.
+- Prove imports, native play, live mappings and embedded desktop packaging with executable evidence. Report each platform's actual build/device verification honestly.
 
 ## Working style
 

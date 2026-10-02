@@ -79,3 +79,9 @@ python3 scripts/filetree.py lint
 [CLI 계약](docs/CLI_CONTRACT.md), [파일 작성법](docs/AUTHORING.md), [구조](docs/ARCHITECTURE.md), [검증 계획](docs/TESTPLAN.md), [릴리스 기록](docs/RELEASE_NOTES.md)을 참고하세요. `AGENTS.md`와 `F(x).md`는 다음 에이전트를 위한 저장소 내 작업 지침·상태 레지스트리입니다.
 
 자동 검증과 가상 디스플레이 창 실행을 기록했습니다. 실제 사람이 키보드로 플레이하는 최종 수용 테스트와 ILCX™ 인간 기여 평가는 아직 수행되지 않았습니다.
+
+## Flutter client: GE4G / GameEngineForGPT
+
+Android/iOS: install the client → **Import .ge4g** → play. Windows/Arch: each game ships with its complete embedded Flutter client and native Basement runtime and starts directly. Joystick + Z/X/C/Space, digital brutalism, live profile switching/editing and separate per-game JSON bindings are implemented.
+
+See [client usage/build/distribution](docs/CLIENT.md) and [permanent launcher philosophy](docs/LAUNCHER_PHILOSOPHY.md). Download platform bundles from the [GE4G Flutter clients Actions artifacts](https://github.com/zizonhyeontae218/Game-Engine-For-GPT/actions/workflows/client.yml). Android artifacts use a development signing key; iOS artifacts are unsigned.

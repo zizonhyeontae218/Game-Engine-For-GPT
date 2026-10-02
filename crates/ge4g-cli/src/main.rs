@@ -111,6 +111,8 @@ struct Trace {
     events_dropped: u64,
 }
 const EVENT_KINDS: &[&str] = &[
+    "action_pressed",
+    "action_released",
     "scene_loaded",
     "entity_spawned",
     "collision_started",

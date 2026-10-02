@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "game_id": "demo.basement",
+  "profiles": {
+    "default": {
+      "joystick": {"left": ["left"], "right": ["right"], "up": ["up"], "down": ["down"]},
+      "buttons": {"z": ["interact"], "x": ["x"], "c": ["c"], "space": ["space"]},
+      "keys": {"KeyZ": ["interact"], "KeyX": ["x"], "KeyC": ["c"], "Space": ["space"], "KeyE": ["interact"], "KeyA": ["left"], "KeyD": ["right"], "KeyW": ["up"], "KeyS": ["down"], "ArrowLeft": ["left"], "ArrowRight": ["right"], "ArrowUp": ["up"], "ArrowDown": ["down"]}
+    },
+    "left_handed": {
+      "joystick": {"left": ["left"], "right": ["right"], "up": ["up"], "down": ["down"]},
+      "buttons": {"z": ["interact"], "x": ["x"], "c": ["c"], "space": ["space"]},
+      "keys": {"KeyZ": ["interact"], "KeyX": ["x"], "KeyC": ["c"], "Space": ["space"], "KeyE": ["interact"], "KeyA": ["left"], "KeyD": ["right"], "KeyW": ["up"], "KeyS": ["down"], "ArrowLeft": ["left"], "ArrowRight": ["right"], "ArrowUp": ["up"], "ArrowDown": ["down"]}
+    }
+  }
+}

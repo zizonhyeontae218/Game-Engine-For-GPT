@@ -29,4 +29,8 @@ An agent should be able to answer these from CLI output without scraping source 
 
 ## Explicitly outside 0.1
 
-3D, networking, editor GUI, visual scripting, hot asset authoring UI, general rigid-body physics, navigation mesh, ECS optimization work, mobile packaging, consoles, marketplace/plugins.
+3D, networking, game-authoring editor GUI, visual scripting, hot asset authoring UI, general rigid-body physics, navigation mesh, ECS optimization work, consoles, marketplace/plugins.
+
+## Runtime client extension
+
+Flutter mobile import/play clients and Windows/Arch clients embedded in each game distribution are required. Joystick + Z/X/C/Space, digital brutalism and live per-game JSON profiles follow [the permanent launcher philosophy](docs/LAUNCHER_PHILOSOPHY.md).

@@ -6,6 +6,7 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 
 - `.agent/PLANS.md` — ExecPlan policy for long/multi-stage work.
 - `.github/workflows/ci.yml` — Clean-checkout headless and window acceptance CI.
+- `.github/workflows/client.yml` — Repository file; inspect only when relevant to the task.
 - `.gitignore` — Repository file; inspect only when relevant to the task.
 - `00_MASTER_CONCEPT.md` — Canonical GE4G concept and design philosophy.
 - `AGENTS.md` — Compact agent routing and non-negotiable repository rules.
@@ -17,9 +18,126 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `GOAL.md` — Basement observable product goal and scope.
 - `LICENSE` — Repository file; inspect only when relevant to the task.
 - `README.md` — Human entry point and ILCX target.
+- `client/.gitignore` — Repository file; inspect only when relevant to the task.
+- `client/.metadata` — Repository file; inspect only when relevant to the task.
+- `client/README.md` — Repository file; inspect only when relevant to the task.
+- `client/analysis_options.yaml` — Repository file; inspect only when relevant to the task.
+- `client/android/.gitignore` — Repository file; inspect only when relevant to the task.
+- `client/android/app/build.gradle.kts` — Repository file; inspect only when relevant to the task.
+- `client/android/app/src/debug/AndroidManifest.xml` — Repository file; inspect only when relevant to the task.
+- `client/android/app/src/main/AndroidManifest.xml` — Repository file; inspect only when relevant to the task.
+- `client/android/app/src/main/kotlin/dev/ge4g/ge4g_client/MainActivity.kt` — Repository file; inspect only when relevant to the task.
+- `client/android/app/src/main/res/drawable-v21/launch_background.xml` — Repository file; inspect only when relevant to the task.
+- `client/android/app/src/main/res/drawable/launch_background.xml` — Repository file; inspect only when relevant to the task.
+- `client/android/app/src/main/res/mipmap-hdpi/ic_launcher.png` — Repository file; inspect only when relevant to the task.
+- `client/android/app/src/main/res/mipmap-mdpi/ic_launcher.png` — Repository file; inspect only when relevant to the task.
+- `client/android/app/src/main/res/mipmap-xhdpi/ic_launcher.png` — Repository file; inspect only when relevant to the task.
+- `client/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png` — Repository file; inspect only when relevant to the task.
+- `client/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png` — Repository file; inspect only when relevant to the task.
+- `client/android/app/src/main/res/values-night/styles.xml` — Repository file; inspect only when relevant to the task.
+- `client/android/app/src/main/res/values/styles.xml` — Repository file; inspect only when relevant to the task.
+- `client/android/app/src/profile/AndroidManifest.xml` — Repository file; inspect only when relevant to the task.
+- `client/android/build.gradle.kts` — Repository file; inspect only when relevant to the task.
+- `client/android/gradle.properties` — Repository file; inspect only when relevant to the task.
+- `client/android/gradle/wrapper/gradle-wrapper.properties` — Repository file; inspect only when relevant to the task.
+- `client/android/settings.gradle.kts` — Repository file; inspect only when relevant to the task.
+- `client/assets/default_bindings.json` — Repository file; inspect only when relevant to the task.
+- `client/assets/default_layouts.json` — Repository file; inspect only when relevant to the task.
+- `client/ios/.gitignore` — Repository file; inspect only when relevant to the task.
+- `client/ios/Flutter/AppFrameworkInfo.plist` — Repository file; inspect only when relevant to the task.
+- `client/ios/Flutter/Debug.xcconfig` — Repository file; inspect only when relevant to the task.
+- `client/ios/Flutter/Release.xcconfig` — Repository file; inspect only when relevant to the task.
+- `client/ios/Runner.xcodeproj/project.pbxproj` — Repository file; inspect only when relevant to the task.
+- `client/ios/Runner.xcodeproj/project.xcworkspace/contents.xcworkspacedata` — Repository file; inspect only when relevant to the task.
+- `client/ios/Runner.xcodeproj/project.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist` — Repository file; inspect only when relevant to the task.
+- `client/ios/Runner.xcodeproj/project.xcworkspace/xcshareddata/WorkspaceSettings.xcsettings` — Repository file; inspect only when relevant to the task.
+- `client/ios/Runner.xcodeproj/xcshareddata/xcschemes/Runner.xcscheme` — Repository file; inspect only when relevant to the task.
+- `client/ios/Runner.xcworkspace/contents.xcworkspacedata` — Repository file; inspect only when relevant to the task.
+- `client/ios/Runner.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist` — Repository file; inspect only when relevant to the task.
+- `client/ios/Runner.xcworkspace/xcshareddata/WorkspaceSettings.xcsettings` — Repository file; inspect only when relevant to the task.
+- `client/ios/Runner/AppDelegate.swift` — Repository file; inspect only when relevant to the task.
+- `client/ios/Runner/Assets.xcassets/AppIcon.appiconset/Contents.json` — Repository file; inspect only when relevant to the task.
+- `client/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-1024x1024@1x.png` — Repository file; inspect only when relevant to the task.
+- `client/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-20x20@1x.png` — Repository file; inspect only when relevant to the task.
+- `client/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-20x20@2x.png` — Repository file; inspect only when relevant to the task.
+- `client/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-20x20@3x.png` — Repository file; inspect only when relevant to the task.
+- `client/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-29x29@1x.png` — Repository file; inspect only when relevant to the task.
+- `client/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-29x29@2x.png` — Repository file; inspect only when relevant to the task.
+- `client/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-29x29@3x.png` — Repository file; inspect only when relevant to the task.
+- `client/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-40x40@1x.png` — Repository file; inspect only when relevant to the task.
+- `client/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-40x40@2x.png` — Repository file; inspect only when relevant to the task.
+- `client/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-40x40@3x.png` — Repository file; inspect only when relevant to the task.
+- `client/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-60x60@2x.png` — Repository file; inspect only when relevant to the task.
+- `client/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-60x60@3x.png` — Repository file; inspect only when relevant to the task.
+- `client/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-76x76@1x.png` — Repository file; inspect only when relevant to the task.
+- `client/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-76x76@2x.png` — Repository file; inspect only when relevant to the task.
+- `client/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-83.5x83.5@2x.png` — Repository file; inspect only when relevant to the task.
+- `client/ios/Runner/Assets.xcassets/LaunchImage.imageset/Contents.json` — Repository file; inspect only when relevant to the task.
+- `client/ios/Runner/Assets.xcassets/LaunchImage.imageset/LaunchImage.png` — Repository file; inspect only when relevant to the task.
+- `client/ios/Runner/Assets.xcassets/LaunchImage.imageset/LaunchImage@2x.png` — Repository file; inspect only when relevant to the task.
+- `client/ios/Runner/Assets.xcassets/LaunchImage.imageset/LaunchImage@3x.png` — Repository file; inspect only when relevant to the task.
+- `client/ios/Runner/Assets.xcassets/LaunchImage.imageset/README.md` — Repository file; inspect only when relevant to the task.
+- `client/ios/Runner/Base.lproj/LaunchScreen.storyboard` — Repository file; inspect only when relevant to the task.
+- `client/ios/Runner/Base.lproj/Main.storyboard` — Repository file; inspect only when relevant to the task.
+- `client/ios/Runner/Info.plist` — Repository file; inspect only when relevant to the task.
+- `client/ios/Runner/Runner-Bridging-Header.h` — Repository file; inspect only when relevant to the task.
+- `client/ios/Runner/SceneDelegate.swift` — Repository file; inspect only when relevant to the task.
+- `client/ios/RunnerTests/RunnerTests.swift` — Repository file; inspect only when relevant to the task.
+- `client/lib/control_editor.dart` — Repository file; inspect only when relevant to the task.
+- `client/lib/control_store.dart` — Repository file; inspect only when relevant to the task.
+- `client/lib/controls.dart` — Repository file; inspect only when relevant to the task.
+- `client/lib/game_library.dart` — Repository file; inspect only when relevant to the task.
+- `client/lib/main.dart` — Repository file; inspect only when relevant to the task.
+- `client/lib/player.dart` — Repository file; inspect only when relevant to the task.
+- `client/lib/touch_controls.dart` — Repository file; inspect only when relevant to the task.
+- `client/linux/.gitignore` — Repository file; inspect only when relevant to the task.
+- `client/linux/CMakeLists.txt` — Repository file; inspect only when relevant to the task.
+- `client/linux/flutter/CMakeLists.txt` — Repository file; inspect only when relevant to the task.
+- `client/linux/flutter/generated_plugin_registrant.cc` — Repository file; inspect only when relevant to the task.
+- `client/linux/flutter/generated_plugin_registrant.h` — Repository file; inspect only when relevant to the task.
+- `client/linux/flutter/generated_plugins.cmake` — Repository file; inspect only when relevant to the task.
+- `client/linux/runner/CMakeLists.txt` — Repository file; inspect only when relevant to the task.
+- `client/linux/runner/main.cc` — Repository file; inspect only when relevant to the task.
+- `client/linux/runner/my_application.cc` — Repository file; inspect only when relevant to the task.
+- `client/linux/runner/my_application.h` — Repository file; inspect only when relevant to the task.
+- `client/packages/ge4g_native/.gitignore` — Repository file; inspect only when relevant to the task.
+- `client/packages/ge4g_native/.metadata` — Repository file; inspect only when relevant to the task.
+- `client/packages/ge4g_native/CHANGELOG.md` — Repository file; inspect only when relevant to the task.
+- `client/packages/ge4g_native/LICENSE` — Repository file; inspect only when relevant to the task.
+- `client/packages/ge4g_native/README.md` — Repository file; inspect only when relevant to the task.
+- `client/packages/ge4g_native/analysis_options.yaml` — Repository file; inspect only when relevant to the task.
+- `client/packages/ge4g_native/hook/build.dart` — Repository file; inspect only when relevant to the task.
+- `client/packages/ge4g_native/lib/ge4g_native.dart` — Repository file; inspect only when relevant to the task.
+- `client/packages/ge4g_native/pubspec.yaml` — Repository file; inspect only when relevant to the task.
+- `client/pubspec.lock` — Repository file; inspect only when relevant to the task.
+- `client/pubspec.yaml` — Repository file; inspect only when relevant to the task.
+- `client/test/controls_test.dart` — Repository file; inspect only when relevant to the task.
+- `client/test/library_test.dart` — Repository file; inspect only when relevant to the task.
+- `client/test/widget_test.dart` — Repository file; inspect only when relevant to the task.
+- `client/windows/.gitignore` — Repository file; inspect only when relevant to the task.
+- `client/windows/CMakeLists.txt` — Repository file; inspect only when relevant to the task.
+- `client/windows/flutter/CMakeLists.txt` — Repository file; inspect only when relevant to the task.
+- `client/windows/flutter/generated_plugin_registrant.cc` — Repository file; inspect only when relevant to the task.
+- `client/windows/flutter/generated_plugin_registrant.h` — Repository file; inspect only when relevant to the task.
+- `client/windows/flutter/generated_plugins.cmake` — Repository file; inspect only when relevant to the task.
+- `client/windows/runner/CMakeLists.txt` — Repository file; inspect only when relevant to the task.
+- `client/windows/runner/Runner.rc` — Repository file; inspect only when relevant to the task.
+- `client/windows/runner/flutter_window.cpp` — Repository file; inspect only when relevant to the task.
+- `client/windows/runner/flutter_window.h` — Repository file; inspect only when relevant to the task.
+- `client/windows/runner/main.cpp` — Repository file; inspect only when relevant to the task.
+- `client/windows/runner/resource.h` — Repository file; inspect only when relevant to the task.
+- `client/windows/runner/resources/app_icon.ico` — Repository file; inspect only when relevant to the task.
+- `client/windows/runner/runner.exe.manifest` — Repository file; inspect only when relevant to the task.
+- `client/windows/runner/utils.cpp` — Repository file; inspect only when relevant to the task.
+- `client/windows/runner/utils.h` — Repository file; inspect only when relevant to the task.
+- `client/windows/runner/win32_window.cpp` — Repository file; inspect only when relevant to the task.
+- `client/windows/runner/win32_window.h` — Repository file; inspect only when relevant to the task.
 - `crates/ge4g-cli/Cargo.toml` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-cli/src/main.rs` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-cli/tests/acceptance.rs` — Engine source, package configuration or behavioral verification.
+- `crates/ge4g-client/Cargo.toml` — Engine source, package configuration or behavioral verification.
+- `crates/ge4g-client/include/ge4g_client.h` — Engine source, package configuration or behavioral verification.
+- `crates/ge4g-client/src/lib.rs` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-core/Cargo.toml` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-core/src/lib.rs` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-platform/Cargo.toml` — Engine source, package configuration or behavioral verification.
@@ -34,12 +152,15 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `docs/ARCHITECTURE.md` — Basement architecture and subsystem boundaries.
 - `docs/AUTHORING.md` — Manifest, components, replay and assertion authoring guide.
 - `docs/BASEMENT_SPEC.md` — 0.1 product and runtime specification.
+- `docs/CLIENT.md` — Repository file; inspect only when relevant to the task.
 - `docs/CLI_CONTRACT.md` — Agent-facing CLI contract.
 - `docs/FAILURE_NOTES.md` — Durable record of non-obvious recurring failures.
+- `docs/LAUNCHER_PHILOSOPHY.md` — Repository file; inspect only when relevant to the task.
 - `docs/RELEASE_NOTES.md` — Release evidence and honest human acceptance status.
 - `docs/RESEARCH_BASIS.md` — Research basis for the agent setup.
 - `docs/TESTPLAN.md` — Acceptance and deterministic verification plan.
 - `docs/exec-plans/active/.gitkeep` — Repository file; inspect only when relevant to the task.
+- `docs/exec-plans/active/flutter-client.md` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/completed/.gitkeep` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/completed/basement.md` — Repository file; inspect only when relevant to the task.
 - `examples/basement_demo/ge4g.toml` — Playable reference demo data, replay or inspected framebuffer golden.
@@ -47,7 +168,13 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `examples/basement_demo/replays/journey.json` — Playable reference demo data, replay or inspected framebuffer golden.
 - `examples/basement_demo/scenes/room_a.json5` — Playable reference demo data, replay or inspected framebuffer golden.
 - `examples/basement_demo/scenes/room_b.json5` — Playable reference demo data, replay or inspected framebuffer golden.
+- `packaging/arch/PKGBUILD` — Repository file; inspect only when relevant to the task.
+- `packaging/arch/ge4g.png` — Repository file; inspect only when relevant to the task.
+- `scripts/bundle_desktop.py` — Repository file; inspect only when relevant to the task.
+- `scripts/client_icons.py` — Repository file; inspect only when relevant to the task.
+- `scripts/client_smoke.py` — Repository file; inspect only when relevant to the task.
 - `scripts/filetree.py` — FILETREE update/lint helper.
 - `scripts/interactive_smoke.py` — Real window/headless replay equivalence check.
+- `scripts/pack_game.py` — Repository file; inspect only when relevant to the task.
 - `scripts/package.py` — Bundle a built executable, demo and user documentation.
 - `templates/EXECPLAN_TEMPLATE.md` — Template for checked-in execution plans.

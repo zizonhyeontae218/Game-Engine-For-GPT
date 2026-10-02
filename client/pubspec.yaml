@@ -1,0 +1,28 @@
+name: ge4g_client
+description: GE4G Basement native player with live per-game touch profiles.
+publish_to: none
+version: 0.1.0+1
+environment:
+  sdk: '>=3.13.0 <4.0.0'
+dependencies:
+  flutter:
+    sdk: flutter
+  ge4g_native:
+    path: packages/ge4g_native
+  archive: ^4.0.9
+  crypto: ^3.0.7
+  ffi: ^2.1.4
+  file_selector: ^1.1.0
+  path: ^1.9.1
+  path_provider: ^2.1.5
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+  integration_test:
+    sdk: flutter
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/default_layouts.json
+    - assets/default_bindings.json

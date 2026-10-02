@@ -19,3 +19,16 @@ Public formats currently use schema version 1. This registry records identifiers
 | save `project` | string | manifest name | project / save writer | save | Save | save writer | save loader | New project | Must match current name | v1 project identity validation |
 
 Demo stable scene ids: `room_a`, `room_b`; named transition spawn: `entry`. Referenced entity ids: `player`, `wall`, `npc`, `door`, `return_door`. Transitions reload scene-local entities and preserve StateStore.
+
+## Client ABI and package/control identifiers (v1)
+
+| ID | Owner / scope | Persistence / reset | Contract |
+| --- | --- | --- | --- |
+| `abi_version`, bundle `engine_abi` | Rust native ABI / Flutter / `.ge4g` | Build/artifact | Exactly 1; incompatible versions fail |
+| `session` | Rust ABI registry | Runtime only; close removes, monotonic ids | Opaque nonzero u64; at most eight open sessions |
+| `game_id` | Game author / package / bindings/library | Stable across package updates | Lowercase slug max96; isolates controls and save paths |
+| package `digest` | Library | Content-addressed install | SHA256 of complete `.ge4g`; immutable installed content |
+| `active_profile`, profile `id` | Layout JSON / input router | Per-game settings | Matching mapping profile IDs; valid switching releases held input |
+| touch button `id` | Layout and binding JSON | Per-game settings | Unique per profile; IDs must match in both files |
+| `actions` / `action_pressed`, `action_released` | Router / World / event trace | Held during session; release/close clears | Max32 ASCII named actions ≤64 chars; sorted edges |
+| `mode=embedded`, `allow_library=false` | Desktop `client_mode.json` | Shipped bundle | Game starts from relative included `.ge4g`; no runtime import prompt |

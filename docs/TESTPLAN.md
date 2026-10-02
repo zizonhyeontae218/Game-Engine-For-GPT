@@ -13,7 +13,7 @@ python3 scripts/filetree.py lint
 
 ## Automated coverage
 
-The workspace currently has 22 behavioral tests: 3 core, 2 project, 6 runtime, 2 renderer and 9 CLI integration tests.
+The workspace currently has 24 behavioral tests: 3 core, 2 project, 6 runtime, 2 renderer, 2 native-client ABI and 9 CLI integration tests.
 
 | Requirement | Executable evidence |
 | --- | --- |
@@ -61,3 +61,24 @@ cargo test --locked -p ge4g-cli --no-default-features
 A human must launch `cargo run --locked -p ge4g-cli -- run examples/basement_demo`, move with WASD/arrows, collide with the wall, talk to the NPC using E, enter the door, save with F5 and reload with F9. The title should retain `NPC:true` and `RoomB:true`. Close and relaunch with `--load examples/basement_demo/save.json` to check persistent values again.
 
 Record tester/date/result and any issues in RELEASE_NOTES when performed. Automated Xvfb evidence does not earn the human execution contribution or complete ILCX™ evaluation. See RELEASE_NOTES for the current verified milestone and remaining human sign-off.
+
+## Flutter client acceptance
+
+Use Flutter 3.47.6 and stable Rust. Build the portable demo before Flutter tests:
+
+```sh
+cargo build --locked -p ge4g-cli
+python3 scripts/pack_game.py examples/basement_demo --game-id demo.basement --out dist/basement-demo.ge4g
+cd client
+flutter pub get
+flutter analyze
+flutter test
+flutter build linux --release
+cd ..
+python3 scripts/bundle_desktop.py --client client/build/linux/x64/release/bundle --game dist/basement-demo.ge4g --platform linux --out dist/ge4g-basement-linux
+xvfb-run -a python3 scripts/client_smoke.py dist/ge4g-basement-linux
+```
+
+Flutter tests execute the actual bundled Rust FFI replay, compare canonical frame SHA256, save/reload, reject invalid/traversal/hash-corrupt packages, prove settings/save game isolation, reload external JSON while retaining invalid edits, and exercise real button chords, joystick ownership and cancellation widgets. The embedded desktop smoke opens a real Flutter window and compares its full Rust snapshot and decoded frame to CLI/headless.
+
+Hosted client CI additionally builds Windows embedded ZIP, Android APK and unsigned iOS app. Build results do not constitute human touch-device tests, Windows interaction tests or `makepkg`/Wayland acceptance on Arch. Those remain explicit human/platform checks.

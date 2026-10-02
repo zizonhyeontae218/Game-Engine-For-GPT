@@ -355,6 +355,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "ge4g-client"
+version = "0.1.0"
+dependencies = [
+ "ge4g-core",
+ "ge4g-project",
+ "ge4g-render2d",
+ "ge4g-runtime",
+ "serde",
+ "serde_json",
+ "tempfile",
+]
+
+[[package]]
 name = "ge4g-core"
 version = "0.1.0"
 dependencies = [
