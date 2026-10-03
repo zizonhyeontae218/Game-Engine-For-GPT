@@ -79,6 +79,13 @@ four client build jobs in run 37095556206. Downloaded artifacts contain the actu
 Rust runtime (three Android ABIs, Windows DLL exports, iOS framework), embedded v2
 desktop games and portable demo. A follow-up packaging check fixes Windows CRLF
 conversion and uploads the new FlatLand smoke evidence alongside v1 evidence.
+2026-10-03: Final client run 37096137150 (`6fcf909`) passed all four platform builds;
+engine run 37096318044 (`2996369`, hash registry synchronization) passed the complete
+acceptance floor. Downloaded Windows/Linux game/control source bytes match, metadata
+values match and all seven pinned SVG hashes survive packaging. Real Linux popup,
+portrait and manual landscape views were inspected. Actual idle chase loses three
+lives at ticks 257/437/617 without test-position mutation. Static context byte counts
+are recorded in RELEASE_NOTES; tokenizer/end-to-end token measurement remains pending.
 
 ## Handoff
 Read this plan and only the relevant numbered section of `docs/FLATLAND_SPEC.md`.

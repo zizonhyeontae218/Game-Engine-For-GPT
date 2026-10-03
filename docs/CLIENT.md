@@ -8,9 +8,16 @@ The product name is **GE4G / GameEngineForGPT**. Flutter presents the authoritat
 
 **Desktop (Windows/Arch Linux):** open the executable in the game's complete bundle. Its adjacent `client_mode.json` identifies the included game and disables the library flow. Every shipped game includes Flutter assets, plugins, the Rust runtime and its game data. The developer CLI remains a development/verification tool.
 
-Joystick/WASD/arrows move. Default **Z/E = interact**, **X = x**, **C = c**, **Space = space**. X/C/Space are versioned named actions producing `action_pressed`/`action_released` runtime events. The current demo implements movement and NPC interaction; these default buttons do not invent jump or combat behavior. A game can remap a button to an existing built-in action (for example Space → interact) or consume named actions when its runtime behavior is extended.
+Joystick/WASD/arrows move. Default **Z/E = interact**, **X = x**, **C = c**, **Space = space**. X/C/Space are versioned named actions producing `action_pressed`/`action_released` runtime events. The original Basement demo implements movement and NPC interaction; these default buttons do not invent jump or combat behavior. A game can remap a button to an existing built-in action (for example Space → interact) or consume named actions when its runtime behavior is extended.
 
 In-game actions include pause, save, load, fresh restart, debug collision outlines, profile selection and **조작 편집 / Control Lab**. Inputs release on profile changes, valid edits, cancellation, focus loss and backgrounding. The game pauses while backgrounded; resuming preserves the prior pause state and never fast-forwards through background time.
+
+FlatLand alpha adds a **rotation button in the black title bar**: it selects portrait
+or landscape explicitly. Mobile locks to portrait-up or landscape-left; sensors and
+desktop window resizing do not select a layout. Text/dialogue appears in a separate
+scrollable popup which pauses client ticking until **확인 / CONTINUE**. The title-bar
+menu reopens the latest message or toggles sound. Cue playback uses four voices;
+headless simulation remains independent of device audio.
 
 ## Separate control files
 
@@ -72,6 +79,15 @@ python3 scripts/pack_game.py examples/basement_demo \
 
 `.ge4g` is a deterministic ZIP containing `bundle.json`, `game/` and `controls/`. The versioned manifest includes engine ABI 1, stable ID, name/version and SHA256 for every data file. Imports check paths, duplicate/case collisions, symlinks, file sizes, hashes, control schemas and actual Rust project validation before library activation. Limits: 64 MiB compressed, 256 MiB extracted, 16 MiB per entry, 4096 entries. These hashes detect corruption; packages are not publisher-signed.
 
+Schema 2 projects produce bundle schema 2 with `game_schema:2`; native ABI remains 1
+and controls remain schema 1. The new client accepts both game versions; older clients
+reject the unsupported package version. Example:
+
+```sh
+python3 scripts/pack_game.py examples/flatland_pacman \
+  --game-id demo.flatland.pacman --version 0.2.0-alpha.1 --out dist/flatland-pacman.ge4g
+```
+
 To supply authored initial controls, use `--layouts path/layouts.json --bindings path/bindings.json`. Bindings are stamped with the specified game ID; existing player overrides remain preserved.
 
 ## Build clients and embed desktop games
@@ -88,7 +104,13 @@ flutter build linux --release
 flutter build windows --release
 ```
 
-Linux/Arch build prerequisites: `flutter`, `rust`, `clang`, `cmake`, `ninja`, `pkgconf`, `gtk3`; desktop runtime uses GTK3 and the system graphics stack. Wayland/X11 follow the standard Flutter GTK runner. Windows uses the Flutter release folder including its plugins and runtime DLLs; install the Microsoft Visual C++ runtime if the target system lacks it.
+Linux/Arch build prerequisites: `flutter`, `rust`, `clang`, `cmake`, `ninja`, `pkgconf`,
+`gtk3`, GStreamer and base-plugin development headers. Runtime playback needs
+`gstreamer`, `gst-plugins-base` and `gst-plugins-good` (Ubuntu: `gstreamer1.0-plugins-base`
+and `gstreamer1.0-plugins-good`); GTK3 and the system graphics stack present the window.
+Wayland/X11 follow the standard Flutter GTK runner. Windows uses the Flutter release
+folder including its plugins and runtime DLLs; install the Microsoft Visual C++ runtime
+if the target system lacks it.
 
 From repository root:
 

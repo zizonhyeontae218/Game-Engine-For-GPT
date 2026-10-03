@@ -91,3 +91,30 @@ Remaining: dedicated quest/inventory systems, advanced melee/projectile combat,
 elevation/bridge/camera/atlas features, RNG, serialized event scenes/choices/turn battle,
 loop/music/positional audio, broader coverage and end-to-end token/repair benchmarks.
 Read FLATLAND_AUTHORING for actual APIs rather than assuming every proposal is shipped.
+
+### Final alpha build evidence
+
+Native-host [client run 37096137150](https://github.com/zizonhyeontae218/Game-Engine-For-GPT/actions/runs/37096137150)
+at `6fcf909` passed Linux, Windows, Android and iOS.
+[Engine acceptance 37096318044](https://github.com/zizonhyeontae218/Game-Engine-For-GPT/actions/runs/37096318044)
+at `2996369` passed every step, including v1/v2 replays, strict Rust checks, filetree,
+real window comparison and no-window CLI tests. The latter commit synchronizes the
+generated hash registry; gameplay and client code are identical.
+
+Downloaded Windows/Linux games have identical game/control file bytes and metadata
+values (JSON file-index key ordering may differ). All seven original SVG hashes match
+the pinned sources. Hosted Linux evidence includes both FlatLand and v1 screenshots,
+snapshots and results. A further real 1200-tick idle replay records ghost hits at ticks
+257/437/617 with HP 2/1/0 and GAME OVER. A running Linux Flutter window was visually
+inspected with the popup, portrait layout and button-selected landscape layout.
+
+Downloads are in that client run: `ge4g-flatland-windows-embedded`,
+`ge4g-basement-linux-embedded` (contains both games and both smoke evidence sets),
+`ge4g-android-client` and `ge4g-ios-unsigned`. Local copies use `dist/GE4G-FlatLand-*`;
+mobile imports `dist/flatland-pacman.ge4g`. Desktop bundles open the maze directly.
+
+Static context sample: authored maze 7,979 bytes / five explicit actors plus shared
+prefabs and 21 map rows; body schema 120 bytes versus scene schema 9,395; one-entity
+observation 463 versus full snapshot 192,381. This measures command/source bytes,
+not end-to-end task tokens. Token counts are unmeasured because the tokenizer vocabulary
+could not be retrieved; conversations, repairs and asset prompts remain outside this sample.
