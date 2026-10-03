@@ -219,6 +219,8 @@ pub struct EntitySnapshot {
     pub layer: i32,
     pub blocking: bool,
     pub trigger: bool,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub flatland: Option<Value>,
 }
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, schemars::JsonSchema)]
 #[serde(deny_unknown_fields)]
@@ -235,6 +237,8 @@ pub struct Snapshot {
     pub state: BTreeMap<String, Value>,
     pub events: Vec<Event>,
     pub events_dropped: u64,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub flatland: Option<Value>,
 }
 
 #[cfg(test)]

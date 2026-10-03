@@ -88,6 +88,7 @@ enum Command {
 }
 #[derive(Clone, Copy, ValueEnum)]
 enum InspectTarget {
+    Prefab,
     Project,
     Scene,
     Entity,
@@ -101,6 +102,11 @@ enum SchemaKind {
     Trace,
     Save,
     Snapshot,
+    Resume,
+    Body,
+    Actor,
+    Rule,
+    Map,
 }
 #[derive(Serialize, Deserialize, schemars::JsonSchema)]
 #[serde(deny_unknown_fields)]
@@ -111,6 +117,11 @@ struct Trace {
     events_dropped: u64,
 }
 const EVENT_KINDS: &[&str] = &[
+    "pickup",
+    "hit",
+    "dialogue",
+    "rule_fired",
+    "entity_removed",
     "action_pressed",
     "action_released",
     "scene_loaded",
@@ -325,6 +336,11 @@ fn dispatch(command: Command) -> Result<Value> {
         Command::Diagnose { project } => diagnose(&project),
         Command::Schema { kind } => {
             let schema = match kind {
+                SchemaKind::Resume => schemars::schema_for!(ge4g_runtime::Resume),
+                SchemaKind::Body => schemars::schema_for!(ge4g_project::flatland::BodyMode),
+                SchemaKind::Actor => schemars::schema_for!(ge4g_project::flatland::Actor),
+                SchemaKind::Rule => schemars::schema_for!(ge4g_project::flatland::Rule),
+                SchemaKind::Map => schemars::schema_for!(ge4g_project::flatland::Map),
                 SchemaKind::Project => schemars::schema_for!(Manifest),
                 SchemaKind::Scene => schemars::schema_for!(Scene),
                 SchemaKind::Replay => schemars::schema_for!(Replay),
@@ -334,7 +350,24 @@ fn dispatch(command: Command) -> Result<Value> {
             };
             let mut schema =
                 serde_json::to_value(schema).map_err(|e| Error(format!("schema: {e}")))?;
-            schema["properties"]["schema_version"]["const"] = json!(1);
+            match kind {
+                SchemaKind::Project
+                | SchemaKind::Scene
+                | SchemaKind::Replay
+                | SchemaKind::Snapshot => {
+                    schema["properties"]["schema_version"]["enum"] = json!([1, 2]);
+                }
+                SchemaKind::Resume => {
+                    schema["properties"]["schema_version"]["const"] = json!(2);
+                }
+                SchemaKind::Save | SchemaKind::Trace => {
+                    schema["properties"]["schema_version"]["const"] = json!(1);
+                }
+                _ => {}
+            }
+            if matches!(kind, SchemaKind::Scene) {
+                schema["allOf"] = json!([{"if":{"properties":{"schema_version":{"const":1}}},"then":{"properties":{"entities":{"items":{"required":["position","size"]}}}}}]);
+            }
             if matches!(kind, SchemaKind::Snapshot) {
                 schema["properties"]["tick_hz"]["const"] = json!(60);
                 schema["properties"]["subpixels_per_pixel"]["const"] = json!(60);
@@ -363,11 +396,20 @@ fn inspect(
             json!({"schema_version": 1, "ok": true, "name": project.manifest.name, "engine_version": ENGINE_VERSION, "start_scene": project.manifest.start_scene, "window": project.manifest.window, "scenes": project.manifest.scenes, "state_definitions": project.manifest.state, "tests": project.manifest.tests, "files_checked": project.files_checked}),
         );
     }
+    if matches!(target, InspectTarget::Prefab) {
+        let id = name.ok_or_else(|| Error("inspect prefab needs an ID".into()))?;
+        let prefab = project.scenes[&project.manifest.start_scene]
+            .prefabs
+            .get(id)
+            .ok_or_else(|| Error(format!("unknown prefab {id}")))?;
+        return Ok(json!({"schema_version":1,"ok":true,"prefab_id":id,"prefab":prefab}));
+    }
     let snapshot = if let Some(path) = snapshot_path {
         let snapshot: Snapshot = serde_json::from_str(&ge4g_project::read_text(path)?)
             .map_err(|e| Error(format!("snapshot {}: {e}", path.display())))?;
         version(snapshot.schema_version, "snapshot")?;
-        if !project.scenes.contains_key(&snapshot.scene)
+        if snapshot.schema_version != project.manifest.schema_version
+            || !project.scenes.contains_key(&snapshot.scene)
             || snapshot.tick_hz != 60
             || snapshot.subpixels_per_pixel != 60
         {
@@ -407,7 +449,7 @@ fn inspect(
             }
             Ok(json!({"schema_version": 1, "ok": true, "snapshot": snapshot}))
         }
-        InspectTarget::Project => unreachable!(),
+        InspectTarget::Project | InspectTarget::Prefab => unreachable!(),
     }
 }
 fn project_tests(project: Project) -> Result<Value> {

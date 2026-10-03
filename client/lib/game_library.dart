@@ -133,13 +133,19 @@ class GameLibrary {
       jsonDecode(utf8.decode(files['bundle.json']!)),
       'bundle',
     );
-    version(manifest, 'bundle');
+    if (![1, 2].contains(manifest['schema_version'])) {
+      throw const FormatException('unsupported game package schema');
+    }
+    if (manifest['schema_version'] == 2 && manifest['game_schema'] != 2) {
+      throw const FormatException('FlatLand package requires game_schema 2');
+    }
     fields(manifest, {
       'schema_version',
       'game_id',
       'name',
       'version',
       'engine_abi',
+      if (manifest['schema_version'] == 2) 'game_schema',
       'project',
       'layouts',
       'bindings',

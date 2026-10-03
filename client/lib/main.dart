@@ -15,6 +15,8 @@ import 'controls.dart';
 import 'game_library.dart';
 import 'player.dart';
 import 'touch_controls.dart';
+import 'game_popup.dart';
+import 'manual_orientation.dart';
 
 Future<void> main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -96,6 +98,7 @@ class ClientHome extends StatefulWidget {
 
 class _ClientHomeState extends State<ClientHome>
     with SingleTickerProviderStateMixin, WidgetsBindingObserver {
+  final orientation = ManualOrientation();
   Player? player;
   GameLibrary? library;
   List<InstalledGame> games = [];
@@ -112,6 +115,8 @@ class _ClientHomeState extends State<ClientHome>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    orientation.addListener(changed);
+    unawaited(orientation.initialize());
     ticker = createTicker((elapsed) => player?.tick(elapsed))..start();
     unawaited(initialize());
   }
@@ -270,7 +275,10 @@ class _ClientHomeState extends State<ClientHome>
   }
 
   KeyEventResult keyboard(FocusNode node, KeyEvent event) {
-    if (editing || player?.session == null || player!.paused) {
+    if (editing ||
+        player?.session == null ||
+        player!.paused ||
+        player!.popupVisible) {
       return KeyEventResult.ignored;
     }
     final code = keyCode(event.logicalKey);
@@ -285,6 +293,8 @@ class _ClientHomeState extends State<ClientHome>
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
+    orientation.removeListener(changed);
+    orientation.dispose();
     ticker.dispose();
     player?.removeListener(changed);
     player?.dispose();
@@ -322,7 +332,7 @@ class _ClientHomeState extends State<ClientHome>
               ),
               block(
                 const Text(
-                  'BASEMENT\nPLAYER / 0.1',
+                  'FLATLAND\nPLAYER / 0.2',
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 color: acid,
@@ -449,6 +459,41 @@ class _ClientHomeState extends State<ClientHome>
                   color: acid,
                 ),
               ),
+              IconButton(
+                key: const Key('manual-rotation'),
+                tooltip: orientation.landscape ? '세로모드' : '가로모드',
+                onPressed: () async {
+                  live.release();
+                  try {
+                    await orientation.toggle();
+                  } catch (error) {
+                    if (mounted) setState(() => failure = '회전 실패: $error');
+                  }
+                },
+                icon: Icon(
+                  orientation.landscape
+                      ? Icons.stay_current_portrait
+                      : Icons.stay_current_landscape,
+                  color: acid,
+                ),
+              ),
+              PopupMenuButton<String>(
+                tooltip: '대화·소리',
+                icon: const Icon(Icons.more_horiz, color: acid),
+                onSelected: (value) =>
+                    value == 'dialogue' ? live.showPopup() : live.toggleSound(),
+                itemBuilder: (_) => [
+                  PopupMenuItem(
+                    value: 'dialogue',
+                    enabled: live.popup != null,
+                    child: const Text('대화 다시 보기'),
+                  ),
+                  PopupMenuItem(
+                    value: 'sound',
+                    child: Text(live.audio.muted ? '소리 켜기' : '소리 끄기'),
+                  ),
+                ],
+              ),
               if (!embedded)
                 IconButton(
                   tooltip: '보관함',
@@ -463,58 +508,59 @@ class _ClientHomeState extends State<ClientHome>
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-          child: Wrap(
-            spacing: 10,
-            runSpacing: 6,
-            crossAxisAlignment: WrapCrossAlignment.center,
-            children: [
-              DropdownButton<String>(
-                key: const Key('profile-select'),
-                value: controls.activeId,
-                items: controls.profiles
-                    .map(
-                      (profile) => DropdownMenuItem(
-                        value: profile.id,
-                        child: Text(profile.name),
-                      ),
-                    )
-                    .toList(),
-                onChanged: (value) async {
-                  if (value == null) return;
-                  try {
-                    await live.store!.select(value);
-                  } catch (error) {
-                    if (mounted) setState(() => failure = '$error');
-                  }
-                  focus.requestFocus();
-                },
-              ),
-              OutlinedButton(
-                key: const Key('edit-controls'),
-                onPressed: edit,
-                child: const Text('조작 편집'),
-              ),
-              OutlinedButton(onPressed: live.save, child: const Text('저장')),
-              OutlinedButton(
-                onPressed: () => live.open(live.game!, load: true),
-                child: const Text('불러오기'),
-              ),
-              OutlinedButton(
-                onPressed: () => live.open(live.game!),
-                child: const Text('재시작'),
-              ),
-              IconButton(
-                tooltip: '충돌 영역 표시',
-                onPressed: live.toggleDebug,
-                icon: const Icon(Icons.border_outer),
-              ),
-            ],
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              spacing: 10,
+              children: [
+                DropdownButton<String>(
+                  key: const Key('profile-select'),
+                  value: controls.activeId,
+                  items: controls.profiles
+                      .map(
+                        (profile) => DropdownMenuItem(
+                          value: profile.id,
+                          child: Text(profile.name),
+                        ),
+                      )
+                      .toList(),
+                  onChanged: (value) async {
+                    if (value == null) return;
+                    try {
+                      await live.store!.select(value);
+                    } catch (error) {
+                      if (mounted) setState(() => failure = '$error');
+                    }
+                    focus.requestFocus();
+                  },
+                ),
+                OutlinedButton(
+                  key: const Key('edit-controls'),
+                  onPressed: edit,
+                  child: const Text('조작 편집'),
+                ),
+                OutlinedButton(onPressed: live.save, child: const Text('저장')),
+                OutlinedButton(
+                  onPressed: () => live.open(live.game!, load: true),
+                  child: const Text('불러오기'),
+                ),
+                OutlinedButton(
+                  onPressed: () => live.open(live.game!),
+                  child: const Text('재시작'),
+                ),
+                IconButton(
+                  tooltip: '충돌 영역 표시',
+                  onPressed: live.toggleDebug,
+                  icon: const Icon(Icons.border_outer),
+                ),
+              ],
+            ),
           ),
         ),
         Expanded(
           child: LayoutBuilder(
             builder: (context, constraints) {
-              final portrait = constraints.maxWidth < 600;
+              final portrait = !orientation.landscape;
               Widget frame = Center(
                 child: AspectRatio(
                   aspectRatio:
@@ -595,7 +641,7 @@ class _ClientHomeState extends State<ClientHome>
           color: acid,
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
           child: Text(
-            '${live.status['scene']} / TICK ${live.status['tick']}  ${state.entries.map((e) => '${e.key.split('.').last}:${e.value}').join('  ')}',
+            '${live.status['scene']} / HP ${(live.status['actors'] as Map?)?['player']?['hp'] ?? '-'} / POWER ${(live.status['timers'] as Map?)?['power'] ?? 0} / TICK ${live.status['tick']}  ${state.entries.map((e) => '${e.key.split('.').last}:${e.value}').join('  ')}',
             maxLines: 2,
             style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
           ),
@@ -626,27 +672,43 @@ class _ClientHomeState extends State<ClientHome>
   @override
   Widget build(BuildContext context) => Scaffold(
     body: SafeArea(
-      child: Focus(
-        focusNode: focus,
-        autofocus: true,
-        onKeyEvent: keyboard,
-        onFocusChange: (hasFocus) {
-          if (!hasFocus) player?.release();
-        },
-        child: !ready || (player?.loading ?? false)
-            ? const Center(child: CircularProgressIndicator())
-            : player?.session != null
-            ? playView()
-            : embedded
-            ? Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(24),
-                  child: SelectableText(
-                    'GE4G / 게임을 열 수 없습니다\n${player?.error ?? failure ?? ''}',
-                  ),
-                ),
-              )
-            : libraryView(),
+      child: Stack(
+        children: [
+          Positioned.fill(
+            child: Focus(
+              focusNode: focus,
+              autofocus: true,
+              onKeyEvent: keyboard,
+              onFocusChange: (hasFocus) {
+                if (!hasFocus) player?.release();
+              },
+              child: !ready || (player?.loading ?? false)
+                  ? const Center(child: CircularProgressIndicator())
+                  : player?.session != null
+                  ? playView()
+                  : embedded
+                  ? Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(24),
+                        child: SelectableText(
+                          'GE4G / 게임을 열 수 없습니다\n${player?.error ?? failure ?? ''}',
+                        ),
+                      ),
+                    )
+                  : libraryView(),
+            ),
+          ),
+          if (player?.popupVisible ?? false)
+            Positioned.fill(
+              child: GamePopup(
+                text: player!.popup!['text'] as String,
+                onClose: () {
+                  player!.dismissPopup();
+                  focus.requestFocus();
+                },
+              ),
+            ),
+        ],
       ),
     ),
   );

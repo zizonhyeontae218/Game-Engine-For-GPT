@@ -52,3 +52,36 @@ A final client repair serializes restart against an in-flight frame decode, show
 Final native-host [run 37022204555](https://github.com/zizonhyeontae218/Game-Engine-For-GPT/actions/runs/37022204555) at source `e1497ce` passed **Linux, Windows, Android and iOS**. [Basement acceptance 37022204025](https://github.com/zizonhyeontae218/Game-Engine-For-GPT/actions/runs/37022204025) also passed the full Rust/CLI/window/no-window acceptance floor. The loading-clock regression is covered and the hosted packaged Flutter replay again matches exactly tick160, the complete headless snapshot and canonical pixels. All eight Flutter tests and analysis pass.
 
 Artifacts: `ge4g-android-client` (APK, three native ABIs), `ge4g-basement-windows-embedded` (ZIP), `ge4g-basement-linux-embedded` (tarball, portable demo and replay evidence), `ge4g-ios-unsigned` (ZIP preserving Runner.app). Latest copies were downloaded into local `dist/GE4G-*` files. iOS app/framework paths were inspected after repackaging. APK is development-signed; Apple owner signing is still required for iOS device/store distribution. Physical touch devices, Windows human interaction and Arch installation/Wayland acceptance remain unclaimed.
+
+## User acceptance — 2026-10-03
+
+The user reports the Flutter 0.1 runners tested normally on PC, Linux and Android.
+Record these platforms as user-confirmed; specific devices, Arch/Wayland installation
+and Apple signing were not supplied. This closes the general runner play-check pending
+status for those platforms. FlatLand changes require fresh regression evidence.
+
+## Basement 0.2 — FlatLand alpha.1, 2026-10-03
+
+First engine implementation, not completion of the full 0.2 design: map-wall/entity
+separation, compact prefabs, pass/fixed/push bodies, direction helpers, cardinal
+queued movement and deterministic chase/flee AI, typed conditions/actions and Lua 5.4,
+HP/immunity/pickups/timers, sprite clips/Y sorting, exact versioned resume, local
+component/prefab schemas and selective native observation. The Pac-Man-style demo
+uses pinned CC0 pacman-canvas SVG/PNG sprites and in-repository synthesized WAV cues.
+
+Flutter adds a manual portrait/landscape button, separate scrollable text popups,
+four-voice device audio playback, and explicit v2 imports/embedded packages. ABI
+functions remain v1; package schema/game schema v2 keeps older clients from accepting
+unsupported data. Android's build hook now configures the C compiler for vendored Lua.
+
+Evidence: 32 Rust tests, old/new authored replays, strict Clippy/fmt; 10 Flutter tests;
+Linux release and both real embedded Flutter windows equal headless snapshots/frames.
+Pac-Man canonical tick30 RGBA: `435f09d564ece74d46699508521ab86839c2f1f0c9ebbe84bc9353768be12f35`.
+The v1 tick160 framebuffer golden remains unchanged. User acceptance of 0.1 PC/Linux/
+Android runners is recorded above; alpha device rotation and audible playback are
+separate pending checks. Windows/Android/iOS build results will be recorded after CI.
+
+Remaining: dedicated quest/inventory systems, advanced melee/projectile combat,
+elevation/bridge/camera/atlas features, RNG, serialized event scenes/choices/turn battle,
+loop/music/positional audio, broader coverage and end-to-end token/repair benchmarks.
+Read FLATLAND_AUTHORING for actual APIs rather than assuming every proposal is shipped.

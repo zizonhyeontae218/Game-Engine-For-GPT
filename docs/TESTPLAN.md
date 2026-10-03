@@ -82,3 +82,33 @@ xvfb-run -a python3 scripts/client_smoke.py dist/ge4g-basement-linux
 Flutter tests execute the actual bundled Rust FFI replay, compare canonical frame SHA256, save/reload and live profile/remapping input release through the native player, reject invalid/traversal/hash-corrupt packages, prove settings/save game isolation, reload external JSON while retaining invalid edits, and exercise real button chords, joystick ownership and cancellation widgets. The embedded desktop smoke opens a real Flutter window and compares its full Rust snapshot and decoded frame to CLI/headless.
 
 Hosted client CI additionally builds Windows embedded ZIP, Android APK and unsigned iOS app. Build results do not constitute human touch-device tests, Windows interaction tests or `makepkg`/Wayland acceptance on Arch. Those remain explicit human/platform checks.
+
+## FlatLand alpha acceptance
+
+The user confirmed the **previous 0.1** Flutter runners on PC/Linux/Android on 2026-10-03.
+Do not transfer that sign-off to changed alpha builds. Build both portable packages
+before Flutter tests, then run:
+
+```sh
+cargo test --locked --workspace
+cargo run --locked -p ge4g-cli -- test examples/flatland_pacman --json
+python3 scripts/pack_game.py examples/flatland_pacman --game-id demo.flatland.pacman --version 0.2.0-alpha.1 --out dist/flatland-pacman.ge4g
+cd client
+flutter analyze
+flutter test
+flutter build linux --release
+cd ..
+python3 scripts/bundle_desktop.py --client client/build/linux/x64/release/bundle --game dist/flatland-pacman.ge4g --platform linux --out dist/ge4g-flatland-linux
+xvfb-run -a python3 scripts/client_smoke.py dist/ge4g-flatland-linux --project examples/flatland_pacman
+python3 scripts/context_benchmark.py
+```
+
+Linux builds need GStreamer development packages, runtime base/good plugins and GTK3.
+Engine tests check complete push rollback, pass/fixed policies, facing, Lua sandbox
+budgets/rollback, deterministic ghost motion, score/power expiry/HP/win/loss, food
+reachability, queued turns, exact resume and corruption rejection. Native tests compare
+v2 replay/frame with Rust and exercise cursor/entity observation and resume. Flutter
+widgets check modal text and manual layout changes while resizing; no sensor selection.
+Actual audible playback and mobile orientation/device controls require a human check
+on the new builds. Event scenes, choices, turn combat and dedicated quests are not
+alpha acceptance claims; they remain full-0.2 release gates in FLATLAND_SPEC.

@@ -1,0 +1,105 @@
+import 'dart:io';
+
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:ge4g_client/game_library.dart';
+import 'package:ge4g_client/main.dart';
+import 'package:ge4g_client/manual_orientation.dart';
+import 'package:ge4g_client/player.dart';
+
+class PlayEngine implements EngineBridge {
+  int releases = 0;
+  @override
+  Map<String, dynamic> request(Map<String, dynamic> value) {
+    if (value['op'] == 'release') releases++;
+    return {
+      'ok': true,
+      'session': 1,
+      'width': 20,
+      'height': 20,
+      'frame_bytes': 1600,
+      'tick': 0,
+      'scene': 'maze',
+      'state': <String, dynamic>{},
+      'audio': [],
+      'popup': {'id': 1, 'text': 'A separate dialogue popup'},
+    };
+  }
+
+  @override
+  Uint8List frame(int session, int length) => Uint8List(length);
+}
+
+void main() {
+  test(
+    'orientation remains locked to one direction and changes only on toggle',
+    () async {
+      final calls = <List<DeviceOrientation>>[];
+      final mode = ManualOrientation(
+        apply: (value) async {
+          calls.add(value);
+        },
+      );
+      await mode.initialize();
+      expect(mode.landscape, false);
+      expect(calls.single, [DeviceOrientation.portraitUp]);
+      await mode.toggle();
+      expect(mode.landscape, true);
+      expect(calls.last, [DeviceOrientation.landscapeLeft]);
+      await mode.toggle();
+      expect(mode.landscape, false);
+      expect(calls.last, [DeviceOrientation.portraitUp]);
+      mode.dispose();
+    },
+  );
+  testWidgets(
+    'FlatLand import, modal dismissal and manual layout survive window resizing',
+    (tester) async {
+      final root = Directory.systemTemp.createTempSync('flatland-ui-');
+      final engine = PlayEngine();
+      final library = GameLibrary(root, (_) => {});
+      await tester.runAsync(() async {
+        await library.importFile(File('../dist/flatland-pacman.ge4g'));
+      });
+      tester.view.devicePixelRatio = 1;
+      tester.view.physicalSize = const Size(360, 740);
+      addTearDown(tester.view.resetPhysicalSize);
+      addTearDown(tester.view.resetDevicePixelRatio);
+      await tester.runAsync(() async {
+        await tester.pumpWidget(GE4GApp(engine: engine, dataDirectory: root));
+        await Future<void>.delayed(const Duration(milliseconds: 150));
+      });
+      await tester.pump();
+      await tester.ensureVisible(find.text('PLAY →'));
+      await tester.pump();
+      await tester.runAsync(() async {
+        await tester.tap(find.text('PLAY →'));
+        await Future<void>.delayed(const Duration(milliseconds: 150));
+      });
+      await tester.pump();
+      expect(find.text('A separate dialogue popup'), findsOneWidget);
+      await tester.tap(find.byKey(const Key('close-game-popup')));
+      await tester.pump();
+      expect(find.text('A separate dialogue popup'), findsNothing);
+      expect(find.byTooltip('가로모드'), findsOneWidget);
+      tester.view.physicalSize = const Size(740, 360);
+      await tester.pump();
+      expect(
+        find.byTooltip('가로모드'),
+        findsOneWidget,
+      ); // Resize does not select landscape.
+      final releases = engine.releases;
+      await tester.tap(find.byKey(const Key('manual-rotation')));
+      await tester.pump();
+      expect(find.byTooltip('세로모드'), findsOneWidget);
+      expect(engine.releases, greaterThan(releases));
+      tester.view.physicalSize = const Size(360, 740);
+      await tester.pump();
+      expect(find.byTooltip('세로모드'), findsOneWidget);
+      expect(tester.takeException(), isNull);
+      await tester.pumpWidget(const SizedBox());
+      root.deleteSync(recursive: true);
+    },
+  );
+}

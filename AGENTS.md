@@ -1,11 +1,15 @@
 # GE4G agent map
 
-This repository is **GameEngineForGPT 0.1 "Basement"**.
+The shipped engine is **GameEngineForGPT 0.1 "Basement"**.
+Current development build: **Basement 0.2 — FlatLand, 0.2.0-alpha.1**.
+The larger 0.2 specification is partially implemented; consult `docs/FLATLAND_AUTHORING.md` for actual capabilities.
 
 ## Read by task, not by ritual
 
 Use only the document relevant to the current work:
 - Product intent/scope → `00_MASTER_CONCEPT.md`, `GOAL.md`, `docs/BASEMENT_SPEC.md`
+- FlatLand authoring / current capabilities → `docs/FLATLAND_AUTHORING.md`
+- FlatLand 0.2 design/implementation → `docs/exec-plans/active/flatland.md`, relevant section of `docs/FLATLAND_SPEC.md`
 - Architecture/module boundaries → `docs/ARCHITECTURE.md`
 - CLI behavior/output/exit codes → `docs/CLI_CONTRACT.md`
 - Engine-visible durable state IDs → `F(x).md`
@@ -67,3 +71,17 @@ Do not paper over:
 - tests that only assert that a command returned success.
 
 Fix the cause or document a real blocker in the active ExecPlan.
+
+## FlatLand implementation direction
+
+- Separate static map walls/cells from runtime actors and interactive Entity objects.
+- Entity bodies declare `pass`, `fixed` or `push`; facing is shared by movement, interaction, combat and animation.
+- Prefer compact JSON5 prefabs and validated conditions/actions for ordinary content; Lua 5.4 extends unusual behavior through the same authoritative commands.
+- Minimize input context as well as output: query one component/prefab, patch one resource, observe selected deltas; full artifacts remain opt-in. Measure total task tokens and repair cost.
+- Depth rendering, collision planes and visual elevation are separate concepts.
+- Cutscenes and turn combat use serializable event scenes; headless must accept the same choices and reproduce their results.
+- Sound events require actual playback adapters before claiming audio support.
+- Version/migrate public data, saves, package requirements and ABI explicitly; preserve v1 behavior.
+- Follow the plan's vertical slices. Proposed schemas/APIs must never be described as shipped features.
+
+- Orientation is selected with a user button; do not enable sensor-driven landscape changes. Keep dialogue/text popups separate from controls.

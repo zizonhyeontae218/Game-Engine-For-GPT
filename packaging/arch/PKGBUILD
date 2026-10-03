@@ -7,7 +7,7 @@ pkgdesc='GE4G Basement demo with its embedded Flutter client and Rust runtime'
 arch=('x86_64')
 url='https://github.com/zizonhyeontae218/Game-Engine-For-GPT'
 license=('MIT')
-depends=('gtk3' 'glibc' 'gcc-libs')
+depends=('gtk3' 'glibc' 'gcc-libs' 'gstreamer' 'gst-plugins-base' 'gst-plugins-good')
 source=('ge4g-basement-linux.tar.gz')
 # This is a locally produced artifact, not an unchecked remote download.
 sha256sums=('SKIP')

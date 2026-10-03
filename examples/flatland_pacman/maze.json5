@@ -1,0 +1,446 @@
+{
+  "schema_version": 2,
+  "id": "maze",
+  "background": [
+    0,
+    0,
+    0,
+    255
+  ],
+  "spawns": {
+    "start": [
+      180,
+      300
+    ]
+  },
+  "map": {
+    "cell": 20,
+    "rows": [
+      "###################",
+      "#o.......#.......o#",
+      "#.##.###.#.###.##.#",
+      "#.................#",
+      "#.##.#.#####.#.##.#",
+      "#....#...#...#....#",
+      "####.### # ###.####",
+      "#....#       #....#",
+      "#.##.# ## ## #.##.#",
+      "#......#   #......#",
+      "#.##.# ##### #.##.#",
+      "#....#.......#....#",
+      "####.#.#####.#.####",
+      "#.................#",
+      "#.##.###.#.###.##.#",
+      "#o.#..... .....#.o#",
+      "##.#.#.#####.#.#.##",
+      "#....#...#...#....#",
+      "#.######.#.######.#",
+      "#.................#",
+      "###################"
+    ],
+    "tiles": {
+      "#": {
+        "solid": true,
+        "color": [
+          26,
+          36,
+          173,
+          255
+        ]
+      },
+      ".": {
+        "color": [
+          0,
+          0,
+          0,
+          255
+        ],
+        "spawn": "pellet"
+      },
+      "o": {
+        "color": [
+          0,
+          0,
+          0,
+          255
+        ],
+        "spawn": "power"
+      },
+      " ": {
+        "color": [
+          0,
+          0,
+          0,
+          255
+        ]
+      }
+    }
+  },
+  "prefabs": {
+    "pellet": {
+      "size": [
+        4,
+        4
+      ],
+      "sprite": {
+        "color": [
+          255,
+          220,
+          170,
+          255
+        ]
+      },
+      "tags": [
+        "food"
+      ],
+      "flatland": {
+        "pickup": [
+          {
+            "op": "add",
+            "key": "game.score",
+            "value": 10
+          },
+          {
+            "op": "sound",
+            "cue": "eat"
+          }
+        ]
+      }
+    },
+    "power": {
+      "size": [
+        10,
+        10
+      ],
+      "sprite": {
+        "color": [
+          255,
+          240,
+          210,
+          255
+        ]
+      },
+      "tags": [
+        "food",
+        "power"
+      ],
+      "flatland": {
+        "pickup": [
+          {
+            "op": "add",
+            "key": "game.score",
+            "value": 50
+          },
+          {
+            "op": "timer",
+            "id": "power",
+            "ticks": 420
+          },
+          {
+            "op": "sound",
+            "cue": "power"
+          }
+        ]
+      }
+    },
+    "ghost": {
+      "size": [
+        20,
+        20
+      ],
+      "tags": [
+        "ghost"
+      ],
+      "sprite": {
+        "color": [
+          255,
+          255,
+          255,
+          255
+        ],
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "grid": true,
+        "ai": {
+          "speed": 70,
+          "target": "player",
+          "flee_timer": "power"
+        },
+        "animation": {
+          "frames": [
+            "assets/blinky.png"
+          ],
+          "ticks": 8,
+          "alternate_timer": "power",
+          "alternate": [
+            "assets/dazzled.png",
+            "assets/dazzled2.png"
+          ]
+        }
+      }
+    }
+  },
+  "entities": [
+    {
+      "id": "player",
+      "position": [
+        180,
+        300
+      ],
+      "size": [
+        20,
+        20
+      ],
+      "player": {
+        "speed": 100
+      },
+      "sprite": {
+        "texture": "assets/Pacman-Icon.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "grid": true,
+        "hp": 3,
+        "animation": {
+          "frames": [
+            "assets/Pacman-Icon.png"
+          ],
+          "ticks": 6,
+          "rotate": true
+        }
+      }
+    },
+    {
+      "id": "blinky",
+      "prefab": "ghost",
+      "position": [
+        160,
+        180
+      ],
+      "flatland": {
+        "ai": {
+          "speed": 75
+        },
+        "animation": {
+          "frames": [
+            "assets/blinky.png"
+          ]
+        }
+      }
+    },
+    {
+      "id": "pinky",
+      "prefab": "ghost",
+      "position": [
+        180,
+        180
+      ],
+      "flatland": {
+        "ai": {
+          "speed": 70
+        },
+        "animation": {
+          "frames": [
+            "assets/pinky.png"
+          ]
+        }
+      }
+    },
+    {
+      "id": "inky",
+      "prefab": "ghost",
+      "position": [
+        200,
+        180
+      ],
+      "flatland": {
+        "ai": {
+          "speed": 65
+        },
+        "animation": {
+          "frames": [
+            "assets/inky.png"
+          ]
+        }
+      }
+    },
+    {
+      "id": "clyde",
+      "prefab": "ghost",
+      "position": [
+        180,
+        160
+      ],
+      "flatland": {
+        "ai": {
+          "speed": 60
+        },
+        "animation": {
+          "frames": [
+            "assets/clyde.png"
+          ]
+        }
+      }
+    }
+  ],
+  "rules": [
+    {
+      "id": "welcome",
+      "on": "start",
+      "once": true,
+      "actions": [
+        {
+          "op": "say",
+          "text": "FLATLAND / MAZE CHASE\nCollect every dot. Power dots turn ghosts blue for 7 seconds.\nJoystick or arrow keys / WASD. Use the rotation button for landscape.\nThree lives. Save resumes the maze exactly."
+        }
+      ]
+    },
+    {
+      "id": "eat_ghost",
+      "on": "contact",
+      "target_tag": "ghost",
+      "when": {
+        "op": "all",
+        "conditions": [
+          {
+            "op": "timer",
+            "id": "power"
+          },
+          {
+            "op": "vulnerable",
+            "entity": "$target"
+          }
+        ]
+      },
+      "actions": [
+        {
+          "op": "add",
+          "key": "game.score",
+          "value": 200
+        },
+        {
+          "op": "respawn",
+          "entity": "$target",
+          "immunity": 120
+        },
+        {
+          "op": "sound",
+          "cue": "ghost"
+        }
+      ]
+    },
+    {
+      "id": "ghost_hit",
+      "on": "contact",
+      "target_tag": "ghost",
+      "when": {
+        "op": "all",
+        "conditions": [
+          {
+            "op": "not",
+            "condition": {
+              "op": "timer",
+              "id": "power"
+            }
+          },
+          {
+            "op": "vulnerable",
+            "entity": "player"
+          }
+        ]
+      },
+      "actions": [
+        {
+          "op": "damage",
+          "entity": "player",
+          "amount": 1,
+          "immunity": 180
+        },
+        {
+          "op": "respawn",
+          "entity": "player"
+        }
+      ]
+    },
+    {
+      "id": "lose",
+      "on": "tick",
+      "once": true,
+      "when": {
+        "op": "hp",
+        "entity": "player",
+        "le": 0
+      },
+      "actions": [
+        {
+          "op": "set",
+          "key": "game.result",
+          "value": "lost"
+        },
+        {
+          "op": "stop"
+        },
+        {
+          "op": "sound",
+          "cue": "lose"
+        },
+        {
+          "op": "say",
+          "text": "GAME OVER\nThe ghosts caught you. Press RESTART to try again."
+        }
+      ]
+    },
+    {
+      "id": "win",
+      "on": "tick",
+      "once": true,
+      "when": {
+        "op": "all",
+        "conditions": [
+          {
+            "op": "remaining",
+            "tag": "food",
+            "count": 0
+          },
+          {
+            "op": "not",
+            "condition": {
+              "op": "hp",
+              "entity": "player",
+              "le": 0
+            }
+          }
+        ]
+      },
+      "actions": [
+        {
+          "op": "set",
+          "key": "game.result",
+          "value": "won"
+        },
+        {
+          "op": "stop"
+        },
+        {
+          "op": "sound",
+          "cue": "win"
+        },
+        {
+          "op": "say",
+          "text": "MAZE CLEARED!\nEvery dot collected. Press RESTART for another round."
+        }
+      ]
+    }
+  ],
+  "script": "hooks.lua",
+  "sounds": {
+    "eat": "assets/eat.wav",
+    "power": "assets/power.wav",
+    "ghost": "assets/ghost.wav",
+    "lose": "assets/lose.wav",
+    "win": "assets/win.wav"
+  }
+}

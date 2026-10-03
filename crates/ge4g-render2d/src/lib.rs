@@ -73,8 +73,41 @@ pub fn render(project: &Project, snapshot: &Snapshot, debug: bool) -> Result<Fra
         height,
         rgba: snapshot.background.repeat((width * height) as usize),
     };
+    if let Some(map) = project
+        .scenes
+        .get(&snapshot.scene)
+        .and_then(|s| s.map.as_ref())
+    {
+        for (y, row) in map.rows.iter().enumerate() {
+            for (x, ch) in row.chars().enumerate() {
+                let tile = &map.tiles[&ch.to_string()];
+                let left = x as i64 * i64::from(map.cell) - snapshot.camera[0];
+                let top = y as i64 * i64::from(map.cell) - snapshot.camera[1];
+                for py in top.max(0)..(top + i64::from(map.cell)).min(i64::from(height)) {
+                    for px in left.max(0)..(left + i64::from(map.cell)).min(i64::from(width)) {
+                        frame.blend(px, py, tile.color);
+                    }
+                }
+            }
+        }
+    }
     let mut entities: Vec<_> = snapshot.entities.iter().collect();
-    entities.sort_by(|a, b| (a.layer, &a.id).cmp(&(b.layer, &b.id)));
+    entities.sort_by_key(|e| {
+        (
+            e.layer,
+            if e.flatland
+                .as_ref()
+                .and_then(|a| a.get("depth"))
+                .and_then(|v| v.as_bool())
+                .unwrap_or(false)
+            {
+                e.position.y + i64::from(e.size[1]) * SUBPIXELS
+            } else {
+                0
+            },
+            &e.id,
+        )
+    });
     for entity in &entities {
         let x = entity.position.x.div_euclid(SUBPIXELS) - snapshot.camera[0];
         let y = entity.position.y.div_euclid(SUBPIXELS) - snapshot.camera[1];
@@ -92,8 +125,40 @@ pub fn render(project: &Project, snapshot: &Snapshot, debug: bool) -> Result<Fra
             for py in y.max(0)..(y + i64::from(h)).min(i64::from(height)) {
                 for px in x.max(0)..(x + i64::from(w)).min(i64::from(width)) {
                     let pixel = if let Some(texture) = texture {
-                        let tx = (px - x) as u32 * texture.width / w;
-                        let ty = (py - y) as u32 * texture.height / h;
+                        let mut tx = (px - x) as u32 * texture.width / w;
+                        let mut ty = (py - y) as u32 * texture.height / h;
+                        if texture.width == texture.height
+                            && entity
+                                .flatland
+                                .as_ref()
+                                .and_then(|a| a.get("rotate"))
+                                .and_then(|v| v.as_bool())
+                                .unwrap_or(false)
+                        {
+                            let facing = entity
+                                .flatland
+                                .as_ref()
+                                .and_then(|a| a.get("facing"))
+                                .and_then(|v| v.as_array());
+                            let dx = facing
+                                .and_then(|f| f.first())
+                                .and_then(|v| v.as_i64())
+                                .unwrap_or(1);
+                            let dy = facing
+                                .and_then(|f| f.get(1))
+                                .and_then(|v| v.as_i64())
+                                .unwrap_or(0);
+                            let max = texture.width - 1;
+                            (tx, ty) = if dx < 0 {
+                                (max - tx, max - ty)
+                            } else if dy > 0 {
+                                (ty, max - tx)
+                            } else if dy < 0 {
+                                (max - ty, tx)
+                            } else {
+                                (tx, ty)
+                            };
+                        }
                         let i = ((ty * texture.width + tx) * 4) as usize;
                         std::array::from_fn(|c| {
                             ((u16::from(texture.rgba[i + c]) * u16::from(color[c]) + 127) / 255)

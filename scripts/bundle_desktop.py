@@ -25,7 +25,7 @@ def main():
         parser.error(f'Output already exists: {args.out}')
     with zipfile.ZipFile(args.game) as source:
         manifest = json.loads(source.read('bundle.json'))
-        if manifest['schema_version'] != 1 or manifest['engine_abi'] != 1:
+        if manifest['schema_version'] not in (1,2) or manifest['engine_abi'] != 1:
             parser.error('Unsupported game package version')
     shutil.copytree(args.client, args.out)
     shutil.copy2(Path(__file__).resolve().parents[1] / 'LICENSE', args.out / 'LICENSE')
@@ -33,7 +33,7 @@ def main():
     (args.out / 'data').mkdir(exist_ok=True)
     shutil.copy2(args.game, args.out / 'data/basement_game.ge4g')
     (args.out / 'client_mode.json').write_text(json.dumps({'schema_version': 1, 'mode': 'embedded', 'game': 'data/basement_game.ge4g', 'allow_library': False}, indent=2) + '\n')
-    (args.out / 'PLAY.txt').write_text('GE4G / GameEngineForGPT — Basement\n\nStart ge4g_client' + ('.exe' if args.platform == 'windows' else '') + '. Your game starts directly.\nJoystick / WASD / arrows: move. Z / E: interact. X, C, Space: game actions.\nUse the in-game control editor to switch or edit per-game JSON profiles.\nSaves and controls live in your user application data directory.\n')
+    (args.out / 'PLAY.txt').write_text('GE4G / GameEngineForGPT — Basement / FlatLand\n\nStart ge4g_client' + ('.exe' if args.platform == 'windows' else '') + '. Your game starts directly.\nJoystick / WASD / arrows: move. Z / E: interact. X, C, Space: game actions.\nUse the in-game control editor to switch or edit per-game JSON profiles.\nSaves and controls live in your user application data directory.\n')
     # Ordinary Linux desktop dependencies are supplied by Arch; the engine is embedded.
     if args.platform == 'linux':
         (args.out / 'ge4g.desktop').write_text('[Desktop Entry]\nType=Application\nName=' + manifest['name'].replace('\n', ' ') + '\nExec=ge4g_client\nIcon=ge4g\nTerminal=false\nCategories=Game;\n')

@@ -13,7 +13,10 @@ ROOT = Path(__file__).resolve().parents[1]
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('bundle', type=Path)
+    parser.add_argument('--project',type=Path,default=ROOT / 'examples/basement_demo')
     args = parser.parse_args()
+    project=args.project.resolve()
+    replay=json.loads((project / 'replays/journey.json').read_text())
     with tempfile.TemporaryDirectory(prefix='ge4g-client-smoke-') as work:
         output = Path(work)
         env = dict(os.environ, GE4G_CLIENT_DATA=str(output / 'user'), GE4G_SMOKE_OUTPUT=str(output / 'evidence'))
@@ -22,22 +25,27 @@ def main():
         subprocess.run(command, check=True, env=env, timeout=90)
         evidence = output / 'evidence'
         result = json.loads((evidence / 'result.json').read_text())
-        assert result['ok'] and result['mode'] == 'embedded' and result['tick'] == 160 and result['scene'] == 'room_b', result
+        assert result['ok'] and result['mode'] == 'embedded' and result['tick'] == replay['ticks'], result
         reference = output / 'headless.json'
-        subprocess.run([str(ROOT / 'target/debug/ge4g'), 'run', str(ROOT / 'examples/basement_demo'), '--headless', '--replay', str(ROOT / 'examples/basement_demo/replays/journey.json'), '--ticks', '160', '--snapshot-out', str(reference)], check=True, capture_output=True)
+        subprocess.run([str(ROOT / 'target/debug/ge4g'), 'run', str(project), '--headless', '--replay', str(project / 'replays/journey.json'), '--ticks', str(replay['ticks']), '--snapshot-out', str(reference)], check=True, capture_output=True)
         expected = json.loads(reference.read_text())
         actual = json.loads((evidence / 'snapshot.json').read_text())
         assert actual == expected, 'Flutter/native snapshot diverges from CLI/headless replay'
         from PIL import Image
         with Image.open(evidence / 'frame.png') as frame:
             digest = hashlib.sha256(frame.convert('RGBA').tobytes()).hexdigest()
-        assert digest == '38cc4352e7160dcf9104cbe19acd709e36d8165989b3c99d8b6611f0f76e932b', digest
-        destination = ROOT / 'artifacts/client-smoke'
+        reference_png=output / 'headless.png'
+        subprocess.run([str(ROOT / 'target/debug/ge4g'),'capture',str(project),'--tick',str(replay['ticks']),'--replay',str(project / 'replays/journey.json'),'--out',str(reference_png)],check=True,capture_output=True)
+        with Image.open(reference_png) as frame:
+            assert digest==hashlib.sha256(frame.convert('RGBA').tobytes()).hexdigest()
+        if project.name=='basement_demo':
+            assert digest=='38cc4352e7160dcf9104cbe19acd709e36d8165989b3c99d8b6611f0f76e932b'
+        destination = ROOT / ('artifacts/client-smoke' if project.name=='basement_demo' else 'artifacts/flatland-smoke')
         destination.mkdir(parents=True, exist_ok=True)
         import shutil
         for name in ['result.json', 'snapshot.json', 'frame.png']:
             shutil.copy2(evidence / name, destination / name)
-        print(json.dumps({'ok': True, 'tick': 160, 'scene': 'room_b', 'rgba_sha256': digest, 'snapshot_equal': True}))
+        print(json.dumps({'ok': True, 'tick': result['tick'], 'scene': result['scene'], 'rgba_sha256': digest, 'snapshot_equal': True}))
 
 if __name__ == '__main__':
     main()

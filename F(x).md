@@ -1,6 +1,6 @@
 # F(x) — implemented stable state / identifier registry
 
-Public formats currently use schema version 1. This registry records identifiers that are actually implemented and cross subsystem/serialization boundaries. Entity positions use 60 subpixels per pixel; scene authoring and test assertion coordinates use pixels.
+CLI/control/ABI transport stays v1. Game/scene/replay/snapshot/save data supports explicit v1 and FlatLand v2. The first table preserves the v1 baseline; FlatLand additions follow below. This registry records identifiers that are actually implemented and cross subsystem/serialization boundaries. Entity positions use 60 subpixels per pixel; scene authoring and test assertion coordinates use pixels.
 
 | ID / public path | Kind | Default | Owner | Scope | Persistence | Writers | Readers | Reset | Range | Migration |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -32,3 +32,17 @@ Demo stable scene ids: `room_a`, `room_b`; named transition spawn: `entry`. Refe
 | touch button `id` | Layout and binding JSON | Per-game settings | Unique per profile; IDs must match in both files |
 | `actions` / `action_pressed`, `action_released` | Router / World / event trace | Held during session; release/close clears | Max32 ASCII named actions ≤64 chars; sorted edges |
 | `mode=embedded`, `allow_library=false` | Desktop `client_mode.json` | Shipped bundle | Game starts from relative included `.ge4g`; no runtime import prompt |
+
+## FlatLand alpha schema 2
+
+- `map.cell/rows/tiles`: static world collision/render/navigation; walls have no Entity IDs.
+- `flatland.body`: pass/fixed/push; `plane` filters actor-body collision, not map walls.
+- Actor `facing`, `direction`, `queued`, `hp`, `immune_until`: authoritative, v2 saved.
+- World `timers`, `completed` (scene:rule), `stopped`, `popup`, `popup_serial`: v2 saved.
+- Resume `content`: SHA256 of checked project inputs; mismatches reject instead of guessing a migration.
+- Bundle `schema_version=2`, `game_schema=2`, `engine_abi=1`: explicit capability boundary.
+- Native `event_cursor` / observe `after,cursor,more,reset_required`: session-local event sequence, including dropped entries.
+- Native `popup` and tick-tagged `audio` carry presentation; historical audio is not replayed on resume/poll.
+- Demo state: `game.score` integer0, `game.pickups` integer0, `game.result` string playing; all v2 saved.
+
+Workspace engine version is now 0.2.0-alpha.1; existing v1 framebuffer goldens remain unchanged.

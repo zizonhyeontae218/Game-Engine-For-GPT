@@ -1,7 +1,9 @@
 //! One authoritative fixed-step simulation shared by every adapter.
+mod flatland;
+pub use flatland::Resume;
 use ge4g_core::{
-    Aabb, ENGINE_VERSION, EntitySnapshot, Error, Event, Input, Result, SCHEMA_VERSION, SUBPIXELS,
-    Snapshot, StateStore, TICK_HZ, Vec2,
+    Aabb, ENGINE_VERSION, EntitySnapshot, Error, Event, Input, Result, SUBPIXELS, Snapshot,
+    StateStore, TICK_HZ, Vec2,
 };
 use ge4g_project::{Assertion, Entity, Project, Transition, atomic_json, read_text, version};
 use serde::{Deserialize, Serialize};
@@ -13,10 +15,11 @@ use std::{
 };
 
 pub const EVENT_LIMIT: usize = 4096;
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize, schemars::JsonSchema)]
 pub struct LiveEntity {
     pub spec: Entity,
     pub position: Vec2,
+    pub actor: flatland::ActorState,
 }
 impl LiveEntity {
     fn aabb(&self) -> Aabb {
@@ -54,6 +57,11 @@ impl LiveEntity {
             layer: self.spec.sprite.as_ref().map_or(0, |s| s.layer),
             blocking: self.spec.collider.as_ref().is_some_and(|c| c.blocking),
             trigger: self.spec.trigger.is_some(),
+            flatland: self
+                .spec
+                .flatland
+                .as_ref()
+                .map(|_| serde_json::to_value(&self.actor).expect("actor JSON")),
         }
     }
 }
@@ -69,6 +77,9 @@ pub struct World {
     triggers: BTreeSet<String>,
     interact_held: bool,
     held_actions: BTreeSet<String>,
+    pub flatland: flatland::FlatState,
+    lua_budget: std::sync::Arc<std::sync::atomic::AtomicU32>,
+    command_budget: usize,
 }
 impl World {
     pub fn new(project: Project) -> Result<Self> {
@@ -76,7 +87,7 @@ impl World {
     }
     pub fn with_save(project: Project, save: Option<&Path>) -> Result<Self> {
         let mut state = StateStore::new(project.manifest.state.clone())?;
-        if let Some(path) = save {
+        if let Some(path) = save.filter(|_| project.manifest.schema_version == 1) {
             load_save(path, &project.manifest.name, &mut state)?;
         }
         let initial = project.manifest.start_scene.clone();
@@ -92,6 +103,9 @@ impl World {
             triggers: BTreeSet::new(),
             interact_held: false,
             held_actions: BTreeSet::new(),
+            flatland: flatland::FlatState::default(),
+            lua_budget: std::sync::Arc::new(std::sync::atomic::AtomicU32::new(0)),
+            command_budget: 0,
         };
         if save.is_some() {
             world.emit(
@@ -101,6 +115,13 @@ impl World {
             );
         }
         world.enter_scene(&initial, None)?;
+        if world.project.manifest.schema_version == 2 {
+            if let Some(path) = save {
+                world.load_flatland(path)?;
+            } else {
+                world.flat_event("start", None)?;
+            }
+        }
         Ok(world)
     }
     fn emit(&mut self, kind: &str, entity: Option<&str>, data: Value) {
@@ -160,6 +181,7 @@ impl World {
                 entity.id.clone(),
                 LiveEntity {
                     position: Vec2::pixels(entity.position[0], entity.position[1]),
+                    actor: flatland::ActorState::new(&entity),
                     spec: entity,
                 },
             );
@@ -186,7 +208,7 @@ impl World {
     pub fn snapshot(&self) -> Snapshot {
         let scene = &self.project.scenes[&self.scene];
         Snapshot {
-            schema_version: SCHEMA_VERSION,
+            schema_version: self.project.manifest.schema_version,
             engine_version: ENGINE_VERSION.into(),
             tick: self.tick,
             tick_hz: TICK_HZ,
@@ -194,10 +216,48 @@ impl World {
             scene: self.scene.clone(),
             camera: scene.camera,
             background: scene.background,
-            entities: self.entities.values().map(LiveEntity::snapshot).collect(),
+            entities: self
+                .entities
+                .values()
+                .map(|e| {
+                    let mut snapshot = e.snapshot();
+                    if let Some(a) = &e.spec.flatland {
+                        snapshot.blocking = a.body != ge4g_project::flatland::BodyMode::Pass;
+                        if let Some(v) = snapshot.flatland.as_mut().and_then(Value::as_object_mut) {
+                            v.insert("depth".into(), json!(a.depth));
+                            v.insert("body".into(), json!(a.body));
+                            v.insert("plane".into(), json!(a.plane));
+                            v.insert(
+                                "rotate".into(),
+                                json!(a.animation.as_ref().is_some_and(|a| a.rotate)),
+                            );
+                        }
+                        if let Some(anim) = &a.animation {
+                            let frames = if anim.alternate_timer.as_ref().is_some_and(|id| {
+                                self.flatland
+                                    .timers
+                                    .get(id)
+                                    .is_some_and(|end| *end > self.tick)
+                            }) && !anim.alternate.is_empty()
+                            {
+                                &anim.alternate
+                            } else {
+                                &anim.frames
+                            };
+                            snapshot.texture = Some(
+                                frames[(self.tick / u64::from(anim.ticks)) as usize % frames.len()]
+                                    .clone(),
+                            );
+                        }
+                    }
+                    snapshot
+                })
+                .collect(),
             state: self.state.values.clone(),
             events: self.events.iter().cloned().collect(),
             events_dropped: self.events_dropped,
+            flatland: (self.project.manifest.schema_version == 2)
+                .then(|| serde_json::to_value(&self.flatland).expect("world JSON")),
         }
     }
     /// Versioned client adapters may also send named buttons. Standard Basement
@@ -244,6 +304,9 @@ impl World {
     }
     /// Advance exactly one tick; event timestamps describe the resulting tick.
     pub fn step(&mut self, input: &Input) -> Result<()> {
+        if self.project.manifest.schema_version == 2 {
+            return self.step_flatland(input);
+        }
         if self.tick >= 1_000_000 {
             return Err(Error("runtime tick limit (1,000,000) reached".into()));
         }
@@ -388,6 +451,9 @@ impl World {
         Ok(())
     }
     pub fn save(&mut self, path: &Path) -> Result<()> {
+        if self.project.manifest.schema_version == 2 {
+            return self.save_flatland(path);
+        }
         let save = Save {
             schema_version: 1,
             project: self.project.manifest.name.clone(),
@@ -413,6 +479,13 @@ pub struct Save {
 pub fn load_save(path: &Path, project: &str, state: &mut StateStore) -> Result<()> {
     let save: Save = serde_json::from_str(&read_text(path)?)
         .map_err(|e| Error(format!("save {}: {e}", path.display())))?;
+    if save.schema_version != 1 {
+        return Err(Error(format!(
+            "save {}: unsupported schema_version {}; v1 games require v1 flag saves",
+            path.display(),
+            save.schema_version
+        )));
+    }
     version(save.schema_version, "save")
         .map_err(|e| Error(format!("save {}: {e}", path.display())))?;
     if save.project != project {

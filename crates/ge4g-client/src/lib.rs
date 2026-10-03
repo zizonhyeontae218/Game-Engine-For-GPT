@@ -75,6 +75,12 @@ enum Request {
     },
     Observe {
         session: u64,
+        #[serde(default)]
+        compact: bool,
+        #[serde(default)]
+        after: Option<u64>,
+        #[serde(default)]
+        entity: Option<String>,
     },
     Release {
         session: u64,
@@ -107,7 +113,47 @@ fn status(session: u64, live: &Session) -> Value {
         .find(|e| e.kind == "action_pressed")
         .and_then(|e| e.data.get("action"))
         .cloned();
-    json!({"abi_version": ABI_VERSION, "ok": true, "session": session, "tick": snapshot.tick, "scene": snapshot.scene, "width": live.frame.width, "height": live.frame.height, "frame_bytes": live.frame.rgba.len(), "state": snapshot.state, "dialogue": dialogue, "last_action": action})
+    let mut response = json!({"abi_version": ABI_VERSION, "ok": true, "session": session, "tick": snapshot.tick, "scene": snapshot.scene, "width": live.frame.width, "height": live.frame.height, "frame_bytes": live.frame.rgba.len(), "state": snapshot.state, "dialogue": dialogue, "last_action": action});
+    response["game_schema"] = json!(live.world.project.manifest.schema_version);
+    response["popup"] = if let Some(p) = &live.world.flatland.popup {
+        json!(p)
+    } else {
+        snapshot.events.iter().rev().find(|e|e.kind=="interaction").map(|e|json!({"id":format!("{}:{}",e.tick,e.entity.as_deref().unwrap_or("")),"text":e.data["dialogue"]})).unwrap_or(Value::Null)
+    };
+    response["actors"] = json!(
+        live.world
+            .entities
+            .iter()
+            .filter(|(_, e)| e.spec.player.is_some()
+                || e.spec.flatland.as_ref().is_some_and(|a| a.ai.is_some()))
+            .map(|(id, e)| (id.clone(), json!({"hp":e.actor.hp,"facing":e.actor.facing})))
+            .collect::<BTreeMap<_, _>>()
+    );
+    response["timers"] = json!(
+        live.world
+            .flatland
+            .timers
+            .iter()
+            .map(|(id, end)| (id.clone(), end.saturating_sub(live.world.tick)))
+            .collect::<BTreeMap<_, _>>()
+    );
+    response["stopped"] = json!(live.world.flatland.stopped);
+    let end = snapshot.events_dropped + snapshot.events.len() as u64;
+    response["event_cursor"] = json!(end);
+    response["audio"] = json!(
+        snapshot
+            .events
+            .iter()
+            .enumerate()
+            .rev()
+            .filter(|(_, e)| e.kind == "audio")
+            .take(32)
+            .map(
+                |(i, e)| json!({"id":snapshot.events_dropped+i as u64+1,"file":e.data.get("file")})
+            )
+            .collect::<Vec<_>>()
+    );
+    response
 }
 pub fn request_json(request: &str) -> Value {
     match catch_unwind(AssertUnwindSafe(|| dispatch(request))) {
@@ -181,18 +227,56 @@ fn dispatch(text: &str) -> Result<Value> {
                 .sessions
                 .get_mut(&session)
                 .ok_or_else(|| Error(format!("unknown client session {session}")))?;
+            let popup = live.world.flatland.popup_serial;
             for _ in 0..ticks {
                 live.world.step_actions(&input.core(), &input.actions)?;
+                if live.world.flatland.popup_serial != popup {
+                    break;
+                }
             }
             live.frame = render(&live.world.project, &live.world.snapshot(), live.debug)?;
             Ok(status(session, live))
         }
-        Request::Observe { session } => {
+        Request::Observe {
+            session,
+            compact,
+            after,
+            entity,
+        } => {
             let live = registry
                 .sessions
                 .get(&session)
                 .ok_or_else(|| Error(format!("unknown client session {session}")))?;
-            Ok(json!({"abi_version": ABI_VERSION, "ok": true, "snapshot": live.world.snapshot()}))
+            let snapshot = live.world.snapshot();
+            if let Some(id) = entity {
+                let e = snapshot
+                    .entities
+                    .iter()
+                    .find(|e| e.id == id)
+                    .ok_or_else(|| Error(format!("unknown entity {id}")))?;
+                return Ok(
+                    json!({"abi_version":ABI_VERSION,"ok":true,"tick":snapshot.tick,"entity":e}),
+                );
+            }
+            if compact || after.is_some() {
+                let start = snapshot.events_dropped;
+                let end = start + snapshot.events.len() as u64;
+                let requested = after.unwrap_or(start);
+                if requested > end {
+                    return Err(Error("event cursor is ahead of this session".into()));
+                }
+                let events: Vec<_> = snapshot
+                    .events
+                    .iter()
+                    .skip(requested.saturating_sub(start) as usize)
+                    .take(256)
+                    .collect();
+                let cursor = requested.max(start) + events.len() as u64;
+                return Ok(
+                    json!({"abi_version":ABI_VERSION,"ok":true,"tick":snapshot.tick,"scene":snapshot.scene,"state":snapshot.state,"events":events,"cursor":cursor,"more":cursor<end,"reset_required":requested<start,"entity_count":snapshot.entities.len()}),
+                );
+            }
+            Ok(json!({"abi_version": ABI_VERSION, "ok": true, "snapshot": snapshot}))
         }
         Request::Release { session } => {
             let live = registry
@@ -366,5 +450,65 @@ mod tests {
             request_json(&json!({"op":"observe","session":session}).to_string())["ok"],
             false
         );
+    }
+    #[test]
+    fn flatland_native_replay_selective_observation_and_resume_match_rust() {
+        let path = Path::new(concat!(
+            env!("CARGO_MANIFEST_DIR"),
+            "/../../examples/flatland_pacman"
+        ));
+        let opened = request_json(&json!({"op":"open","project":path}).to_string());
+        assert_eq!(opened["game_schema"], 2);
+        assert!(opened["popup"]["text"].as_str().unwrap().contains("MAZE"));
+        let id = opened["session"].as_u64().unwrap();
+        let mut expected = World::new(Project::load(path).unwrap()).unwrap();
+        let input = Input {
+            left: true,
+            ..Input::default()
+        };
+        for _ in 0..30 {
+            expected.step(&input).unwrap();
+            assert_eq!(
+                request_json(
+                    &json!({"op":"advance","session":id,"ticks":1,"input":input}).to_string()
+                )["ok"],
+                true
+            );
+        }
+        let result = request_json(&json!({"op":"observe","session":id}).to_string());
+        assert_eq!(
+            result["snapshot"],
+            serde_json::to_value(expected.snapshot()).unwrap()
+        );
+        let partial =
+            request_json(&json!({"op":"observe","session":id,"entity":"player"}).to_string());
+        assert_eq!(partial["entity"]["flatland"]["facing"], json!([-1, 0]));
+        let delta = request_json(
+            &json!({"op":"observe","session":id,"compact":true,"after":opened["event_cursor"]})
+                .to_string(),
+        );
+        assert_eq!(delta["reset_required"], false);
+        assert!(!delta["events"].as_array().unwrap().is_empty());
+        assert!(delta.get("snapshot").is_none());
+        let frame = render(&expected.project, &expected.snapshot(), false).unwrap();
+        let mut actual = vec![0; frame.rgba.len()];
+        assert_eq!(
+            unsafe { ge4g_frame_copy(id, actual.as_mut_ptr(), actual.len()) },
+            actual.len() as i64
+        );
+        assert_eq!(actual, frame.rgba);
+        let dir = std::env::temp_dir().join(format!("ge4g-ffi-{id}"));
+        std::fs::create_dir_all(&dir).unwrap();
+        let save = dir.join("save.json");
+        assert_eq!(
+            request_json(&json!({"op":"save","session":id,"path":save}).to_string())["ok"],
+            true
+        );
+        request_json(&json!({"op":"close","session":id}).to_string());
+        let restored = request_json(&json!({"op":"open","project":path,"load":save}).to_string());
+        assert_eq!(restored["tick"], 30);
+        assert_eq!(restored["state"]["game.score"], 30);
+        request_json(&json!({"op":"close","session":restored["session"]}).to_string());
+        std::fs::remove_dir_all(dir).unwrap();
     }
 }

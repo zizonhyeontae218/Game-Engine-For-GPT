@@ -1,5 +1,7 @@
 # Authoring a GE4G game
 
+This is the schema 1 guide. For schema 2 FlatLand alpha, read [FLATLAND_AUTHORING](FLATLAND_AUTHORING.md).
+
 Copy `examples/basement_demo` as a starting project. Edit `ge4g.toml`, scene JSON5, and replay JSON; then run `ge4g validate <project>` and `ge4g test <project>`. Use `ge4g schema <kind> --json` for field structure. All formats use `schema_version = 1` / `schema_version: 1`; unknown fields are errors.
 
 ## Project

@@ -48,6 +48,11 @@ Future<void> main(List<String> args) async {
       }
       environment['CARGO_TARGET_${triple.replaceAll('-', '_').toUpperCase()}_LINKER'] =
           wrapper.toFilePath();
+      // Vendored Lua is C: cc-rs needs the target compiler as well as Rust's linker.
+      environment['CC_${triple.replaceAll('-', '_')}'] = wrapper.toFilePath();
+      environment['AR_${triple.replaceAll('-', '_')}'] = compiler
+          .resolve('llvm-ar')
+          .toFilePath();
     }
     if (os == OS.iOS) {
       final sdk = await Process.run('xcrun', [

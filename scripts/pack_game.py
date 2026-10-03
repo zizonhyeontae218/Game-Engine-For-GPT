@@ -43,7 +43,9 @@ def pack(project, game_id, version, output, validator, layouts=None, mapping=Non
         raise ValueError("game package exceeds 256 MiB or 4096 files")
     if len({name.lower() for name in entries}) != len(entries):
         raise ValueError("game package paths collide on case-insensitive platforms")
-    metadata = {"schema_version": 1, "game_id": game_id, "name": manifest["name"], "version": version, "engine_abi": 1, "project": "game/ge4g.toml", "layouts": "controls/layouts.json", "bindings": "controls/bindings.json", "files": {name: hashlib.sha256(data).hexdigest() for name, data in entries.items()}}
+    metadata = {"schema_version": manifest["schema_version"], "game_id": game_id, "name": manifest["name"], "version": version, "engine_abi": 1, "project": "game/ge4g.toml", "layouts": "controls/layouts.json", "bindings": "controls/bindings.json", "files": {name: hashlib.sha256(data).hexdigest() for name, data in entries.items()}}
+    if manifest["schema_version"] == 2:
+        metadata["game_schema"] = 2
     entries["bundle.json"] = (json.dumps(metadata, ensure_ascii=False, indent=2) + "\n").encode()
     layout = json.loads(entries["controls/layouts.json"])
     if layout.get("schema_version") != 1 or bindings.get("schema_version") != 1:

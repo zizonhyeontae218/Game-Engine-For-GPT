@@ -1,0 +1,24 @@
+schema_version = 2
+name = "FlatLand / Maze Chase"
+start_scene = "maze"
+[window]
+width = 380
+height = 420
+[scenes]
+maze = "maze.json5"
+[state."game.score"]
+kind = "integer"
+default = 0
+[state."game.pickups"]
+kind = "integer"
+default = 0
+[state."game.result"]
+kind = "string"
+default = "playing"
+[[tests]]
+name = "journey"
+golden_rgba_sha256 = "435f09d564ece74d46699508521ab86839c2f1f0c9ebbe84bc9353768be12f35"
+replay = "replays/journey.json"
+[[tests.assertions]]
+tick = 30
+state = { "game.score" = 30, "game.pickups" = 3 }

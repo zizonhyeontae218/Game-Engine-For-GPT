@@ -1,0 +1,36 @@
+{
+  "repository": "https://github.com/platzhersh/pacman-canvas",
+  "commit": "6c42e3c991830283c8b6022a2d1237f2332c32ab",
+  "license": "CC0-1.0",
+  "files": {
+    "Pacman-Icon.svg": {
+      "source": "https://raw.githubusercontent.com/platzhersh/pacman-canvas/6c42e3c991830283c8b6022a2d1237f2332c32ab/img/Pacman-Icon.svg",
+      "sha256": "6be869f7554a5f5e806b3a59e4bc38e0c2345205228a9e8c08e12f604dc7c320"
+    },
+    "blinky.svg": {
+      "source": "https://raw.githubusercontent.com/platzhersh/pacman-canvas/6c42e3c991830283c8b6022a2d1237f2332c32ab/img/blinky.svg",
+      "sha256": "2f531d1dfa3542bfdc9f8b5c899f4e5659bb5ffbb1e35ccf4a884bea473f09b8"
+    },
+    "pinky.svg": {
+      "source": "https://raw.githubusercontent.com/platzhersh/pacman-canvas/6c42e3c991830283c8b6022a2d1237f2332c32ab/img/pinky.svg",
+      "sha256": "673ec44c79199c74b2ec802795005714092c5248acc26fd79ce1cd873c8a9f60"
+    },
+    "inky.svg": {
+      "source": "https://raw.githubusercontent.com/platzhersh/pacman-canvas/6c42e3c991830283c8b6022a2d1237f2332c32ab/img/inky.svg",
+      "sha256": "9c3c6e2d36e09adb093a36b630af62e8006fb9fbd764e688709a902037d934c7"
+    },
+    "clyde.svg": {
+      "source": "https://raw.githubusercontent.com/platzhersh/pacman-canvas/6c42e3c991830283c8b6022a2d1237f2332c32ab/img/clyde.svg",
+      "sha256": "f4f0a4ef61c3dee68717158d26d797343a0e1e9d6ac7ae5992bdf5816aa39910"
+    },
+    "dazzled.svg": {
+      "source": "https://raw.githubusercontent.com/platzhersh/pacman-canvas/6c42e3c991830283c8b6022a2d1237f2332c32ab/img/dazzled.svg",
+      "sha256": "1969a764d7cb2cd07e840bac207f182dc1b50ffb02176175228c0fbfb158979f"
+    },
+    "dazzled2.svg": {
+      "source": "https://raw.githubusercontent.com/platzhersh/pacman-canvas/6c42e3c991830283c8b6022a2d1237f2332c32ab/img/dazzled2.svg",
+      "sha256": "db5f29b1effdb2c63ab939918d9d01db9e54c8b6001e63c379a48f48abb21a86"
+    }
+  },
+  "conversion": "CairoSVG, SVG rendered to transparent 32x32 PNG; SVG originals preserved."
+}

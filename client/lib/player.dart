@@ -7,6 +7,9 @@ import 'package:ge4g_native/ge4g_native.dart';
 import 'control_store.dart';
 import 'controls.dart';
 import 'game_library.dart';
+import 'game_audio.dart';
+
+import 'package:path/path.dart' as p;
 
 abstract interface class EngineBridge {
   Map<String, dynamic> request(Map<String, dynamic> request);
@@ -38,7 +41,64 @@ class Player extends ChangeNotifier {
       _disposed = false;
   Completer<void>? _frameIdle;
   String? error, message;
+  final GameAudio audio = GameAudio();
+  Map<String, dynamic>? popup;
+  bool popupVisible = false;
+  dynamic _seenPopup;
+  int _audioCursor = 0;
   int _generation = 0;
+  void _presentation() {
+    final candidate = status['popup'];
+    if (candidate is Map && candidate['id'] != _seenPopup) {
+      popup = Map<String, dynamic>.from(candidate);
+      _seenPopup = candidate['id'];
+      popupVisible = true;
+      release();
+    }
+    final cues = (status['audio'] as List? ?? []).whereType<Map>().toList()
+      ..sort((a, b) => (a['id'] as int).compareTo(b['id'] as int));
+    for (final cue in cues) {
+      final id = cue['id'] as int;
+      if (id <= _audioCursor || cue['file'] is! String || game == null) {
+        continue;
+      }
+      final relative = packagePath(cue['file'] as String);
+      final path = p.joinAll([
+        game!.directory.path,
+        'game',
+        ...relative.split('/'),
+      ]);
+      unawaited(
+        audio.play(path).catchError((Object failure) {
+          if (!_disposed) {
+            message = '사운드 재생 오류: $failure';
+            notifyListeners();
+          }
+        }),
+      );
+    }
+    _audioCursor = status['event_cursor'] as int? ?? _audioCursor;
+  }
+
+  void dismissPopup() {
+    release();
+    popupVisible = false;
+    notifyListeners();
+  }
+
+  void showPopup() {
+    if (popup == null) return;
+    release();
+    popupVisible = true;
+    notifyListeners();
+  }
+
+  void toggleSound() {
+    audio.muted = !audio.muted;
+    if (audio.muted) audio.pause();
+    notifyListeners();
+  }
+
   Duration? _lastElapsed;
   double _accumulator = 0;
   Player(this.engine, this.library);
@@ -73,6 +133,8 @@ class Player extends ChangeNotifier {
       input = InputRouter(controls.current);
       session = opened['session'] as int;
       status = opened;
+      _audioCursor = status['event_cursor'] as int? ?? 0;
+      _presentation();
       paused = false;
       error = null;
       store!.addListener(_controlsChanged);
@@ -116,12 +178,13 @@ class Player extends ChangeNotifier {
   void setPaused(bool value) {
     release();
     paused = value;
+    if (value) audio.pause();
     notifyListeners();
   }
 
   /// Fixed 60 Hz authoritative ticks; background gaps never advance the game.
   void tick(Duration elapsed) {
-    if (session == null || loading || paused || error != null) {
+    if (session == null || loading || paused || popupVisible || error != null) {
       _lastElapsed = elapsed;
       return;
     }
@@ -140,6 +203,7 @@ class Player extends ChangeNotifier {
         'ticks': ticks,
         'input': input!.input,
       });
+      _presentation();
       refreshFrame();
       notifyListeners();
     } catch (failure) {
@@ -243,6 +307,11 @@ class Player extends ChangeNotifier {
     image?.dispose();
     image = null;
     status = {};
+    audio.pause();
+    popup = null;
+    popupVisible = false;
+    _seenPopup = null;
+    _audioCursor = 0;
     debug = false;
     paused = false;
     loading = false;
@@ -253,6 +322,7 @@ class Player extends ChangeNotifier {
   void dispose() {
     _disposed = true;
     close();
+    audio.dispose();
     super.dispose();
   }
 }

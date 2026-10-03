@@ -4,6 +4,8 @@
 
 Rust로 구현한 실제 엔진입니다. OpenAI 계정, LLM 호출, GPU, 인터넷 연결은 게임 실행에 필요하지 않습니다. 초기 의존성 다운로드에는 인터넷이 필요합니다.
 
+Basement 0.2 — **FlatLand alpha.1** 구현을 시작했습니다. 맵·엔티티 분리, 밀기·방향, 경로 탐색 AI, 조건·액션, Lua 5.4와 정확한 저장 재개를 사용하는 **팩맨 스타일 데모**가 있습니다. [현재 작성 규격](docs/FLATLAND_AUTHORING.md) · [전체 설계](docs/FLATLAND_SPEC.md) · [구현 계획](docs/exec-plans/active/flatland.md). 컷씬·턴제 전투·정식 퀘스트 등 전체 0.2 정의는 후속 단계입니다.
+
 ## 빠른 시작
 
 안정판 Rust를 [rustup](https://rustup.rs/)으로 설치한 뒤 실행하세요. 기본 창 빌드는 Linux X11, Windows, macOS용 minifb 어댑터를 사용합니다. Linux에서는 X11 런타임 라이브러리가 필요하며 Wayland에서는 XWayland를 사용할 수 있습니다. CI가 검증하는 플랫폼은 Linux입니다.
@@ -87,3 +89,13 @@ Android/iOS: install the client → **Import .ge4g** → play. Windows/Arch: eac
 See [client usage/build/distribution](docs/CLIENT.md) and [permanent launcher philosophy](docs/LAUNCHER_PHILOSOPHY.md). Download platform bundles from the [GE4G Flutter clients Actions artifacts](https://github.com/zizonhyeontae218/Game-Engine-For-GPT/actions/workflows/client.yml). Android artifacts use a development signing key; iOS artifacts are unsigned.
 
 최종 [플랫폼 빌드·다운로드](https://github.com/zizonhyeontae218/Game-Engine-For-GPT/actions/runs/37022204555): Android APK, Windows 내장 ZIP, Linux 내장 tarball, unsigned iOS ZIP. 네 플랫폼 작업과 전체 엔진 검증이 통과했습니다. 실기기 및 Arch 설치 확인은 별도입니다.
+
+## FlatLand 데모
+
+```sh
+cargo run --locked -p ge4g-cli -- run examples/flatland_pacman
+cargo run --locked -p ge4g-cli -- test examples/flatland_pacman --json
+python3 scripts/pack_game.py examples/flatland_pacman --game-id demo.flatland.pacman --version 0.2.0-alpha.1 --out dist/flatland-pacman.ge4g
+```
+
+Flutter 0.2 실행기로 `.ge4g`를 불러오세요. 회전 버튼으로 가로/세로 배치를 선택하며, 대화는 별도 팝업으로 표시됩니다. CC0 스프라이트 출처·라이선스는 데모 `assets/`에 포함됩니다. 0.1 게임도 계속 실행할 수 있습니다.

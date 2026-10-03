@@ -279,7 +279,14 @@ fn trace_filters_preserve_order_and_schema_commands_are_machine_readable() {
         let schema = decoded(&output);
         assert!(schema["$schema"].as_str().unwrap().contains("json-schema"));
         assert!(schema["properties"]["schema_version"].is_object());
-        assert_eq!(schema["properties"]["schema_version"]["const"], 1);
+        if ["save", "trace"].contains(&kind) {
+            assert_eq!(schema["properties"]["schema_version"]["const"], 1);
+        } else {
+            assert_eq!(
+                schema["properties"]["schema_version"]["enum"],
+                json!([1, 2])
+            );
+        }
         assert_eq!(schema["additionalProperties"], false);
     }
     let inspect = command(&["inspect", path(&demo()), "entity", "does_not_exist"]);

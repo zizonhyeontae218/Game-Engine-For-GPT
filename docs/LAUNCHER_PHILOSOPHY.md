@@ -15,3 +15,10 @@ Mobile ships with a joystick plus Z, X, C and Space. Layouts and profiles are ve
 Input is simultaneous and multi-touch. Touch cancellation, focus loss, profile replacement and app backgrounding must not leave an action held. Running in the background pauses the host clock; resume must not fast-forward gameplay through the elapsed absence.
 
 Builds and game bundles must include the actual native runtime and all game assets. Packaging must fail clearly when required files are missing. Preserve explicit versions and game identity across updates; do not mix settings or saves between games.
+
+## FlatLand orientation and text
+
+All future clients expose an explicit portrait/landscape toggle. Sensor-driven
+orientation changes must not select the gameplay layout. Release held inputs before
+changing layout. Mobile requests one fixed device orientation per selected mode.
+Dialogue/text uses a separate modal surface with scrolling for short screens.

@@ -1,4 +1,5 @@
 //! File authoring, version checks and validation before simulation.
+pub mod flatland;
 use ge4g_core::{Error, Input, Result, SCHEMA_VERSION, StateDefinition, StateStore};
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
@@ -71,8 +72,14 @@ pub struct Interaction {
 #[serde(deny_unknown_fields)]
 pub struct Entity {
     pub id: String,
+    #[serde(default)]
+    pub prefab: Option<String>,
+    #[serde(default)]
     pub position: [i64; 2],
+    #[serde(default = "default_size")]
     pub size: [u32; 2],
+    #[serde(default)]
+    pub flatland: Option<flatland::Actor>,
     #[serde(default)]
     pub sprite: Option<Sprite>,
     #[serde(default)]
@@ -88,6 +95,9 @@ pub struct Entity {
     #[serde(default)]
     pub metadata: BTreeMap<String, Value>,
 }
+fn default_size() -> [u32; 2] {
+    [16, 16]
+}
 #[derive(Debug, Clone, Serialize, Deserialize, schemars::JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct Scene {
@@ -100,6 +110,16 @@ pub struct Scene {
     #[serde(default)]
     pub on_enter: BTreeMap<String, Value>,
     pub entities: Vec<Entity>,
+    #[serde(default)]
+    pub map: Option<flatland::Map>,
+    #[serde(default)]
+    pub prefabs: BTreeMap<String, Value>,
+    #[serde(default)]
+    pub rules: Vec<flatland::Rule>,
+    #[serde(default)]
+    pub script: Option<String>,
+    #[serde(default)]
+    pub sounds: BTreeMap<String, String>,
 }
 #[derive(Debug, Clone, Serialize, Deserialize, schemars::JsonSchema)]
 #[serde(deny_unknown_fields)]
@@ -219,6 +239,7 @@ pub struct Project {
     pub scenes: BTreeMap<String, Scene>,
     pub textures: BTreeMap<String, Texture>,
     pub files_checked: Vec<String>,
+    pub scripts: BTreeMap<String, String>,
 }
 #[derive(Debug, Serialize)]
 pub struct ValidationReport {
@@ -239,9 +260,9 @@ pub fn read_text(path: &Path) -> Result<String> {
     fs::read_to_string(path).map_err(|e| Error(format!("read {}: {e}", path.display())))
 }
 pub fn version(actual: u32, kind: &str) -> Result<()> {
-    if actual != SCHEMA_VERSION {
+    if !(SCHEMA_VERSION..=2).contains(&actual) {
         return Err(Error(format!(
-            "{kind}: unsupported schema_version {actual}; expected {SCHEMA_VERSION}"
+            "{kind}: unsupported schema_version {actual}; expected 1 or 2"
         )));
     }
     Ok(())
@@ -291,11 +312,22 @@ impl Project {
             scenes: BTreeMap::new(),
             textures: BTreeMap::new(),
             files_checked: vec!["ge4g.toml".into()],
+            scripts: BTreeMap::new(),
         };
         for (id, filename) in &project.manifest.scenes {
             let path = project.path(filename)?;
-            let scene: Scene = json5::from_str(&read_text(&path)?)
+            let raw: Value = json5::from_str(&read_text(&path)?)
                 .map_err(|e| Error(format!("scene {filename}: {e}")))?;
+            let scene: Scene = serde_json::from_value(
+                flatland::expand_scene(raw).map_err(|e| Error(format!("scene {filename}: {e}")))?,
+            )
+            .map_err(|e| Error(format!("scene {filename}: {e}")))?;
+            if scene.schema_version != project.manifest.schema_version {
+                return Err(Error(format!(
+                    "scene {filename}: schema_version {} must match manifest {}",
+                    scene.schema_version, project.manifest.schema_version
+                )));
+            }
             if !valid_id(id) || &scene.id != id {
                 return Err(Error(format!(
                     "scene {filename}: id must equal manifest scene key {id}"
@@ -310,7 +342,17 @@ impl Project {
             .scenes
             .values()
             .flat_map(|s| &s.entities)
-            .filter_map(|e| e.sprite.as_ref()?.texture.clone())
+            .flat_map(|e| {
+                let mut paths = Vec::new();
+                if let Some(t) = e.sprite.as_ref().and_then(|s| s.texture.clone()) {
+                    paths.push(t);
+                }
+                if let Some(a) = e.flatland.as_ref().and_then(|a| a.animation.as_ref()) {
+                    paths.extend(a.frames.clone());
+                    paths.extend(a.alternate.clone());
+                }
+                paths
+            })
             .collect();
         for texture in texture_paths {
             let path = project.path(&texture)?;
@@ -318,6 +360,18 @@ impl Project {
                 .textures
                 .insert(texture.clone(), load_texture(&path)?);
             project.files_checked.push(texture);
+        }
+        for scene in project.scenes.values() {
+            if let Some(file) = &scene.script {
+                project
+                    .scripts
+                    .insert(scene.id.clone(), read_text(&project.path(file)?)?);
+                project.files_checked.push(file.clone());
+            }
+            for file in scene.sounds.values() {
+                project.path(file)?;
+                project.files_checked.push(file.clone());
+            }
         }
         for test in &project.manifest.tests {
             if !valid_id(&test.name) {
@@ -432,6 +486,7 @@ impl Project {
         }
         for scene in self.scenes.values() {
             let context = format!("scene {}", scene.id);
+            self.validate_flatland(scene)?;
             self.validate_state_writes(&scene.on_enter, &context)?;
             if !coordinate_ok(scene.camera)
                 || scene.spawns.is_empty()
@@ -463,7 +518,8 @@ impl Project {
                 }
                 if let Some(player) = &entity.player
                     && (!(1..=60_000).contains(&player.speed)
-                        || entity.collider.as_ref().is_none_or(|c| !c.blocking))
+                        || (entity.collider.as_ref().is_none_or(|c| !c.blocking)
+                            && entity.flatland.is_none()))
                 {
                     return Err(Error(format!(
                         "{ctx}: player needs speed 1..60000 and a blocking collider"
@@ -635,10 +691,10 @@ mod tests {
     #[test]
     fn future_versions_are_rejected() {
         assert!(
-            version(2, "scene")
+            version(3, "scene")
                 .unwrap_err()
                 .to_string()
-                .contains("schema_version 2")
+                .contains("schema_version 3")
         );
     }
 }
