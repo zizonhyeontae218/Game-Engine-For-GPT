@@ -43,6 +43,7 @@ Do not read every document before every edit.
 - Mobile default controls are a joystick and Z, X, C, Space. Touch layouts are versioned JSON with live profile switching/editing. Game-specific mappings are persisted separately from layout JSON and game save state.
 - A valid live profile change releases held inputs before applying it; an invalid edit retains the last valid profile and reports the error. Backgrounding, focus loss and touch cancellation release inputs.
 - Prove imports, native play, live mappings and embedded desktop packaging with executable evidence. Report each platform's actual build/device verification honestly.
+- Deliver requested demo builds through the connected Google Drive: `Demos/<engine version>/<build version>/` (for example `Demos/Basement 0.2 FlatLand/0.2.0-alpha.1/`). Reuse verified folders, upload the portable game and platform packages with instructions/checksums, verify the uploaded files, and return Drive links. Workspace file links are not downloadable for this user. Preserve existing Drive sharing permissions.
 
 ## Working style
 

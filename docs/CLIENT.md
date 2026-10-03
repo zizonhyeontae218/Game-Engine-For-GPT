@@ -144,3 +144,13 @@ iOS requires macOS/Xcode and `rustup target add aarch64-apple-ios`. `flutter bui
 `xvfb-run -a python3 scripts/client_smoke.py dist/ge4g-basement-linux` opens the **packaged Flutter executable**, autoloads its game, completes all 160 replay ticks, compares its complete snapshot to the CLI and compares its decoded real frame to the canonical hash. Evidence is written to `artifacts/client-smoke/`. No substituted/synthesized captures are used.
 
 `.github/workflows/client.yml` builds Linux, Windows, Android APK and unsigned iOS on native hosts and uploads artifacts. Automated builds are separate from human mobile/device and Arch installation acceptance; record those honestly in release notes.
+
+## Demo delivery
+
+Deliver demo files to the user's connected Google Drive under
+`Demos/<engine version>/<build version>/`, starting with
+`Demos/Basement 0.2 FlatLand/0.2.0-alpha.1/`. Reuse existing verified folders and retain
+older versions. Include the portable `.ge4g`, available platform packages, installation
+instructions and checksum manifest. Read back file names, parents and byte counts
+before giving the user the Drive folder/file links; internal workspace paths do not
+provide usable downloads for this user. Preserve existing sharing permissions.
