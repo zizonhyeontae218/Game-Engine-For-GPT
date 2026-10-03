@@ -79,7 +79,13 @@ Linux release and both real embedded Flutter windows equal headless snapshots/fr
 Pac-Man canonical tick30 RGBA: `435f09d564ece74d46699508521ab86839c2f1f0c9ebbe84bc9353768be12f35`.
 The v1 tick160 framebuffer golden remains unchanged. User acceptance of 0.1 PC/Linux/
 Android runners is recorded above; alpha device rotation and audible playback are
-separate pending checks. Windows/Android/iOS build results will be recorded after CI.
+separate pending checks. Source `b1dbf97` passed hosted
+[engine acceptance](https://github.com/zizonhyeontae218/Game-Engine-For-GPT/actions/runs/37095556205)
+and [all four client builds](https://github.com/zizonhyeontae218/Game-Engine-For-GPT/actions/runs/37095556206).
+Downloaded packages contain native runtimes for all three Android ABIs, Windows DLL
+exports and the iOS framework; both desktop games embed their client/runtime. Follow-up
+packaging fixes pin LF source bytes across hosts to preserve content-bound saves and
+the original CC0 SVG hashes. iOS remains unsigned and Android development-signed.
 
 Remaining: dedicated quest/inventory systems, advanced melee/projectile combat,
 elevation/bridge/camera/atlas features, RNG, serialized event scenes/choices/turn battle,

@@ -1,0 +1,6 @@
+# Portable games and exact resume bind source bytes across desktop/mobile builds.
+* text=auto eol=lf
+*.png binary
+*.wav binary
+*.zip binary
+*.ge4g binary

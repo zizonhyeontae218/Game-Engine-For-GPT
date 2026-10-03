@@ -5,6 +5,7 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 `FILETREE.md` and `FILETREE.hash.json` are excluded from their own hash registry.
 
 - `.agent/PLANS.md` — ExecPlan policy for long/multi-stage work.
+- `.gitattributes` — Repository file; inspect only when relevant to the task.
 - `.github/workflows/ci.yml` — Clean-checkout headless and window acceptance CI.
 - `.github/workflows/client.yml` — Repository file; inspect only when relevant to the task.
 - `.gitignore` — Repository file; inspect only when relevant to the task.

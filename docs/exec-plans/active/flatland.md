@@ -54,6 +54,9 @@ Documentation validation alone does not prove engine capabilities.
 - 2026-10-03: 2.5D separates Y sorting/visual height from discrete collision planes.
 - 2026-10-03: Event scenes suspend serializable worlds; no Lua coroutine saves.
 - 2026-10-03: Product name is Basement 0.2 — FlatLand; shipped 0.1 remains explicit.
+- 2026-10-03: Pin checkout text to LF. The first Windows artifact converted authored
+  game files and original SVGs to CRLF, changing content-bound resume IDs and source
+  hashes despite equivalent gameplay. Preserve identical game bytes on every host.
 
 ## Progress
 Completed: source inspection, requested scope, draft contract, execution order and agent
@@ -71,6 +74,11 @@ Both initial design documents have balanced code fences and the required plan se
 replays passed, retaining the original v1 RGBA golden. Flutter 10 tests passed;
 Linux release built. Real embedded Flutter/headless full snapshots and CPU frames
 match at tick30 maze and tick160 room_b. New alpha device/audio checks remain pending.
+2026-10-03: Source `b1dbf97` passed hosted engine acceptance run 37095556205 and all
+four client build jobs in run 37095556206. Downloaded artifacts contain the actual
+Rust runtime (three Android ABIs, Windows DLL exports, iOS framework), embedded v2
+desktop games and portable demo. A follow-up packaging check fixes Windows CRLF
+conversion and uploads the new FlatLand smoke evidence alongside v1 evidence.
 
 ## Handoff
 Read this plan and only the relevant numbered section of `docs/FLATLAND_SPEC.md`.

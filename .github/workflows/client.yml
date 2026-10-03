@@ -1,9 +1,9 @@
 name: GE4G Flutter clients
 on:
   push:
-    paths: ['client/**', 'crates/**', 'Cargo.*', 'packaging/**', 'scripts/pack_game.py', 'scripts/bundle_desktop.py', 'scripts/client_icons.py', 'scripts/client_smoke.py', '.github/workflows/client.yml', 'examples/**']
+    paths: ['client/**', 'crates/**', 'Cargo.*', 'packaging/**', 'scripts/pack_game.py', 'scripts/bundle_desktop.py', 'scripts/client_icons.py', 'scripts/client_smoke.py', '.github/workflows/client.yml', '.gitattributes', 'examples/**']
   pull_request:
-    paths: ['client/**', 'crates/**', 'Cargo.*', 'packaging/**', 'scripts/pack_game.py', 'scripts/bundle_desktop.py', 'scripts/client_icons.py', 'scripts/client_smoke.py', '.github/workflows/client.yml', 'examples/**']
+    paths: ['client/**', 'crates/**', 'Cargo.*', 'packaging/**', 'scripts/pack_game.py', 'scripts/bundle_desktop.py', 'scripts/client_icons.py', 'scripts/client_smoke.py', '.github/workflows/client.yml', '.gitattributes', 'examples/**']
   workflow_dispatch:
 permissions:
   contents: read
@@ -42,6 +42,7 @@ jobs:
             dist/flatland-pacman.ge4g
             dist/ge4g-flatland-linux.tar.gz
             artifacts/client-smoke/
+            artifacts/flatland-smoke/
   windows:
     runs-on: windows-latest
     steps:
