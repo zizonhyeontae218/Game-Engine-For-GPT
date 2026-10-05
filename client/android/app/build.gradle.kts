@@ -4,6 +4,8 @@ plugins {
     id("dev.flutter.flutter-gradle-plugin")
 }
 
+val ge4gKeystore = System.getenv("GE4G_ANDROID_KEYSTORE")
+
 android {
     namespace = "dev.ge4g.ge4g_client"
     compileSdk = flutter.compileSdkVersion
@@ -29,11 +31,30 @@ android {
         versionName = flutter.versionName
     }
 
+    signingConfigs {
+        if (ge4gKeystore != null) {
+            create("ge4gRelease") {
+                storeFile = file(ge4gKeystore)
+                storePassword = requireNotNull(System.getenv("GE4G_ANDROID_STORE_PASSWORD"))
+                keyAlias = "ge4g"
+                keyPassword = storePassword
+                val keyStore = java.security.KeyStore.getInstance("PKCS12")
+                storeFile!!.inputStream().use { keyStore.load(it, storePassword!!.toCharArray()) }
+                val certificate = requireNotNull(keyStore.getCertificate(keyAlias))
+                val fingerprint = java.security.MessageDigest.getInstance("SHA-256")
+                    .digest(certificate.encoded).joinToString("") { "%02x".format(it.toInt() and 0xff) }
+                require(fingerprint == rootProject.file("signing-certificate.sha256").readText().trim()) {
+                    "GE4G release certificate changed; refusing an incompatible Android update"
+                }
+            }
+        }
+    }
+
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig = signingConfigs.getByName("debug")
+            // Hosted builds are unsigned; delivery signs with the preserved private key.
+            // Never create a runner-specific debug certificate for a release again.
+            signingConfig = if (ge4gKeystore != null) signingConfigs.getByName("ge4gRelease") else null
         }
     }
 }

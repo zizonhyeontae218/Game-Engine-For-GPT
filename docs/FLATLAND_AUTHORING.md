@@ -1,6 +1,6 @@
-# FlatLand alpha: author only what differs
+# FlatLand playable candidate: author only what differs
 
-Implemented in **0.2.0-alpha.1**, game schema 2. See `FLATLAND_SPEC.md` for the larger
+Implemented in **0.2.0-rc.1**, game schema 2. See `FLATLAND_SPEC.md` for the larger
 0.2 design; it is not a list of completed features. Existing schema 1 games still run.
 
 ## Smallest useful context
@@ -17,7 +17,7 @@ Results report `cursor`, `more` and `reset_required`. Lost history is never sile
 A schema 2 scene has a `map` with `cell`, equal ASCII `rows` (up to 128x128), and a
 `tiles` legend. Tiles have RGBA `color`, `solid` and optional `spawn` prefab ID.
 Walls are queried from nearby map cells and rendered without becoming runtime entities.
-All map walls block every collision plane in this alpha; bridges/plane portals are later.
+All map walls block every collision plane in this candidate; bridges/plane portals are later.
 
 `prefabs` are shared entity objects. Instances use `prefab` plus overrides; object
 fields merge recursively and arrays replace. Inheritance between prefabs is rejected.
@@ -43,7 +43,7 @@ Stopping retains facing; blocked motion alone does not change it. Diagonals are 
 unit vectors. `in_front` uses a 90-degree cone and Chebyshev distance in authored pixels.
 
 Animation uses PNG `frames`, frame duration `ticks`, optional directional `rotate`,
-and timer-selected `alternate` frames. CPU rendering remains canonical. `depth:true`
+and timer-selected `alternate` frames. Optional `directions` maps up/down/left/right to frame clips; alternate timer clips take priority. All frames use authoritative fixed ticks and resume at the same phase. CPU rendering remains canonical. `depth:true`
 sorts sprites in a layer by ground feet Y, then ID. Sprite `layer` establishes bands.
 There is no atlas crop, moving camera, elevation physics or frame-marker API yet.
 
@@ -55,7 +55,7 @@ Conditions: `always`, `state` equality, active `timer`, `vulnerable`, tagged `re
 count, `hp` threshold, `all`, `not`. `$target` is available to vulnerability conditions.
 Actions: `set`, checked integer `add`, `timer`, `say`, `remove`, `damage`, `respawn`,
 `face`, `goto`, `stop`, `sound`. Actor references accept `$player` and `$target`.
-Respawn can grant immunity ticks. Damage uses HP and immunity; this alpha does not
+Respawn can grant immunity ticks. Damage uses HP and immunity; this candidate does not
 include melee/projectile attack controllers, defense stats or knockback.
 
 ```json5

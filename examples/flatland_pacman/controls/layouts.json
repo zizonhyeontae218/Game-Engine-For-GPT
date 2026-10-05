@@ -1,0 +1,28 @@
+{
+  "schema_version": 2,
+  "active_profile": "maze_left",
+  "profiles": [
+    {
+      "id": "maze_left",
+      "name": "이동 / LEFT",
+      "joystick": {
+        "x": 0.15,
+        "y": 0.86,
+        "size": 0.28,
+        "dead_zone": 0.18
+      },
+      "buttons": []
+    },
+    {
+      "id": "maze_right",
+      "name": "이동 / RIGHT",
+      "joystick": {
+        "x": 0.85,
+        "y": 0.86,
+        "size": 0.28,
+        "dead_zone": 0.18
+      },
+      "buttons": []
+    }
+  ]
+}

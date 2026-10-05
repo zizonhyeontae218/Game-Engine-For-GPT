@@ -23,7 +23,7 @@ def pack(project, game_id, version, output, validator, layouts=None, mapping=Non
         raise ValueError(f"Basement project validation failed: {result.stdout} {result.stderr}")
     manifest = tomllib.loads((project / "ge4g.toml").read_text())
     entries = {}
-    for source in sorted(project.rglob("*")):
+    for source in sorted(project.rglob("*"), key=lambda p: p.relative_to(project).as_posix()):
         if source.is_symlink():
             raise ValueError(f"game package cannot contain symlinks: {source}")
         if not source.is_file():
@@ -35,8 +35,12 @@ def pack(project, game_id, version, output, validator, layouts=None, mapping=Non
         if "\\" in name or source.stat().st_size > 16 * 1024 * 1024:
             raise ValueError(f"invalid path or file exceeds 16 MiB: {relative}")
         entries[name] = source.read_bytes()
-    entries["controls/layouts.json"] = (layouts or ROOT / "client/assets/default_layouts.json").read_bytes()
-    bindings = json.loads((mapping or ROOT / "client/assets/default_bindings.json").read_text())
+    authored_layouts = project / "controls/layouts.json"
+    authored_bindings = project / "controls/bindings.json"
+    if authored_layouts.exists() != authored_bindings.exists():
+        raise ValueError("game controls require both layouts.json and bindings.json")
+    entries["controls/layouts.json"] = (layouts or (authored_layouts if authored_layouts.exists() else ROOT / "client/assets/default_layouts.json")).read_bytes()
+    bindings = json.loads((mapping or (authored_bindings if authored_bindings.exists() else ROOT / "client/assets/default_bindings.json")).read_text())
     bindings["game_id"] = game_id
     entries["controls/bindings.json"] = (json.dumps(bindings, ensure_ascii=False, indent=2) + "\n").encode()
     if sum(map(len, entries.values())) > 256 * 1024 * 1024 or len(entries) > 4095:
@@ -48,14 +52,14 @@ def pack(project, game_id, version, output, validator, layouts=None, mapping=Non
         metadata["game_schema"] = 2
     entries["bundle.json"] = (json.dumps(metadata, ensure_ascii=False, indent=2) + "\n").encode()
     layout = json.loads(entries["controls/layouts.json"])
-    if layout.get("schema_version") != 1 or bindings.get("schema_version") != 1:
-        raise ValueError("controls require schema_version 1")
+    if layout.get("schema_version") not in (1, 2) or bindings.get("schema_version") != 1:
+        raise ValueError("layouts require schema_version 1 or 2; bindings require 1")
     ids = [profile["id"] for profile in layout["profiles"]]
     if len(ids) != len(set(ids)) or not 1 <= len(ids) <= 16 or set(ids) != set(bindings["profiles"]) or layout["active_profile"] not in ids:
         raise ValueError("layout and binding profile IDs must match")
     for profile in layout["profiles"]:
         buttons = [button["id"] for button in profile["buttons"]]
-        if not 1 <= len(buttons) <= 16 or len(set(buttons)) != len(buttons) or set(buttons) != set(bindings["profiles"][profile["id"]]["buttons"]):
+        if not (1 if layout["schema_version"] == 1 else 0) <= len(buttons) <= 16 or len(set(buttons)) != len(buttons) or set(buttons) != set(bindings["profiles"][profile["id"]]["buttons"]):
             raise ValueError("layout and binding button IDs must match")
     output.parent.mkdir(parents=True, exist_ok=True)
     with zipfile.ZipFile(output, "w", compression=zipfile.ZIP_DEFLATED) as archive:

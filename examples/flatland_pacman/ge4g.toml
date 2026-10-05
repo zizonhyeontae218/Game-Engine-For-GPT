@@ -17,7 +17,7 @@ kind = "string"
 default = "playing"
 [[tests]]
 name = "journey"
-golden_rgba_sha256 = "435f09d564ece74d46699508521ab86839c2f1f0c9ebbe84bc9353768be12f35"
+golden_rgba_sha256 = "a0be5c7fc85ca45c9dd8a54e0fa1bfc6c355a1e7e1d78a7ce5598b447fa43546"
 replay = "replays/journey.json"
 [[tests.assertions]]
 tick = 30

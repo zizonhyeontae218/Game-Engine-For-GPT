@@ -1,0 +1,486 @@
+{
+  "repository": "https://github.com/bward2/pacman-js",
+  "commit": "93f1bb08b8e8d4c511e7194b967b3d4fdf765681",
+  "license": "MIT",
+  "conversion": "Unmodified 16x16 frame extraction from horizontal PNG strips; no resizing or repainting.",
+  "files": {
+    "pacman-strip.png": {
+      "source": "https://raw.githubusercontent.com/bward2/pacman-js/93f1bb08b8e8d4c511e7194b967b3d4fdf765681/app/style/graphics/spriteSheets/characters/pacman/pacman_right.png",
+      "sha256": "6a46d68dccb40a7fe08f94fec92d14372ceb3c185c0c3b9ce8f73fe5bcf754da"
+    },
+    "scared_blue-strip.png": {
+      "source": "https://raw.githubusercontent.com/bward2/pacman-js/93f1bb08b8e8d4c511e7194b967b3d4fdf765681/app/style/graphics/spriteSheets/characters/ghosts/scared_blue.png",
+      "sha256": "cf1f4a2ba487bd4d5dc442e83500059234d0a6af83679acaf9a805063c707e03"
+    },
+    "scared_white-strip.png": {
+      "source": "https://raw.githubusercontent.com/bward2/pacman-js/93f1bb08b8e8d4c511e7194b967b3d4fdf765681/app/style/graphics/spriteSheets/characters/ghosts/scared_white.png",
+      "sha256": "41beeab5f696b5cf08a7627c825642f056f2d5616e51018b41c48f4e3198111b"
+    },
+    "blinky_up-strip.png": {
+      "source": "https://raw.githubusercontent.com/bward2/pacman-js/93f1bb08b8e8d4c511e7194b967b3d4fdf765681/app/style/graphics/spriteSheets/characters/ghosts/blinky/blinky_up.png",
+      "sha256": "3feb3821c6ce71a01496c6e151779427619e299c5147aaf4e9e7527dd55ffe3e"
+    },
+    "blinky_down-strip.png": {
+      "source": "https://raw.githubusercontent.com/bward2/pacman-js/93f1bb08b8e8d4c511e7194b967b3d4fdf765681/app/style/graphics/spriteSheets/characters/ghosts/blinky/blinky_down.png",
+      "sha256": "9a3f1ed41f54a8bf58f2f305aec658e0d863ffd6144b7f335ecc82048f596892"
+    },
+    "blinky_left-strip.png": {
+      "source": "https://raw.githubusercontent.com/bward2/pacman-js/93f1bb08b8e8d4c511e7194b967b3d4fdf765681/app/style/graphics/spriteSheets/characters/ghosts/blinky/blinky_left.png",
+      "sha256": "4880a388a9ffd65f060d1f305418017ae895b2de53f3fe68addf8f6e5f8ab705"
+    },
+    "blinky_right-strip.png": {
+      "source": "https://raw.githubusercontent.com/bward2/pacman-js/93f1bb08b8e8d4c511e7194b967b3d4fdf765681/app/style/graphics/spriteSheets/characters/ghosts/blinky/blinky_right.png",
+      "sha256": "f59de62d5328639d0d8f090306bc91ad269d87b7b20053d398e9ec13529c8285"
+    },
+    "pinky_up-strip.png": {
+      "source": "https://raw.githubusercontent.com/bward2/pacman-js/93f1bb08b8e8d4c511e7194b967b3d4fdf765681/app/style/graphics/spriteSheets/characters/ghosts/pinky/pinky_up.png",
+      "sha256": "c984cbd062cf14396c7d8aa77b96f6f62eb5ada3be7413cdf5d1895905bb0843"
+    },
+    "pinky_down-strip.png": {
+      "source": "https://raw.githubusercontent.com/bward2/pacman-js/93f1bb08b8e8d4c511e7194b967b3d4fdf765681/app/style/graphics/spriteSheets/characters/ghosts/pinky/pinky_down.png",
+      "sha256": "28bb29b0f5b97570639f5b6f2612d7c03c1d597912245f9b45cf78c44f60823d"
+    },
+    "pinky_left-strip.png": {
+      "source": "https://raw.githubusercontent.com/bward2/pacman-js/93f1bb08b8e8d4c511e7194b967b3d4fdf765681/app/style/graphics/spriteSheets/characters/ghosts/pinky/pinky_left.png",
+      "sha256": "e40799703ca4853a97b7e4dd7b7b1332fb937657a6a989b823ef32e950d97593"
+    },
+    "pinky_right-strip.png": {
+      "source": "https://raw.githubusercontent.com/bward2/pacman-js/93f1bb08b8e8d4c511e7194b967b3d4fdf765681/app/style/graphics/spriteSheets/characters/ghosts/pinky/pinky_right.png",
+      "sha256": "2e1d26a1bad20481dc502c896546b8c9e938433b2a060c88102153d40bfd23c4"
+    },
+    "inky_up-strip.png": {
+      "source": "https://raw.githubusercontent.com/bward2/pacman-js/93f1bb08b8e8d4c511e7194b967b3d4fdf765681/app/style/graphics/spriteSheets/characters/ghosts/inky/inky_up.png",
+      "sha256": "4a9b8c7e8b59983a761f4edad7c1613a7dc0fb15a68af85995fb291ec8a533eb"
+    },
+    "inky_down-strip.png": {
+      "source": "https://raw.githubusercontent.com/bward2/pacman-js/93f1bb08b8e8d4c511e7194b967b3d4fdf765681/app/style/graphics/spriteSheets/characters/ghosts/inky/inky_down.png",
+      "sha256": "e386defb54f320b3cd3d87f1d287f14f2307b6a01b3a2f78f3804846ff78c57c"
+    },
+    "inky_left-strip.png": {
+      "source": "https://raw.githubusercontent.com/bward2/pacman-js/93f1bb08b8e8d4c511e7194b967b3d4fdf765681/app/style/graphics/spriteSheets/characters/ghosts/inky/inky_left.png",
+      "sha256": "d4be4d95106e238277314d1154c46bf171fe6cfc4d84e08c57ecce91ade2f048"
+    },
+    "inky_right-strip.png": {
+      "source": "https://raw.githubusercontent.com/bward2/pacman-js/93f1bb08b8e8d4c511e7194b967b3d4fdf765681/app/style/graphics/spriteSheets/characters/ghosts/inky/inky_right.png",
+      "sha256": "ba6d7a3c4a272621069f556d2d8797a6707f380f3c7a8f1232e6f0c30620d5dd"
+    },
+    "clyde_up-strip.png": {
+      "source": "https://raw.githubusercontent.com/bward2/pacman-js/93f1bb08b8e8d4c511e7194b967b3d4fdf765681/app/style/graphics/spriteSheets/characters/ghosts/clyde/clyde_up.png",
+      "sha256": "5ca5198d6ff5f89ba3e19765fc2df937ce021132f8b04ae7849b168bb216b845"
+    },
+    "clyde_down-strip.png": {
+      "source": "https://raw.githubusercontent.com/bward2/pacman-js/93f1bb08b8e8d4c511e7194b967b3d4fdf765681/app/style/graphics/spriteSheets/characters/ghosts/clyde/clyde_down.png",
+      "sha256": "fbc585a8431e497c760c7cc46b786d5b1150f636d3b9af88069897b8242f58ab"
+    },
+    "clyde_left-strip.png": {
+      "source": "https://raw.githubusercontent.com/bward2/pacman-js/93f1bb08b8e8d4c511e7194b967b3d4fdf765681/app/style/graphics/spriteSheets/characters/ghosts/clyde/clyde_left.png",
+      "sha256": "d9c156886345abb266c9b4e16f9202f6c40bcd77655c132c17014e3ffae6ecb5"
+    },
+    "clyde_right-strip.png": {
+      "source": "https://raw.githubusercontent.com/bward2/pacman-js/93f1bb08b8e8d4c511e7194b967b3d4fdf765681/app/style/graphics/spriteSheets/characters/ghosts/clyde/clyde_right.png",
+      "sha256": "c0e50bec28948fc33dfcbc1a38e30fda672910e59895be6bb012f0d2a560e0e1"
+    }
+  },
+  "frames": {
+    "pacman-0.png": {
+      "strip": "pacman-strip.png",
+      "rect": [
+        0,
+        0,
+        16,
+        16
+      ],
+      "sha256": "e6cf7bfb606b1c8bba0b07351b81e61d4f559da488605f5f29ff6f82c07c0a7e"
+    },
+    "pacman-1.png": {
+      "strip": "pacman-strip.png",
+      "rect": [
+        16,
+        0,
+        16,
+        16
+      ],
+      "sha256": "27d30ec176b12d2d4194ca15061e49ca38e80283705791dc3aeba0f87110ea9c"
+    },
+    "pacman-2.png": {
+      "strip": "pacman-strip.png",
+      "rect": [
+        32,
+        0,
+        16,
+        16
+      ],
+      "sha256": "1c043b2eb6720568a7f2f20e519d8259836fd1ec0cc433eaf74bae91f8e1301e"
+    },
+    "pacman-3.png": {
+      "strip": "pacman-strip.png",
+      "rect": [
+        48,
+        0,
+        16,
+        16
+      ],
+      "sha256": "27d30ec176b12d2d4194ca15061e49ca38e80283705791dc3aeba0f87110ea9c"
+    },
+    "scared_blue-0.png": {
+      "strip": "scared_blue-strip.png",
+      "rect": [
+        0,
+        0,
+        16,
+        16
+      ],
+      "sha256": "f96b76f4cb9406460f040b408579d78e4c91bf16a382a9137076fbed47042aa1"
+    },
+    "scared_blue-1.png": {
+      "strip": "scared_blue-strip.png",
+      "rect": [
+        16,
+        0,
+        16,
+        16
+      ],
+      "sha256": "21986a3680090aed271ac180d3df317ffd3632e108d0217f3ac37691ac792340"
+    },
+    "scared_white-0.png": {
+      "strip": "scared_white-strip.png",
+      "rect": [
+        0,
+        0,
+        16,
+        16
+      ],
+      "sha256": "314ff95d5d026c38f1e9e275327e02f6a1279923d09542d6ce95815699be9486"
+    },
+    "scared_white-1.png": {
+      "strip": "scared_white-strip.png",
+      "rect": [
+        16,
+        0,
+        16,
+        16
+      ],
+      "sha256": "ab272f79fd3f25b9335259641f6cbec289fe5bdc564fe250e8ef122210f3d4ea"
+    },
+    "blinky_up-0.png": {
+      "strip": "blinky_up-strip.png",
+      "rect": [
+        0,
+        0,
+        16,
+        16
+      ],
+      "sha256": "df2f18408ca32533fef2c3b1830bb236d2422a05a347f61c388cc2158c97ed93"
+    },
+    "blinky_up-1.png": {
+      "strip": "blinky_up-strip.png",
+      "rect": [
+        16,
+        0,
+        16,
+        16
+      ],
+      "sha256": "2c14a96a1ba9a3a756449b51b728ccea7ac8d2dc2eaa90f99c046d1d537a89d2"
+    },
+    "blinky_down-0.png": {
+      "strip": "blinky_down-strip.png",
+      "rect": [
+        0,
+        0,
+        16,
+        16
+      ],
+      "sha256": "915f37673bef3e0ed7084145dcd2a1c25fc2a7408677ee01f87188f611061444"
+    },
+    "blinky_down-1.png": {
+      "strip": "blinky_down-strip.png",
+      "rect": [
+        16,
+        0,
+        16,
+        16
+      ],
+      "sha256": "7c4fb2935475b5adae5ac871c823bfccf0f1134780df12fa3deebd330433fe50"
+    },
+    "blinky_left-0.png": {
+      "strip": "blinky_left-strip.png",
+      "rect": [
+        0,
+        0,
+        16,
+        16
+      ],
+      "sha256": "ce7b2750bb963b12bdd1f5e508cf3732ef163f6da6f164e51a402b5417483f84"
+    },
+    "blinky_left-1.png": {
+      "strip": "blinky_left-strip.png",
+      "rect": [
+        16,
+        0,
+        16,
+        16
+      ],
+      "sha256": "271984c8661a406da71dc3788f115d8957af9a903962229d937f0c7ef1eccf33"
+    },
+    "blinky_right-0.png": {
+      "strip": "blinky_right-strip.png",
+      "rect": [
+        0,
+        0,
+        16,
+        16
+      ],
+      "sha256": "46533cc9f2e0a0306b29754d24879104fe357e8b46e2b6c3666a4072057049b6"
+    },
+    "blinky_right-1.png": {
+      "strip": "blinky_right-strip.png",
+      "rect": [
+        16,
+        0,
+        16,
+        16
+      ],
+      "sha256": "dccb3874b6b1178782e5d5abfb8ad0b35490ef69ce93e6ac76312472e04c6ade"
+    },
+    "pinky_up-0.png": {
+      "strip": "pinky_up-strip.png",
+      "rect": [
+        0,
+        0,
+        16,
+        16
+      ],
+      "sha256": "be896b14aa4df39b0d73da726447be411dc400c67b597bacaf0be9b44fd452c4"
+    },
+    "pinky_up-1.png": {
+      "strip": "pinky_up-strip.png",
+      "rect": [
+        16,
+        0,
+        16,
+        16
+      ],
+      "sha256": "c22cbd72c8fab71724bc936e01e4dad13a20c5adade35244365ab8b591d7b706"
+    },
+    "pinky_down-0.png": {
+      "strip": "pinky_down-strip.png",
+      "rect": [
+        0,
+        0,
+        16,
+        16
+      ],
+      "sha256": "66ed5286e38c164745a89e862ad654682f289d799172b11cd1a6e796cceb0840"
+    },
+    "pinky_down-1.png": {
+      "strip": "pinky_down-strip.png",
+      "rect": [
+        16,
+        0,
+        16,
+        16
+      ],
+      "sha256": "75dc3a05fccb5060bdacc18eac44bf92780de80781d389ec3e090fe8cee5ec82"
+    },
+    "pinky_left-0.png": {
+      "strip": "pinky_left-strip.png",
+      "rect": [
+        0,
+        0,
+        16,
+        16
+      ],
+      "sha256": "d40c1a287b0200dce089c6f04c3554a6e750072a85116a5b70a6fcaf1db83faa"
+    },
+    "pinky_left-1.png": {
+      "strip": "pinky_left-strip.png",
+      "rect": [
+        16,
+        0,
+        16,
+        16
+      ],
+      "sha256": "7d42806923013e95b10109bc146a10afcfcae936b9f6272badd76e5fbbd03d79"
+    },
+    "pinky_right-0.png": {
+      "strip": "pinky_right-strip.png",
+      "rect": [
+        0,
+        0,
+        16,
+        16
+      ],
+      "sha256": "ce726b08c96bf9e21e31857a466045b869cff82c1c11632a0cadda960b026e63"
+    },
+    "pinky_right-1.png": {
+      "strip": "pinky_right-strip.png",
+      "rect": [
+        16,
+        0,
+        16,
+        16
+      ],
+      "sha256": "8d27f31f52a3cb81ef1b1015676f04cd3aaa0348210b2ca46c74c58bc2903195"
+    },
+    "inky_up-0.png": {
+      "strip": "inky_up-strip.png",
+      "rect": [
+        0,
+        0,
+        16,
+        16
+      ],
+      "sha256": "6c3d72c2074f0d3d17cd5b3ac730c0593e20e9f49912e4dd6ace5353cb2b9768"
+    },
+    "inky_up-1.png": {
+      "strip": "inky_up-strip.png",
+      "rect": [
+        16,
+        0,
+        16,
+        16
+      ],
+      "sha256": "f32576b6c195ca1fb2a106d13cc38ede0d4d1919be0bb17775d6fa7849aef718"
+    },
+    "inky_down-0.png": {
+      "strip": "inky_down-strip.png",
+      "rect": [
+        0,
+        0,
+        16,
+        16
+      ],
+      "sha256": "2cda007869260951474b47e23338efd1555a7fb224f9271eab864cf7cf26526d"
+    },
+    "inky_down-1.png": {
+      "strip": "inky_down-strip.png",
+      "rect": [
+        16,
+        0,
+        16,
+        16
+      ],
+      "sha256": "e9f707cfa38378304abc3d5c849b47de967807e40ce59a7078784812d3cc7d13"
+    },
+    "inky_left-0.png": {
+      "strip": "inky_left-strip.png",
+      "rect": [
+        0,
+        0,
+        16,
+        16
+      ],
+      "sha256": "c91677f334c847121a463c7bb03c7faef9b2c414570acb3b15a526af6a4bd6c6"
+    },
+    "inky_left-1.png": {
+      "strip": "inky_left-strip.png",
+      "rect": [
+        16,
+        0,
+        16,
+        16
+      ],
+      "sha256": "a4059cfbdaa4ba87dd5c6e30750047936bf87f73811ae0dcad97ef558abad063"
+    },
+    "inky_right-0.png": {
+      "strip": "inky_right-strip.png",
+      "rect": [
+        0,
+        0,
+        16,
+        16
+      ],
+      "sha256": "236e8d380a1208dddac336e64d476013040d9d3e8af93d3e08f64ea53dd000a1"
+    },
+    "inky_right-1.png": {
+      "strip": "inky_right-strip.png",
+      "rect": [
+        16,
+        0,
+        16,
+        16
+      ],
+      "sha256": "0a1b6d5acd522739dbc8ce709ec84956f5185d1dfd2518d1e50e11018d4a95e0"
+    },
+    "clyde_up-0.png": {
+      "strip": "clyde_up-strip.png",
+      "rect": [
+        0,
+        0,
+        16,
+        16
+      ],
+      "sha256": "8eb31cc2d0b40a4fc2b17248cbc4808d059c356a1bae2ce9e896bd9582efa12d"
+    },
+    "clyde_up-1.png": {
+      "strip": "clyde_up-strip.png",
+      "rect": [
+        16,
+        0,
+        16,
+        16
+      ],
+      "sha256": "7bb9f2da7b2ed6cded5b40f5dcdd7c7a9191753e60971130c7cc8e192cc2506b"
+    },
+    "clyde_down-0.png": {
+      "strip": "clyde_down-strip.png",
+      "rect": [
+        0,
+        0,
+        16,
+        16
+      ],
+      "sha256": "6879b068dcf517d0cde2fb8f855ee4f95fe2e7726b7903b0e8d13b78a7ca02a6"
+    },
+    "clyde_down-1.png": {
+      "strip": "clyde_down-strip.png",
+      "rect": [
+        16,
+        0,
+        16,
+        16
+      ],
+      "sha256": "ca2a861a55512a6451f478b061f53d5dff1b2ae1a8b979efdbbfe26cad90382c"
+    },
+    "clyde_left-0.png": {
+      "strip": "clyde_left-strip.png",
+      "rect": [
+        0,
+        0,
+        16,
+        16
+      ],
+      "sha256": "6233bcf2a5127874cf3e758ec4426b22276a1c72b5bd30223eec6307a9324425"
+    },
+    "clyde_left-1.png": {
+      "strip": "clyde_left-strip.png",
+      "rect": [
+        16,
+        0,
+        16,
+        16
+      ],
+      "sha256": "5c821f89841df1f5679c71a224998d48489af555d012ee76992e43c3cc77afa8"
+    },
+    "clyde_right-0.png": {
+      "strip": "clyde_right-strip.png",
+      "rect": [
+        0,
+        0,
+        16,
+        16
+      ],
+      "sha256": "9ed43c47cfb08fff2c731407406157381ca1d8dfca2630b5cec41a1af3867c67"
+    },
+    "clyde_right-1.png": {
+      "strip": "clyde_right-strip.png",
+      "rect": [
+        16,
+        0,
+        16,
+        16
+      ],
+      "sha256": "9bfc0420ce35490eadc450840fa2293910b4faf5d6bdffc94b3b03db7aff0022"
+    }
+  }
+}

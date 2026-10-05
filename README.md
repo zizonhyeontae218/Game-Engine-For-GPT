@@ -4,7 +4,7 @@
 
 Rust로 구현한 실제 엔진입니다. OpenAI 계정, LLM 호출, GPU, 인터넷 연결은 게임 실행에 필요하지 않습니다. 초기 의존성 다운로드에는 인터넷이 필요합니다.
 
-Basement 0.2 — **FlatLand alpha.1** 구현을 시작했습니다. 맵·엔티티 분리, 밀기·방향, 경로 탐색 AI, 조건·액션, Lua 5.4와 정확한 저장 재개를 사용하는 **팩맨 스타일 데모**가 있습니다. [현재 작성 규격](docs/FLATLAND_AUTHORING.md) · [전체 설계](docs/FLATLAND_SPEC.md) · [구현 계획](docs/exec-plans/active/flatland.md). 컷씬·턴제 전투·정식 퀘스트 등 전체 0.2 정의는 후속 단계입니다.
+Basement 0.2 — **FlatLand rc.1** 플레이 후보를 구현했습니다. 게임별 모바일 프리셋, 게임 영역을 최대로 확보하는 간결한 UI, 방향별 스프라이트 애니메이션과 고정 Android 서명을 포함합니다. 맵·엔티티 분리, 밀기·방향, 경로 탐색 AI, 조건·액션, Lua 5.4와 정확한 저장 재개를 사용하는 **팩맨 스타일 데모**가 있습니다. [현재 작성 규격](docs/FLATLAND_AUTHORING.md) · [전체 설계](docs/FLATLAND_SPEC.md) · [구현 계획](docs/exec-plans/active/flatland.md). 컷씬·턴제 전투·정식 퀘스트 등 전체 0.2 정의는 후속 단계입니다.
 
 ## 빠른 시작
 

@@ -242,7 +242,13 @@ impl World {
                             {
                                 &anim.alternate
                             } else {
-                                &anim.frames
+                                let direction = match e.actor.facing {
+                                    [x, _] if x > 0 => "right",
+                                    [x, _] if x < 0 => "left",
+                                    [_, y] if y < 0 => "up",
+                                    _ => "down",
+                                };
+                                anim.directions.get(direction).unwrap_or(&anim.frames)
                             };
                             snapshot.texture = Some(
                                 frames[(self.tick / u64::from(anim.ticks)) as usize % frames.len()]

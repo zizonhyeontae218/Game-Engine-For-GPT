@@ -17,6 +17,7 @@ import 'player.dart';
 import 'touch_controls.dart';
 import 'game_popup.dart';
 import 'manual_orientation.dart';
+import 'game_viewport.dart';
 
 Future<void> main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -400,6 +401,15 @@ class _ClientHomeState extends State<ClientHome>
                             },
                       child: const Text('PLAY →'),
                     ),
+                    TextButton(
+                      onPressed: busy
+                          ? null
+                          : () async {
+                              await player!.open(game);
+                              focus.requestFocus();
+                            },
+                      child: const Text('새 게임'),
+                    ),
                   ],
                 ),
               ),
@@ -424,245 +434,245 @@ class _ClientHomeState extends State<ClientHome>
       ),
     ),
   );
-  Widget playView() {
-    final live = player!, controls = live.store!.current;
-    final state = live.status['state'] as Map? ?? {};
-    return Column(
-      children: [
-        Container(
-          color: ink,
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-          child: Row(
+  Future<void> playSettings() async {
+    final live = player!, previousPause = player!.paused;
+    live.setPaused(true);
+    editing = true;
+    final action = await showModalBottomSheet<String>(
+      context: context,
+      isScrollControlled: true,
+      useSafeArea: true,
+      builder: (sheetContext) => StatefulBuilder(
+        builder: (sheetContext, update) => FractionallySizedBox(
+          heightFactor: .9,
+          child: ListView(
+            padding: const EdgeInsets.all(16),
             children: [
-              const Text(
-                'GE4G',
-                style: TextStyle(
-                  color: acid,
-                  fontWeight: FontWeight.w900,
-                  fontSize: 22,
-                ),
-              ),
-              const SizedBox(width: 14),
-              Expanded(
-                child: Text(
-                  live.game!.name,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(color: paper),
-                ),
-              ),
-              IconButton(
-                tooltip: live.paused ? '계속' : '일시 정지',
-                onPressed: () => live.setPaused(!live.paused),
-                icon: Icon(
-                  live.paused ? Icons.play_arrow : Icons.pause,
-                  color: acid,
-                ),
-              ),
-              IconButton(
-                key: const Key('manual-rotation'),
-                tooltip: orientation.landscape ? '세로모드' : '가로모드',
-                onPressed: () async {
-                  live.release();
-                  try {
-                    await orientation.toggle();
-                  } catch (error) {
-                    if (mounted) setState(() => failure = '회전 실패: $error');
-                  }
-                },
-                icon: Icon(
-                  orientation.landscape
-                      ? Icons.stay_current_portrait
-                      : Icons.stay_current_landscape,
-                  color: acid,
-                ),
-              ),
-              PopupMenuButton<String>(
-                tooltip: '대화·소리',
-                icon: const Icon(Icons.more_horiz, color: acid),
-                onSelected: (value) =>
-                    value == 'dialogue' ? live.showPopup() : live.toggleSound(),
-                itemBuilder: (_) => [
-                  PopupMenuItem(
-                    value: 'dialogue',
-                    enabled: live.popup != null,
-                    child: const Text('대화 다시 보기'),
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      live.game!.name,
+                      style: const TextStyle(fontWeight: FontWeight.w900),
+                    ),
                   ),
-                  PopupMenuItem(
-                    value: 'sound',
-                    child: Text(live.audio.muted ? '소리 켜기' : '소리 끄기'),
+                  IconButton(
+                    tooltip: '닫기',
+                    onPressed: () => Navigator.pop(sheetContext),
+                    icon: const Icon(Icons.close),
                   ),
                 ],
               ),
+              DropdownButton<String>(
+                key: const Key('profile-select'),
+                isExpanded: true,
+                value: live.store!.current.activeId,
+                items: live.store!.current.profiles
+                    .map(
+                      (p) => DropdownMenuItem(value: p.id, child: Text(p.name)),
+                    )
+                    .toList(),
+                onChanged: (value) async {
+                  if (value == null) return;
+                  try {
+                    await live.store!.select(value);
+                    if (sheetContext.mounted) update(() {});
+                  } catch (error) {
+                    if (mounted) setState(() => failure = '$error');
+                  }
+                },
+              ),
+              for (final entry in const <(String, String, IconData)>[
+                ('edit', '조작 편집', Icons.tune),
+                ('preset', '게임 기본 프리셋 적용', Icons.restore),
+                ('save', '저장', Icons.save_outlined),
+                ('load', '불러오기', Icons.folder_open),
+                ('restart', '새 게임 / 재시작', Icons.replay),
+                ('dialogue', '대화 다시 보기', Icons.chat_bubble_outline),
+                ('sound', '소리 켜기 / 끄기', Icons.volume_up_outlined),
+                ('debug', '충돌 영역 표시', Icons.border_outer),
+              ])
+                ListTile(
+                  key: entry.$1 == 'edit' ? const Key('edit-controls') : null,
+                  leading: Icon(entry.$3),
+                  title: Text(entry.$2),
+                  onTap: () => Navigator.pop(sheetContext, entry.$1),
+                ),
               if (!embedded)
-                IconButton(
-                  tooltip: '보관함',
-                  onPressed: () {
-                    live.close();
-                    setState(() {});
-                  },
-                  icon: const Icon(Icons.grid_view, color: paper),
+                ListTile(
+                  leading: const Icon(Icons.grid_view),
+                  title: const Text('보관함'),
+                  onTap: () => Navigator.pop(sheetContext, 'library'),
+                ),
+              ExpansionTile(
+                title: const Text('디버그 상태'),
+                children: [
+                  SelectableText(
+                    'scene ${live.status['scene']} · tick ${live.status['tick']}\n${live.status['state']}\n${live.status['last_action'] ?? ''}',
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+    editing = false;
+    if (!mounted || player != live || live.session == null) return;
+    live.setPaused(previousPause);
+    try {
+      switch (action) {
+        case 'edit':
+          await edit();
+        case 'preset':
+          await live.store!.resetPreset();
+        case 'save':
+          await live.save();
+        case 'load':
+          await live.open(live.game!, load: true);
+        case 'restart':
+          await live.open(live.game!);
+        case 'dialogue':
+          live.showPopup();
+        case 'sound':
+          live.toggleSound();
+        case 'debug':
+          live.toggleDebug();
+        case 'library':
+          live.close();
+          setState(() {});
+      }
+    } catch (error) {
+      if (mounted) setState(() => failure = '$error');
+    }
+    if (mounted) focus.requestFocus();
+  }
+
+  Widget playView() {
+    final live = player!;
+    final state = live.status['state'] as Map? ?? {};
+    final hp = (live.status['actors'] as Map?)?['player']?['hp'];
+    final power = (live.status['timers'] as Map?)?['power'] as int? ?? 0;
+    final issue = live.store!.error ?? live.error ?? failure ?? live.message;
+    return Stack(
+      children: [
+        Positioned.fill(
+          top: 44,
+          child: Stack(
+            children: [
+              Positioned.fill(
+                child: GameViewport(
+                  image: live.image,
+                  source: Size(
+                    (live.status['width'] as int? ?? 320).toDouble(),
+                    (live.status['height'] as int? ?? 200).toDouble(),
+                  ),
+                ),
+              ),
+              Positioned.fill(child: TouchControls(router: live.input!)),
+              if (live.paused)
+                const Center(
+                  child: ColoredBox(
+                    color: ink,
+                    child: Padding(
+                      padding: EdgeInsets.all(12),
+                      child: Text(
+                        'PAUSED / 일시 정지',
+                        style: TextStyle(color: acid),
+                      ),
+                    ),
+                  ),
                 ),
             ],
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
+        Positioned(
+          top: 0,
+          left: 0,
+          right: 0,
+          height: 44,
+          child: ColoredBox(
+            color: ink,
             child: Row(
-              spacing: 10,
               children: [
-                DropdownButton<String>(
-                  key: const Key('profile-select'),
-                  value: controls.activeId,
-                  items: controls.profiles
-                      .map(
-                        (profile) => DropdownMenuItem(
-                          value: profile.id,
-                          child: Text(profile.name),
-                        ),
-                      )
-                      .toList(),
-                  onChanged: (value) async {
-                    if (value == null) return;
-                    try {
-                      await live.store!.select(value);
-                    } catch (error) {
-                      if (mounted) setState(() => failure = '$error');
-                    }
-                    focus.requestFocus();
-                  },
-                ),
-                OutlinedButton(
-                  key: const Key('edit-controls'),
-                  onPressed: edit,
-                  child: const Text('조작 편집'),
-                ),
-                OutlinedButton(onPressed: live.save, child: const Text('저장')),
-                OutlinedButton(
-                  onPressed: () => live.open(live.game!, load: true),
-                  child: const Text('불러오기'),
-                ),
-                OutlinedButton(
-                  onPressed: () => live.open(live.game!),
-                  child: const Text('재시작'),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    '${hp == null ? 'GE4G' : '♥ $hp'}  ${state['game.score'] == null ? live.game!.name : 'SCORE ${state['game.score']}'}${power > 0 ? '  ⚡${(power / 60).ceil()}s' : ''}',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      color: acid,
+                      fontSize: 13,
+                      fontWeight: FontWeight.w900,
+                    ),
+                  ),
                 ),
                 IconButton(
-                  tooltip: '충돌 영역 표시',
-                  onPressed: live.toggleDebug,
-                  icon: const Icon(Icons.border_outer),
+                  tooltip: live.paused ? '계속' : '일시 정지',
+                  onPressed: () => live.setPaused(!live.paused),
+                  icon: Icon(
+                    live.paused ? Icons.play_arrow : Icons.pause,
+                    color: acid,
+                  ),
+                ),
+                IconButton(
+                  key: const Key('manual-rotation'),
+                  tooltip: orientation.landscape ? '세로모드' : '가로모드',
+                  onPressed: () async {
+                    live.release();
+                    try {
+                      await orientation.toggle();
+                    } catch (error) {
+                      if (mounted) setState(() => failure = '회전 실패: $error');
+                    }
+                  },
+                  icon: Icon(
+                    orientation.landscape
+                        ? Icons.stay_current_portrait
+                        : Icons.stay_current_landscape,
+                    color: acid,
+                  ),
+                ),
+                IconButton(
+                  key: const Key('play-settings'),
+                  tooltip: '게임 메뉴',
+                  onPressed: playSettings,
+                  icon: const Icon(Icons.menu, color: acid),
                 ),
               ],
             ),
           ),
         ),
-        Expanded(
-          child: LayoutBuilder(
-            builder: (context, constraints) {
-              final portrait = !orientation.landscape;
-              Widget frame = Center(
-                child: AspectRatio(
-                  aspectRatio:
-                      (live.status['width'] as int? ?? 320) /
-                      (live.status['height'] as int? ?? 200),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: ink,
-                      border: Border.all(color: ink, width: 3),
-                    ),
-                    child: live.image == null
-                        ? const Center(
-                            child: CircularProgressIndicator(color: acid),
-                          )
-                        : RawImage(
-                            image: live.image,
-                            filterQuality: FilterQuality.none,
-                            fit: BoxFit.contain,
-                          ),
-                  ),
-                ),
-              );
-              final touch = TouchControls(router: live.input!);
-              return Stack(
+        if (issue != null)
+          Positioned(
+            left: 8,
+            right: 8,
+            bottom: 8,
+            child: Material(
+              color: paper,
+              child: Row(
                 children: [
-                  if (portrait)
-                    Column(
-                      children: [
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.all(12),
-                            child: frame,
-                          ),
-                        ),
-                        SizedBox(
-                          height: (constraints.maxHeight * .5)
-                              .clamp(160, 300)
-                              .toDouble(),
-                          child: touch,
-                        ),
-                      ],
-                    )
-                  else
-                    Positioned.fill(
-                      child: Stack(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(12),
-                            child: frame,
-                          ),
-                          Positioned.fill(child: touch),
-                        ],
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: Text(
+                        issue,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
-                  if (live.paused)
-                    const Center(
-                      child: ColoredBox(
-                        color: ink,
-                        child: Padding(
-                          padding: EdgeInsets.all(16),
-                          child: Text(
-                            'PAUSED / 일시 정지',
-                            style: TextStyle(
-                              color: acid,
-                              fontWeight: FontWeight.w900,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
+                  ),
+                  IconButton(
+                    tooltip: '알림 닫기',
+                    onPressed: () => setState(() {
+                      failure = null;
+                      live.message = null;
+                    }),
+                    icon: const Icon(Icons.close),
+                  ),
                 ],
-              );
-            },
-          ),
-        ),
-        Container(
-          width: double.infinity,
-          color: acid,
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-          child: Text(
-            '${live.status['scene']} / HP ${(live.status['actors'] as Map?)?['player']?['hp'] ?? '-'} / POWER ${(live.status['timers'] as Map?)?['power'] ?? 0} / TICK ${live.status['tick']}  ${state.entries.map((e) => '${e.key.split('.').last}:${e.value}').join('  ')}',
-            maxLines: 2,
-            style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
-          ),
-        ),
-        if (live.status['dialogue'] != null ||
-            live.status['last_action'] != null)
-          Padding(
-            padding: const EdgeInsets.all(8),
-            child: Text(
-              '${live.status['dialogue'] ?? ''} ${live.status['last_action'] == null ? '' : 'ACTION: ${live.status['last_action']}'}',
-              maxLines: 2,
-            ),
-          ),
-        if (live.message != null) Text(live.message!),
-        if (live.store!.error != null || live.error != null || failure != null)
-          Padding(
-            padding: const EdgeInsets.all(8),
-            child: Text(
-              live.store!.error ?? live.error ?? failure!,
-              maxLines: 3,
-              style: const TextStyle(color: Colors.red),
+              ),
             ),
           ),
       ],

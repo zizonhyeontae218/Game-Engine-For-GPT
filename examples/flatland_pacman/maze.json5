@@ -175,8 +175,8 @@
           "ticks": 8,
           "alternate_timer": "power",
           "alternate": [
-            "assets/dazzled.png",
-            "assets/dazzled2.png"
+            "assets/animated/scared_blue-0.png",
+            "assets/animated/scared_blue-1.png"
           ]
         }
       }
@@ -197,7 +197,7 @@
         "speed": 100
       },
       "sprite": {
-        "texture": "assets/Pacman-Icon.png",
+        "texture": "assets/animated/pacman-0.png",
         "layer": 1
       },
       "flatland": {
@@ -206,7 +206,10 @@
         "hp": 3,
         "animation": {
           "frames": [
-            "assets/Pacman-Icon.png"
+            "assets/animated/pacman-0.png",
+            "assets/animated/pacman-1.png",
+            "assets/animated/pacman-2.png",
+            "assets/animated/pacman-3.png"
           ],
           "ticks": 6,
           "rotate": true
@@ -226,8 +229,27 @@
         },
         "animation": {
           "frames": [
-            "assets/blinky.png"
-          ]
+            "assets/animated/blinky_right-0.png",
+            "assets/animated/blinky_right-1.png"
+          ],
+          "directions": {
+            "up": [
+              "assets/animated/blinky_up-0.png",
+              "assets/animated/blinky_up-1.png"
+            ],
+            "down": [
+              "assets/animated/blinky_down-0.png",
+              "assets/animated/blinky_down-1.png"
+            ],
+            "left": [
+              "assets/animated/blinky_left-0.png",
+              "assets/animated/blinky_left-1.png"
+            ],
+            "right": [
+              "assets/animated/blinky_right-0.png",
+              "assets/animated/blinky_right-1.png"
+            ]
+          }
         }
       }
     },
@@ -244,8 +266,27 @@
         },
         "animation": {
           "frames": [
-            "assets/pinky.png"
-          ]
+            "assets/animated/pinky_right-0.png",
+            "assets/animated/pinky_right-1.png"
+          ],
+          "directions": {
+            "up": [
+              "assets/animated/pinky_up-0.png",
+              "assets/animated/pinky_up-1.png"
+            ],
+            "down": [
+              "assets/animated/pinky_down-0.png",
+              "assets/animated/pinky_down-1.png"
+            ],
+            "left": [
+              "assets/animated/pinky_left-0.png",
+              "assets/animated/pinky_left-1.png"
+            ],
+            "right": [
+              "assets/animated/pinky_right-0.png",
+              "assets/animated/pinky_right-1.png"
+            ]
+          }
         }
       }
     },
@@ -262,8 +303,27 @@
         },
         "animation": {
           "frames": [
-            "assets/inky.png"
-          ]
+            "assets/animated/inky_right-0.png",
+            "assets/animated/inky_right-1.png"
+          ],
+          "directions": {
+            "up": [
+              "assets/animated/inky_up-0.png",
+              "assets/animated/inky_up-1.png"
+            ],
+            "down": [
+              "assets/animated/inky_down-0.png",
+              "assets/animated/inky_down-1.png"
+            ],
+            "left": [
+              "assets/animated/inky_left-0.png",
+              "assets/animated/inky_left-1.png"
+            ],
+            "right": [
+              "assets/animated/inky_right-0.png",
+              "assets/animated/inky_right-1.png"
+            ]
+          }
         }
       }
     },
@@ -280,8 +340,27 @@
         },
         "animation": {
           "frames": [
-            "assets/clyde.png"
-          ]
+            "assets/animated/clyde_right-0.png",
+            "assets/animated/clyde_right-1.png"
+          ],
+          "directions": {
+            "up": [
+              "assets/animated/clyde_up-0.png",
+              "assets/animated/clyde_up-1.png"
+            ],
+            "down": [
+              "assets/animated/clyde_down-0.png",
+              "assets/animated/clyde_down-1.png"
+            ],
+            "left": [
+              "assets/animated/clyde_left-0.png",
+              "assets/animated/clyde_left-1.png"
+            ],
+            "right": [
+              "assets/animated/clyde_right-0.png",
+              "assets/animated/clyde_right-1.png"
+            ]
+          }
         }
       }
     }

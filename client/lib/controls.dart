@@ -92,18 +92,20 @@ class TouchProfile {
   final String id, name;
   final JoystickLayout joystick;
   final List<TouchButton> buttons;
-  TouchProfile.fromJson(Map<String, dynamic> json)
+  TouchProfile.fromJson(Map<String, dynamic> json, {bool allowEmpty = false})
     : id = identifier(json['id'], 'profile.id'),
       name = text(json['name'], 'profile.name'),
       joystick = JoystickLayout.fromJson(
         object(json['joystick'], 'profile.joystick'),
       ),
-      buttons = _buttons(json['buttons']) {
+      buttons = _buttons(json['buttons'], allowEmpty) {
     fields(json, {'id', 'name', 'joystick', 'buttons'}, 'profile');
   }
-  static List<TouchButton> _buttons(Object? value) {
-    if (value is! List || value.isEmpty || value.length > 16) {
-      throw const FormatException('profile.buttons needs 1..16 buttons');
+  static List<TouchButton> _buttons(Object? value, bool allowEmpty) {
+    if (value is! List || (!allowEmpty && value.isEmpty) || value.length > 16) {
+      throw FormatException(
+        'profile.buttons needs ${allowEmpty ? 0 : 1}..16 buttons',
+      );
     }
     final buttons = value
         .map((b) => TouchButton.fromJson(object(b, 'button')))
@@ -174,9 +176,16 @@ class ProfileBindings {
 
 class GameControls {
   final String gameId, activeId;
+  final int layoutVersion;
   final List<TouchProfile> profiles;
   final Map<String, ProfileBindings> bindings;
-  GameControls._(this.gameId, this.activeId, this.profiles, this.bindings);
+  GameControls._(
+    this.gameId,
+    this.activeId,
+    this.profiles,
+    this.bindings,
+    this.layoutVersion,
+  );
   factory GameControls.parse(
     String layoutsText,
     String bindingsText,
@@ -187,7 +196,9 @@ class GameControls {
     }
     final layouts = object(jsonDecode(layoutsText), 'layouts');
     final mappings = object(jsonDecode(bindingsText), 'bindings');
-    version(layouts, 'layouts');
+    if (![1, 2].contains(layouts['schema_version'])) {
+      throw const FormatException('unsupported layouts schema_version');
+    }
     version(mappings, 'bindings');
     fields(layouts, {
       'schema_version',
@@ -205,7 +216,12 @@ class GameControls {
       throw const FormatException('layouts needs 1..16 profiles');
     }
     final profiles = list
-        .map((p) => TouchProfile.fromJson(object(p, 'profile')))
+        .map(
+          (p) => TouchProfile.fromJson(
+            object(p, 'profile'),
+            allowEmpty: layouts['schema_version'] == 2,
+          ),
+        )
         .toList(growable: false);
     final ids = profiles.map((p) => p.id).toSet();
     if (ids.length != profiles.length) {
@@ -255,12 +271,13 @@ class GameControls {
       active,
       List.unmodifiable(profiles),
       Map.unmodifiable(bindings),
+      layouts['schema_version'] as int,
     );
   }
   TouchProfile get active => profiles.firstWhere((p) => p.id == activeId);
   ProfileBindings get activeBindings => bindings[activeId]!;
   Map<String, dynamic> get layoutsJson => {
-    'schema_version': 1,
+    'schema_version': layoutVersion,
     'active_profile': activeId,
     'profiles': profiles.map((p) => p.toJson()).toList(),
   };

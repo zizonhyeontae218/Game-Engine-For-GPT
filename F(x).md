@@ -46,3 +46,5 @@ Demo stable scene ids: `room_a`, `room_b`; named transition spawn: `entry`. Refe
 - Demo state: `game.score` integer0, `game.pickups` integer0, `game.result` string playing; all v2 saved.
 
 Workspace engine version is now 0.2.0-alpha.1; existing v1 framebuffer goldens remain unchanged.
+
+FlatLand rc.1: `flatland.animation.directions` selects fixed-tick up/down/left/right clips from actor facing. Layout schema 2 permits a joystick-only profile; game-local control files are packaged presets. Android identity is fixed by application ID and pinned release certificate, with increasing version code.

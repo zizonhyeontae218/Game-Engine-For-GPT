@@ -1,7 +1,7 @@
 # GE4G agent map
 
 The shipped engine is **GameEngineForGPT 0.1 "Basement"**.
-Current development build: **Basement 0.2 — FlatLand, 0.2.0-alpha.1**.
+Current development build: **Basement 0.2 — FlatLand, 0.2.0-rc.1**.
 The larger 0.2 specification is partially implemented; consult `docs/FLATLAND_AUTHORING.md` for actual capabilities.
 
 ## Read by task, not by ritual
@@ -40,10 +40,10 @@ Do not read every document before every edit.
 - Desktop (Windows and Arch Linux): distribute each game with its client and native runtime already embedded. A shipped game must start directly without asking the player to install an engine or locate a CLI.
 - Every runtime adapter calls the authoritative Rust simulation and presents its canonical CPU framebuffer. Do not reimplement gameplay in Dart or spawn the development CLI as a mobile runtime.
 - Use digital brutalism for the client: flat strong contrast, hard borders, explicit typography and direct controls.
-- Mobile default controls are a joystick and Z, X, C, Space. Touch layouts are versioned JSON with live profile switching/editing. Game-specific mappings are persisted separately from layout JSON and game save state.
+- Generic mobile controls are a joystick and Z, X, C, Space; packaged game presets may omit unused buttons using layout schema 2. Touch layouts are versioned JSON with live profile switching/editing. Game-specific mappings are persisted separately from layout JSON and game save state.
 - A valid live profile change releases held inputs before applying it; an invalid edit retains the last valid profile and reports the error. Backgrounding, focus loss and touch cancellation release inputs.
 - Prove imports, native play, live mappings and embedded desktop packaging with executable evidence. Report each platform's actual build/device verification honestly.
-- Deliver requested demo builds through the connected Google Drive: `Demos/<engine version>/<build version>/` (for example `Demos/Basement 0.2 FlatLand/0.2.0-alpha.1/`). Reuse verified folders, upload the portable game and platform packages with instructions/checksums, verify the uploaded files, and return Drive links. Workspace file links are not downloadable for this user. Preserve existing Drive sharing permissions.
+- Deliver requested demo builds through the connected Google Drive: `Demos/<engine version>/<build version>/` (for example `Demos/Basement 0.2 FlatLand/0.2.0-rc.1/`). Reuse verified folders, upload the portable game and platform packages with instructions/checksums, verify the uploaded files, and return Drive links. Workspace file links are not downloadable for this user. Preserve existing Drive sharing permissions.
 
 ## Working style
 
@@ -86,3 +86,5 @@ Fix the cause or document a real blocker in the active ExecPlan.
 - Follow the plan's vertical slices. Proposed schemas/APIs must never be described as shipped features.
 
 - Orientation is selected with a user button; do not enable sensor-driven landscape changes. Keep dialogue/text popups separate from controls.
+
+- Android releases must retain application ID `dev.ge4g.ge4g_client` and the certificate pinned in `client/android/signing-certificate.sha256`; increment the build version code. Restore the original key from the user's private `GE4G Private Signing` Drive folder. Never generate a replacement key or release-sign with ephemeral debug keys. Hosted APKs are unsigned; use `scripts/sign_android.py` before delivery. Private keys/passwords must never enter Git or the public Demos folders.

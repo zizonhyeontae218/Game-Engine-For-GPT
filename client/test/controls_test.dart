@@ -13,6 +13,78 @@ GameControls defaults() =>
     GameControls.parse(layouts, bindings, 'demo.basement');
 void main() {
   test(
+    'v2 joystick-only presets survive edits; v1 cannot silently change shape',
+    () {
+      final l = jsonDecode(
+        File('../examples/flatland_pacman/controls/layouts.json')
+            .readAsStringSync(),
+      );
+      final b = File('../examples/flatland_pacman/controls/bindings.json')
+          .readAsStringSync();
+      final controls = GameControls.parse(
+        jsonEncode(l),
+        b,
+        'demo.flatland.pacman',
+      );
+      expect(controls.layoutVersion, 2);
+      expect(controls.active.buttons, isEmpty);
+      expect(controls.activeBindings.buttons, isEmpty);
+      expect(
+        GameControls.parse(
+          controls.layoutsText,
+          controls.bindingsText,
+          controls.gameId,
+        ).active.buttons,
+        isEmpty,
+      );
+      l['schema_version'] = 1;
+      expect(
+        () => GameControls.parse(jsonEncode(l), b, controls.gameId),
+        throwsFormatException,
+      );
+    },
+  );
+  test('legacy defaults migrate to authored preset; custom mapping is retained and reset is explicit', () async {
+    final root = Directory.systemTemp.createTempSync('ge4g-preset-upgrade-');
+    final oldBindings = bindings.replaceAll(
+      'demo.basement',
+      'demo.flatland.pacman',
+    );
+    final l = File('../examples/flatland_pacman/controls/layouts.json')
+        .readAsStringSync();
+    final b = File('../examples/flatland_pacman/controls/bindings.json')
+        .readAsStringSync();
+    final original = ControlStore(root, 'demo.flatland.pacman');
+    await original.initialize(layouts, oldBindings);
+    original.dispose();
+    final upgraded = ControlStore(root, 'demo.flatland.pacman');
+    await upgraded.initialize(
+      l,
+      b,
+      legacyLayouts: layouts,
+      legacyBindings: oldBindings,
+    );
+    expect(upgraded.current.active.buttons, isEmpty);
+    await upgraded.apply(
+      layouts,
+      oldBindings.replaceAll('"interact"', '"space"'),
+    );
+    upgraded.dispose();
+    final custom = ControlStore(root, 'demo.flatland.pacman');
+    await custom.initialize(
+      l,
+      b,
+      legacyLayouts: layouts,
+      legacyBindings: oldBindings,
+    );
+    expect(custom.current.active.buttons.length, 4);
+    expect(custom.current.activeBindings.buttons['z'], ['space']);
+    await custom.resetPreset();
+    expect(custom.current.active.buttons, isEmpty);
+    custom.dispose();
+    root.deleteSync(recursive: true);
+  });
+  test(
     'simultaneous touches, keyboard and joystick merge; release is per pointer',
     () {
       final router = InputRouter(defaults());

@@ -10,9 +10,9 @@ The product name is **GE4G / GameEngineForGPT**. Flutter presents the authoritat
 
 Joystick/WASD/arrows move. Default **Z/E = interact**, **X = x**, **C = c**, **Space = space**. X/C/Space are versioned named actions producing `action_pressed`/`action_released` runtime events. The original Basement demo implements movement and NPC interaction; these default buttons do not invent jump or combat behavior. A game can remap a button to an existing built-in action (for example Space → interact) or consume named actions when its runtime behavior is extended.
 
-In-game actions include pause, save, load, fresh restart, debug collision outlines, profile selection and **조작 편집 / Control Lab**. Inputs release on profile changes, valid edits, cancellation, focus loss and backgrounding. The game pauses while backgrounded; resuming preserves the prior pause state and never fast-forwards through background time.
+The compact in-game HUD contains score/lives/power, pause, manual rotation and a **게임 메뉴** button. Its separate settings sheet contains save, load, fresh restart, debug details, profile selection, packaged-preset reset and **조작 편집 / Control Lab**. Inputs release on profile changes, valid edits, cancellation, focus loss and backgrounding. The game pauses while backgrounded; resuming preserves the prior pause state and never fast-forwards through background time.
 
-FlatLand alpha adds a **rotation button in the black title bar**: it selects portrait
+FlatLand adds a **rotation button in the black title bar**: it selects portrait
 or landscape explicitly. Mobile locks to portrait-up or landscape-left; sensors and
 desktop window resizing do not select a layout. Text/dialogue appears in a separate
 scrollable popup which pauses client ticking until **확인 / CONTINUE**. The title-bar
@@ -35,7 +35,7 @@ saves/<game_id>/save.json
 
 `layouts.json` owns active profile, profile names, joystick and touch button geometry. `bindings.json` owns **game-specific** profile button/joystick/keyboard mappings. The save owns gameplay state. Neither input file is part of a game save. Default/reference files are in `client/assets/` and `.ge4g` packages ship game-specific initial copies. Existing user files take priority on update.
 
-Coordinates `x`,`y` are normalized centers in the available touch viewport. Joystick `size`, button `width`,`height` are fractions of its shorter dimension. Hit targets clamp to the viewport and at least 48 logical pixels; joystick is normally at least 96. Portrait separates gameplay and controls; landscape overlays controls over the game. Joystick is single-pointer owned and supports simultaneous independent button touches.
+Coordinates `x`,`y` are normalized centers in the available touch viewport. Joystick `size`, button `width`,`height` are fractions of its shorter dimension. Hit targets clamp to the viewport and at least 48 logical pixels; joystick is normally at least 96. The game fits the full viewport below a single 44-pixel HUD. Controls overlay without reserving game space, independently of the selected manual orientation. Tall portrait displays put the fitted game at the top, leaving spare space for controls; wide displays center it. Button labels stay on one line. Joystick is single-pointer owned and supports simultaneous independent button touches.
 
 ```json
 {
@@ -63,7 +63,7 @@ Coordinates `x`,`y` are normalized centers in the available touch viewport. Joys
 }
 ```
 
-Both schemas require version 1, matching profile/button IDs and correct game identity. Empty action arrays disable a binding; multiple actions form a chord. Built-in actions are left/right/up/down/interact. Named action identifiers are ASCII letters/digits/underscore/dot/hyphen, max 64 characters; the runtime accepts up to 32 held named actions. Up to 16 profiles and 16 touch buttons per profile are supported.
+Layouts accept schema 1 (1..16 buttons) or schema 2 (0..16 buttons, including joystick-only presets); bindings remain schema 1. Both require matching profile/button IDs and correct game identity. Empty action arrays disable a binding; multiple actions form a chord. Built-in actions are left/right/up/down/interact. Named action identifiers are ASCII letters/digits/underscore/dot/hyphen, max 64 characters; the runtime accepts up to 32 held named actions. Up to 16 profiles and 16 touch buttons per profile are supported.
 
 Choose DEFAULT or LEFT HAND during play. Control Lab provides joystick/button position and size sliders, button mapping input, profile cloning and separate JSON editors. Slider release or **JSON 적용** commits valid changes immediately while the game continues ticking. Game keys are released while typing in the editor. Invalid JSON keeps the last valid running configuration and displays the error. Desktop external edits are watched/debounced, with a one-second polling fallback on platforms where watchers are unavailable. File paths are shown in Control Lab. Each JSON file is atomically replaced; a two-file edit is validated together before publication to the running game.
 
@@ -85,10 +85,10 @@ reject the unsupported package version. Example:
 
 ```sh
 python3 scripts/pack_game.py examples/flatland_pacman \
-  --game-id demo.flatland.pacman --version 0.2.0-alpha.1 --out dist/flatland-pacman.ge4g
+  --game-id demo.flatland.pacman --version 0.2.0-rc.1 --out dist/flatland-pacman.ge4g
 ```
 
-To supply authored initial controls, use `--layouts path/layouts.json --bindings path/bindings.json`. Bindings are stamped with the specified game ID; existing player overrides remain preserved.
+To supply authored initial controls, use `--layouts path/layouts.json --bindings path/bindings.json`. Bindings are stamped with the specified game ID; existing player overrides remain preserved. Game-local `controls/layouts.json` and `controls/bindings.json` are automatically packaged ahead of generic app defaults, without extra CLI flags. Untouched legacy generic controls migrate to a new schema-2 game preset; edited mappings/layouts remain and can explicitly reset from the game menu.
 
 ## Build clients and embed desktop games
 
@@ -133,7 +133,7 @@ rustup target add aarch64-linux-android armv7-linux-androideabi x86_64-linux-and
 cd client && flutter build apk --release
 ```
 
-The current CI APK uses Flutter's development signing key for direct installation/testing. Store publishing requires your own signing configuration and package identity; no signing secret is checked in.
+CI now builds an unsigned APK. The user authorized one final reinstall for rc.1 because older runner-generated debug keys were lost. Every delivered release from rc.1 onward uses the same preserved key, package ID `dev.ge4g.ge4g_client` and increasing version code (rc.1: 3). The public certificate SHA256 is pinned in `client/android/signing-certificate.sha256`. Restore the encrypted PKCS12 and password from the owner's private `GE4G Private Signing` Drive backup; never generate another key. Do not share that folder or put key/password files in Git. `scripts/sign_android.py` signs and verifies the pin; `--previous-apk` additionally rejects mismatched prior signatures. An environment-configured Gradle release key is also checked against the same fingerprint. Never deliver the unsigned CI APK as an installable build.
 
 iOS requires macOS/Xcode and `rustup target add aarch64-apple-ios`. `flutter build ios --release --no-codesign` verifies the app build. Device installation/App Store release requires the owner's Apple team/provisioning/signature. Simulator builds additionally require the matching `aarch64-apple-ios-sim` or `x86_64-apple-ios` Rust target.
 

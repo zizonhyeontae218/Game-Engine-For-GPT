@@ -145,6 +145,62 @@ fn pacman() -> Project {
     )))
     .unwrap()
 }
+
+#[test]
+fn animated_frames_direction_and_resume_use_the_authoritative_tick() {
+    let project = pacman();
+    let mut world = World::new(project.clone()).unwrap();
+    let mut frames = std::collections::BTreeSet::new();
+    let mut pixels = std::collections::BTreeSet::new();
+    for tick in [0, 6, 12, 18] {
+        world.tick = tick;
+        let frame = world
+            .snapshot()
+            .entities
+            .into_iter()
+            .find(|e| e.id == "player")
+            .unwrap()
+            .texture
+            .unwrap();
+        frames.insert(frame.clone());
+        pixels.insert(project.textures[&frame].rgba.clone());
+    }
+    assert_eq!(frames.len(), 4);
+    assert_eq!(pixels.len(), 3); // The fourth authored frame closes back towards frame 1.
+    world.tick = 8;
+    world.face("blinky", [-1, 0]).unwrap();
+    let snapshot = world.snapshot();
+    assert!(
+        snapshot
+            .entities
+            .iter()
+            .find(|e| e.id == "blinky")
+            .unwrap()
+            .texture
+            .as_ref()
+            .unwrap()
+            .ends_with("blinky_left-1.png")
+    );
+    world.flatland.timers.insert("power".into(), 100);
+    assert!(
+        world
+            .snapshot()
+            .entities
+            .iter()
+            .find(|e| e.id == "blinky")
+            .unwrap()
+            .texture
+            .as_ref()
+            .unwrap()
+            .contains("scared_blue")
+    );
+    let dir = tempfile::tempdir().unwrap();
+    let path = dir.path().join("animated-save.json");
+    world.save(&path).unwrap();
+    let resumed = World::with_save(project, Some(&path)).unwrap();
+    assert_eq!(resumed.tick, world.tick);
+    assert_eq!(resumed.snapshot().entities, world.snapshot().entities);
+}
 #[test]
 fn maze_walls_are_not_entities_and_ghosts_move_deterministically() {
     let p = pacman();

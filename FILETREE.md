@@ -42,6 +42,7 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `client/android/gradle.properties` — Repository file; inspect only when relevant to the task.
 - `client/android/gradle/wrapper/gradle-wrapper.properties` — Repository file; inspect only when relevant to the task.
 - `client/android/settings.gradle.kts` — Repository file; inspect only when relevant to the task.
+- `client/android/signing-certificate.sha256` — Repository file; inspect only when relevant to the task.
 - `client/assets/default_bindings.json` — Repository file; inspect only when relevant to the task.
 - `client/assets/default_layouts.json` — Repository file; inspect only when relevant to the task.
 - `client/ios/.gitignore` — Repository file; inspect only when relevant to the task.
@@ -90,6 +91,7 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `client/lib/game_audio.dart` — Repository file; inspect only when relevant to the task.
 - `client/lib/game_library.dart` — Repository file; inspect only when relevant to the task.
 - `client/lib/game_popup.dart` — Repository file; inspect only when relevant to the task.
+- `client/lib/game_viewport.dart` — Repository file; inspect only when relevant to the task.
 - `client/lib/main.dart` — Repository file; inspect only when relevant to the task.
 - `client/lib/manual_orientation.dart` — Repository file; inspect only when relevant to the task.
 - `client/lib/player.dart` — Repository file; inspect only when relevant to the task.
@@ -171,6 +173,7 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `docs/RESEARCH_BASIS.md` — Research basis for the agent setup.
 - `docs/TESTPLAN.md` — Acceptance and deterministic verification plan.
 - `docs/exec-plans/active/.gitkeep` — Repository file; inspect only when relevant to the task.
+- `docs/exec-plans/active/flatland-rc1.md` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/active/flatland.md` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/completed/.gitkeep` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/completed/basement.md` — Repository file; inspect only when relevant to the task.
@@ -185,6 +188,67 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `examples/flatland_pacman/assets/Pacman-Icon.png` — Repository file; inspect only when relevant to the task.
 - `examples/flatland_pacman/assets/Pacman-Icon.svg` — Repository file; inspect only when relevant to the task.
 - `examples/flatland_pacman/assets/SOURCES.json` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_pacman/assets/animated/LICENSE-MIT.txt` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_pacman/assets/animated/SOURCES.json` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_pacman/assets/animated/blinky_down-0.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_pacman/assets/animated/blinky_down-1.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_pacman/assets/animated/blinky_down-strip.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_pacman/assets/animated/blinky_left-0.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_pacman/assets/animated/blinky_left-1.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_pacman/assets/animated/blinky_left-strip.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_pacman/assets/animated/blinky_right-0.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_pacman/assets/animated/blinky_right-1.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_pacman/assets/animated/blinky_right-strip.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_pacman/assets/animated/blinky_up-0.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_pacman/assets/animated/blinky_up-1.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_pacman/assets/animated/blinky_up-strip.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_pacman/assets/animated/clyde_down-0.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_pacman/assets/animated/clyde_down-1.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_pacman/assets/animated/clyde_down-strip.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_pacman/assets/animated/clyde_left-0.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_pacman/assets/animated/clyde_left-1.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_pacman/assets/animated/clyde_left-strip.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_pacman/assets/animated/clyde_right-0.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_pacman/assets/animated/clyde_right-1.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_pacman/assets/animated/clyde_right-strip.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_pacman/assets/animated/clyde_up-0.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_pacman/assets/animated/clyde_up-1.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_pacman/assets/animated/clyde_up-strip.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_pacman/assets/animated/inky_down-0.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_pacman/assets/animated/inky_down-1.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_pacman/assets/animated/inky_down-strip.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_pacman/assets/animated/inky_left-0.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_pacman/assets/animated/inky_left-1.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_pacman/assets/animated/inky_left-strip.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_pacman/assets/animated/inky_right-0.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_pacman/assets/animated/inky_right-1.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_pacman/assets/animated/inky_right-strip.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_pacman/assets/animated/inky_up-0.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_pacman/assets/animated/inky_up-1.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_pacman/assets/animated/inky_up-strip.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_pacman/assets/animated/pacman-0.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_pacman/assets/animated/pacman-1.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_pacman/assets/animated/pacman-2.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_pacman/assets/animated/pacman-3.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_pacman/assets/animated/pacman-strip.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_pacman/assets/animated/pinky_down-0.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_pacman/assets/animated/pinky_down-1.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_pacman/assets/animated/pinky_down-strip.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_pacman/assets/animated/pinky_left-0.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_pacman/assets/animated/pinky_left-1.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_pacman/assets/animated/pinky_left-strip.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_pacman/assets/animated/pinky_right-0.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_pacman/assets/animated/pinky_right-1.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_pacman/assets/animated/pinky_right-strip.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_pacman/assets/animated/pinky_up-0.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_pacman/assets/animated/pinky_up-1.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_pacman/assets/animated/pinky_up-strip.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_pacman/assets/animated/scared_blue-0.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_pacman/assets/animated/scared_blue-1.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_pacman/assets/animated/scared_blue-strip.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_pacman/assets/animated/scared_white-0.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_pacman/assets/animated/scared_white-1.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_pacman/assets/animated/scared_white-strip.png` — Repository file; inspect only when relevant to the task.
 - `examples/flatland_pacman/assets/blinky.png` — Repository file; inspect only when relevant to the task.
 - `examples/flatland_pacman/assets/blinky.svg` — Repository file; inspect only when relevant to the task.
 - `examples/flatland_pacman/assets/clyde.png` — Repository file; inspect only when relevant to the task.
@@ -202,6 +266,8 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `examples/flatland_pacman/assets/pinky.svg` — Repository file; inspect only when relevant to the task.
 - `examples/flatland_pacman/assets/power.wav` — Repository file; inspect only when relevant to the task.
 - `examples/flatland_pacman/assets/win.wav` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_pacman/controls/bindings.json` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_pacman/controls/layouts.json` — Repository file; inspect only when relevant to the task.
 - `examples/flatland_pacman/ge4g.toml` — Repository file; inspect only when relevant to the task.
 - `examples/flatland_pacman/hooks.lua` — Repository file; inspect only when relevant to the task.
 - `examples/flatland_pacman/maze.json5` — Repository file; inspect only when relevant to the task.
@@ -216,4 +282,5 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `scripts/interactive_smoke.py` — Real window/headless replay equivalence check.
 - `scripts/pack_game.py` — Repository file; inspect only when relevant to the task.
 - `scripts/package.py` — Bundle a built executable, demo and user documentation.
+- `scripts/sign_android.py` — Repository file; inspect only when relevant to the task.
 - `templates/EXECPLAN_TEMPLATE.md` — Template for checked-in execution plans.

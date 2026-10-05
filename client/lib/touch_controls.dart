@@ -37,7 +37,9 @@ class TouchControls extends StatelessWidget {
         }
 
         final stick = profile.joystick;
-        final size = (short * stick.size).clamp(math.min(96.0, short), short).toDouble();
+        final size = (short * stick.size)
+            .clamp(math.min(96.0, short), math.min(144.0, short))
+            .toDouble();
         final rect = position(stick.x, stick.y, size, size);
         return Stack(
           children: [
@@ -50,8 +52,8 @@ class TouchControls extends StatelessWidget {
                 rect: position(
                   button.x,
                   button.y,
-                  short * button.width,
-                  short * button.height,
+                  (short * button.width).clamp(48.0, 96.0),
+                  (short * button.height).clamp(48.0, 72.0),
                 ),
                 child: Semantics(
                   label: '${button.label} 게임 버튼',
@@ -76,12 +78,20 @@ class TouchControls extends StatelessWidget {
                           BoxShadow(color: ink, offset: Offset(4, 4)),
                         ],
                       ),
-                      child: Text(
-                        button.label,
-                        style: const TextStyle(
-                          color: ink,
-                          fontWeight: FontWeight.w900,
-                          fontSize: 18,
+                      child: Padding(
+                        padding: const EdgeInsets.all(4),
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Text(
+                            button.label,
+                            maxLines: 1,
+                            softWrap: false,
+                            style: const TextStyle(
+                              color: ink,
+                              fontWeight: FontWeight.w900,
+                              fontSize: 18,
+                            ),
+                          ),
                         ),
                       ),
                     ),

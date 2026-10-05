@@ -7,6 +7,7 @@ import 'package:ge4g_client/game_library.dart';
 import 'package:ge4g_client/main.dart';
 import 'package:ge4g_client/manual_orientation.dart';
 import 'package:ge4g_client/player.dart';
+import 'package:ge4g_client/game_viewport.dart';
 
 class PlayEngine implements EngineBridge {
   int releases = 0;
@@ -16,9 +17,9 @@ class PlayEngine implements EngineBridge {
     return {
       'ok': true,
       'session': 1,
-      'width': 20,
-      'height': 20,
-      'frame_bytes': 1600,
+      'width': 380,
+      'height': 420,
+      'frame_bytes': 638400,
       'tick': 0,
       'scene': 'maze',
       'state': <String, dynamic>{},
@@ -32,6 +33,15 @@ class PlayEngine implements EngineBridge {
 }
 
 void main() {
+  test('frame fit uses all available space without orientation/control reservations', () {
+    final rect = fittedGameRect(const Size(740, 316), const Size(380, 420));
+    expect(rect.height, 316);
+    expect(rect.width, closeTo(285.90476, .001));
+    expect(rect.center.dx, 370);
+    final portrait = fittedGameRect(const Size(360, 696), const Size(380, 420));
+    expect(portrait.width, 360);
+    expect(portrait.top, 0);
+  });
   test(
     'orientation remains locked to one direction and changes only on toggle',
     () async {
@@ -83,12 +93,19 @@ void main() {
       await tester.pump();
       expect(find.text('A separate dialogue popup'), findsNothing);
       expect(find.byTooltip('가로모드'), findsOneWidget);
+      expect(tester.getSize(find.byKey(const Key('game-frame'))).width, 360);
+      expect(find.text('SPACE'), findsNothing);
+      expect(find.text('Z'), findsNothing);
+      expect(find.textContaining('ACTION:'), findsNothing);
       tester.view.physicalSize = const Size(740, 360);
       await tester.pump();
       expect(
         find.byTooltip('가로모드'),
         findsOneWidget,
       ); // Resize does not select landscape.
+      final frame = tester.getSize(find.byKey(const Key('game-frame')));
+      expect(frame.height, 316);
+      expect(frame.width, closeTo(316 * 380 / 420, .01));
       final releases = engine.releases;
       await tester.tap(find.byKey(const Key('manual-rotation')));
       await tester.pump();
@@ -97,7 +114,14 @@ void main() {
       tester.view.physicalSize = const Size(360, 740);
       await tester.pump();
       expect(find.byTooltip('세로모드'), findsOneWidget);
+      tester.platformDispatcher.textScaleFactorTestValue = 2;
+      addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
+      await tester.pump();
       expect(tester.takeException(), isNull);
+      await tester.tap(find.byKey(const Key('play-settings')));
+      await tester.pump(const Duration(milliseconds: 500));
+      expect(find.byKey(const Key('profile-select')), findsOneWidget);
+      expect(find.text('게임 기본 프리셋 적용'), findsOneWidget);
       await tester.pumpWidget(const SizedBox());
       root.deleteSync(recursive: true);
     },

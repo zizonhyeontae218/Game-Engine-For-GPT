@@ -23,7 +23,7 @@ Future<void> atomicText(File file, String text) async {
 class ControlStore extends ChangeNotifier {
   final Directory directory;
   final String gameId;
-  late GameControls current;
+  late GameControls current, packaged;
   String? error;
   StreamSubscription<FileSystemEvent>? _watch;
   Timer? _debounce, _poll;
@@ -33,13 +33,47 @@ class ControlStore extends ChangeNotifier {
   ControlStore(this.directory, this.gameId);
   File get layoutsFile => File(p.join(directory.path, 'layouts.json'));
   File get bindingsFile => File(p.join(directory.path, 'bindings.json'));
-  Future<void> initialize(String defaultLayouts, String defaultBindings) async {
+  Future<void> initialize(
+    String defaultLayouts,
+    String defaultBindings, {
+    String? legacyLayouts,
+    String? legacyBindings,
+  }) async {
     final candidate = GameControls.parse(
       defaultLayouts,
       defaultBindings,
       gameId,
     );
+    packaged = candidate;
     await directory.create(recursive: true);
+    // Only migrate untouched generic layouts; retain user edits and invalid files.
+    if (candidate.layoutVersion == 2 &&
+        legacyLayouts != null &&
+        legacyBindings != null &&
+        await layoutsFile.exists() &&
+        await bindingsFile.exists()) {
+      try {
+        final previous = GameControls.parse(
+          await layoutsFile.readAsString(),
+          await bindingsFile.readAsString(),
+          gameId,
+        );
+        final legacy = GameControls.parse(
+          legacyLayouts,
+          legacyBindings,
+          gameId,
+        );
+        final previousLayout = previous.layoutsJson..remove('active_profile');
+        final legacyLayout = legacy.layoutsJson..remove('active_profile');
+        if (jsonEncode(previousLayout) == jsonEncode(legacyLayout) &&
+            previous.bindingsText == legacy.bindingsText) {
+          await atomicText(bindingsFile, candidate.bindingsText);
+          await atomicText(layoutsFile, candidate.layoutsText);
+        }
+      } on FormatException {
+        // reload() reports invalid overrides while keeping the packaged preset valid.
+      }
+    }
     if (!await layoutsFile.exists()) {
       await atomicText(layoutsFile, candidate.layoutsText);
     }
@@ -122,6 +156,9 @@ class ControlStore extends ChangeNotifier {
     _queue = work;
     await work;
   }
+
+  Future<void> resetPreset() =>
+      apply(packaged.layoutsText, packaged.bindingsText);
 
   Future<void> select(String profile) async {
     final layouts = current.layoutsJson..['active_profile'] = profile;

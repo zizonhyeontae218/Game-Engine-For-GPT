@@ -1,0 +1,92 @@
+{
+  "schema_version": 1,
+  "game_id": "demo.flatland.pacman",
+  "profiles": {
+    "maze_left": {
+      "joystick": {
+        "left": [
+          "left"
+        ],
+        "right": [
+          "right"
+        ],
+        "up": [
+          "up"
+        ],
+        "down": [
+          "down"
+        ]
+      },
+      "buttons": {},
+      "keys": {
+        "KeyA": [
+          "left"
+        ],
+        "KeyD": [
+          "right"
+        ],
+        "KeyW": [
+          "up"
+        ],
+        "KeyS": [
+          "down"
+        ],
+        "ArrowLeft": [
+          "left"
+        ],
+        "ArrowRight": [
+          "right"
+        ],
+        "ArrowUp": [
+          "up"
+        ],
+        "ArrowDown": [
+          "down"
+        ]
+      }
+    },
+    "maze_right": {
+      "joystick": {
+        "left": [
+          "left"
+        ],
+        "right": [
+          "right"
+        ],
+        "up": [
+          "up"
+        ],
+        "down": [
+          "down"
+        ]
+      },
+      "buttons": {},
+      "keys": {
+        "KeyA": [
+          "left"
+        ],
+        "KeyD": [
+          "right"
+        ],
+        "KeyW": [
+          "up"
+        ],
+        "KeyS": [
+          "down"
+        ],
+        "ArrowLeft": [
+          "left"
+        ],
+        "ArrowRight": [
+          "right"
+        ],
+        "ArrowUp": [
+          "up"
+        ],
+        "ArrowDown": [
+          "down"
+        ]
+      }
+    }
+  }
+}

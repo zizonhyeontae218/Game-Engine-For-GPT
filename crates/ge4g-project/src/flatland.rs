@@ -66,6 +66,8 @@ pub struct Animation {
     pub frames: Vec<String>,
     pub ticks: u32,
     #[serde(default)]
+    pub directions: BTreeMap<String, Vec<String>>,
+    #[serde(default)]
     pub rotate: bool,
     #[serde(default)]
     pub alternate_timer: Option<String>,
@@ -371,6 +373,11 @@ impl Project {
                     && (anim.frames.is_empty()
                         || anim.frames.len() > 128
                         || anim.alternate.len() > 128
+                        || anim.directions.iter().any(|(key, frames)| {
+                            !matches!(key.as_str(), "up" | "down" | "left" | "right")
+                                || frames.is_empty()
+                                || frames.len() > 128
+                        })
                         || anim.ticks == 0)
                 {
                     return Err(fail("animation needs 1..128 frames and positive ticks"));

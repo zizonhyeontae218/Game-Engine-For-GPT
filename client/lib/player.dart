@@ -1,4 +1,8 @@
 import 'dart:async';
+import 'dart:convert';
+
+import 'package:flutter/services.dart';
+
 import 'dart:ui' as ui;
 
 import 'package:flutter/foundation.dart';
@@ -109,9 +113,17 @@ class Player extends ChangeNotifier {
     final generation = _generation;
     final controls = ControlStore(library.controls(candidate.id), candidate.id);
     try {
+      final legacyMappings = jsonDecode(
+        await rootBundle.loadString('assets/default_bindings.json'),
+      ) as Map<String, dynamic>;
+      legacyMappings['game_id'] = candidate.id;
       await controls.initialize(
         await candidate.layouts,
         await candidate.bindings,
+        legacyLayouts: await rootBundle.loadString(
+          'assets/default_layouts.json',
+        ),
+        legacyBindings: jsonEncode(legacyMappings),
       );
       if (_disposed || generation != _generation) {
         controls.dispose();

@@ -350,6 +350,7 @@ impl Project {
                 if let Some(a) = e.flatland.as_ref().and_then(|a| a.animation.as_ref()) {
                     paths.extend(a.frames.clone());
                     paths.extend(a.alternate.clone());
+                    paths.extend(a.directions.values().flatten().cloned());
                 }
                 paths
             })

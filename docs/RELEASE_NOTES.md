@@ -118,3 +118,33 @@ prefabs and 21 map rows; body schema 120 bytes versus scene schema 9,395; one-en
 observation 463 versus full snapshot 192,381. This measures command/source bytes,
 not end-to-end task tokens. Token counts are unmeasured because the tokenizer vocabulary
 could not be retrieved; conversations, repairs and asset prompts remain outside this sample.
+
+## FlatLand 0.2.0-rc.1 playable candidate — 2026-10-05
+
+Requested polish: automatic game-authored mobile presets inside .ge4g packages,
+layout schema 2 with joystick-only profiles, conservative migration of untouched
+generic controls and explicit preset reset, a single 44px HUD and separate settings
+panel, maximum frame fitting independent of manual orientation and control geometry,
+no permanent debug/footer/action rows, capped touch sizes and nonwrapping labels.
+
+The maze now uses unchanged MIT bward2/pacman-js PNG strips (pinned commit
+93f1bb08b8e8d4c511e7194b967b3d4fdf765681): four mouth frames, two ghost frames
+per direction and frightened frames. Originals, frame coordinates, hashes and license
+are packaged. Animation is selected by authoritative ticks/facing/timers and resumes
+at its exact phase. New tick30 RGBA: a0be5c7fc85ca45c9dd8a54e0fa1bfc6c355a1e7e1d78a7ce5598b447fa43546.
+
+33 Rust tests and strict checks, 13 Flutter tests/analyze, local Linux release passed.
+Actual packaged Flutter/headless snapshots and RGBA agree. Frame geometry is tested
+at narrow/wide viewports and twice the normal text scale. A real 1280x527 running window was captured at the reported screenshot dimensions: the game is 437x483 pixels, with no reserved touch region or persistent footer. Hosted builds are pending.
+
+Android's old CI debug keys were not retained and the older certificates differed.
+The user explicitly authorized one final reinstall for rc.1, then stable updates.
+The application ID stays dev.ge4g.ge4g_client; version code is 3. A permanent key is
+backed up in an owner-only private Drive folder and its SHA256 is pinned in source.
+Hosted builds are unsigned; delivery signs/verifies with scripts/sign_android.py.
+Never regenerate the key or release-sign using temporary debug certificates.
+
+This candidate completes the requested presentation/preset/animation polish, not
+the entire broader proposed 0.2 contract. Dedicated quests/inventory, advanced combat
+and serialized event scenes/cutscenes/turn combat remain in the full implementation plan.
+Hosted platform build and Drive delivery results are recorded after publication.
