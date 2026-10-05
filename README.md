@@ -18,7 +18,7 @@ cargo run --locked -p ge4g-cli -- test examples/basement_demo
 cargo run --locked -p ge4g-cli -- run examples/basement_demo
 ```
 
-GitHub Actions의 `ge4g-basement-linux-x86_64` 아티팩트에는 실행 파일과 데모가 함께 들어 있습니다. 압축을 풀고 `ge4g-basement` 폴더에서 `./ge4g run examples/basement_demo`로 실행할 수 있습니다. 직접 패키징하려면 `cargo build --locked --release -p ge4g-cli` 후 `python3 scripts/package.py`를 실행하세요.
+FlatLand 0.2의 현재 배포 대상은 Android와 Windows입니다. iOS·macOS·Linux/Arch 지원 작업은 0.3.0 개발 시작 전까지 중단합니다. 이전 배포 파일과 플랫폼 소스는 보존합니다. Linux에서 실행되는 엔진·헤드리스 CI는 개발 검증용입니다.
 
 창에서 **WASD / 방향키**로 이동하고 **E / Space**로 NPC와 대화합니다. 파란 사각형이 플레이어, 주황색이 NPC, 초록색이 다음 방으로 가는 문입니다. 오른쪽 벽에 부딪힌 뒤 벽 아래로 내려가 NPC에 접근하고 문으로 이동하세요. 대사와 저장 상태는 창 제목에 표시됩니다.
 
@@ -84,11 +84,11 @@ python3 scripts/filetree.py lint
 
 ## Flutter client: GE4G / GameEngineForGPT
 
-Android/iOS: install the client → **Import .ge4g** → play. Windows/Arch: each game ships with its complete embedded Flutter client and native Basement runtime and starts directly. Joystick + Z/X/C/Space, digital brutalism, live profile switching/editing and separate per-game JSON bindings are implemented.
+Android: install the client → **Import .ge4g** → play. Windows: each game ships with its complete embedded Flutter client and native Basement runtime and starts directly. Joystick + Z/X/C/Space, digital brutalism, live profile switching/editing and separate per-game JSON bindings are implemented.
 
-See [client usage/build/distribution](docs/CLIENT.md) and [permanent launcher philosophy](docs/LAUNCHER_PHILOSOPHY.md). Download platform bundles from the [GE4G Flutter clients Actions artifacts](https://github.com/zizonhyeontae218/Game-Engine-For-GPT/actions/workflows/client.yml). Android artifacts use a development signing key; iOS artifacts are unsigned.
+See [client usage/build/distribution](docs/CLIENT.md) and [permanent launcher philosophy](docs/LAUNCHER_PHILOSOPHY.md). Download platform bundles from the [GE4G Flutter clients Actions artifacts](https://github.com/zizonhyeontae218/Game-Engine-For-GPT/actions/workflows/client.yml). Android CI artifacts are unsigned; delivered APKs use the preserved release signing certificate.
 
-최종 [플랫폼 빌드·다운로드](https://github.com/zizonhyeontae218/Game-Engine-For-GPT/actions/runs/37022204555): Android APK, Windows 내장 ZIP, Linux 내장 tarball, unsigned iOS ZIP. 네 플랫폼 작업과 전체 엔진 검증이 통과했습니다. 실기기 및 Arch 설치 확인은 별도입니다.
+rc1의 과거 [플랫폼 빌드·다운로드](https://github.com/zizonhyeontae218/Game-Engine-For-GPT/actions/runs/37022204555): Android APK, Windows 내장 ZIP, Linux 내장 tarball, unsigned iOS ZIP. 네 플랫폼 작업과 전체 엔진 검증이 통과했습니다. 실기기 및 Arch 설치 확인은 별도입니다.
 
 ## FlatLand 데모
 

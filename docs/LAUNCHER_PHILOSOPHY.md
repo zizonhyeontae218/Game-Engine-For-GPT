@@ -2,9 +2,11 @@
 
 This is the user's standing design direction for every future launcher, established 2026-10-02. It supersedes the original Basement exclusion of mobile packaging; the simulation constraints still apply.
 
+Through FlatLand 0.2, active client support and distribution cover **Android and Windows only**. iOS, macOS and Linux/Arch client work is suspended until 0.3.0 development begins. Existing source and historical downloads are retained. Linux-hosted engine/headless checks and Android builds remain development infrastructure.
+
 Mobile is a reusable **client → Import → load Basement game → play** flow. Games are portable versioned data packages, not downloaded executables. The installed client supplies the authoritative native engine. Imported versions and game-local saves/controls live in application storage.
 
-Desktop games for **Windows and Arch Linux** ship with the Flutter client, native runtime and game package embedded. They open their embedded game directly. Players do not install Rust, Flutter, an engine or a development CLI. Library mode is useful for development, but is not the default distribution experience for a desktop game.
+Desktop games for **Windows** ship with the Flutter client, native runtime and game package embedded. They open their embedded game directly. Players do not install Rust, Flutter, an engine or a development CLI. Library mode is useful for development, but is not the default distribution experience for a desktop game.
 
 Flutter owns presentation, import, lifecycle, keyboard/touch normalization and control editing. Rust owns simulation, collision, scene lifecycle, saves, events and canonical CPU RGBA frames. Both surfaces consume the same engine. Flutter must not substitute a second implementation or a subprocess CLI bridge.
 

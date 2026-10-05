@@ -35,10 +35,17 @@ Do not read every document before every edit.
 9. Prefer inspectable in-repo code over opaque framework behavior. Low-level libraries are allowed; importing another full game engine is not.
 10. Never silently change a public CLI/scene/save schema. Version or migrate it.
 
+## Supported platforms through FlatLand 0.2
+
+- Active client support, build verification and distribution: **Android and Windows only**.
+- iOS, macOS and Linux/Arch support work is suspended until **0.3.0 development begins**; do not build, test, package or publish clients for those platforms during rc4.
+- Preserve existing platform source and every historical artifact. Reconsider the support matrix explicitly at 0.3.0; do not automatically resume suspended jobs.
+- Linux-hosted Rust/headless checks and Android cross-compilation are development infrastructure, not Linux client support.
+
 ## Launcher philosophy — all future runners
 
 - Mobile: install the Flutter client, choose **Import**, load a portable Basement game package, then play. Imported games are data; the client owns the native runtime.
-- Desktop (Windows and Arch Linux): distribute each game with its client and native runtime already embedded. A shipped game must start directly without asking the player to install an engine or locate a CLI.
+- Desktop (Windows; Linux/Arch deferred until 0.3.0): distribute each game with its client and native runtime already embedded. A shipped game must start directly without asking the player to install an engine or locate a CLI.
 - Every runtime adapter calls the authoritative Rust simulation and presents its canonical CPU framebuffer. Do not reimplement gameplay in Dart or spawn the development CLI as a mobile runtime.
 - Use digital brutalism for the client: flat strong contrast, hard borders, explicit typography and direct controls.
 - Generic mobile controls are a joystick and Z, X, C, Space; packaged game presets may omit unused buttons using layout schema 2. Touch layouts are versioned JSON with live profile switching/editing. Game-specific mappings are persisted separately from layout JSON and game save state.

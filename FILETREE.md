@@ -186,6 +186,7 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `docs/TESTPLAN.md` — Acceptance and deterministic verification plan.
 - `docs/benchmarks/flatland-task-context.json` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/active/.gitkeep` — Repository file; inspect only when relevant to the task.
+- `docs/exec-plans/active/flatland-rc4.md` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/completed/.gitkeep` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/completed/basement.md` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/completed/flatland-polish.md` — Repository file; inspect only when relevant to the task.
