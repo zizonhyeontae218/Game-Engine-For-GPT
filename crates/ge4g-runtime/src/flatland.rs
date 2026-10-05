@@ -26,6 +26,8 @@ impl ActorState {
 #[derive(Debug, Clone, Default, Serialize, Deserialize, PartialEq, Eq, schemars::JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct FlatState {
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub systems: Option<super::gameplay::Systems>,
     pub timers: BTreeMap<String, u64>,
     pub completed: BTreeSet<String>,
     pub stopped: bool,
@@ -97,8 +99,12 @@ impl World {
     fn timer(&self, id: &str) -> bool {
         self.flatland.timers.get(id).is_some_and(|t| *t > self.tick)
     }
-    fn condition(&self, c: &Condition, target: Option<&str>) -> bool {
+    pub(super) fn condition(&self, c: &Condition, target: Option<&str>) -> bool {
         match c {
+            Condition::HasItem { .. }
+            | Condition::QuestIs { .. }
+            | Condition::ObjectivesComplete { .. } => self.system_condition(c),
+            Condition::Any { conditions } => conditions.iter().any(|c| self.condition(c, target)),
             Condition::Always => true,
             Condition::Vulnerable { entity } => self
                 .ref_id(entity, target)
@@ -123,7 +129,7 @@ impl World {
             Condition::Not { condition } => !self.condition(condition, target),
         }
     }
-    fn ref_id(&self, id: &str, target: Option<&str>) -> Result<String> {
+    pub(super) fn ref_id(&self, id: &str, target: Option<&str>) -> Result<String> {
         match id {
             "$target" => target
                 .map(str::to_owned)
@@ -137,7 +143,16 @@ impl World {
             _ => Ok(id.into()),
         }
     }
-    fn actions(&mut self, actions: &[Action], target: Option<&str>) -> Result<()> {
+    pub(super) fn actions(&mut self, actions: &[Action], target: Option<&str>) -> Result<()> {
+        if self.action_depth >= 16 {
+            return Err(Error("action recursion exceeds 16".into()));
+        }
+        self.action_depth += 1;
+        let result = self.actions_inner(actions, target);
+        self.action_depth -= 1;
+        result
+    }
+    fn actions_inner(&mut self, actions: &[Action], target: Option<&str>) -> Result<()> {
         self.command_budget += actions.len();
         if self.command_budget > 4096 {
             return Err(Error("tick command budget exceeded".into()));
@@ -149,6 +164,27 @@ impl World {
             self.project
                 .validate_action(&self.project.scenes[&self.scene], action)?;
             match action {
+                Action::Heal { entity, amount } => {
+                    let id = self.ref_id(entity, target)?;
+                    let e = self
+                        .entities
+                        .get_mut(&id)
+                        .ok_or_else(|| Error("heal actor missing".into()))?;
+                    let max = e
+                        .spec
+                        .flatland
+                        .as_ref()
+                        .and_then(|a| a.hp)
+                        .ok_or_else(|| Error("heal actor needs HP".into()))?;
+                    e.actor.hp = Some(
+                        e.actor
+                            .hp
+                            .unwrap_or(0)
+                            .checked_add(*amount)
+                            .ok_or_else(|| Error("heal overflow".into()))?
+                            .min(max),
+                    );
+                }
                 Action::Set { key, value } => {
                     self.set_state(&BTreeMap::from([(key.clone(), value.clone())]), target)?
                 }
@@ -210,6 +246,9 @@ impl World {
                             .ok_or_else(|| Error(format!("actor {id} has no HP")))?;
                         e.actor.hp = Some((hp - amount).max(0));
                         e.actor.immune_until = self.tick + immunity;
+                        if hp > 0 && e.actor.hp == Some(0) {
+                            self.systems().pending_deaths.insert(id.clone());
+                        }
                         self.emit(
                             "hit",
                             Some(&id),
@@ -233,6 +272,14 @@ impl World {
                     self.face(&id, *vector)?;
                 }
                 Action::Goto { scene, spawn } => {
+                    if self
+                        .flatland
+                        .systems
+                        .as_ref()
+                        .is_some_and(|s| !s.events.is_empty())
+                    {
+                        return Err(Error("return from event before world transition".into()));
+                    }
                     let id = self.ref_id("$player", None)?;
                     self.transition(
                         &Transition {
@@ -249,6 +296,7 @@ impl World {
                     target,
                     json!({"cue":cue,"file":self.project.scenes[&self.scene].sounds[cue]}),
                 ),
+                other => self.system_action(other, target)?,
             }
         }
         Ok(())
@@ -292,7 +340,6 @@ impl World {
                 "dofile",
                 "loadfile",
                 "load",
-                "require",
                 "print",
                 "pairs",
                 "next",
@@ -359,6 +406,207 @@ impl World {
                     .map_err(lua_error)?,
                 )
                 .map_err(lua_error)?;
+            let modules: BTreeMap<String, String> = self.project.scenes[&self.scene]
+                .gameplay
+                .modules
+                .keys()
+                .filter_map(|id| {
+                    self.project
+                        .scripts
+                        .get(&format!("module:{}:{id}", self.scene))
+                        .map(|source| (id.clone(), source.clone()))
+                })
+                .collect();
+            lua.globals()
+                .set(
+                    "require",
+                    lua.create_function(move |lua, id: String| {
+                        let source = modules.get(&id).ok_or_else(|| {
+                            mlua::Error::RuntimeError(format!("unknown project module {id}"))
+                        })?;
+                        lua.load(source)
+                            .set_name(format!("module:{id}"))
+                            .eval::<mlua::Value>()
+                    })
+                    .map_err(lua_error)?,
+                )
+                .map_err(lua_error)?;
+            if self.project.scenes[&self.scene].gameplay.modules.is_empty() {
+                lua.globals()
+                    .set("require", mlua::Value::Nil)
+                    .map_err(lua_error)?;
+            }
+            let original_rng = self
+                .flatland
+                .systems
+                .as_ref()
+                .map_or(self.project.scenes[&self.scene].gameplay.seed.max(1), |s| {
+                    s.rng
+                });
+            let random_state = std::rc::Rc::new(std::cell::Cell::new(original_rng));
+            let rng = random_state.clone();
+            lua.globals()
+                .set(
+                    "random",
+                    lua.create_function(move |_, (min, max): (mlua::Value, mlua::Value)| {
+                        let min = lua_integer(min)?;
+                        let max = lua_integer(max)?;
+                        if min > max
+                            || min.unsigned_abs() > 1_000_000
+                            || max.unsigned_abs() > 1_000_000
+                        {
+                            return Err(mlua::Error::RuntimeError(
+                                "invalid integer random range".into(),
+                            ));
+                        }
+                        let mut x = rng.get();
+                        x ^= x << 13;
+                        x ^= x >> 7;
+                        x ^= x << 17;
+                        rng.set(x);
+                        Ok(min + (x % ((max - min + 1) as u64)) as i64)
+                    })
+                    .map_err(lua_error)?,
+                )
+                .map_err(lua_error)?;
+            let positions: BTreeMap<String, Vec2> = self
+                .entities
+                .iter()
+                .map(|(id, e)| (id.clone(), e.position))
+                .collect();
+            lua.globals()
+                .set(
+                    "toward",
+                    lua.create_function(move |_, (a, b): (String, String)| {
+                        let a = positions
+                            .get(&a)
+                            .ok_or_else(|| mlua::Error::RuntimeError("unknown source".into()))?;
+                        let b = positions
+                            .get(&b)
+                            .ok_or_else(|| mlua::Error::RuntimeError("unknown target".into()))?;
+                        Ok(((b.x - a.x).signum(), (b.y - a.y).signum()))
+                    })
+                    .map_err(lua_error)?,
+                )
+                .map_err(lua_error)?;
+            let inventory = self
+                .flatland
+                .systems
+                .as_ref()
+                .map(|s| s.inventory.clone())
+                .unwrap_or_default();
+            lua.globals()
+                .set(
+                    "item_count",
+                    lua.create_function(move |_, id: String| Ok(*inventory.get(&id).unwrap_or(&0)))
+                        .map_err(lua_error)?,
+                )
+                .map_err(lua_error)?;
+            let query_actors:BTreeMap<String,Value>=self.entities.iter().map(|(id,e)|(id.clone(),json!({"id":id,"position":[e.position.x/SUBPIXELS,e.position.y/SUBPIXELS],"hp":e.actor.hp,"facing":e.actor.facing,"plane":self.actor_plane(id),"tags":e.spec.tags}))).collect();
+            let actors = query_actors.clone();
+            lua.globals()
+                .set(
+                    "entity",
+                    lua.create_function(move |lua, id: String| {
+                        let v = actors.get(&id).ok_or_else(|| {
+                            mlua::Error::RuntimeError(format!("unknown actor {id}"))
+                        })?;
+                        lua.to_value(v)
+                    })
+                    .map_err(lua_error)?,
+                )
+                .map_err(lua_error)?;
+            lua.globals()
+                .set(
+                    "entities",
+                    lua.create_function(move |lua, (tag, limit): (String, mlua::Value)| {
+                        let limit = lua_integer(limit)?;
+                        if !(1..=256).contains(&limit) {
+                            return Err(mlua::Error::RuntimeError("query limit 1..256".into()));
+                        }
+                        let ids: Vec<_> = query_actors
+                            .iter()
+                            .filter(|(_, e)| {
+                                tag == "*"
+                                    || e["tags"].as_array().is_some_and(|tags| {
+                                        tags.iter().any(|t| t.as_str() == Some(&tag))
+                                    })
+                            })
+                            .map(|(id, _)| id.clone())
+                            .collect();
+                        let more = ids.len() > limit as usize;
+                        Ok((
+                            lua.to_value(
+                                &ids.into_iter().take(limit as usize).collect::<Vec<_>>(),
+                            )?,
+                            more,
+                        ))
+                    })
+                    .map_err(lua_error)?,
+                )
+                .map_err(lua_error)?;
+            let queued = std::rc::Rc::new(std::cell::RefCell::new(Vec::<Action>::new()));
+            let q = queued.clone();
+            lua.globals()
+                .set(
+                    "say",
+                    lua.create_function(move |_, text: String| {
+                        push_lua_action(&q, Action::Say { text })
+                    })
+                    .map_err(lua_error)?,
+                )
+                .map_err(lua_error)?;
+            let q = queued.clone();
+            lua.globals()
+                .set(
+                    "give",
+                    lua.create_function(move |_, (item, count): (String, mlua::Value)| {
+                        push_lua_action(
+                            &q,
+                            Action::Give {
+                                item,
+                                count: lua_integer(count)?,
+                            },
+                        )
+                    })
+                    .map_err(lua_error)?,
+                )
+                .map_err(lua_error)?;
+            let q = queued.clone();
+            lua.globals()
+                .set(
+                    "damage",
+                    lua.create_function(move |_, (entity, amount): (String, mlua::Value)| {
+                        push_lua_action(
+                            &q,
+                            Action::Damage {
+                                entity,
+                                amount: lua_integer(amount)?,
+                                immunity: 0,
+                            },
+                        )
+                    })
+                    .map_err(lua_error)?,
+                )
+                .map_err(lua_error)?;
+            let q = queued.clone();
+            lua.globals()
+                .set(
+                    "face",
+                    lua.create_function(
+                        move |_, (entity, x, y): (String, mlua::Value, mlua::Value)| {
+                            push_lua_action(
+                                &q,
+                                Action::Face {
+                                    entity,
+                                    vector: [lua_integer(x)?, lua_integer(y)?],
+                                },
+                            )
+                        },
+                    )
+                    .map_err(lua_error)?,
+                )
+                .map_err(lua_error)?;
             let ctx = lua
                 .to_value(
                     &json!({"event":on,"target":target,"tick":self.tick,"state":self.state.values}),
@@ -375,6 +623,13 @@ impl World {
                 .eval()
                 .map_err(lua_error)?;
             let result: mlua::Value = hook.call(ctx).map_err(lua_error)?;
+            if random_state.get() != original_rng {
+                self.systems().rng = random_state.get();
+            }
+            let queued = queued.borrow().clone();
+            if !queued.is_empty() {
+                self.actions(&queued, target)?;
+            }
             if result != mlua::Value::Nil {
                 let actions: Vec<Action> = lua.from_value(result).map_err(lua_error)?;
                 self.actions(&actions, target)?;
@@ -419,7 +674,38 @@ impl World {
             .store(0, std::sync::atomic::Ordering::Relaxed);
         self.command_budget = 0;
         self.tick += 1;
+        let origin = self.scene.clone();
         if self.flatland.stopped {
+            return Ok(());
+        }
+        if self
+            .flatland
+            .systems
+            .as_ref()
+            .is_some_and(|s| !s.events.is_empty())
+        {
+            self.freeze_world_tick();
+            self.event_tick()?;
+            return Ok(());
+        }
+        let buttons: Vec<_> = self
+            .requested_actions
+            .difference(&self.held_actions)
+            .cloned()
+            .collect();
+        for button in buttons {
+            self.flat_event(&format!("action.{button}"), None)?;
+            if self.scene != origin {
+                return Ok(());
+            }
+        }
+        if self
+            .flatland
+            .systems
+            .as_ref()
+            .is_some_and(|s| !s.events.is_empty())
+        {
+            self.event_tick()?;
             return Ok(());
         }
         let player_id = self.ref_id("$player", None)?;
@@ -452,38 +738,24 @@ impl World {
                     self.entities.get_mut(&id).unwrap().actor.queued =
                         if x != 0 { [x, 0] } else { [0, y] };
                 }
-                let map = self.project.scenes[&self.scene]
-                    .map
-                    .as_ref()
-                    .unwrap()
-                    .clone();
+                let map = self.effective_map(self.actor_plane(&id)).unwrap();
                 let cell = i64::from(map.cell) * SUBPIXELS;
                 let mut budget = speed;
                 for _ in 0..128 {
-                    let e = &self.entities[&id];
+                    let e = self.entities[&id].clone();
                     let pos = e.position;
                     if pos.x % cell == 0 && pos.y % cell == 0 {
                         let at = [pos.x / cell, pos.y / cell];
                         let desired = if let Some(a) = &ai {
-                            let target = a
-                                .target
-                                .as_ref()
-                                .and_then(|id| self.entities.get(id))
-                                .map(|e| [e.position.x / cell, e.position.y / cell])
-                                .unwrap_or(a.corner);
-                            next_direction(
-                                &map,
-                                at,
-                                target,
-                                e.actor.direction,
-                                a.flee_timer.as_ref().is_some_and(|t| self.timer(t)),
-                            )
+                            self.ai_decision(&id, a, &map, at)?
                         } else {
                             e.actor.queued
                         };
                         let open =
                             |d: [i64; 2]| d != [0, 0] && map.open(at[0] + d[0], at[1] + d[1]);
-                        let dir = if open(desired) {
+                        let dir = if ai.is_some() && desired == [0, 0] {
+                            [0, 0]
+                        } else if open(desired) {
                             desired
                         } else if open(e.actor.direction) {
                             e.actor.direction
@@ -546,6 +818,7 @@ impl World {
             .iter()
             .filter(|(id, e)| {
                 *id != &player_id
+                    && self.actor_plane(id) == self.actor_plane(&player_id)
                     && (touched(e.aabb())
                         || actor_paths.get(*id).is_some_and(|segments| {
                             segments
@@ -568,10 +841,19 @@ impl World {
             if !pickup.is_empty() {
                 self.emit("pickup", Some(&player_id), json!({"target":target}));
                 self.actions(&pickup, Some(&target))?;
+                if self.scene != origin {
+                    return Ok(());
+                }
                 self.flat_event("pickup", Some(&target))?;
+                if self.scene != origin {
+                    return Ok(());
+                }
                 self.entities.remove(&target);
             } else {
                 self.flat_event("contact", Some(&target))?;
+                if self.scene != origin {
+                    return Ok(());
+                }
             }
         }
         if input.interact && !self.interact_held {
@@ -601,8 +883,12 @@ impl World {
                     }
                     self.set_state(&i.set_state, Some(&target))?;
                     self.flat_event("interact", Some(&target))?;
+                    if self.scene != origin {
+                        return Ok(());
+                    }
                     if let Some(t) = i.transition {
                         self.transition(&t, &player_id)?;
+                        return Ok(());
                     }
                     break;
                 }
@@ -621,22 +907,38 @@ impl World {
             return Ok(());
         }
         self.triggers = doors.into_iter().collect();
+        self.portal_tick()?;
+        self.animation_markers()?;
+        if self.scene != origin {
+            return Ok(());
+        }
+        self.combat_tick()?;
+        if self.scene != origin {
+            return Ok(());
+        }
+        self.death_phase()?;
+        if self.scene != origin {
+            return Ok(());
+        }
         self.flat_event("tick", None)?;
+        self.event_tick()?;
         Ok(())
     }
-    fn move_axis(&mut self, id: &str, x: bool, delta: i64) -> Result<(Aabb, Aabb)> {
+    pub(super) fn move_axis(&mut self, id: &str, x: bool, delta: i64) -> Result<(Aabb, Aabb)> {
         let start = self.entities[id].aabb();
         if delta == 0 {
             return Ok((start, start));
         }
-        let plane = self.entities[id]
-            .spec
-            .flatland
-            .as_ref()
-            .map_or(0, |a| a.plane);
+        let plane = self.actor_plane(id);
+        let map = self.effective_map(plane);
         let mut candidate = self.entities.clone();
+        for (other, e) in &mut candidate {
+            if let Some(a) = &mut e.spec.flatland {
+                a.plane = self.actor_plane(other);
+            }
+        }
         if !push_axis(
-            &self.project.scenes[&self.scene].map,
+            &map,
             &mut candidate,
             id,
             x,
@@ -646,11 +948,17 @@ impl World {
         ) {
             // Clamp blocked movers up to contact, preserving free sliding.
             let mut allowed = delta;
-            for wall in map_boxes(&self.project.scenes[&self.scene].map, start, delta, x) {
+            for wall in map_boxes(&map, start, delta, x) {
                 allowed = start.sweep_axis(wall, allowed, x);
             }
             for (other, e) in &self.entities {
-                if other != id && blocks(e, plane) {
+                if other != id
+                    && self.actor_plane(other) == plane
+                    && e.spec
+                        .flatland
+                        .as_ref()
+                        .is_some_and(|a| a.body != BodyMode::Pass)
+                {
                     allowed = start.sweep_axis(e.aabb(), allowed, x);
                 }
             }
@@ -661,6 +969,9 @@ impl World {
                 e.position.y += allowed;
             }
         } else {
+            for (other, e) in &mut candidate {
+                e.spec = self.entities[other].spec.clone();
+            }
             self.entities = candidate;
         }
         Ok((start, self.entities[id].aabb()))
@@ -763,18 +1074,21 @@ impl World {
         {
             return Err(Error("invalid saved timer/popup".into()));
         }
-        for e in save.actors.values().filter(|e| {
-            e.spec.player.is_some()
+        let mut candidate = self.clone();
+        candidate.scene = save.scene.clone();
+        candidate.tick = save.tick;
+        candidate.entities = save.actors.clone();
+        candidate.flatland = save.runtime.clone();
+        candidate.validate_systems()?;
+        for (id, e) in &candidate.entities {
+            if (e.spec.player.is_some()
                 || e.spec
                     .flatland
                     .as_ref()
-                    .is_some_and(|a| a.body != BodyMode::Pass)
-        }) {
-            if map_boxes(&scene.map, e.aabb(), 0, true)
-                .iter()
-                .any(|wall| e.aabb().overlaps(*wall))
+                    .is_some_and(|a| a.body != BodyMode::Pass))
+                && !candidate.actor_clear(id, e.position, candidate.actor_plane(id))
             {
-                return Err(Error("saved actor overlaps map wall".into()));
+                return Err(Error("saved actor overlaps map/entity wall".into()));
             }
         }
         self.tick = save.tick;
@@ -885,7 +1199,7 @@ fn push_axis(
     visited.remove(id);
     true
 }
-fn next_direction(
+pub(super) fn next_direction(
     map: &Map,
     at: [i64; 2],
     goal: [i64; 2],
@@ -928,4 +1242,22 @@ fn next_direction(
             if flee { -d } else { d }
         })
         .unwrap_or([0, 0])
+}
+
+fn lua_integer(value: mlua::Value) -> mlua::Result<i64> {
+    if let mlua::Value::Integer(i) = value {
+        Ok(i)
+    } else {
+        Err(mlua::Error::RuntimeError(
+            "expected an integer; floating-point commands are not supported".into(),
+        ))
+    }
+}
+fn push_lua_action(queue: &std::cell::RefCell<Vec<Action>>, action: Action) -> mlua::Result<()> {
+    let mut q = queue.borrow_mut();
+    if q.len() >= 64 {
+        return Err(mlua::Error::RuntimeError("Lua command limit 64".into()));
+    }
+    q.push(action);
+    Ok(())
 }

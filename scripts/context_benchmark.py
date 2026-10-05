@@ -26,9 +26,9 @@ def main():
     full_snapshot=(ROOT/'artifacts/flatland/context-snapshot.json').read_text()
     try:
         import tiktoken
-        encoder=tiktoken.get_encoding('o200k_base')
+        encoder=tiktoken.get_encoding('cl100k_base')
         token=lambda s:len(encoder.encode(s))
-        tokenizer={'package':f'tiktoken {tiktoken.__version__}','encoding':'o200k_base'}
+        tokenizer={'package':f'tiktoken {tiktoken.__version__}','encoding':'cl100k_base'}
     except Exception:
         token=lambda s:None
         tokenizer=None

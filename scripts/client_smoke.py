@@ -40,7 +40,7 @@ def main():
             assert digest==hashlib.sha256(frame.convert('RGBA').tobytes()).hexdigest()
         if project.name=='basement_demo':
             assert digest=='38cc4352e7160dcf9104cbe19acd709e36d8165989b3c99d8b6611f0f76e932b'
-        destination = ROOT / ('artifacts/client-smoke' if project.name=='basement_demo' else 'artifacts/flatland-smoke')
+        destination = ROOT / ('artifacts/client-smoke' if project.name=='basement_demo' else ('artifacts/signal-yard-smoke' if project.name=='flatland_signal_yard' else 'artifacts/flatland-smoke'))
         destination.mkdir(parents=True, exist_ok=True)
         import shutil
         for name in ['result.json', 'snapshot.json', 'frame.png']:

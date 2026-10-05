@@ -1,0 +1,26 @@
+schema_version=2
+name="FlatLand / Signal Yard"
+start_scene="yard"
+features=["combat", "inventory", "quests", "event_scenes", "turn_battle", "planes", "atlas", "music", "lua_rng"]
+[window]
+width=320
+height=224
+[scenes]
+yard="scenes/yard.json5"
+[state."yard.complete"]
+kind="bool"
+default=false
+[state."yard.roll"]
+kind="integer"
+default=0
+[state."yard.frames"]
+kind="integer"
+default=0
+[[tests]]
+name="signal-yard-corpus"
+replay="replays/journey.json"
+golden_rgba_sha256="f50923d16622d3ee8232739c821d2e8cc6e98acaca9b0dc2c9c174604962a987"
+[[tests.assertions]]
+tick=714
+scene="yard"
+state={"yard.complete"=true,"yard.roll"=3}

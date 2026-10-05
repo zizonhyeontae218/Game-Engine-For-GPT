@@ -48,3 +48,21 @@ Demo stable scene ids: `room_a`, `room_b`; named transition spawn: `entry`. Refe
 Workspace engine version is now 0.2.0-alpha.1; existing v1 framebuffer goldens remain unchanged.
 
 FlatLand rc.1: `flatland.animation.directions` selects fixed-tick up/down/left/right clips from actor facing. Layout schema 2 permits a joystick-only profile; game-local control files are packaged presets. Android identity is fixed by application ID and pinned release certificate, with increasing version code.
+
+## FlatLand gameplay systems (schema2 / 0.2.0)
+
+| Identifier | Owner / persistence | Contract |
+|---|---|---|
+| `systems.rng` | World/save | Nonzero xorshift64 integer state; command/tick failures restore it |
+| `inventory`, `equipment` | World/save | Stable item IDs, stack quantities, owned slotted items |
+| `quests.<id>` | World/save | Status, bounded objectives, once-only rewarded latch |
+| `attacks`, `cooldowns`, `pending_deaths` | Scene/save | Owner/preset/start/hit IDs, ordered combat/death effects |
+| `planes`, `elevation`, `patches` | World/save | Actor plane/visual z, sparse scene:x:y map replacement |
+| `animations`, `patrol`, `portal_latches` | Scene/save | Fixed clip phase, patrol cursor, portal arrival node |
+| `events`, `event_serial`, `paused_ticks` | World/save | Bounded event stack and PC, waiting/battle, exact parent actors/camera/planes/animation; frozen parent clocks |
+| `music` | World/save | Cue/file/volume; device handles excluded |
+| resource `revision` | Authoring source | SHA256 checked before transactional merge/replace |
+| bundle `features` | Package schema3 | Required capability IDs; ABI remains1, older importers reject |
+
+Actor IDs remain scene-local. Scene transitions finish old-scene pending work; event scenes
+return before world transitions. Save content revision prevents silent schema/content drift.

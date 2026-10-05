@@ -59,6 +59,21 @@ impl ClientInput {
 #[derive(Deserialize)]
 #[serde(tag = "op", rename_all = "snake_case", deny_unknown_fields)]
 enum Request {
+    Replay {
+        session: u64,
+        replay: ge4g_project::Replay,
+    },
+    Choose {
+        session: u64,
+        choice: String,
+    },
+    Command {
+        session: u64,
+        actions: Vec<ge4g_project::flatland::Action>,
+    },
+    Skip {
+        session: u64,
+    },
     Validate {
         project: String,
     },
@@ -114,6 +129,9 @@ fn status(session: u64, live: &Session) -> Value {
         .and_then(|e| e.data.get("action"))
         .cloned();
     let mut response = json!({"abi_version": ABI_VERSION, "ok": true, "session": session, "tick": snapshot.tick, "scene": snapshot.scene, "width": live.frame.width, "height": live.frame.height, "frame_bytes": live.frame.rgba.len(), "state": snapshot.state, "dialogue": dialogue, "last_action": action});
+    response["waiting"] = live.world.waiting().unwrap_or(Value::Null);
+    response["systems"]=live.world.flatland.systems.as_ref().map(|s|json!({"inventory":s.inventory,"equipment":s.equipment,"quests":s.quests,"music":s.music,"event":s.events.last().map(|f|json!({"id":f.event,"pc":f.pc}))})).unwrap_or(Value::Null);
+    response["catalog"] = json!({"items":live.world.project.scenes[&live.world.scene].gameplay.items.iter().map(|(id,i)|(id,json!({"name":i.name,"usable":!i.use_actions.is_empty(),"slot":i.slot}))).collect::<BTreeMap<_,_>>(),"quests":live.world.project.scenes[&live.world.scene].gameplay.quests.iter().map(|(id,q)|(id,json!({"name":q.name,"objectives":q.objectives,"objective_labels":q.objective_labels}))).collect::<BTreeMap<_,_>>()});
     response["game_schema"] = json!(live.world.project.manifest.schema_version);
     response["popup"] = if let Some(p) = &live.world.flatland.popup {
         json!(p)
@@ -182,6 +200,48 @@ fn dispatch(text: &str) -> Result<Value> {
         .lock()
         .map_err(|_| Error("native session registry is poisoned; restart the client".into()))?;
     match request {
+        Request::Replay { session, replay } => {
+            replay.validate()?;
+            if replay.ticks > 10000 {
+                return Err(Error("native replay limit 10000 ticks".into()));
+            }
+            let live = registry
+                .sessions
+                .get_mut(&session)
+                .ok_or_else(|| Error("unknown session".into()))?;
+            for _ in 0..replay.ticks {
+                live.world.step_replay(&replay)?;
+            }
+            live.frame = render(&live.world.project, &live.world.snapshot(), live.debug)?;
+            Ok(status(session, live))
+        }
+        Request::Choose { session, choice } => {
+            let live = registry
+                .sessions
+                .get_mut(&session)
+                .ok_or_else(|| Error("unknown session".into()))?;
+            live.world.choose(&choice)?;
+            live.frame = render(&live.world.project, &live.world.snapshot(), live.debug)?;
+            Ok(status(session, live))
+        }
+        Request::Command { session, actions } => {
+            let live = registry
+                .sessions
+                .get_mut(&session)
+                .ok_or_else(|| Error("unknown session".into()))?;
+            live.world.command(&actions)?;
+            live.frame = render(&live.world.project, &live.world.snapshot(), live.debug)?;
+            Ok(status(session, live))
+        }
+        Request::Skip { session } => {
+            let live = registry
+                .sessions
+                .get_mut(&session)
+                .ok_or_else(|| Error("unknown session".into()))?;
+            live.world.skip_event_wait()?;
+            live.frame = render(&live.world.project, &live.world.snapshot(), live.debug)?;
+            Ok(status(session, live))
+        }
         Request::Open { project, load } => {
             if registry.sessions.len() >= 8 {
                 return Err(Error(
@@ -230,7 +290,7 @@ fn dispatch(text: &str) -> Result<Value> {
             let popup = live.world.flatland.popup_serial;
             for _ in 0..ticks {
                 live.world.step_actions(&input.core(), &input.actions)?;
-                if live.world.flatland.popup_serial != popup {
+                if live.world.flatland.popup_serial != popup || live.world.waiting().is_some() {
                     break;
                 }
             }

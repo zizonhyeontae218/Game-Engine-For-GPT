@@ -121,6 +121,7 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `client/test/flatland_test.dart` — Repository file; inspect only when relevant to the task.
 - `client/test/library_test.dart` — Repository file; inspect only when relevant to the task.
 - `client/test/player_test.dart` — Repository file; inspect only when relevant to the task.
+- `client/test/signal_yard_test.dart` — Repository file; inspect only when relevant to the task.
 - `client/test/widget_test.dart` — Repository file; inspect only when relevant to the task.
 - `client/windows/.gitignore` — Repository file; inspect only when relevant to the task.
 - `client/windows/CMakeLists.txt` — Repository file; inspect only when relevant to the task.
@@ -149,16 +150,21 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `crates/ge4g-core/Cargo.toml` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-core/src/lib.rs` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-platform/Cargo.toml` — Engine source, package configuration or behavioral verification.
+- `crates/ge4g-platform/src/audio.rs` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-platform/src/lib.rs` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-project/Cargo.toml` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-project/src/flatland.rs` — Engine source, package configuration or behavioral verification.
+- `crates/ge4g-project/src/gameplay.rs` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-project/src/lib.rs` — Engine source, package configuration or behavioral verification.
+- `crates/ge4g-project/src/patch.rs` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-render2d/Cargo.toml` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-render2d/src/lib.rs` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-runtime/Cargo.toml` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-runtime/src/flatland.rs` — Engine source, package configuration or behavioral verification.
+- `crates/ge4g-runtime/src/gameplay.rs` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-runtime/src/lib.rs` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-runtime/tests/flatland.rs` — Engine source, package configuration or behavioral verification.
+- `crates/ge4g-runtime/tests/systems.rs` — Engine source, package configuration or behavioral verification.
 - `docs/AGENT_WORKFLOW.md` — Task-specific context/tool discipline guidance.
 - `docs/ARCHITECTURE.md` — Basement architecture and subsystem boundaries.
 - `docs/AUTHORING.md` — Manifest, components, replay and assertion authoring guide.
@@ -167,11 +173,14 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `docs/CLI_CONTRACT.md` — Agent-facing CLI contract.
 - `docs/FAILURE_NOTES.md` — Durable record of non-obvious recurring failures.
 - `docs/FLATLAND_AUTHORING.md` — Repository file; inspect only when relevant to the task.
+- `docs/FLATLAND_QUICKSTART.md` — Repository file; inspect only when relevant to the task.
+- `docs/FLATLAND_RELEASE.md` — Repository file; inspect only when relevant to the task.
 - `docs/FLATLAND_SPEC.md` — Repository file; inspect only when relevant to the task.
 - `docs/LAUNCHER_PHILOSOPHY.md` — Repository file; inspect only when relevant to the task.
 - `docs/RELEASE_NOTES.md` — Release evidence and honest human acceptance status.
 - `docs/RESEARCH_BASIS.md` — Research basis for the agent setup.
 - `docs/TESTPLAN.md` — Acceptance and deterministic verification plan.
+- `docs/benchmarks/flatland-task-context.json` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/active/.gitkeep` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/active/flatland.md` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/completed/.gitkeep` — Repository file; inspect only when relevant to the task.
@@ -272,6 +281,43 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `examples/flatland_pacman/hooks.lua` — Repository file; inspect only when relevant to the task.
 - `examples/flatland_pacman/maze.json5` — Repository file; inspect only when relevant to the task.
 - `examples/flatland_pacman/replays/journey.json` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_signal_yard/README.md` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_signal_yard/assets/LICENSE-CC0.txt` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_signal_yard/assets/canopy.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_signal_yard/assets/crate.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_signal_yard/assets/drone_0.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_signal_yard/assets/drone_1.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_signal_yard/assets/drone_2.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_signal_yard/assets/drone_3.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_signal_yard/assets/gate.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_signal_yard/assets/guard_0.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_signal_yard/assets/guard_1.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_signal_yard/assets/guard_2.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_signal_yard/assets/guard_3.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_signal_yard/assets/guide_0.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_signal_yard/assets/guide_1.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_signal_yard/assets/guide_2.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_signal_yard/assets/guide_3.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_signal_yard/assets/guide_atlas.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_signal_yard/assets/hero_0.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_signal_yard/assets/hero_1.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_signal_yard/assets/hero_2.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_signal_yard/assets/hero_3.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_signal_yard/assets/key.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_signal_yard/assets/ramp.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_signal_yard/assets/terminal.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_signal_yard/audio/door.wav` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_signal_yard/audio/hit.wav` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_signal_yard/audio/music.wav` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_signal_yard/audio/quest.wav` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_signal_yard/controls/bindings.json` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_signal_yard/controls/layouts.json` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_signal_yard/data/signals.lua` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_signal_yard/data/systems.json5` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_signal_yard/data/yard.lua` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_signal_yard/ge4g.toml` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_signal_yard/replays/journey.json` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_signal_yard/scenes/yard.json5` — Repository file; inspect only when relevant to the task.
 - `packaging/arch/PKGBUILD` — Repository file; inspect only when relevant to the task.
 - `packaging/arch/ge4g.png` — Repository file; inspect only when relevant to the task.
 - `scripts/bundle_desktop.py` — Repository file; inspect only when relevant to the task.
@@ -279,8 +325,11 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `scripts/client_smoke.py` — Repository file; inspect only when relevant to the task.
 - `scripts/context_benchmark.py` — Repository file; inspect only when relevant to the task.
 - `scripts/filetree.py` — FILETREE update/lint helper.
+- `scripts/flatland_task_benchmark.py` — Repository file; inspect only when relevant to the task.
 - `scripts/interactive_smoke.py` — Real window/headless replay equivalence check.
+- `scripts/make_signal_yard_assets.py` — Repository file; inspect only when relevant to the task.
 - `scripts/pack_game.py` — Repository file; inspect only when relevant to the task.
 - `scripts/package.py` — Bundle a built executable, demo and user documentation.
 - `scripts/sign_android.py` — Repository file; inspect only when relevant to the task.
+- `scripts/verify_audio_adapter.py` — Repository file; inspect only when relevant to the task.
 - `templates/EXECPLAN_TEMPLATE.md` — Template for checked-in execution plans.

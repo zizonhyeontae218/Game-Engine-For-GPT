@@ -6,7 +6,7 @@ license.workspace = true
 
 [features]
 default = ["window"]
-window = ["dep:minifb"]
+window = ["dep:minifb", "dep:rodio"]
 
 [dependencies]
 ge4g-core = { path = "../ge4g-core" }
@@ -14,3 +14,5 @@ ge4g-project = { path = "../ge4g-project" }
 ge4g-runtime = { path = "../ge4g-runtime" }
 ge4g-render2d = { path = "../ge4g-render2d" }
 minifb = { version = "0.28", default-features = false, features = ["x11"], optional = true }
+
+rodio = { version = "0.21.1", default-features = false, features = ["playback", "wav", "vorbis"], optional = true }

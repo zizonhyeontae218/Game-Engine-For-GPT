@@ -9,6 +9,7 @@ schemars = "0.8"
 ge4g-core = { path = "../ge4g-core" }
 serde.workspace = true
 serde_json.workspace = true
+sha2.workspace = true
 toml = "0.8"
 json5 = "0.4"
 png = "0.17"

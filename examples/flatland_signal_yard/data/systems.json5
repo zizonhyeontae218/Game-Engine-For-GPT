@@ -1,0 +1,313 @@
+{
+  "gameplay": {
+    "seed": 7391,
+    "items": {
+      "key": {
+        "name": "보안 열쇠",
+        "stack": 1
+      },
+      "coin": {
+        "name": "코인",
+        "stack": 99
+      },
+      "potion": {
+        "name": "응급 키트",
+        "stack": 9,
+        "use_actions": [
+          {
+            "op": "heal",
+            "entity": "$player",
+            "amount": 8
+          }
+        ]
+      },
+      "blade": {
+        "name": "작업 검",
+        "stack": 1,
+        "slot": "weapon",
+        "attack_bonus": 1
+      }
+    },
+    "quests": {
+      "signal": {
+        "name": "신호탑 재가동",
+        "objectives": {
+          "key": 1,
+          "combat": 1,
+          "battle": 1
+        },
+        "rewards": [
+          {
+            "op": "give",
+            "item": "coin",
+            "count": 10
+          },
+          {
+            "op": "set",
+            "key": "yard.complete",
+            "value": true
+          },
+          {
+            "op": "sound",
+            "cue": "quest"
+          }
+        ],
+        "objective_labels": {
+          "key": "열쇠 찾기",
+          "combat": "경비 로봇 처치",
+          "battle": "턴제 전투 승리"
+        }
+      }
+    },
+    "attacks": {
+      "blade": {
+        "damage": 3,
+        "range": 32,
+        "startup": 4,
+        "active": 3,
+        "recovery": 12,
+        "immunity": 8,
+        "knockback": 4,
+        "on_hit": [
+          {
+            "op": "sound",
+            "cue": "hit"
+          }
+        ]
+      },
+      "bolt": {
+        "damage": 2,
+        "range": 32,
+        "startup": 2,
+        "active": 1,
+        "recovery": 20,
+        "projectile_speed": 180,
+        "lifetime": 100,
+        "on_hit": [
+          {
+            "op": "sound",
+            "cue": "hit"
+          }
+        ]
+      },
+      "claw": {
+        "damage": 2,
+        "range": 26,
+        "startup": 10,
+        "active": 2,
+        "recovery": 30,
+        "immunity": 20
+      }
+    },
+    "events": {
+      "intro": [
+        {
+          "op": "say",
+          "text": "SIGNAL YARD / 신호 실험장\n이동: 조이스틱 또는 WASD\nZ: 근접 검 · X: 투사체 · C: 응급 키트 · SPACE: 상호작용\n게임 메뉴에서 인벤토리/퀘스트를 확인할 수 있습니다.\n선택지와 전투에서도 저장할 수 있습니다."
+        },
+        {
+          "op": "choice",
+          "text": "신호탑을 재가동해 주세요. 노란 열쇠를 찾고, 빨간 경비 로봇을 물리친 뒤, 보라색 전투 터미널을 완료하세요.",
+          "options": [
+            {
+              "id": "accept",
+              "text": "임무 수락",
+              "next": 2,
+              "actions": [
+                {
+                  "op": "quest",
+                  "quest": "signal",
+                  "status": "active"
+                },
+                {
+                  "op": "give",
+                  "item": "potion",
+                  "count": 3
+                },
+                {
+                  "op": "give",
+                  "item": "blade",
+                  "count": 1
+                },
+                {
+                  "op": "equip",
+                  "slot": "weapon",
+                  "item": "blade"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "op": "say",
+          "text": "노란 상자는 밀 수 있습니다. 회색 벽 앞 상자 두 개는 함께 막힙니다.\n청록 램프에서 SPACE를 누르면 다리 위/아래 평면을 바꿉니다.\n초록 수관 뒤를 지나고, 경비 로봇의 순찰·추격·공격을 확인하세요."
+        },
+        {
+          "op": "return"
+        }
+      ],
+      "arena": [
+        {
+          "op": "choice",
+          "text": "TURN ARENA / 턴제 실험\n전투 중 저장 후 불러와도 같은 턴과 난수 상태를 이어갑니다.",
+          "options": [
+            {
+              "id": "start",
+              "text": "전투 시작",
+              "next": 1
+            },
+            {
+              "id": "leave",
+              "text": "돌아가기",
+              "next": 3
+            }
+          ]
+        },
+        {
+          "op": "battle",
+          "fighters": [
+            {
+              "id": "hero",
+              "name": "기술자",
+              "hp": 24,
+              "attack": 6,
+              "defense": 1,
+              "speed": 8
+            },
+            {
+              "id": "sentry",
+              "name": "방어 드론",
+              "hp": 12,
+              "attack": 3,
+              "defense": 1,
+              "speed": 5,
+              "enemy": true
+            },
+            {
+              "id": "scout",
+              "name": "정찰 드론",
+              "hp": 9,
+              "attack": 2,
+              "speed": 10,
+              "enemy": true
+            }
+          ],
+          "victory": [
+            {
+              "op": "give",
+              "item": "coin",
+              "count": 2
+            }
+          ],
+          "defeat": [
+            {
+              "op": "say",
+              "text": "패배했습니다. 다시 터미널에서 도전하세요."
+            }
+          ]
+        },
+        {
+          "op": "say",
+          "text": "전투가 끝났습니다. 원래 실험장으로 돌아갑니다."
+        },
+        {
+          "op": "return"
+        }
+      ],
+      "cutscene": [
+        {
+          "op": "camera",
+          "at": [
+            192,
+            96
+          ]
+        },
+        {
+          "op": "do",
+          "actions": [
+            {
+              "op": "move",
+              "entity": "guide",
+              "at": [
+                368,
+                240
+              ]
+            },
+            {
+              "op": "play_clip",
+              "entity": "guide",
+              "clip": "wave"
+            }
+          ]
+        },
+        {
+          "op": "wait",
+          "ticks": 45
+        },
+        {
+          "op": "say",
+          "text": "신호탑 관측 / CUTSCENE\n이 동안 실험장의 적·공격·타이머는 멈춥니다.\n카메라와 배우를 조작한 뒤 원래 위치로 복귀합니다."
+        },
+        {
+          "op": "return"
+        }
+      ],
+      "journal": [
+        {
+          "op": "branch",
+          "when": {
+            "op": "quest_is",
+            "quest": "signal",
+            "status": "completed"
+          },
+          "yes": 3,
+          "no": 1
+        },
+        {
+          "op": "say",
+          "text": "신호탑 임무: 열쇠 찾기 · 경비 로봇 처치 · 턴제 전투 승리.\n상단 메뉴의 퀘스트에서 진행도를 확인하세요."
+        },
+        {
+          "op": "return"
+        },
+        {
+          "op": "say",
+          "text": "신호 복구 완료! 보상은 한 번만 지급됩니다."
+        },
+        {
+          "op": "return"
+        }
+      ]
+    },
+    "camera": {
+      "target": "player",
+      "bounds": [
+        0,
+        0,
+        192,
+        96
+      ]
+    },
+    "modules": {
+      "signals": "data/signals.lua"
+    },
+    "clips": {
+      "wave": {
+        "frames": [
+          "assets/guide_0.png",
+          "assets/guide_1.png",
+          "assets/guide_2.png",
+          "assets/guide_3.png"
+        ],
+        "ticks": 4,
+        "once": true
+      }
+    }
+  },
+  "sounds": {
+    "hit": "audio/hit.wav",
+    "door": "audio/door.wav",
+    "quest": "audio/quest.wav",
+    "music": "audio/music.wav"
+  }
+}

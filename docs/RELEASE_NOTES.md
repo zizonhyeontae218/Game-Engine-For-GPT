@@ -1,3 +1,13 @@
+# Current release — Basement 0.2 FlatLand 0.2.0
+
+See [full release evidence](FLATLAND_RELEASE.md), [implemented authoring contract](FLATLAND_AUTHORING.md),
+and [Signal Yard](../examples/flatland_signal_yard/README.md). User reported rc.1 testing
+complete on 2026-10-05. This final adds quests/items, advanced combat, layered bridges,
+conditional choices, cutscenes and turn battle. Android retains the rc.1 certificate
+and increments versionCode to4. New device acceptance is distinguished from builds.
+
+---
+
 # GE4G 0.1.0 — Basement
 
 Date: 2026-10-02. The requested repository started empty. The supplied GE4C 0.1 instruction set was implemented as **GE4G / GameEngineForGPT**, with binary `ge4g`, project `ge4g.toml`, and six Rust edition 2024 workspace packages. This initial release has no earlier published schemas to migrate.

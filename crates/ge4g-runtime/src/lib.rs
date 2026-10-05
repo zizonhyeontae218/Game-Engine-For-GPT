@@ -1,5 +1,6 @@
 //! One authoritative fixed-step simulation shared by every adapter.
 mod flatland;
+mod gameplay;
 pub use flatland::Resume;
 use ge4g_core::{
     Aabb, ENGINE_VERSION, EntitySnapshot, Error, Event, Input, Result, SUBPIXELS, Snapshot,
@@ -65,6 +66,7 @@ impl LiveEntity {
         }
     }
 }
+#[derive(Clone)]
 pub struct World {
     pub project: Project,
     pub tick: u64,
@@ -77,9 +79,11 @@ pub struct World {
     triggers: BTreeSet<String>,
     interact_held: bool,
     held_actions: BTreeSet<String>,
+    requested_actions: BTreeSet<String>,
     pub flatland: flatland::FlatState,
     lua_budget: std::sync::Arc<std::sync::atomic::AtomicU32>,
     command_budget: usize,
+    action_depth: usize,
 }
 impl World {
     pub fn new(project: Project) -> Result<Self> {
@@ -103,9 +107,11 @@ impl World {
             triggers: BTreeSet::new(),
             interact_held: false,
             held_actions: BTreeSet::new(),
+            requested_actions: BTreeSet::new(),
             flatland: flatland::FlatState::default(),
             lua_budget: std::sync::Arc::new(std::sync::atomic::AtomicU32::new(0)),
             command_budget: 0,
+            action_depth: 0,
         };
         if save.is_some() {
             world.emit(
@@ -120,6 +126,7 @@ impl World {
                 world.load_flatland(path)?;
             } else {
                 world.flat_event("start", None)?;
+                world.event_tick()?;
             }
         }
         Ok(world)
@@ -169,18 +176,28 @@ impl World {
             .transpose()?;
         self.scene = scene.to_owned();
         self.entities.clear();
+        if let Some(s) = &mut self.flatland.systems {
+            s.planes.clear();
+            s.elevation.clear();
+            s.animations.clear();
+            s.attacks.clear();
+            s.cooldowns.clear();
+            s.patrol.clear();
+            s.portal_latches.clear();
+            s.camera = None;
+        }
         self.contacts.clear();
         self.triggers.clear();
-        for mut entity in spec.entities {
-            if entity.player.is_some()
-                && let Some(pos) = position
-            {
-                entity.position = pos;
-            }
+        for entity in spec.entities {
+            let at = if entity.player.is_some() {
+                position.unwrap_or(entity.position)
+            } else {
+                entity.position
+            };
             self.entities.insert(
                 entity.id.clone(),
                 LiveEntity {
-                    position: Vec2::pixels(entity.position[0], entity.position[1]),
+                    position: Vec2::pixels(at[0], at[1]),
                     actor: flatland::ActorState::new(&entity),
                     spec: entity,
                 },
@@ -214,7 +231,7 @@ impl World {
             tick_hz: TICK_HZ,
             subpixels_per_pixel: SUBPIXELS,
             scene: self.scene.clone(),
-            camera: scene.camera,
+            camera: self.camera_position(),
             background: scene.background,
             entities: self
                 .entities
@@ -226,7 +243,26 @@ impl World {
                         if let Some(v) = snapshot.flatland.as_mut().and_then(Value::as_object_mut) {
                             v.insert("depth".into(), json!(a.depth));
                             v.insert("body".into(), json!(a.body));
-                            v.insert("plane".into(), json!(a.plane));
+                            v.insert("plane".into(), json!(self.actor_plane(&e.spec.id)));
+                            let z = self
+                                .flatland
+                                .systems
+                                .as_ref()
+                                .and_then(|s| s.elevation.get(&e.spec.id))
+                                .copied()
+                                .unwrap_or(a.z);
+                            if a.health_bar {
+                                v.insert("hp_max".into(), json!(a.hp));
+                            }
+                            if z != 0 {
+                                v.insert("z".into(), json!(z));
+                            }
+                            if let Some(size) = a.visual_size {
+                                v.insert("visual_size".into(), json!(size));
+                            }
+                            if a.anchor != [0, 0] {
+                                v.insert("anchor".into(), json!(a.anchor));
+                            }
                             v.insert(
                                 "rotate".into(),
                                 json!(a.animation.as_ref().is_some_and(|a| a.rotate)),
@@ -250,14 +286,56 @@ impl World {
                                 };
                                 anim.directions.get(direction).unwrap_or(&anim.frames)
                             };
-                            snapshot.texture = Some(
-                                frames[(self.tick / u64::from(anim.ticks)) as usize % frames.len()]
-                                    .clone(),
-                            );
+                            let phase = self.tick.saturating_sub(
+                                self.flatland.systems.as_ref().map_or(0, |s| s.paused_ticks),
+                            ) / u64::from(anim.ticks);
+                            if let Some(atlas) = &anim.atlas {
+                                let n = if anim.once {
+                                    (phase as usize).min(atlas.indices.len() - 1)
+                                } else {
+                                    phase as usize % atlas.indices.len()
+                                };
+                                let index = atlas.indices[n];
+                                let t = &self.project.textures[&atlas.file];
+                                let columns = t.width / atlas.cell[0];
+                                snapshot.texture = Some(atlas.file.clone());
+                                snapshot.flatland.as_mut().unwrap()["atlas"] = json!([
+                                    (index % columns) * atlas.cell[0],
+                                    (index / columns) * atlas.cell[1],
+                                    atlas.cell[0],
+                                    atlas.cell[1]
+                                ]);
+                            } else {
+                                let n = if anim.once {
+                                    (phase as usize).min(frames.len() - 1)
+                                } else {
+                                    phase as usize % frames.len()
+                                };
+                                snapshot.texture = Some(frames[n].clone());
+                            }
+                        }
+                    }
+                    if let Some(anim) = self
+                        .flatland
+                        .systems
+                        .as_ref()
+                        .and_then(|s| s.animations.get(&e.spec.id))
+                    {
+                        let phase =
+                            (self.tick.saturating_sub(anim.start) / u64::from(anim.ticks)) as usize;
+                        let n = if anim.once {
+                            phase.min(anim.frames.len() - 1)
+                        } else {
+                            phase % anim.frames.len()
+                        };
+                        snapshot.texture = Some(anim.frames[n].clone());
+                        if let Some(v) = snapshot.flatland.as_mut().and_then(Value::as_object_mut) {
+                            v.remove("atlas");
                         }
                     }
                     snapshot
                 })
+                .chain(self.projectile_snapshots())
                 .collect(),
             state: self.state.values.clone(),
             events: self.events.iter().cloned().collect(),
@@ -283,7 +361,12 @@ impl World {
                 "client actions require at most 32 valid names of 1..64 ASCII characters".into(),
             ));
         }
-        self.step(input)?;
+        let previous = self.requested_actions.clone();
+        self.requested_actions = actions.clone();
+        if let Err(e) = self.step(input) {
+            self.requested_actions = previous;
+            return Err(e);
+        }
         for action in self
             .held_actions
             .difference(actions)
@@ -302,7 +385,27 @@ impl World {
         self.held_actions = actions.clone();
         Ok(())
     }
+    pub fn step_replay(&mut self, replay: &ge4g_project::Replay) -> Result<()> {
+        let before = self.clone();
+        let result = self.replay_tick(replay);
+        if result.is_err() {
+            *self = before;
+        }
+        result
+    }
+    fn replay_tick(&mut self, replay: &ge4g_project::Replay) -> Result<()> {
+        let tick = self.tick;
+        for command in replay.commands.iter().filter(|c| c.tick() == tick) {
+            match command {
+                ge4g_project::ReplayCommand::Choice { id, .. } => self.choose(id)?,
+                ge4g_project::ReplayCommand::Do { actions, .. } => self.command(actions)?,
+                ge4g_project::ReplayCommand::Skip { .. } => self.skip_event_wait()?,
+            }
+        }
+        self.step_actions(&replay.input_at(tick), &replay.actions_at(tick))
+    }
     pub fn release_inputs(&mut self) {
+        self.requested_actions.clear();
         self.interact_held = false;
         for action in std::mem::take(&mut self.held_actions) {
             self.emit("action_released", None, json!({"action": action}));

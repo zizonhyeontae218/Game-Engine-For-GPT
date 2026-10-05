@@ -52,13 +52,42 @@ class Player extends ChangeNotifier {
   int _audioCursor = 0;
   int _generation = 0;
   void _presentation() {
-    final candidate = status['popup'];
+    final candidate = status['waiting'] is Map
+        ? status['waiting']
+        : status['popup'];
     if (candidate is Map && candidate['id'] != _seenPopup) {
       popup = Map<String, dynamic>.from(candidate);
       _seenPopup = candidate['id'];
       popupVisible = true;
       release();
     }
+    if (candidate is Map && candidate['id'] == _seenPopup && popupVisible) {
+      popup = Map<String, dynamic>.from(candidate);
+    }
+    final music = (status['systems'] as Map?)?['music'] as Map?;
+    String? musicPath;
+    if (music?['file'] is String && game != null) {
+      final relative = packagePath(music!['file'] as String);
+      musicPath = p.joinAll([
+        game!.directory.path,
+        'game',
+        ...relative.split('/'),
+      ]);
+    }
+    unawaited(
+      audio
+          .syncMusic(
+            musicPath,
+            ((music?['volume'] as num?)?.toDouble() ?? 40) / 100,
+            suspended: paused,
+          )
+          .catchError((Object failure) {
+            if (!_disposed) {
+              message = '음악 재생 오류: $failure';
+              notifyListeners();
+            }
+          }),
+    );
     final cues = (status['audio'] as List? ?? []).whereType<Map>().toList()
       ..sort((a, b) => (a['id'] as int).compareTo(b['id'] as int));
     for (final cue in cues) {
@@ -84,6 +113,41 @@ class Player extends ChangeNotifier {
     _audioCursor = status['event_cursor'] as int? ?? _audioCursor;
   }
 
+  void choose(String choice) {
+    if (session == null) return;
+    try {
+      release();
+      status = engine.request({
+        'op': 'choose',
+        'session': session,
+        'choice': choice,
+      });
+      popupVisible = false;
+      _presentation();
+      refreshFrame();
+    } catch (failure) {
+      message = '선택 실패: $failure';
+    }
+    notifyListeners();
+  }
+
+  void command(List<Map<String, dynamic>> actions) {
+    if (session == null) return;
+    try {
+      release();
+      status = engine.request({
+        'op': 'command',
+        'session': session,
+        'actions': actions,
+      });
+      _presentation();
+      refreshFrame();
+    } catch (failure) {
+      message = '실행 실패: $failure';
+    }
+    notifyListeners();
+  }
+
   void dismissPopup() {
     release();
     popupVisible = false;
@@ -100,6 +164,7 @@ class Player extends ChangeNotifier {
   void toggleSound() {
     audio.muted = !audio.muted;
     if (audio.muted) audio.pause();
+    _presentation();
     notifyListeners();
   }
 
@@ -190,7 +255,11 @@ class Player extends ChangeNotifier {
   void setPaused(bool value) {
     release();
     paused = value;
-    if (value) audio.pause();
+    if (value) {
+      audio.pause();
+    } else {
+      _presentation();
+    }
     notifyListeners();
   }
 

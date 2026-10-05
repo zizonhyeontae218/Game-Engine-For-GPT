@@ -1,9 +1,8 @@
 # Basement 0.2 — FlatLand
 
-Status: full 0.2 design, 2026-10-03. First implementation is 0.2.0-alpha.1.
-This document describes the target, including unimplemented features. Actual alpha
-syntax and supported behavior are in `FLATLAND_AUTHORING.md`; examples here remain
-proposals where they differ from that implemented contract.
+Status: 0.2.0 implemented release contract and evidence are in `FLATLAND_AUTHORING.md`
+and `FLATLAND_RELEASE.md`. This original design retains proposed examples and optional
+future extensions; it must not be mistaken for exact syntax or an unlimited capability claim.
 
 ## Product outcome
 

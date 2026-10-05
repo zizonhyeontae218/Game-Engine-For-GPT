@@ -485,6 +485,8 @@ class _ClientHomeState extends State<ClientHome>
               for (final entry in const <(String, String, IconData)>[
                 ('edit', '조작 편집', Icons.tune),
                 ('preset', '게임 기본 프리셋 적용', Icons.restore),
+                ('inventory', '인벤토리 / 장비', Icons.backpack_outlined),
+                ('quests', '퀘스트', Icons.assignment_outlined),
                 ('save', '저장', Icons.save_outlined),
                 ('load', '불러오기', Icons.folder_open),
                 ('restart', '새 게임 / 재시작', Icons.replay),
@@ -526,6 +528,10 @@ class _ClientHomeState extends State<ClientHome>
           await edit();
         case 'preset':
           await live.store!.resetPreset();
+        case 'inventory':
+          await gameJournal(false);
+        case 'quests':
+          await gameJournal(true);
         case 'save':
           await live.save();
         case 'load':
@@ -546,6 +552,122 @@ class _ClientHomeState extends State<ClientHome>
       if (mounted) setState(() => failure = '$error');
     }
     if (mounted) focus.requestFocus();
+  }
+
+  Future<void> gameJournal(bool quests) async {
+    final live = player!;
+    final previous = live.paused;
+    live.setPaused(true);
+    await showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: paper,
+      builder: (context) => StatefulBuilder(
+        builder: (context, update) {
+          final systems = live.status['systems'] as Map? ?? {};
+          final catalog = live.status['catalog'] as Map? ?? {};
+          final owned = (systems[quests ? 'quests' : 'inventory'] as Map? ?? {})
+              .entries
+              .toList();
+          final definitions =
+              catalog[quests ? 'quests' : 'items'] as Map? ?? {};
+          return SafeArea(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                maxHeight: MediaQuery.sizeOf(context).height * .8,
+              ),
+              child: ListView(
+                shrinkWrap: true,
+                padding: const EdgeInsets.all(16),
+                children: [
+                  Text(
+                    quests ? 'QUESTS / 퀘스트' : 'INVENTORY / 인벤토리',
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w900,
+                      fontSize: 20,
+                    ),
+                  ),
+                  const Divider(thickness: 3, color: ink),
+                  if (owned.isEmpty) const Text('아직 없습니다.'),
+                  for (final entry in owned)
+                    Card(
+                      child: Padding(
+                        padding: const EdgeInsets.all(12),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              '${(definitions[entry.key] as Map?)?['name'] ?? entry.key}',
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            if (quests) ...[
+                              Text(
+                                {
+                                      'inactive': '미수락',
+                                      'active': '진행 중',
+                                      'completed': '완료',
+                                      'failed': '실패',
+                                    }[(entry.value as Map)['status']] ??
+                                    '',
+                              ),
+                              for (final objective
+                                  in ((entry.value as Map)['objectives']
+                                              as Map? ??
+                                          {})
+                                      .entries)
+                                Text(
+                                  '${(definitions[entry.key] as Map?)?['objective_labels']?[objective.key] ?? objective.key}: ${objective.value} / ${(definitions[entry.key] as Map?)?['objectives']?[objective.key] ?? '?'}',
+                                ),
+                            ] else ...[
+                              Text('수량 ${entry.value}'),
+                              if ((entry.value as int) > 0 &&
+                                  (definitions[entry.key] as Map?)?['usable'] ==
+                                      true)
+                                FilledButton(
+                                  onPressed: () {
+                                    live.command([
+                                      {'op': 'use', 'item': entry.key},
+                                    ]);
+                                    update(() {});
+                                  },
+                                  child: const Text('사용'),
+                                ),
+                              if ((entry.value as int) > 0 &&
+                                  (definitions[entry.key] as Map?)?['slot'] !=
+                                      null)
+                                OutlinedButton(
+                                  onPressed: () {
+                                    live.command([
+                                      {
+                                        'op': 'equip',
+                                        'item': entry.key,
+                                        'slot': definitions[entry.key]['slot'],
+                                      },
+                                    ]);
+                                    update(() {});
+                                  },
+                                  child: const Text('장착'),
+                                ),
+                            ],
+                          ],
+                        ),
+                      ),
+                    ),
+                  if (live.message != null) Text(live.message!),
+                  OutlinedButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: const Text('닫기'),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
+    );
+    if (mounted && player == live) live.setPaused(previous);
   }
 
   Widget playView() {
@@ -712,6 +834,17 @@ class _ClientHomeState extends State<ClientHome>
             Positioned.fill(
               child: GamePopup(
                 text: player!.popup!['text'] as String,
+                choices: (player!.popup!['options'] as List? ?? [])
+                    .whereType<Map>()
+                    .map((e) => Map<String, dynamic>.from(e))
+                    .toList(),
+                onChoose: (choice) {
+                  player!.choose(choice);
+                  focus.requestFocus();
+                },
+                onSave: () {
+                  player!.save();
+                },
                 onClose: () {
                   player!.dismissPopup();
                   focus.requestFocus();
@@ -744,24 +877,11 @@ class _ClientHomeState extends State<ClientHome>
         ),
         'replay',
       );
-      for (var tick = 0; tick < replay['ticks']; tick++) {
-        final actions = <String>{};
-        for (final span in replay['inputs']) {
-          if (tick >= span['start'] && tick < span['end']) {
-            actions.addAll((span['actions'] as List).cast<String>());
-          }
-        }
-        live.status = live.engine.request({
-          'op': 'advance',
-          'session': live.session,
-          'ticks': 1,
-          'input': {
-            for (final name in ['left', 'right', 'up', 'down', 'interact'])
-              name: actions.contains(name),
-            'actions': <String>[],
-          },
-        });
-      }
+      live.status = live.engine.request({
+        'op': 'replay',
+        'session': live.session,
+        'replay': replay,
+      });
       await live.refreshFrame();
       await Future<void>.delayed(const Duration(milliseconds: 500));
       final output = Directory(

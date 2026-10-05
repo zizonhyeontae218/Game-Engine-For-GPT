@@ -4,11 +4,11 @@
 
 Rust로 구현한 실제 엔진입니다. OpenAI 계정, LLM 호출, GPU, 인터넷 연결은 게임 실행에 필요하지 않습니다. 초기 의존성 다운로드에는 인터넷이 필요합니다.
 
-Basement 0.2 — **FlatLand rc.1** 플레이 후보를 구현했습니다. 게임별 모바일 프리셋, 게임 영역을 최대로 확보하는 간결한 UI, 방향별 스프라이트 애니메이션과 고정 Android 서명을 포함합니다. 맵·엔티티 분리, 밀기·방향, 경로 탐색 AI, 조건·액션, Lua 5.4와 정확한 저장 재개를 사용하는 **팩맨 스타일 데모**가 있습니다. [현재 작성 규격](docs/FLATLAND_AUTHORING.md) · [전체 설계](docs/FLATLAND_SPEC.md) · [구현 계획](docs/exec-plans/active/flatland.md). 컷씬·턴제 전투·정식 퀘스트 등 전체 0.2 정의는 후속 단계입니다.
+Basement 0.2 — **FlatLand 0.2.0**: 맵·엔티티 분리, 밀기·방향, 전투/적 AI, 아이템/장비/퀘스트, 평면·높이·카메라·아틀라스 애니메이션, 선택 대화·컷씬·턴제 전투와 Lua 5.4를 구현했습니다. 팩맨 스타일 데모와 **[Signal Yard](examples/flatland_signal_yard/README.md)** 기능 실험장이 함께 제공됩니다. 모바일은 `.ge4g` 불러오기, PC는 실행기를 내장한 배포 방식입니다. Android 0.2.0은 rc.1과 같은 서명으로 업데이트됩니다. [짧은 작성 안내](docs/FLATLAND_QUICKSTART.md) · [실제 작성 규격과 제한](docs/FLATLAND_AUTHORING.md).
 
 ## 빠른 시작
 
-안정판 Rust를 [rustup](https://rustup.rs/)으로 설치한 뒤 실행하세요. 기본 창 빌드는 Linux X11, Windows, macOS용 minifb 어댑터를 사용합니다. Linux에서는 X11 런타임 라이브러리가 필요하며 Wayland에서는 XWayland를 사용할 수 있습니다. CI가 검증하는 플랫폼은 Linux입니다.
+안정판 Rust를 [rustup](https://rustup.rs/)으로 설치한 뒤 실행하세요. 기본 창 빌드는 Linux X11, Windows, macOS용 minifb 어댑터를 사용합니다. Linux 창/오디오 빌드에는 ALSA 개발 패키지(`libasound2-dev`, Arch: `alsa-lib`)와 X11 런타임 라이브러리가 필요하며 Wayland에서는 XWayland를 사용할 수 있습니다. CI가 검증하는 플랫폼은 Linux입니다.
 
 ```sh
 git clone https://github.com/zizonhyeontae218/Game-Engine-For-GPT.git

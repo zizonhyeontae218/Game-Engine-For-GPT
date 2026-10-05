@@ -1,6 +1,6 @@
 # Basement 0.2 — FlatLand implementation plan
 
-Status: implementation in progress — first playable FlatLand slice with a Pac-Man-style demo.
+Status: full 0.2 implementation authorized on 2026-10-05; rc.1 user play-test passed.
 
 ## Outcome
 A reproducible AI-authored top-view game with maps separated from interactive entities,
@@ -16,10 +16,10 @@ manual landscape switching and separate dialogue/text popups on 2026-10-03.
 `docs/FLATLAND_SPEC.md` is the proposed contract, not implemented functionality.
 
 ## Scope / non-scope
-Implement the first playable slice: maps/bodies/facing, reusable grid AI, pickups/HP,
+The initial playable slice implemented: maps/bodies/facing, reusable grid AI, pickups/HP,
 conditions/actions and Lua, resumable saves, sprites and Flutter manual orientation/popups.
-The complete specification remains the later milestone target; turn combat/cutscene
-controllers and advanced combat are not to be claimed from this first demo. Implementation
+The first-slice restriction was superseded by the user on 2026-10-05. Complete remaining
+gameplay with Signal Yard, reusable event/quest/combat systems and measured authoring edits. Implementation
 is divided into vertical slices below. No 3D, networking or authoring GUI. Preserve the
 permanent launcher philosophy. Do not rename the currently shipped version to 0.2
 until the release gates pass.
@@ -62,7 +62,7 @@ Documentation validation alone does not prove engine capabilities.
 Completed: source inspection, requested scope, draft contract, execution order and agent
 routing. Completed first alpha: schema v2 maps/prefabs, body policies/facing, grid AI, conditions/actions, Lua, HP/pickups, exact resume and selective queries.
 Completed client additions: manual orientation, separate text popup, four-voice sound adapter, v2 import/embedded packaging.
-Remaining full-0.2 slices: inventory/quest controllers, richer combat/AI, elevation/bridge/camera/atlas features, serializable cutscenes/choices and turn battle, RNG, complete context/coverage benchmarks.
+2026-10-05: User completed rc.1 testing and requested full v0.2 plus a second demo proving features absent from Pac-Man. Implementing the remaining full-0.2 slices: inventory/quest controllers, richer combat/AI, elevation/bridge/camera/atlas features, serializable cutscenes/choices and turn battle, RNG, complete context/coverage benchmarks.
 User confirmed existing 0.1 Flutter runners worked on PC, Linux and Android.
 This is user-reported acceptance, not proof of the new 0.2 build.
 
@@ -95,3 +95,20 @@ full design as already shipped. Update this plan and
 `F(x).md` when cross-system identifiers actually become implemented. Generated filetree
 must describe actual files only. The authoring guide defines actual alpha syntax; unimplemented full-spec APIs remain
 proposed until their tests and documentation land.
+
+2026-10-05 implementation direction: optional scene gameplay resources and serialized system state retain old v2 defaults. Rust owns inventory/quests, combat instances, RNG, sparse patches, event program counters and battle choices. Flutter presents the same authoritative choice model; no Dart gameplay. Deliver a cross-feature adventure through Demos/0.2.0, using the fixed Android certificate and a higher versionCode.
+
+## 2026-10-05 full release implementation
+
+Completed gameplay, inventory/equipment, quests, combat/AI, bridge planes, atlas/named
+clips/camera/elevation, seeded Lua modules, serializable choices/cutscenes/turn battle,
+looping device music and compact revision-checked resource edits. Signal Yard authored
+journey completes at714 with13 coins and exact parent return. Systems tests resume
+every waiting choice and compare authoritative state. 44 Rust/15 Flutter tests; strict
+checks, original goldens and Linux Flutter/headless exact frame equivalence passed.
+Actual native audio adapter produced nonzero virtual PCM; physical audibility is not
+inferred. Full design's optional independent positional audio/dynamic congestion are
+explicit future extensions in shipped authoring contract.
+
+Next: inspect hosted platform artifacts, verify fixed-key Android update identity,
+complete Drive0.2.0 delivery and move this plan to completed.

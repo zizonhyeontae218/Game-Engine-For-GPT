@@ -85,7 +85,7 @@ reject the unsupported package version. Example:
 
 ```sh
 python3 scripts/pack_game.py examples/flatland_pacman \
-  --game-id demo.flatland.pacman --version 0.2.0-rc.1 --out dist/flatland-pacman.ge4g
+  --game-id demo.flatland.pacman --version 0.2.0 --out dist/flatland-pacman.ge4g
 ```
 
 To supply authored initial controls, use `--layouts path/layouts.json --bindings path/bindings.json`. Bindings are stamped with the specified game ID; existing player overrides remain preserved. Game-local `controls/layouts.json` and `controls/bindings.json` are automatically packaged ahead of generic app defaults, without extra CLI flags. Untouched legacy generic controls migrate to a new schema-2 game preset; edited mappings/layouts remain and can explicitly reset from the game menu.
@@ -154,3 +154,13 @@ older versions. Include the portable `.ge4g`, available platform packages, insta
 instructions and checksum manifest. Read back file names, parents and byte counts
 before giving the user the Drive folder/file links; internal workspace paths do not
 provide usable downloads for this user. Preserve existing sharing permissions.
+
+## Full 0.2 client
+
+Feature packages use bundle schema3, game schema2 and ABI1. Required capabilities
+are checked before import. The native waiting model drives Flutter dialogue, conditional
+choices and battle menus. Save within those scenes resumes their exact controller.
+Inventory/quest views use native state and execute validated use/equip commands.
+Music state owns one loop; sound owns four one-shot voices. Final Android versionCode4
+uses the rc.1 certificate, enabling an in-place update. Signal Yard embeds its own
+Z/X/C/SPACE presets. Desktop packages launch their game directly.

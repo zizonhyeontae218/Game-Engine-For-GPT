@@ -73,11 +73,34 @@ pub fn render(project: &Project, snapshot: &Snapshot, debug: bool) -> Result<Fra
         height,
         rgba: snapshot.background.repeat((width * height) as usize),
     };
-    if let Some(map) = project
+    if let Some(mut map) = project
         .scenes
         .get(&snapshot.scene)
-        .and_then(|s| s.map.as_ref())
+        .and_then(|s| s.map.clone())
     {
+        if let Some(patches) = snapshot
+            .flatland
+            .as_ref()
+            .and_then(|f| f.get("systems"))
+            .and_then(|s| s.get("patches"))
+            .and_then(|p| p.as_object())
+        {
+            for (key, tile) in patches {
+                if let Some(at) = key.strip_prefix(&format!("{}:", snapshot.scene)) {
+                    let a: Vec<_> = at
+                        .split(':')
+                        .filter_map(|v| v.parse::<usize>().ok())
+                        .collect();
+                    if a.len() == 2
+                        && a[1] < map.rows.len()
+                        && a[0] < map.rows[a[1]].len()
+                        && let Some(tile) = tile.as_str()
+                    {
+                        map.rows[a[1]].replace_range(a[0]..a[0] + 1, tile);
+                    }
+                }
+            }
+        }
         for (y, row) in map.rows.iter().enumerate() {
             for (x, ch) in row.chars().enumerate() {
                 let tile = &map.tiles[&ch.to_string()];
@@ -109,9 +132,40 @@ pub fn render(project: &Project, snapshot: &Snapshot, debug: bool) -> Result<Fra
         )
     });
     for entity in &entities {
-        let x = entity.position.x.div_euclid(SUBPIXELS) - snapshot.camera[0];
-        let y = entity.position.y.div_euclid(SUBPIXELS) - snapshot.camera[1];
-        let [w, h] = entity.size;
+        let anchor = entity
+            .flatland
+            .as_ref()
+            .and_then(|a| a.get("anchor"))
+            .and_then(|v| v.as_array());
+        let ax = anchor
+            .and_then(|a| a.first())
+            .and_then(|v| v.as_i64())
+            .unwrap_or(0);
+        let ay = anchor
+            .and_then(|a| a.get(1))
+            .and_then(|v| v.as_i64())
+            .unwrap_or(0);
+        let x = entity.position.x.div_euclid(SUBPIXELS) - snapshot.camera[0] + ax;
+        let z = entity
+            .flatland
+            .as_ref()
+            .and_then(|a| a.get("z"))
+            .and_then(|v| v.as_i64())
+            .unwrap_or(0);
+        let y = entity.position.y.div_euclid(SUBPIXELS) - snapshot.camera[1] - z + ay;
+        let visual = entity
+            .flatland
+            .as_ref()
+            .and_then(|a| a.get("visual_size"))
+            .and_then(|v| v.as_array());
+        let w = visual
+            .and_then(|a| a.first())
+            .and_then(|v| v.as_u64())
+            .unwrap_or(u64::from(entity.size[0])) as u32;
+        let h = visual
+            .and_then(|a| a.get(1))
+            .and_then(|v| v.as_u64())
+            .unwrap_or(u64::from(entity.size[1])) as u32;
         if let Some(color) = entity.color {
             let texture = entity
                 .texture
@@ -125,9 +179,25 @@ pub fn render(project: &Project, snapshot: &Snapshot, debug: bool) -> Result<Fra
             for py in y.max(0)..(y + i64::from(h)).min(i64::from(height)) {
                 for px in x.max(0)..(x + i64::from(w)).min(i64::from(width)) {
                     let pixel = if let Some(texture) = texture {
-                        let mut tx = (px - x) as u32 * texture.width / w;
-                        let mut ty = (py - y) as u32 * texture.height / h;
-                        if texture.width == texture.height
+                        let crop = entity
+                            .flatland
+                            .as_ref()
+                            .and_then(|a| a.get("atlas"))
+                            .and_then(|v| v.as_array());
+                        let get = |i: usize, default: u32| {
+                            crop.and_then(|v| v.get(i))
+                                .and_then(|v| v.as_u64())
+                                .map_or(default, |n| n as u32)
+                        };
+                        let (ox, oy, tw, th) = (
+                            get(0, 0),
+                            get(1, 0),
+                            get(2, texture.width),
+                            get(3, texture.height),
+                        );
+                        let mut tx = (px - x) as u32 * tw / w;
+                        let mut ty = (py - y) as u32 * th / h;
+                        if tw == th
                             && entity
                                 .flatland
                                 .as_ref()
@@ -148,7 +218,7 @@ pub fn render(project: &Project, snapshot: &Snapshot, debug: bool) -> Result<Fra
                                 .and_then(|f| f.get(1))
                                 .and_then(|v| v.as_i64())
                                 .unwrap_or(0);
-                            let max = texture.width - 1;
+                            let max = tw - 1;
                             (tx, ty) = if dx < 0 {
                                 (max - tx, max - ty)
                             } else if dy > 0 {
@@ -159,7 +229,7 @@ pub fn render(project: &Project, snapshot: &Snapshot, debug: bool) -> Result<Fra
                                 (tx, ty)
                             };
                         }
-                        let i = ((ty * texture.width + tx) * 4) as usize;
+                        let i = (((ty + oy) * texture.width + tx + ox) * 4) as usize;
                         std::array::from_fn(|c| {
                             ((u16::from(texture.rgba[i + c]) * u16::from(color[c]) + 127) / 255)
                                 as u8
@@ -169,6 +239,27 @@ pub fn render(project: &Project, snapshot: &Snapshot, debug: bool) -> Result<Fra
                     };
                     frame.blend(px, py, pixel);
                 }
+            }
+        }
+        if let Some(a) = entity.flatland.as_ref()
+            && let (Some(max), Some(hp)) = (
+                a.get("hp_max").and_then(|v| v.as_i64()),
+                a.get("hp").and_then(|v| v.as_i64()),
+            )
+            && max > 0
+        {
+            let length = w.min(32);
+            for dx in 0..length {
+                let filled = i64::from(dx) * max < i64::from(length) * hp;
+                frame.blend(
+                    x + i64::from(dx),
+                    y - 3,
+                    if filled {
+                        [210, 255, 56, 255]
+                    } else {
+                        [80, 40, 40, 255]
+                    },
+                );
             }
         }
     }

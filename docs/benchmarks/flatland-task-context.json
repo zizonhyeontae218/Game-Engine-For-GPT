@@ -1,0 +1,41 @@
+{
+  "engine": "0.2.0",
+  "tokenizer": {
+    "package": "tiktoken",
+    "version": "0.14.0",
+    "encoding": "cl100k_base",
+    "vocabulary_sha256": "223921b76ee99bde995b7ff738513eef100fb51d18c93597a113bcffe865b2a7"
+  },
+  "scope": "Scripted same-task authoring/repair benchmark. Counts supplied docs, schema/resource responses, authored output and tool results. Includes one controlled error and repair per route. Times are tool execution, not model generation or human effort. Excludes this conversation and asset prompts; assets are deterministic CC0 Python generation. No claim of universal LLM efficiency.",
+  "tasks": [
+    {
+      "route": "full_resource_rewrite",
+      "task": "Change blade attack damage from 3 to 4; repair an invalid damage=-1 attempt, preserve all other behavior.",
+      "input_tokens": 6820,
+      "output_tokens": 6287,
+      "input_bytes": 25529,
+      "output_bytes": 23157,
+      "tool_calls": 4,
+      "validation_failures": 1,
+      "repair_iterations": 1,
+      "tool_completion_seconds": 0.76,
+      "final_resource_sha256": "7e8914f3fd0e26649b3d76e963eeb957f6e67061bca580b2411ab11257d08bd9",
+      "frame_rgba_sha256": "e125b6df280bb446434a370603b5d4ab7aed5dbdbff9fd04f1af7a7081d91c70"
+    },
+    {
+      "route": "revision_checked_patch",
+      "task": "Change blade attack damage from 3 to 4; repair an invalid damage=-1 attempt, preserve all other behavior.",
+      "input_tokens": 3181,
+      "output_tokens": 1991,
+      "input_bytes": 10579,
+      "output_bytes": 7884,
+      "tool_calls": 5,
+      "validation_failures": 1,
+      "repair_iterations": 1,
+      "tool_completion_seconds": 0.828,
+      "final_resource_sha256": "7e8914f3fd0e26649b3d76e963eeb957f6e67061bca580b2411ab11257d08bd9",
+      "frame_rgba_sha256": "e125b6df280bb446434a370603b5d4ab7aed5dbdbff9fd04f1af7a7081d91c70"
+    }
+  ],
+  "functional_equivalence": true
+}

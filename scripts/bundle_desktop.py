@@ -25,7 +25,7 @@ def main():
         parser.error(f'Output already exists: {args.out}')
     with zipfile.ZipFile(args.game) as source:
         manifest = json.loads(source.read('bundle.json'))
-        if manifest['schema_version'] not in (1,2) or manifest['engine_abi'] != 1:
+        if manifest['schema_version'] not in (1,2,3) or manifest['engine_abi'] != 1:
             parser.error('Unsupported game package version')
     shutil.copytree(args.client, args.out)
     shutil.copy2(Path(__file__).resolve().parents[1] / 'LICENSE', args.out / 'LICENSE')

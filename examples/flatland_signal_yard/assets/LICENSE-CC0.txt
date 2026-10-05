@@ -1,0 +1,3 @@
+Signal Yard sprites and synthesized audio are original assets dedicated to CC0 1.0 Universal.
+https://creativecommons.org/publicdomain/zero/1.0/
+Generated from the checked-in scripts/make_signal_yard_assets.py; no external asset dependency.

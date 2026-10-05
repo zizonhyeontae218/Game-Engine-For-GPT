@@ -1,5 +1,18 @@
 //! File authoring, version checks and validation before simulation.
 pub mod flatland;
+pub mod gameplay;
+pub mod patch;
+pub const CAPABILITIES: &[&str] = &[
+    "combat",
+    "inventory",
+    "quests",
+    "event_scenes",
+    "turn_battle",
+    "planes",
+    "atlas",
+    "music",
+    "lua_rng",
+];
 use ge4g_core::{Error, Input, Result, SCHEMA_VERSION, StateDefinition, StateStore};
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
@@ -28,6 +41,8 @@ pub struct Manifest {
     pub state: BTreeMap<String, StateDefinition>,
     #[serde(default)]
     pub tests: Vec<ProjectTest>,
+    #[serde(default)]
+    pub features: Vec<String>,
 }
 #[derive(Debug, Clone, Serialize, Deserialize, schemars::JsonSchema)]
 #[serde(deny_unknown_fields)]
@@ -120,6 +135,10 @@ pub struct Scene {
     pub script: Option<String>,
     #[serde(default)]
     pub sounds: BTreeMap<String, String>,
+    #[serde(default)]
+    pub resources: Vec<String>,
+    #[serde(default)]
+    pub gameplay: gameplay::Gameplay,
 }
 #[derive(Debug, Clone, Serialize, Deserialize, schemars::JsonSchema)]
 #[serde(deny_unknown_fields)]
@@ -134,8 +153,42 @@ pub struct Replay {
     pub schema_version: u32,
     pub ticks: u64,
     pub inputs: Vec<InputSpan>,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub commands: Vec<ReplayCommand>,
+}
+#[derive(Debug, Clone, Serialize, Deserialize, schemars::JsonSchema)]
+#[serde(tag = "op", rename_all = "snake_case", deny_unknown_fields)]
+pub enum ReplayCommand {
+    Choice {
+        tick: u64,
+        id: String,
+    },
+    Do {
+        tick: u64,
+        actions: Vec<flatland::Action>,
+    },
+    Skip {
+        tick: u64,
+    },
+}
+impl ReplayCommand {
+    pub fn tick(&self) -> u64 {
+        match self {
+            Self::Choice { tick, .. } | Self::Do { tick, .. } | Self::Skip { tick } => *tick,
+        }
+    }
 }
 impl Replay {
+    pub fn actions_at(&self, tick: u64) -> BTreeSet<String> {
+        self.inputs
+            .iter()
+            .filter(|s| tick >= s.start && tick < s.end)
+            .flat_map(|s| s.actions.iter())
+            .filter(|a| !["left", "right", "up", "down", "interact"].contains(&a.as_str()))
+            .cloned()
+            .collect()
+    }
+
     pub fn load(path: &Path) -> Result<Self> {
         let replay: Self = serde_json::from_str(&read_text(path)?)
             .map_err(|e| Error(format!("replay {}: {e}", path.display())))?;
@@ -151,6 +204,12 @@ impl Replay {
                 "replay exceeds 1,000,000 ticks or 100,000 input spans".into(),
             ));
         }
+        if self.commands.len() > 10000
+            || (self.schema_version == 1 && !self.commands.is_empty())
+            || self.commands.iter().any(|c| c.tick() >= self.ticks)
+        {
+            return Err(Error("invalid replay commands/tick/schema".into()));
+        }
         for span in &self.inputs {
             if span.start >= span.end || span.end > self.ticks {
                 return Err(Error(format!(
@@ -159,7 +218,9 @@ impl Replay {
                 )));
             }
             for action in &span.actions {
-                if !["left", "right", "up", "down", "interact"].contains(&action.as_str()) {
+                if !["left", "right", "up", "down", "interact"].contains(&action.as_str())
+                    && (self.schema_version == 1 || action.len() > 64 || !valid_id(action))
+                {
                     return Err(Error(format!("unknown replay action {action}")));
                 }
             }
@@ -318,8 +379,34 @@ impl Project {
             let path = project.path(filename)?;
             let raw: Value = json5::from_str(&read_text(&path)?)
                 .map_err(|e| Error(format!("scene {filename}: {e}")))?;
+            let mut expanded = serde_json::json!({});
+            if let Some(resources) = raw.get("resources").and_then(Value::as_array) {
+                if resources.len() > 32 {
+                    return Err(Error("scene resource limit 32".into()));
+                }
+                for resource in resources {
+                    let file = resource
+                        .as_str()
+                        .ok_or_else(|| Error("resource needs a path".into()))?;
+                    let value: Value = json5::from_str(&read_text(&project.path(file)?)?)
+                        .map_err(|e| Error(format!("resource {file}: {e}")))?;
+                    if value.as_object().is_none_or(|o| {
+                        o.keys().any(|k| {
+                            !["gameplay", "prefabs", "sounds", "rules"].contains(&k.as_str())
+                        })
+                    }) {
+                        return Err(Error(format!(
+                            "resource {file}: expected gameplay/prefabs/sounds/rules"
+                        )));
+                    }
+                    flatland::merge(&mut expanded, value);
+                    project.files_checked.push(file.into());
+                }
+            }
+            flatland::merge(&mut expanded, raw);
             let scene: Scene = serde_json::from_value(
-                flatland::expand_scene(raw).map_err(|e| Error(format!("scene {filename}: {e}")))?,
+                flatland::expand_scene(expanded)
+                    .map_err(|e| Error(format!("scene {filename}: {e}")))?,
             )
             .map_err(|e| Error(format!("scene {filename}: {e}")))?;
             if scene.schema_version != project.manifest.schema_version {
@@ -337,8 +424,7 @@ impl Project {
             project.files_checked.push(filename.clone());
             project.scenes.insert(id.clone(), scene);
         }
-        project.validate_world()?;
-        let texture_paths: BTreeSet<String> = project
+        let mut texture_paths: BTreeSet<String> = project
             .scenes
             .values()
             .flat_map(|s| &s.entities)
@@ -349,12 +435,45 @@ impl Project {
                 }
                 if let Some(a) = e.flatland.as_ref().and_then(|a| a.animation.as_ref()) {
                     paths.extend(a.frames.clone());
+                    if let Some(atlas) = &a.atlas {
+                        paths.push(atlas.file.clone());
+                    }
                     paths.extend(a.alternate.clone());
                     paths.extend(a.directions.values().flatten().cloned());
                 }
                 paths
             })
             .collect();
+        fn clips(value: &Value, paths: &mut BTreeSet<String>) {
+            match value {
+                Value::Object(o) => {
+                    for (k, v) in o {
+                        if k == "frames"
+                            && let Some(a) = v.as_array()
+                        {
+                            for f in a {
+                                if let Some(f) = f.as_str() {
+                                    paths.insert(f.into());
+                                }
+                            }
+                        }
+                        clips(v, paths);
+                    }
+                }
+                Value::Array(a) => {
+                    for v in a {
+                        clips(v, paths);
+                    }
+                }
+                _ => {}
+            }
+        }
+        for scene in project.scenes.values() {
+            clips(
+                &serde_json::to_value(scene).expect("scene JSON"),
+                &mut texture_paths,
+            );
+        }
         for texture in texture_paths {
             let path = project.path(&texture)?;
             project
@@ -363,6 +482,13 @@ impl Project {
             project.files_checked.push(texture);
         }
         for scene in project.scenes.values() {
+            for (name, file) in &scene.gameplay.modules {
+                project.scripts.insert(
+                    format!("module:{}:{name}", scene.id),
+                    read_text(&project.path(file)?)?,
+                );
+                project.files_checked.push(file.clone());
+            }
             if let Some(file) = &scene.script {
                 project
                     .scripts
@@ -374,6 +500,7 @@ impl Project {
                 project.files_checked.push(file.clone());
             }
         }
+        project.validate_world()?;
         for test in &project.manifest.tests {
             if !valid_id(&test.name) {
                 return Err(Error(format!("invalid test name {}", test.name)));
@@ -478,6 +605,16 @@ impl Project {
         Ok(())
     }
     fn validate_world(&self) -> Result<()> {
+        if self.manifest.features.len() > 32
+            || self
+                .manifest
+                .features
+                .iter()
+                .any(|f| !CAPABILITIES.contains(&f.as_str()))
+            || (self.manifest.schema_version == 1 && !self.manifest.features.is_empty())
+        {
+            return Err(Error("unsupported required engine feature".into()));
+        }
         StateStore::new(self.manifest.state.clone())?;
         if !self.scenes.contains_key(&self.manifest.start_scene) {
             return Err(Error(format!(
@@ -677,6 +814,7 @@ mod tests {
         let mut r = Replay {
             schema_version: 1,
             ticks: 3,
+            commands: vec![],
             inputs: vec![InputSpan {
                 start: 0,
                 end: 2,

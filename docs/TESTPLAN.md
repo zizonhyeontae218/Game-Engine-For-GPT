@@ -112,3 +112,27 @@ widgets check modal text and manual layout changes while resizing; no sensor sel
 Actual audible playback and mobile orientation/device controls require a human check
 on the new builds. Event scenes, choices, turn combat and dedicated quests are not
 alpha acceptance claims; they remain full-0.2 release gates in FLATLAND_SPEC.
+
+## FlatLand 0.2.0 acceptance
+
+User reported rc.1 testing complete on 2026-10-05. Full-release new-device checks remain
+separate. Run the existing floor plus:
+
+```sh
+cargo test --locked --workspace
+cargo run --locked -p ge4g-cli -- test examples/flatland_pacman --json
+cargo run --locked -p ge4g-cli -- test examples/flatland_signal_yard --json
+python3 scripts/pack_game.py examples/flatland_signal_yard --game-id demo.flatland.signal-yard --version 0.2.0 --out dist/flatland-signal-yard.ge4g
+cd client
+flutter analyze
+flutter test
+cd ..
+python3 scripts/flatland_task_benchmark.py
+```
+
+Systems tests prove melee/drop once, projectile wall/plane filtering, atomic batches,
+failed replay command/tick rollback, quest reward once, content revision patches,
+choice/battle and every demo choice resume, Lua RNG fault rollback, temporary cutscene
+clip progression, exact parent restore and corrupt parent rejection. The real embedded
+Flutter smoke must match headless state and pixels for all three demos. Sign Android
+with the preserved key and `--previous-apk`; inspect app ID and versionCode4.

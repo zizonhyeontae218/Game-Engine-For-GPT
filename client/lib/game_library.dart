@@ -133,10 +133,11 @@ class GameLibrary {
       jsonDecode(utf8.decode(files['bundle.json']!)),
       'bundle',
     );
-    if (![1, 2].contains(manifest['schema_version'])) {
+    if (![1, 2, 3].contains(manifest['schema_version'])) {
       throw const FormatException('unsupported game package schema');
     }
-    if (manifest['schema_version'] == 2 && manifest['game_schema'] != 2) {
+    if ([2, 3].contains(manifest['schema_version']) &&
+        manifest['game_schema'] != 2) {
       throw const FormatException('FlatLand package requires game_schema 2');
     }
     fields(manifest, {
@@ -145,12 +146,32 @@ class GameLibrary {
       'name',
       'version',
       'engine_abi',
-      if (manifest['schema_version'] == 2) 'game_schema',
+      if (manifest['schema_version'] == 3) 'features',
+      if ([2, 3].contains(manifest['schema_version'])) 'game_schema',
       'project',
       'layouts',
       'bindings',
       'files',
     }, 'bundle');
+    if (manifest['schema_version'] == 3) {
+      final features = manifest['features'];
+      if (features is! List ||
+          features.any(
+            (f) => ![
+              'combat',
+              'inventory',
+              'quests',
+              'event_scenes',
+              'turn_battle',
+              'planes',
+              'atlas',
+              'music',
+              'lua_rng',
+            ].contains(f),
+          )) {
+        throw const FormatException('unsupported required engine feature');
+      }
+    }
     if (manifest['engine_abi'] != 1) {
       throw const FormatException('unsupported engine ABI');
     }

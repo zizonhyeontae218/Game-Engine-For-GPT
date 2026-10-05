@@ -5,7 +5,17 @@ import 'touch_controls.dart';
 class GamePopup extends StatelessWidget {
   final String text;
   final VoidCallback onClose;
-  const GamePopup({super.key, required this.text, required this.onClose});
+  final List<Map<String, dynamic>> choices;
+  final ValueChanged<String>? onChoose;
+  final VoidCallback? onSave;
+  const GamePopup({
+    super.key,
+    required this.text,
+    required this.onClose,
+    this.choices = const [],
+    this.onChoose,
+    this.onSave,
+  });
   @override
   Widget build(BuildContext context) => ColoredBox(
     color: const Color(0xbb000000),
@@ -34,12 +44,38 @@ class GamePopup extends StatelessWidget {
                   child: SingleChildScrollView(child: SelectableText(text)),
                 ),
                 const SizedBox(height: 12),
-                FilledButton(
-                  key: const Key('close-game-popup'),
-                  autofocus: true,
-                  onPressed: onClose,
-                  child: const Text('확인 / CONTINUE'),
-                ),
+                if (choices.isNotEmpty)
+                  Flexible(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          for (final choice in choices)
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 8),
+                              child: FilledButton(
+                                key: Key('choice-${choice['id']}'),
+                                onPressed: () =>
+                                    onChoose?.call(choice['id'] as String),
+                                child: Text(choice['text'] as String),
+                              ),
+                            ),
+                          if (onSave != null)
+                            OutlinedButton(
+                              onPressed: onSave,
+                              child: const Text('이 장면 저장 / SAVE'),
+                            ),
+                        ],
+                      ),
+                    ),
+                  )
+                else
+                  FilledButton(
+                    key: const Key('close-game-popup'),
+                    autofocus: true,
+                    onPressed: onClose,
+                    child: const Text('확인 / CONTINUE'),
+                  ),
               ],
             ),
           ),

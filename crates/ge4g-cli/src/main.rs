@@ -25,6 +25,24 @@ struct Cli {
 }
 #[derive(Subcommand)]
 enum Command {
+    /// Small, version-stamped capability index; complete schemas stay opt-in.
+    Capabilities {},
+    /// Inspect a single authored resource and its source revision.
+    Resource {
+        project: PathBuf,
+        file: String,
+        resource: String,
+    },
+    /// Atomically merge one resource after checking the inspected file revision.
+    Patch {
+        project: PathBuf,
+        file: String,
+        resource: String,
+        #[arg(long)]
+        expected: String,
+        #[arg(long)]
+        patch: PathBuf,
+    },
     /// Validate all project files and references without opening a window.
     Validate { project: PathBuf },
     /// Inspect a project, scene, entity or state; optionally read a runtime snapshot.
@@ -59,6 +77,8 @@ enum Command {
         trace_events: Vec<String>,
         #[arg(long)]
         snapshot_out: Option<PathBuf>,
+        #[arg(long)]
+        full: bool,
         #[arg(long)]
         debug: bool,
     },
@@ -96,6 +116,12 @@ enum InspectTarget {
 }
 #[derive(Clone, Copy, ValueEnum)]
 enum SchemaKind {
+    Item,
+    Quest,
+    Attack,
+    Event,
+    Condition,
+    Action,
     Project,
     Scene,
     Replay,
@@ -117,6 +143,22 @@ struct Trace {
     events_dropped: u64,
 }
 const EVENT_KINDS: &[&str] = &[
+    "inventory",
+    "equipped",
+    "quest",
+    "objective",
+    "attack",
+    "death",
+    "map_patch",
+    "plane",
+    "portal",
+    "music",
+    "event_enter",
+    "event_return",
+    "choice",
+    "battle_turn",
+    "battle_result",
+    "animation_marker",
     "pickup",
     "hit",
     "dialogue",
@@ -210,13 +252,41 @@ fn execute(world: &mut World, replay: Option<&Replay>, ticks: u64) -> Result<()>
         return Err(Error("--ticks/--tick exceeds 1,000,000".into()));
     }
     for _ in 0..ticks {
-        let input = replay.map_or_else(Input::default, |r| r.input_at(world.tick));
-        world.step(&input)?;
+        if let Some(replay) = replay {
+            world.step_replay(replay)?;
+        } else {
+            world.step(&Input::default())?;
+        }
     }
     Ok(())
 }
 fn dispatch(command: Command) -> Result<Value> {
     match command {
+        Command::Capabilities {} => Ok(
+            json!({"ok":true,"engine_version":ENGINE_VERSION,"game_schemas":[1,2],"bundle_schemas":[1,2,3],"abi":1,"features":ge4g_project::CAPABILITIES,"authoring":"JSON5 prefabs + typed actions/conditions; Lua 5.4 for extensions","queries":["schema item|quest|attack|event|action|condition","resource PROJECT FILE PATH","inspect PROJECT prefab ID"],"patch":"patch PROJECT FILE PATH --expected SHA256 --patch JSON_FILE","replay":"schema 2 named inputs + choice/do/skip commands"}),
+        ),
+        Command::Resource {
+            project,
+            file,
+            resource,
+        } => ge4g_project::patch::inspect(&Project::load(&project)?, &file, &resource),
+        Command::Patch {
+            project,
+            file,
+            resource,
+            expected,
+            patch,
+        } => {
+            let value: Value = serde_json::from_str(&ge4g_project::read_text(&patch)?)
+                .map_err(|e| Error(format!("patch JSON: {e}")))?;
+            ge4g_project::patch::apply(
+                &Project::load(&project)?,
+                &file,
+                &resource,
+                &expected,
+                value,
+            )
+        }
         Command::Validate { project } => {
             let report = Project::validate(&project);
             let summary = format!(
@@ -253,6 +323,7 @@ fn dispatch(command: Command) -> Result<Value> {
             trace,
             trace_events,
             snapshot_out,
+            full,
             debug,
         } => {
             for kind in &trace_events {
@@ -311,6 +382,11 @@ fn dispatch(command: Command) -> Result<Value> {
                     },
                 )?;
             }
+            if !full && !world.project.manifest.features.is_empty() {
+                return Ok(
+                    json!({"schema_version":2,"ok":true,"summary":format!("GE4G run: tick {} · {}",snapshot.tick,snapshot.scene),"tick":snapshot.tick,"scene":snapshot.scene,"waiting":world.waiting(),"state":snapshot.state,"entity_count":snapshot.entities.len(),"event_count":snapshot.events.len(),"events_dropped":snapshot.events_dropped,"deterministic_sha256":hash,"snapshot_out":snapshot_out,"trace":trace,"save":save}),
+                );
+            }
             Ok(
                 json!({"schema_version": 1, "ok": true, "summary": format!("GE4G run: tick {} · {} · {hash}", snapshot.tick, snapshot.scene), "snapshot": snapshot, "deterministic_sha256": hash, "trace": trace, "save": save, "snapshot_out": snapshot_out}),
             )
@@ -337,6 +413,12 @@ fn dispatch(command: Command) -> Result<Value> {
         Command::Schema { kind } => {
             let schema = match kind {
                 SchemaKind::Resume => schemars::schema_for!(ge4g_runtime::Resume),
+                SchemaKind::Item => schemars::schema_for!(ge4g_project::gameplay::Item),
+                SchemaKind::Quest => schemars::schema_for!(ge4g_project::gameplay::Quest),
+                SchemaKind::Attack => schemars::schema_for!(ge4g_project::gameplay::Attack),
+                SchemaKind::Event => schemars::schema_for!(ge4g_project::gameplay::Instruction),
+                SchemaKind::Condition => schemars::schema_for!(ge4g_project::flatland::Condition),
+                SchemaKind::Action => schemars::schema_for!(ge4g_project::flatland::Action),
                 SchemaKind::Body => schemars::schema_for!(ge4g_project::flatland::BodyMode),
                 SchemaKind::Actor => schemars::schema_for!(ge4g_project::flatland::Actor),
                 SchemaKind::Rule => schemars::schema_for!(ge4g_project::flatland::Rule),
@@ -472,7 +554,7 @@ fn project_tests(project: Project) -> Result<Value> {
                     checked += 1;
                 }
                 if tick < replay.ticks {
-                    first.step(&replay.input_at(tick))?;
+                    first.step_replay(&replay)?;
                 }
             }
             if first.events_dropped > 0 {

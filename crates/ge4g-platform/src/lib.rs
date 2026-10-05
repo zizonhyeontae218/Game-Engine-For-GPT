@@ -1,4 +1,6 @@
 //! Local input/window adapter. Gameplay always calls World::step.
+#[cfg(feature = "window")]
+mod audio;
 use ge4g_core::{Error, Result};
 use ge4g_project::Replay;
 use ge4g_runtime::World;
@@ -48,6 +50,7 @@ pub fn play(world: &mut World, options: PlayOptions<'_>) -> Result<()> {
     let mut paused = false;
     let mut debug = options.debug;
     let start_tick = world.tick;
+    let mut audio = audio::Audio::new();
     while window.is_open() && !window.is_key_down(Key::Escape) {
         if options
             .ticks
@@ -84,14 +87,54 @@ pub fn play(world: &mut World, options: PlayOptions<'_>) -> Result<()> {
             down: window.is_key_down(Key::S) || window.is_key_down(Key::Down),
             interact: window.is_key_down(Key::E) || window.is_key_down(Key::Space),
         };
-        if paused {
+        let active = options.replay.is_some() || window.is_active();
+        if !active {
+            world.release_inputs();
+            accumulated = Duration::ZERO;
+        }
+        let buttons: std::collections::BTreeSet<String> =
+            [(Key::Z, "melee"), (Key::X, "shoot"), (Key::C, "heal")]
+                .into_iter()
+                .filter(|(key, _)| active && window.is_key_down(*key))
+                .map(|(_, id)| id.to_owned())
+                .collect();
+        if options.replay.is_none()
+            && let Some(waiting) = world.waiting()
+        {
+            let choices = waiting["options"].as_array().cloned().unwrap_or_default();
+            for (i, key) in [
+                Key::Key1,
+                Key::Key2,
+                Key::Key3,
+                Key::Key4,
+                Key::Key5,
+                Key::Key6,
+                Key::Key7,
+                Key::Key8,
+                Key::Key9,
+            ]
+            .into_iter()
+            .enumerate()
+            {
+                if window.is_key_pressed(key, KeyRepeat::No)
+                    && let Some(id) = choices.get(i).and_then(|c| c["id"].as_str())
+                {
+                    world.choose(id)?;
+                    break;
+                }
+            }
+            if choices.len() == 1 && window.is_key_pressed(Key::Enter, KeyRepeat::No) {
+                world.choose(choices[0]["id"].as_str().unwrap())?;
+            }
+        }
+        if paused || !active {
             accumulated = Duration::ZERO;
             if window.is_key_pressed(Key::N, KeyRepeat::No) {
-                world.step(
-                    &options
-                        .replay
-                        .map_or_else(|| live.clone(), |r| r.input_at(world.tick)),
-                )?;
+                if let Some(replay) = options.replay {
+                    world.step_replay(replay)?;
+                } else {
+                    world.step_actions(&live, &buttons)?;
+                }
             }
         } else {
             while accumulated >= step
@@ -99,15 +142,30 @@ pub fn play(world: &mut World, options: PlayOptions<'_>) -> Result<()> {
                     .ticks
                     .is_some_and(|limit| world.tick - start_tick >= limit)
             {
-                world.step(
-                    &options
-                        .replay
-                        .map_or_else(|| live.clone(), |r| r.input_at(world.tick)),
-                )?;
+                if let Some(replay) = options.replay {
+                    world.step_replay(replay)?;
+                } else {
+                    world.step_actions(&live, &buttons)?;
+                }
                 accumulated -= step;
             }
         }
+        audio.sync(world, paused || !active);
         let snapshot = world.snapshot();
+        let waiting = world.waiting().map(|w| {
+            format!(
+                "{} | {}",
+                w["text"].as_str().unwrap_or(""),
+                w["options"]
+                    .as_array()
+                    .unwrap_or(&vec![])
+                    .iter()
+                    .enumerate()
+                    .map(|(i, c)| format!("{}:{}", i + 1, c["text"].as_str().unwrap_or("")))
+                    .collect::<Vec<_>>()
+                    .join(" | ")
+            )
+        });
         let dialogue = snapshot
             .events
             .iter()
@@ -115,6 +173,7 @@ pub fn play(world: &mut World, options: PlayOptions<'_>) -> Result<()> {
             .find(|e| e.kind == "interaction")
             .and_then(|e| e.data["dialogue"].as_str())
             .unwrap_or("WASD move | E talk | F3 debug | F5 save | F9 load | P pause | N step");
+        let dialogue = waiting.as_deref().unwrap_or(dialogue);
         window.set_title(&format!(
             "GE4G | {} | NPC:{} RoomB:{} {} | {dialogue}",
             world.scene,

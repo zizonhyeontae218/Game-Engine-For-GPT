@@ -1,8 +1,8 @@
 # GE4G agent map
 
-The shipped engine is **GameEngineForGPT 0.1 "Basement"**.
-Current development build: **Basement 0.2 — FlatLand, 0.2.0-rc.1**.
-The larger 0.2 specification is partially implemented; consult `docs/FLATLAND_AUTHORING.md` for actual capabilities.
+The shipped engine is **Basement 0.2 — FlatLand, 0.2.0**.
+Schema 1 remains supported. Actual capabilities and limits: `docs/FLATLAND_AUTHORING.md`.
+For small authoring edits read `docs/FLATLAND_QUICKSTART.md` and query one component.
 
 ## Read by task, not by ritual
 
@@ -88,3 +88,5 @@ Fix the cause or document a real blocker in the active ExecPlan.
 - Orientation is selected with a user button; do not enable sensor-driven landscape changes. Keep dialogue/text popups separate from controls.
 
 - Android releases must retain application ID `dev.ge4g.ge4g_client` and the certificate pinned in `client/android/signing-certificate.sha256`; increment the build version code. Restore the original key from the user's private `GE4G Private Signing` Drive folder. Never generate a replacement key or release-sign with ephemeral debug keys. Hosted APKs are unsigned; use `scripts/sign_android.py` before delivery. Private keys/passwords must never enter Git or the public Demos folders.
+
+- Full 0.2 regression: test Signal Yard as well as Pac-Man and the v1 demo. Keep choice/turn resume, RNG rollback, exact parent return and canonical client frames covered. Android 0.2.0 uses versionCode 4 and the rc.1 certificate.

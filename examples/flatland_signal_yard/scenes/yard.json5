@@ -1,0 +1,771 @@
+{
+  "schema_version": 2,
+  "id": "yard",
+  "background": [
+    18,
+    22,
+    25,
+    255
+  ],
+  "spawns": {
+    "start": [
+      48,
+      80
+    ]
+  },
+  "resources": [
+    "data/systems.json5"
+  ],
+  "script": "data/yard.lua",
+  "map": {
+    "cell": 16,
+    "rows": [
+      "################################",
+      "#..............................#",
+      "#..............................#",
+      "#..............................#",
+      "#..............................#",
+      "#..............................#",
+      "#......#######.................#",
+      "#...............#..............#",
+      "#...............#..............#",
+      "#...............#..............#",
+      "#...............G..............#",
+      "#..............................#",
+      "#..............................#",
+      "#..............................#",
+      "#..................BBBBBBBBB...#",
+      "#..............................#",
+      "#..............................#",
+      "#..............................#",
+      "#..............................#",
+      "################################"
+    ],
+    "tiles": {
+      "#": {
+        "color": [
+          78,
+          82,
+          85,
+          255
+        ],
+        "solid": true
+      },
+      ".": {
+        "color": [
+          25,
+          32,
+          37,
+          255
+        ]
+      },
+      "G": {
+        "color": [
+          220,
+          67,
+          64,
+          255
+        ],
+        "solid": true
+      },
+      "B": {
+        "color": [
+          72,
+          110,
+          124,
+          255
+        ],
+        "solid": true,
+        "planes": [
+          0
+        ]
+      }
+    }
+  },
+  "prefabs": {
+    "crate": {
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/crate.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "push",
+        "depth": true
+      }
+    },
+    "terminal": {
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/terminal.png",
+        "layer": 1
+      },
+      "interaction": {
+        "range": 24,
+        "dialogue": ""
+      },
+      "flatland": {
+        "body": "fixed",
+        "depth": true
+      }
+    },
+    "robot": {
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/guard_0.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "grid": true,
+        "hp": 8,
+        "team": "robots",
+        "attack": "claw",
+        "animation": {
+          "frames": [
+            "assets/guard_0.png",
+            "assets/guard_1.png",
+            "assets/guard_2.png",
+            "assets/guard_3.png"
+          ],
+          "ticks": 8
+        },
+        "ai": {
+          "speed": 60,
+          "mode": "attack",
+          "target": "player",
+          "sight": 96
+        },
+        "drops": [
+          {
+            "op": "give",
+            "item": "coin",
+            "count": 1
+          }
+        ],
+        "depth": true,
+        "health_bar": true
+      }
+    }
+  },
+  "entities": [
+    {
+      "id": "player",
+      "position": [
+        48,
+        80
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "player": {
+        "speed": 120
+      },
+      "sprite": {
+        "texture": "assets/hero_0.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "hp": 24,
+        "team": "hero",
+        "animation": {
+          "frames": [
+            "assets/hero_0.png",
+            "assets/hero_1.png",
+            "assets/hero_2.png",
+            "assets/hero_3.png"
+          ],
+          "ticks": 8
+        },
+        "depth": true,
+        "health_bar": true
+      }
+    },
+    {
+      "id": "guide",
+      "position": [
+        48,
+        48
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/guide_0.png",
+        "layer": 1
+      },
+      "interaction": {
+        "range": 24,
+        "dialogue": ""
+      },
+      "tags": [
+        "guide"
+      ],
+      "flatland": {
+        "body": "fixed",
+        "depth": true,
+        "animation": {
+          "frames": [],
+          "ticks": 8,
+          "atlas": {
+            "file": "assets/guide_atlas.png",
+            "cell": [
+              16,
+              16
+            ],
+            "indices": [
+              0,
+              1,
+              2,
+              3
+            ]
+          },
+          "markers": {
+            "2": [
+              {
+                "op": "add",
+                "key": "yard.frames",
+                "value": 1
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "crate_a",
+      "prefab": "crate",
+      "position": [
+        112,
+        80
+      ]
+    },
+    {
+      "id": "crate_b",
+      "prefab": "crate",
+      "position": [
+        128,
+        80
+      ]
+    },
+    {
+      "id": "free_crate",
+      "prefab": "crate",
+      "position": [
+        96,
+        160
+      ]
+    },
+    {
+      "id": "key",
+      "position": [
+        224,
+        80
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "tags": [
+        "key"
+      ],
+      "sprite": {
+        "texture": "assets/key.png",
+        "layer": 1
+      },
+      "flatland": {
+        "pickup": [
+          {
+            "op": "give",
+            "item": "key",
+            "count": 1
+          },
+          {
+            "op": "sound",
+            "cue": "quest"
+          }
+        ]
+      }
+    },
+    {
+      "id": "gate",
+      "position": [
+        240,
+        160
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "tags": [
+        "gate"
+      ],
+      "interaction": {
+        "range": 24,
+        "dialogue": ""
+      },
+      "sprite": {
+        "texture": "assets/gate.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass"
+      }
+    },
+    {
+      "id": "guard",
+      "prefab": "robot",
+      "position": [
+        384,
+        128
+      ],
+      "tags": [
+        "enemy"
+      ]
+    },
+    {
+      "id": "patrol",
+      "prefab": "robot",
+      "position": [
+        336,
+        64
+      ],
+      "flatland": {
+        "ai": {
+          "speed": 40,
+          "mode": "patrol",
+          "patrol": [
+            [
+              21,
+              4
+            ],
+            [
+              26,
+              4
+            ],
+            [
+              26,
+              7
+            ],
+            [
+              21,
+              7
+            ]
+          ]
+        }
+      },
+      "tags": [
+        "patrol"
+      ]
+    },
+    {
+      "id": "arena",
+      "prefab": "terminal",
+      "position": [
+        400,
+        256
+      ],
+      "tags": [
+        "arena"
+      ]
+    },
+    {
+      "id": "cinema",
+      "prefab": "terminal",
+      "position": [
+        80,
+        256
+      ],
+      "tags": [
+        "cinema"
+      ]
+    },
+    {
+      "id": "ramp_up",
+      "position": [
+        288,
+        224
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "tags": [
+        "ramp_up"
+      ],
+      "sprite": {
+        "texture": "assets/ramp.png",
+        "layer": 1
+      },
+      "interaction": {
+        "range": 24,
+        "dialogue": ""
+      },
+      "flatland": {
+        "body": "pass"
+      }
+    },
+    {
+      "id": "ramp_down",
+      "position": [
+        448,
+        224
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "tags": [
+        "ramp_down"
+      ],
+      "sprite": {
+        "texture": "assets/ramp.png",
+        "layer": 1
+      },
+      "interaction": {
+        "range": 24,
+        "dialogue": ""
+      },
+      "flatland": {
+        "body": "pass",
+        "plane": 1
+      }
+    },
+    {
+      "id": "canopy",
+      "position": [
+        160,
+        208
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/canopy.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "visual_size": [
+          48,
+          48
+        ],
+        "anchor": [
+          -16,
+          -32
+        ]
+      }
+    },
+    {
+      "id": "hologram",
+      "position": [
+        128,
+        208
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/guide_0.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "z": 8,
+        "depth": true
+      }
+    },
+    {
+      "id": "fixed_beacon",
+      "position": [
+        144,
+        80
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "color": [
+          140,
+          145,
+          148,
+          255
+        ],
+        "layer": 1
+      },
+      "flatland": {
+        "body": "fixed"
+      }
+    }
+  ],
+  "rules": [
+    {
+      "id": "welcome",
+      "on": "start",
+      "actions": [
+        {
+          "op": "music",
+          "cue": "music",
+          "volume": 25
+        },
+        {
+          "op": "event_scene",
+          "event": "intro"
+        }
+      ],
+      "once": true
+    },
+    {
+      "id": "sword",
+      "on": "action.melee",
+      "actions": [
+        {
+          "op": "attack",
+          "entity": "$player",
+          "attack": "blade"
+        }
+      ]
+    },
+    {
+      "id": "bolt",
+      "on": "action.shoot",
+      "actions": [
+        {
+          "op": "attack",
+          "entity": "$player",
+          "attack": "bolt"
+        }
+      ]
+    },
+    {
+      "id": "heal",
+      "on": "action.heal",
+      "actions": [
+        {
+          "op": "use",
+          "item": "potion"
+        }
+      ],
+      "when": {
+        "op": "has_item",
+        "item": "potion",
+        "count": 1
+      }
+    },
+    {
+      "id": "key_progress",
+      "on": "pickup",
+      "actions": [
+        {
+          "op": "objective",
+          "quest": "signal",
+          "objective": "key"
+        }
+      ],
+      "target_tag": "key",
+      "when": {
+        "op": "quest_is",
+        "quest": "signal",
+        "status": "active"
+      },
+      "once": true
+    },
+    {
+      "id": "guard_progress",
+      "on": "death",
+      "actions": [
+        {
+          "op": "objective",
+          "quest": "signal",
+          "objective": "combat"
+        }
+      ],
+      "target_tag": "enemy",
+      "when": {
+        "op": "quest_is",
+        "quest": "signal",
+        "status": "active"
+      },
+      "once": true
+    },
+    {
+      "id": "guide",
+      "on": "interact",
+      "actions": [
+        {
+          "op": "event_scene",
+          "event": "journal"
+        }
+      ],
+      "target_tag": "guide"
+    },
+    {
+      "id": "open_gate",
+      "on": "interact",
+      "actions": [
+        {
+          "op": "take",
+          "item": "key",
+          "count": 1
+        },
+        {
+          "op": "map_patch",
+          "at": [
+            16,
+            10
+          ],
+          "tile": "."
+        },
+        {
+          "op": "sound",
+          "cue": "door"
+        },
+        {
+          "op": "remove",
+          "entity": "gate"
+        }
+      ],
+      "target_tag": "gate",
+      "when": {
+        "op": "has_item",
+        "item": "key",
+        "count": 1
+      },
+      "once": true
+    },
+    {
+      "id": "arena",
+      "on": "interact",
+      "actions": [
+        {
+          "op": "event_scene",
+          "event": "arena"
+        }
+      ],
+      "target_tag": "arena"
+    },
+    {
+      "id": "cinema",
+      "on": "interact",
+      "actions": [
+        {
+          "op": "event_scene",
+          "event": "cutscene"
+        }
+      ],
+      "target_tag": "cinema"
+    },
+    {
+      "id": "upper",
+      "on": "interact",
+      "actions": [
+        {
+          "op": "plane",
+          "entity": "$player",
+          "plane": 1
+        },
+        {
+          "op": "elevate",
+          "entity": "$player",
+          "z": 8
+        }
+      ],
+      "target_tag": "ramp_up"
+    },
+    {
+      "id": "lower",
+      "on": "interact",
+      "actions": [
+        {
+          "op": "plane",
+          "entity": "$player",
+          "plane": 0
+        },
+        {
+          "op": "elevate",
+          "entity": "$player",
+          "z": 0
+        }
+      ],
+      "target_tag": "ramp_down"
+    },
+    {
+      "id": "battle_progress",
+      "on": "battle_win",
+      "actions": [
+        {
+          "op": "objective",
+          "quest": "signal",
+          "objective": "battle"
+        }
+      ],
+      "when": {
+        "op": "quest_is",
+        "quest": "signal",
+        "status": "active"
+      },
+      "once": true
+    },
+    {
+      "id": "finish",
+      "on": "tick",
+      "actions": [
+        {
+          "op": "quest",
+          "quest": "signal",
+          "status": "completed"
+        }
+      ],
+      "when": {
+        "op": "all",
+        "conditions": [
+          {
+            "op": "quest_is",
+            "quest": "signal",
+            "status": "active"
+          },
+          {
+            "op": "objectives_complete",
+            "quest": "signal"
+          }
+        ]
+      },
+      "once": true
+    },
+    {
+      "id": "dead",
+      "on": "tick",
+      "actions": [
+        {
+          "op": "say",
+          "text": "피격 실험 완료: HP 0. 메뉴에서 새 게임으로 재시작하세요."
+        },
+        {
+          "op": "stop"
+        }
+      ],
+      "when": {
+        "op": "hp",
+        "entity": "player",
+        "le": 0
+      },
+      "once": true
+    }
+  ]
+}
