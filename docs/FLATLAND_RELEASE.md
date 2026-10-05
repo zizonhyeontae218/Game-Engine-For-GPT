@@ -50,3 +50,18 @@ rc.1 user testing is recorded as reported, without inferring specific audio/devi
 This changed release has automated Linux execution/virtual audio evidence and platform
 build inspection; physical Android/Windows/Arch interaction and audible speaker checks
 remain device acceptance. Drive delivery preserves old versions and existing sharing.
+
+## Final publication
+
+Build source: `14b6942d0c2ed15be6e499ff57ad59c1a9c8f1c7`. Engine acceptance
+[37303276002](https://github.com/zizonhyeontae218/Game-Engine-For-GPT/actions/runs/37303276002)
+and all four client jobs in
+[37303275913](https://github.com/zizonhyeontae218/Game-Engine-For-GPT/actions/runs/37303275913)
+succeeded. Windows package game entries match portable packages byte-for-byte. Android
+natives cover three ABIs; apksigner verifies v2/v3 and prior-certificate equality; aapt
+confirms app ID and versionCode4. iOS native framework/version0.2.0 build4 inspected.
+
+[Drive0.2.0 delivery](https://drive.google.com/drive/folders/1YeIJO1SoQ-ncx-mlU6jxm1QLM4vI5XKX)
+contains installable signed APK, both .ge4g games, embedded Windows/Linux builds, source,
+preview, Korean instructions, context/audio evidence, checksums and unsigned iOS.
+Uploaded names, sizes, parent folders and download availability were verified.

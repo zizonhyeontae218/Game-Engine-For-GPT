@@ -1,6 +1,6 @@
 # Basement 0.2 — FlatLand implementation plan
 
-Status: full 0.2 implementation authorized on 2026-10-05; rc.1 user play-test passed.
+Status: completed 2026-10-05. Full implementation, all platform builds and Drive delivery verified.
 
 ## Outcome
 A reproducible AI-authored top-view game with maps separated from interactive entities,
@@ -110,5 +110,18 @@ Actual native audio adapter produced nonzero virtual PCM; physical audibility is
 inferred. Full design's optional independent positional audio/dynamic congestion are
 explicit future extensions in shipped authoring contract.
 
-Next: inspect hosted platform artifacts, verify fixed-key Android update identity,
-complete Drive0.2.0 delivery and move this plan to completed.
+Final verification: source14b6942 passed engine run37303276002 and all Linux/Windows/
+Android/iOS jobs in client run37303275913. Inspected Windows DLL exports and both embedded
+games: exact portable entry bytes. Android has arm64-v8a/armeabi-v7a/x86_64 natives,
+app ID dev.ge4g.ge4g_client, versionCode4 and rc.1-matching pinned certificate; v2/v3
+signatures verify. iOS0.2.0 build4 contains the native framework and remains unsigned.
+Final Linux source was rebuilt and packaged; real Flutter replay/frame matches headless.
+Drive Demos/Basement 0.2 FlatLand/0.2.0 folder1YeIJO1SoQ-ncx-mlU6jxm1QLM4vI5XKX contains
+both portable games, signed APK, embedded Windows/Linux bundles, unsigned iOS, source,
+preview, instructions, benchmark/audio evidence and checksums. Uploaded names/sizes/parents
+were read back; existing folder sharing remains intact. APK private signing backup remains
+outside public artifacts. Physical acceptance remains honestly distinct.
+
+Handoff: no implementation or delivery work pending. Use shipped authoring/quickstart
+contracts, preserve signing identity and increment future Android versionCode above4.
+Do not infer new-device audibility or physical install from build/virtual PCM evidence.
