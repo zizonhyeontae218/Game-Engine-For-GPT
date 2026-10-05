@@ -18,10 +18,10 @@ def pack(project, game_id, version, output, validator, layouts=None, mapping=Non
     if not re.fullmatch(r"[A-Za-z0-9._+-]{1,64}", version):
         raise ValueError("version must be a 1..64 character version label")
     project = project.resolve()
-    result = subprocess.run([str(validator.resolve()), "validate", str(project), "--json"], capture_output=True, text=True, check=False)
+    result = subprocess.run([str(validator.resolve()), "validate", str(project), "--json"], capture_output=True, text=True, encoding="utf-8", check=False)
     if result.returncode:
         raise ValueError(f"Basement project validation failed: {result.stdout} {result.stderr}")
-    manifest = tomllib.loads((project / "ge4g.toml").read_text())
+    manifest = tomllib.loads((project / "ge4g.toml").read_text(encoding="utf-8"))
     entries = {}
     for source in sorted(project.rglob("*"), key=lambda p: p.relative_to(project).as_posix()):
         if source.is_symlink():
@@ -40,7 +40,7 @@ def pack(project, game_id, version, output, validator, layouts=None, mapping=Non
     if authored_layouts.exists() != authored_bindings.exists():
         raise ValueError("game controls require both layouts.json and bindings.json")
     entries["controls/layouts.json"] = (layouts or (authored_layouts if authored_layouts.exists() else ROOT / "client/assets/default_layouts.json")).read_bytes()
-    bindings = json.loads((mapping or (authored_bindings if authored_bindings.exists() else ROOT / "client/assets/default_bindings.json")).read_text())
+    bindings = json.loads((mapping or (authored_bindings if authored_bindings.exists() else ROOT / "client/assets/default_bindings.json")).read_text(encoding="utf-8"))
     bindings["game_id"] = game_id
     entries["controls/bindings.json"] = (json.dumps(bindings, ensure_ascii=False, indent=2) + "\n").encode()
     if sum(map(len, entries.values())) > 256 * 1024 * 1024 or len(entries) > 4095:

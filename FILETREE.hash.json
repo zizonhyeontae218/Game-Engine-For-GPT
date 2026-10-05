@@ -415,7 +415,7 @@
   "scripts/generate_nuvema_assets.py": "e50ee2248abea98a09d87b823bf541b1e550305e22a0920afe2381999f98214d",
   "scripts/interactive_smoke.py": "942f24e3a87e5756c507952580bf2869a2af88608a091852e708960e2176de32",
   "scripts/make_signal_yard_assets.py": "5ed19f1f73f9582abe5304cdbde40c5da1844221013f59de24648ad8cb507aec",
-  "scripts/pack_game.py": "fdbf9c199ce863eee5f419e6767e3badf81eb104fb44cb42c3ae8e2afbe41bb8",
+  "scripts/pack_game.py": "7c2f16902d0c49bacfbf66e32d1c2ed30571637ee36305deb57e1ece5213f2fb",
   "scripts/package.py": "f7a87a23778b13ab409c145cbc7cc6dea8809dc363396af3494f680764796e3b",
   "scripts/sign_android.py": "b385d639e440373c52f56e337ec0c4d1cbff633974c514bbdcc99aa595657c85",
   "scripts/verify_audio_adapter.py": "cc75fca6c523188dd48d730a54fb05b8389aed72f439d79459047fbf64e74503",
