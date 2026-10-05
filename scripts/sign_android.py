@@ -62,7 +62,6 @@ def main():
     try:
         subprocess.run(signer + ["sign", "--ks", str(args.keystore.resolve()),
                        "--ks-key-alias", "ge4g", "--ks-pass", "file:" + str(args.password_file.resolve()),
-                       "--key-pass", "file:" + str(args.password_file.resolve()),
                        "--out", str(args.out), str(args.apk)], check=True)
         subprocess.run(signer + ["verify", "--verbose", "--print-certs", str(args.out)], check=True)
         if certificate_sha256(args.out) != expected:

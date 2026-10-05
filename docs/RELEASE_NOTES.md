@@ -135,7 +135,7 @@ at its exact phase. New tick30 RGBA: a0be5c7fc85ca45c9dd8a54e0fa1bfc6c355a1e7e1d
 
 33 Rust tests and strict checks, 13 Flutter tests/analyze, local Linux release passed.
 Actual packaged Flutter/headless snapshots and RGBA agree. Frame geometry is tested
-at narrow/wide viewports and twice the normal text scale. A real 1280x527 running window was captured at the reported screenshot dimensions: the game is 437x483 pixels, with no reserved touch region or persistent footer. Hosted builds are pending.
+at narrow/wide viewports and twice the normal text scale. A real 1280x527 running window was captured at the reported screenshot dimensions: the game is 437x483 pixels, with no reserved touch region or persistent footer. Hosted builds passed on all four platforms.
 
 Android's old CI debug keys were not retained and the older certificates differed.
 The user explicitly authorized one final reinstall for rc.1, then stable updates.
@@ -147,4 +147,8 @@ Never regenerate the key or release-sign using temporary debug certificates.
 This candidate completes the requested presentation/preset/animation polish, not
 the entire broader proposed 0.2 contract. Dedicated quests/inventory, advanced combat
 and serialized event scenes/cutscenes/turn combat remain in the full implementation plan.
-Hosted platform build and Drive delivery results are recorded after publication.
+Final [client run 37290624550](https://github.com/zizonhyeontae218/Game-Engine-For-GPT/actions/runs/37290624550) and [engine acceptance 37290624631](https://github.com/zizonhyeontae218/Game-Engine-For-GPT/actions/runs/37290624631) passed at build source `f22c7fd9f90a2810fa1598861ccdf5c98b7450ce`. Downloaded Linux/Windows bundles contain the exact same portable game/control bytes. Hosted v1 tick160 and FlatLand tick30 native/headless smoke passed. An actual old-alpha native save at tick30 resumes identically with the new runtime when its game source is retained; changed demo content requires New Game, without deleting the old save.
+
+The delivered APK has application ID `dev.ge4g.ge4g_client`, versionCode 3 and all three native ABIs. Android v2/v3 signatures were cryptographically verified with pinned certificate SHA256 `d6d5ca948e5c1ed644478d7c4c3243efcfcbc30a196f03c39ef7af7118fc00d4`. The signing helper lets the PKCS12 key reuse the store password; reading the same password file twice incorrectly exhausted its stream. Physical installation of this candidate is not claimed. iOS remains unsigned and requires owner signing.
+
+[Drive delivery: Demos / Basement 0.2 FlatLand / 0.2.0-rc.1](https://drive.google.com/drive/folders/13a3oRUOBWZ-RCNHaBaXEnDLbtfS13TVR) contains the signed Android APK, embedded Windows/Linux games, portable game, unsigned iOS app, actual landscape preview, Korean instructions and checksum/provenance manifest. All eight uploaded filenames, byte sizes and download availability were verified. Signing secrets are excluded; their separate backup remains owner-only.

@@ -38,7 +38,7 @@ update requires the original private key; never silently replace it with a new k
   for the original key before claiming same-certificate in-place updates.
 
 ## Progress
-Game-specific schema-2 joystick-only presets, untouched-default migration/explicit reset, full fitted viewport/compact HUD/settings sheet, MIT multi-frame directional sprites and fixed signing configuration implemented. Private key backup is owner-only on Drive. Hosted builds and final delivery pending.
+Game-specific schema-2 joystick-only presets, untouched-default migration/explicit reset, full fitted viewport/compact HUD/settings sheet, MIT multi-frame directional sprites and fixed signing configuration implemented. Private key backup is owner-only on Drive. All four hosted builds and engine acceptance passed; signed APK and eight delivery files verified on Drive. Completed.
 
 ## Verification log
 2026-10-05: 33 Rust tests and strict Clippy/fmt; 13 Flutter tests and analyze passed. Tests cover full fitted frame size before manual rotation, twofold text scaling, zero-button preset parsing, old-default migration/custom override preservation/reset, distinct mouth pixels, direction/timer clips and exact animation-phase resume. Local Linux release built. Animated tick30 RGBA: a0be5c7fc85ca45c9dd8a54e0fa1bfc6c355a1e7e1d78a7ce5598b447fa43546. Original v1 golden unchanged. User authorized a final reinstall for rc.1 and stable signatures thereafter.
@@ -47,4 +47,8 @@ Game-specific schema-2 joystick-only presets, untouched-default migration/explic
 Keep this plan and flatland.md honest. Do not describe the entire full-0.2 proposal as
 implemented, or an APK with a different/new certificate as an update for existing installs.
 
-Actual packaged Linux replay completed; signing backup is verified owner-only, 5,145 bytes, and preserved outside Git. Real 1280x527 capture confirmed a full 437x483 game and joystick-only controls. Complete native/headless snapshots and actual RGBA match; hosted platform builds remain next.
+Actual packaged Linux replay completed; signing backup is verified owner-only, 5,145 bytes, and preserved outside Git. Real 1280x527 capture confirmed a full 437x483 game and joystick-only controls. Complete native/headless snapshots and actual RGBA match; hosted platform builds passed and Drive delivery is verified.
+
+Final acceptance: client run 37290624550 and engine run 37290624631 passed at source f22c7fd. Android manifest retains dev.ge4g.ge4g_client and increases versionCode 2 → 3; all three Rust ABI libraries present; apksigner verifies v2/v3 and the pinned certificate. Fix Gradle java-package DSL shadowing with imports, and avoid re-reading the same PKCS12 password file for the key. Windows/Linux embedded package contents exactly match the portable game. Old alpha save loads under the new engine with unchanged game source. Delivered eight files to the verified rc.1 Drive folder, with byte sizes/download availability checked. No new Android device installation is claimed.
+
+Delivery: https://drive.google.com/drive/folders/13a3oRUOBWZ-RCNHaBaXEnDLbtfS13TVR. The broader full-0.2 plan stays active; this presentation/preset/animation slice is complete. Preserve the fixed signing key for all future APKs.
