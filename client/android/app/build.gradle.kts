@@ -1,3 +1,6 @@
+import java.security.KeyStore
+import java.security.MessageDigest
+
 plugins {
     id("com.android.application")
     // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
@@ -38,10 +41,10 @@ android {
                 storePassword = requireNotNull(System.getenv("GE4G_ANDROID_STORE_PASSWORD"))
                 keyAlias = "ge4g"
                 keyPassword = storePassword
-                val keyStore = java.security.KeyStore.getInstance("PKCS12")
+                val keyStore = KeyStore.getInstance("PKCS12")
                 storeFile!!.inputStream().use { keyStore.load(it, storePassword!!.toCharArray()) }
                 val certificate = requireNotNull(keyStore.getCertificate(keyAlias))
-                val fingerprint = java.security.MessageDigest.getInstance("SHA-256")
+                val fingerprint = MessageDigest.getInstance("SHA-256")
                     .digest(certificate.encoded).joinToString("") { "%02x".format(it.toInt() and 0xff) }
                 require(fingerprint == rootProject.file("signing-certificate.sha256").readText().trim()) {
                     "GE4G release certificate changed; refusing an incompatible Android update"

@@ -19,7 +19,7 @@
   "client/README.md": "4e15e3090019d9b3d442ab4aa15eea1d25d10e9bafb9b2acec6108b8af3db85d",
   "client/analysis_options.yaml": "97272d122f08891c0317cd47d0f8275f1c8f028a6a861bd6394ae5b330b5e9dd",
   "client/android/.gitignore": "b027c9de1011765c015e5819bf857c0d75bfcd0886fb01721c091159012e50f1",
-  "client/android/app/build.gradle.kts": "50e0c133a3268c39ec3607c9e440c24d32a78b3a940cea9a794480013e06b5aa",
+  "client/android/app/build.gradle.kts": "a569f562cc34dc73ee563e1f6269c2e3e1464e6c57065327ec97b75a429821d8",
   "client/android/app/src/debug/AndroidManifest.xml": "30b0832ed8b92dfbd6ae2abfa939ccf26333d37600056b1572bd4a397a18a74b",
   "client/android/app/src/main/AndroidManifest.xml": "4af89e96af1a9a6f5c9d435c09c0fcc54de5729281772e98f47ad804d65ee79d",
   "client/android/app/src/main/kotlin/dev/ge4g/ge4g_client/MainActivity.kt": "3fb76157d5d17b83a6dbfb02255095962cb841eaf51e5729b444014a0affaf19",
