@@ -1,3 +1,5 @@
+import 'battle_screen.dart';
+
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
@@ -720,7 +722,7 @@ class _ClientHomeState extends State<ClientHome>
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text(
-                    '${hp == null ? 'GE4G' : '♥ $hp'}  ${state['game.score'] == null ? live.game!.name : 'SCORE ${state['game.score']}'}${power > 0 ? '  ⚡${(power / 60).ceil()}s' : ''}',
+                    '${hp == null ? 'GE4G' : '♥ $hp'}  ${state['game.score'] == null ? live.game!.name : 'SCORE ${state['game.score']}'}${power > 0 ? '  ⚡${(power / 60).ceil()}s' : ''}${live.status['view_label'] == null ? '' : ' / ${live.status['view_label']}'}',
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
@@ -832,24 +834,43 @@ class _ClientHomeState extends State<ClientHome>
           ),
           if (player?.popupVisible ?? false)
             Positioned.fill(
-              child: GamePopup(
-                text: player!.popup!['text'] as String,
-                choices: (player!.popup!['options'] as List? ?? [])
-                    .whereType<Map>()
-                    .map((e) => Map<String, dynamic>.from(e))
-                    .toList(),
-                onChoose: (choice) {
-                  player!.choose(choice);
-                  focus.requestFocus();
-                },
-                onSave: () {
-                  player!.save();
-                },
-                onClose: () {
-                  player!.dismissPopup();
-                  focus.requestFocus();
-                },
-              ),
+              child: player!.popup?['kind'] == 'battle'
+                  ? BattleScreen(
+                      battle: player!.popup!,
+                      image: player!.image,
+                      source: Size(
+                        (player!.status['width'] as int).toDouble(),
+                        (player!.status['height'] as int).toDouble(),
+                      ),
+                      onChoose: (choice) {
+                        player!.choose(choice);
+                        focus.requestFocus();
+                      },
+                      onSave: () {
+                        player!.save();
+                      },
+                      onRotate: () {
+                        orientation.toggle();
+                      },
+                    )
+                  : GamePopup(
+                      text: player!.popup!['text'] as String,
+                      choices: (player!.popup!['options'] as List? ?? [])
+                          .whereType<Map>()
+                          .map((e) => Map<String, dynamic>.from(e))
+                          .toList(),
+                      onChoose: (choice) {
+                        player!.choose(choice);
+                        focus.requestFocus();
+                      },
+                      onSave: () {
+                        player!.save();
+                      },
+                      onClose: () {
+                        player!.dismissPopup();
+                        focus.requestFocus();
+                      },
+                    ),
             ),
         ],
       ),

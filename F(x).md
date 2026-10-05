@@ -66,3 +66,14 @@ FlatLand rc.1: `flatland.animation.directions` selects fixed-tick up/down/left/r
 
 Actor IDs remain scene-local. Scene transitions finish old-scene pending work; event scenes
 return before world transitions. Save content revision prevents silent schema/content drift.
+
+## FlatLand rc3 presentation and village control additions
+
+- Optional actor `step_walk`: held cardinal input queues a cell; release finishes that cell then stops; blocked inputs change facing. Legacy grid steering unchanged.
+- Systems `view`, `pace`: saved preset ID and per-actor px/s overrides. Event parent_view/parent_pace restore on return; `return.retain_view=true` retains selected view/planes/elevation.
+- Gameplay `views`, `default_view`, `lua_events`: bounded affine CPU camera presets and optional Lua event whitelist (empty preserves existing hooks).
+- Battle fighters `sprite`, `back_sprite`, `moves{id,name,power,pp}`; save stores remaining PP. BattleState `turn_tick`, `previous_hp`, `result` drive deterministic hit feedback/held result; result continue executes reward once.
+- Battle stage `background`, `hold_result`; native waiting exposes hp_max, option group/target/pp, result and animation_ticks. Client HUD consumes state; simulation remains native.
+- Layout optional joystick.cardinal, defaultfalse: one axis plus12% hysteresis. No changes to existing layout defaults.
+- Feature requirements `step_walk`, `battle_stage`, `view_projection` reject older clients explicitly.
+- Nuvema state town.running/starter/completed/viewed/won/crate; game ID demo.flatland.nuvema, Android versionCode5, unchanged pinned certificate.

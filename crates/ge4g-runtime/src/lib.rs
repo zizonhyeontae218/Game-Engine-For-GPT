@@ -185,6 +185,11 @@ impl World {
             s.patrol.clear();
             s.portal_latches.clear();
             s.camera = None;
+            s.view = None;
+            s.pace.clear();
+        }
+        if let Some(mode) = spec.gameplay.default_view.clone() {
+            self.systems().view = Some(mode);
         }
         self.contacts.clear();
         self.triggers.clear();
@@ -222,7 +227,20 @@ impl World {
         );
         self.enter_scene(&transition.scene, Some(&transition.spawn))
     }
+    pub fn events(&self) -> &VecDeque<Event> {
+        &self.events
+    }
+    pub fn event_offset(&self) -> u64 {
+        self.events_dropped
+    }
     pub fn snapshot(&self) -> Snapshot {
+        self.snapshot_impl(false)
+    }
+    /// Minimal canonical rendering input; excludes logs, saves and event parent copies.
+    pub fn render_snapshot(&self) -> Snapshot {
+        self.snapshot_impl(true)
+    }
+    fn snapshot_impl(&self, presentation: bool) -> Snapshot {
         let scene = &self.project.scenes[&self.scene];
         Snapshot {
             schema_version: self.project.manifest.schema_version,
@@ -286,9 +304,13 @@ impl World {
                                 };
                                 anim.directions.get(direction).unwrap_or(&anim.frames)
                             };
-                            let phase = self.tick.saturating_sub(
-                                self.flatland.systems.as_ref().map_or(0, |s| s.paused_ticks),
-                            ) / u64::from(anim.ticks);
+                            let phase = if a.step_walk && e.actor.direction == [0, 0] {
+                                0
+                            } else {
+                                self.tick.saturating_sub(
+                                    self.flatland.systems.as_ref().map_or(0, |s| s.paused_ticks),
+                                ) / u64::from(anim.ticks)
+                            };
                             if let Some(atlas) = &anim.atlas {
                                 let n = if anim.once {
                                     (phase as usize).min(atlas.indices.len() - 1)
@@ -337,11 +359,13 @@ impl World {
                 })
                 .chain(self.projectile_snapshots())
                 .collect(),
-            state: self.state.values.clone(),
-            events: self.events.iter().cloned().collect(),
+            state: if presentation { BTreeMap::new() } else { self.state.values.clone() },
+            events: if presentation { Vec::new() } else { self.events.iter().cloned().collect() },
             events_dropped: self.events_dropped,
             flatland: (self.project.manifest.schema_version == 2)
-                .then(|| serde_json::to_value(&self.flatland).expect("world JSON")),
+                .then(|| if presentation {
+                    self.flatland.systems.as_ref().map(|s| json!({"systems":{"view":s.view,"patches":s.patches,"events":s.events.last().map(|f| vec![json!({"event":f.event,"pc":f.pc,"battle":f.battle})]).unwrap_or_default()}})).unwrap_or_else(||json!({}))
+                } else { serde_json::to_value(&self.flatland).expect("world JSON") }),
         }
     }
     /// Versioned client adapters may also send named buttons. Standard Basement

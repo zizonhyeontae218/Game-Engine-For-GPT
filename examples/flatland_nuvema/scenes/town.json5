@@ -1,0 +1,3122 @@
+{
+  "schema_version": 2,
+  "id": "town",
+  "background": [
+    105,
+    177,
+    117,
+    255
+  ],
+  "spawns": {
+    "start": [
+      240,
+      272
+    ],
+    "home_exit": [
+      240,
+      272
+    ],
+    "lab_exit": [
+      144,
+      144
+    ],
+    "friend_exit": [
+      144,
+      416
+    ],
+    "friend_right_exit": [
+      304,
+      416
+    ]
+  },
+  "entities": [
+    {
+      "id": "terrain",
+      "position": [
+        0,
+        0
+      ],
+      "size": [
+        512,
+        576
+      ],
+      "sprite": {
+        "texture": "assets/town_ground.png",
+        "layer": -10
+      },
+      "flatland": {
+        "body": "pass"
+      }
+    },
+    {
+      "id": "player",
+      "position": [
+        240,
+        272
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/hero_down_0.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "anchor": [
+          -4,
+          -16
+        ],
+        "visual_size": [
+          24,
+          32
+        ],
+        "step_walk": true,
+        "hp": 30,
+        "team": "hero",
+        "attack": "tap",
+        "animation": {
+          "frames": [
+            "assets/hero_down_0.png",
+            "assets/hero_down_1.png",
+            "assets/hero_down_0.png",
+            "assets/hero_down_2.png"
+          ],
+          "ticks": 8,
+          "directions": {
+            "up": [
+              "assets/hero_up_0.png",
+              "assets/hero_up_1.png",
+              "assets/hero_up_0.png",
+              "assets/hero_up_2.png"
+            ],
+            "left": [
+              "assets/hero_left_0.png",
+              "assets/hero_left_1.png",
+              "assets/hero_left_0.png",
+              "assets/hero_left_2.png"
+            ],
+            "right": [
+              "assets/hero_right_0.png",
+              "assets/hero_right_1.png",
+              "assets/hero_right_0.png",
+              "assets/hero_right_2.png"
+            ]
+          }
+        }
+      },
+      "player": {
+        "speed": 48
+      }
+    },
+    {
+      "id": "lab_building",
+      "position": [
+        80,
+        96
+      ],
+      "size": [
+        128,
+        32
+      ],
+      "sprite": {
+        "texture": "assets/lab.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "anchor": [
+          0,
+          -80
+        ],
+        "visual_size": [
+          128,
+          112
+        ]
+      }
+    },
+    {
+      "id": "player_house",
+      "position": [
+        208,
+        224
+      ],
+      "size": [
+        80,
+        32
+      ],
+      "sprite": {
+        "texture": "assets/house_blue.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "anchor": [
+          0,
+          -64
+        ],
+        "visual_size": [
+          80,
+          96
+        ]
+      }
+    },
+    {
+      "id": "friend_house_left",
+      "position": [
+        112,
+        368
+      ],
+      "size": [
+        80,
+        32
+      ],
+      "sprite": {
+        "texture": "assets/house_blue.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "anchor": [
+          0,
+          -64
+        ],
+        "visual_size": [
+          80,
+          96
+        ]
+      }
+    },
+    {
+      "id": "friend_house_right",
+      "position": [
+        272,
+        368
+      ],
+      "size": [
+        80,
+        32
+      ],
+      "sprite": {
+        "texture": "assets/house_blue.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "anchor": [
+          0,
+          -64
+        ],
+        "visual_size": [
+          80,
+          96
+        ]
+      }
+    },
+    {
+      "id": "tree_8_0",
+      "position": [
+        8,
+        24
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/pine.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "anchor": [
+          -8,
+          -32
+        ],
+        "visual_size": [
+          32,
+          48
+        ]
+      }
+    },
+    {
+      "id": "tree_40_0",
+      "position": [
+        40,
+        24
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/pine.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "anchor": [
+          -8,
+          -32
+        ],
+        "visual_size": [
+          32,
+          48
+        ]
+      }
+    },
+    {
+      "id": "tree_440_0",
+      "position": [
+        440,
+        24
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/pine.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "anchor": [
+          -8,
+          -32
+        ],
+        "visual_size": [
+          32,
+          48
+        ]
+      }
+    },
+    {
+      "id": "tree_472_0",
+      "position": [
+        472,
+        24
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/pine.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "anchor": [
+          -8,
+          -32
+        ],
+        "visual_size": [
+          32,
+          48
+        ]
+      }
+    },
+    {
+      "id": "tree_8_32",
+      "position": [
+        8,
+        56
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/pine.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "anchor": [
+          -8,
+          -32
+        ],
+        "visual_size": [
+          32,
+          48
+        ]
+      }
+    },
+    {
+      "id": "tree_40_32",
+      "position": [
+        40,
+        56
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/pine.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "anchor": [
+          -8,
+          -32
+        ],
+        "visual_size": [
+          32,
+          48
+        ]
+      }
+    },
+    {
+      "id": "tree_440_32",
+      "position": [
+        440,
+        56
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/pine.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "anchor": [
+          -8,
+          -32
+        ],
+        "visual_size": [
+          32,
+          48
+        ]
+      }
+    },
+    {
+      "id": "tree_472_32",
+      "position": [
+        472,
+        56
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/pine.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "anchor": [
+          -8,
+          -32
+        ],
+        "visual_size": [
+          32,
+          48
+        ]
+      }
+    },
+    {
+      "id": "tree_8_64",
+      "position": [
+        8,
+        88
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/pine.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "anchor": [
+          -8,
+          -32
+        ],
+        "visual_size": [
+          32,
+          48
+        ]
+      }
+    },
+    {
+      "id": "tree_40_64",
+      "position": [
+        40,
+        88
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/pine.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "anchor": [
+          -8,
+          -32
+        ],
+        "visual_size": [
+          32,
+          48
+        ]
+      }
+    },
+    {
+      "id": "tree_440_64",
+      "position": [
+        440,
+        88
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/pine.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "anchor": [
+          -8,
+          -32
+        ],
+        "visual_size": [
+          32,
+          48
+        ]
+      }
+    },
+    {
+      "id": "tree_472_64",
+      "position": [
+        472,
+        88
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/pine.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "anchor": [
+          -8,
+          -32
+        ],
+        "visual_size": [
+          32,
+          48
+        ]
+      }
+    },
+    {
+      "id": "tree_8_96",
+      "position": [
+        8,
+        120
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/pine.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "anchor": [
+          -8,
+          -32
+        ],
+        "visual_size": [
+          32,
+          48
+        ]
+      }
+    },
+    {
+      "id": "tree_40_96",
+      "position": [
+        40,
+        120
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/pine.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "anchor": [
+          -8,
+          -32
+        ],
+        "visual_size": [
+          32,
+          48
+        ]
+      }
+    },
+    {
+      "id": "tree_440_96",
+      "position": [
+        440,
+        120
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/pine.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "anchor": [
+          -8,
+          -32
+        ],
+        "visual_size": [
+          32,
+          48
+        ]
+      }
+    },
+    {
+      "id": "tree_472_96",
+      "position": [
+        472,
+        120
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/pine.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "anchor": [
+          -8,
+          -32
+        ],
+        "visual_size": [
+          32,
+          48
+        ]
+      }
+    },
+    {
+      "id": "tree_8_128",
+      "position": [
+        8,
+        152
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/pine.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "anchor": [
+          -8,
+          -32
+        ],
+        "visual_size": [
+          32,
+          48
+        ]
+      }
+    },
+    {
+      "id": "tree_40_128",
+      "position": [
+        40,
+        152
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/pine.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "anchor": [
+          -8,
+          -32
+        ],
+        "visual_size": [
+          32,
+          48
+        ]
+      }
+    },
+    {
+      "id": "tree_440_128",
+      "position": [
+        440,
+        152
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/pine.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "anchor": [
+          -8,
+          -32
+        ],
+        "visual_size": [
+          32,
+          48
+        ]
+      }
+    },
+    {
+      "id": "tree_472_128",
+      "position": [
+        472,
+        152
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/pine.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "anchor": [
+          -8,
+          -32
+        ],
+        "visual_size": [
+          32,
+          48
+        ]
+      }
+    },
+    {
+      "id": "tree_8_160",
+      "position": [
+        8,
+        184
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/pine.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "anchor": [
+          -8,
+          -32
+        ],
+        "visual_size": [
+          32,
+          48
+        ]
+      }
+    },
+    {
+      "id": "tree_40_160",
+      "position": [
+        40,
+        184
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/pine.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "anchor": [
+          -8,
+          -32
+        ],
+        "visual_size": [
+          32,
+          48
+        ]
+      }
+    },
+    {
+      "id": "tree_440_160",
+      "position": [
+        440,
+        184
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/pine.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "anchor": [
+          -8,
+          -32
+        ],
+        "visual_size": [
+          32,
+          48
+        ]
+      }
+    },
+    {
+      "id": "tree_472_160",
+      "position": [
+        472,
+        184
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/pine.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "anchor": [
+          -8,
+          -32
+        ],
+        "visual_size": [
+          32,
+          48
+        ]
+      }
+    },
+    {
+      "id": "tree_8_192",
+      "position": [
+        8,
+        216
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/pine.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "anchor": [
+          -8,
+          -32
+        ],
+        "visual_size": [
+          32,
+          48
+        ]
+      }
+    },
+    {
+      "id": "tree_40_192",
+      "position": [
+        40,
+        216
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/pine.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "anchor": [
+          -8,
+          -32
+        ],
+        "visual_size": [
+          32,
+          48
+        ]
+      }
+    },
+    {
+      "id": "tree_440_192",
+      "position": [
+        440,
+        216
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/pine.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "anchor": [
+          -8,
+          -32
+        ],
+        "visual_size": [
+          32,
+          48
+        ]
+      }
+    },
+    {
+      "id": "tree_472_192",
+      "position": [
+        472,
+        216
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/pine.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "anchor": [
+          -8,
+          -32
+        ],
+        "visual_size": [
+          32,
+          48
+        ]
+      }
+    },
+    {
+      "id": "tree_8_224",
+      "position": [
+        8,
+        248
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/pine.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "anchor": [
+          -8,
+          -32
+        ],
+        "visual_size": [
+          32,
+          48
+        ]
+      }
+    },
+    {
+      "id": "tree_40_224",
+      "position": [
+        40,
+        248
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/pine.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "anchor": [
+          -8,
+          -32
+        ],
+        "visual_size": [
+          32,
+          48
+        ]
+      }
+    },
+    {
+      "id": "tree_440_224",
+      "position": [
+        440,
+        248
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/pine.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "anchor": [
+          -8,
+          -32
+        ],
+        "visual_size": [
+          32,
+          48
+        ]
+      }
+    },
+    {
+      "id": "tree_472_224",
+      "position": [
+        472,
+        248
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/pine.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "anchor": [
+          -8,
+          -32
+        ],
+        "visual_size": [
+          32,
+          48
+        ]
+      }
+    },
+    {
+      "id": "tree_8_256",
+      "position": [
+        8,
+        280
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/pine.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "anchor": [
+          -8,
+          -32
+        ],
+        "visual_size": [
+          32,
+          48
+        ]
+      }
+    },
+    {
+      "id": "tree_40_256",
+      "position": [
+        40,
+        280
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/pine.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "anchor": [
+          -8,
+          -32
+        ],
+        "visual_size": [
+          32,
+          48
+        ]
+      }
+    },
+    {
+      "id": "tree_440_256",
+      "position": [
+        440,
+        280
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/pine.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "anchor": [
+          -8,
+          -32
+        ],
+        "visual_size": [
+          32,
+          48
+        ]
+      }
+    },
+    {
+      "id": "tree_472_256",
+      "position": [
+        472,
+        280
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/pine.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "anchor": [
+          -8,
+          -32
+        ],
+        "visual_size": [
+          32,
+          48
+        ]
+      }
+    },
+    {
+      "id": "tree_8_288",
+      "position": [
+        8,
+        312
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/pine.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "anchor": [
+          -8,
+          -32
+        ],
+        "visual_size": [
+          32,
+          48
+        ]
+      }
+    },
+    {
+      "id": "tree_40_288",
+      "position": [
+        40,
+        312
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/pine.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "anchor": [
+          -8,
+          -32
+        ],
+        "visual_size": [
+          32,
+          48
+        ]
+      }
+    },
+    {
+      "id": "tree_440_288",
+      "position": [
+        440,
+        312
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/pine.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "anchor": [
+          -8,
+          -32
+        ],
+        "visual_size": [
+          32,
+          48
+        ]
+      }
+    },
+    {
+      "id": "tree_472_288",
+      "position": [
+        472,
+        312
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/pine.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "anchor": [
+          -8,
+          -32
+        ],
+        "visual_size": [
+          32,
+          48
+        ]
+      }
+    },
+    {
+      "id": "tree_8_320",
+      "position": [
+        8,
+        344
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/pine.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "anchor": [
+          -8,
+          -32
+        ],
+        "visual_size": [
+          32,
+          48
+        ]
+      }
+    },
+    {
+      "id": "tree_40_320",
+      "position": [
+        40,
+        344
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/pine.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "anchor": [
+          -8,
+          -32
+        ],
+        "visual_size": [
+          32,
+          48
+        ]
+      }
+    },
+    {
+      "id": "tree_440_320",
+      "position": [
+        440,
+        344
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/pine.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "anchor": [
+          -8,
+          -32
+        ],
+        "visual_size": [
+          32,
+          48
+        ]
+      }
+    },
+    {
+      "id": "tree_472_320",
+      "position": [
+        472,
+        344
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/pine.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "anchor": [
+          -8,
+          -32
+        ],
+        "visual_size": [
+          32,
+          48
+        ]
+      }
+    },
+    {
+      "id": "tree_8_352",
+      "position": [
+        8,
+        376
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/pine.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "anchor": [
+          -8,
+          -32
+        ],
+        "visual_size": [
+          32,
+          48
+        ]
+      }
+    },
+    {
+      "id": "tree_40_352",
+      "position": [
+        40,
+        376
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/pine.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "anchor": [
+          -8,
+          -32
+        ],
+        "visual_size": [
+          32,
+          48
+        ]
+      }
+    },
+    {
+      "id": "tree_440_352",
+      "position": [
+        440,
+        376
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/pine.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "anchor": [
+          -8,
+          -32
+        ],
+        "visual_size": [
+          32,
+          48
+        ]
+      }
+    },
+    {
+      "id": "tree_472_352",
+      "position": [
+        472,
+        376
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/pine.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "anchor": [
+          -8,
+          -32
+        ],
+        "visual_size": [
+          32,
+          48
+        ]
+      }
+    },
+    {
+      "id": "tree_8_384",
+      "position": [
+        8,
+        408
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/pine.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "anchor": [
+          -8,
+          -32
+        ],
+        "visual_size": [
+          32,
+          48
+        ]
+      }
+    },
+    {
+      "id": "tree_40_384",
+      "position": [
+        40,
+        408
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/pine.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "anchor": [
+          -8,
+          -32
+        ],
+        "visual_size": [
+          32,
+          48
+        ]
+      }
+    },
+    {
+      "id": "tree_440_384",
+      "position": [
+        440,
+        408
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/pine.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "anchor": [
+          -8,
+          -32
+        ],
+        "visual_size": [
+          32,
+          48
+        ]
+      }
+    },
+    {
+      "id": "tree_472_384",
+      "position": [
+        472,
+        408
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/pine.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "anchor": [
+          -8,
+          -32
+        ],
+        "visual_size": [
+          32,
+          48
+        ]
+      }
+    },
+    {
+      "id": "tree_8_416",
+      "position": [
+        8,
+        440
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/pine.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "anchor": [
+          -8,
+          -32
+        ],
+        "visual_size": [
+          32,
+          48
+        ]
+      }
+    },
+    {
+      "id": "tree_40_416",
+      "position": [
+        40,
+        440
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/pine.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "anchor": [
+          -8,
+          -32
+        ],
+        "visual_size": [
+          32,
+          48
+        ]
+      }
+    },
+    {
+      "id": "tree_440_416",
+      "position": [
+        440,
+        440
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/pine.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "anchor": [
+          -8,
+          -32
+        ],
+        "visual_size": [
+          32,
+          48
+        ]
+      }
+    },
+    {
+      "id": "tree_472_416",
+      "position": [
+        472,
+        440
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/pine.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "anchor": [
+          -8,
+          -32
+        ],
+        "visual_size": [
+          32,
+          48
+        ]
+      }
+    },
+    {
+      "id": "north_tree_72",
+      "position": [
+        72,
+        16
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/pine.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "anchor": [
+          -8,
+          -32
+        ],
+        "visual_size": [
+          32,
+          48
+        ]
+      }
+    },
+    {
+      "id": "north_tree_104",
+      "position": [
+        104,
+        16
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/pine.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "anchor": [
+          -8,
+          -32
+        ],
+        "visual_size": [
+          32,
+          48
+        ]
+      }
+    },
+    {
+      "id": "north_tree_136",
+      "position": [
+        136,
+        16
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/pine.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "anchor": [
+          -8,
+          -32
+        ],
+        "visual_size": [
+          32,
+          48
+        ]
+      }
+    },
+    {
+      "id": "north_tree_168",
+      "position": [
+        168,
+        16
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/pine.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "anchor": [
+          -8,
+          -32
+        ],
+        "visual_size": [
+          32,
+          48
+        ]
+      }
+    },
+    {
+      "id": "north_tree_200",
+      "position": [
+        200,
+        16
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/pine.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "anchor": [
+          -8,
+          -32
+        ],
+        "visual_size": [
+          32,
+          48
+        ]
+      }
+    },
+    {
+      "id": "north_tree_232",
+      "position": [
+        232,
+        16
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/pine.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "anchor": [
+          -8,
+          -32
+        ],
+        "visual_size": [
+          32,
+          48
+        ]
+      }
+    },
+    {
+      "id": "north_tree_264",
+      "position": [
+        264,
+        16
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/pine.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "anchor": [
+          -8,
+          -32
+        ],
+        "visual_size": [
+          32,
+          48
+        ]
+      }
+    },
+    {
+      "id": "north_tree_360",
+      "position": [
+        360,
+        16
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/pine.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "anchor": [
+          -8,
+          -32
+        ],
+        "visual_size": [
+          32,
+          48
+        ]
+      }
+    },
+    {
+      "id": "north_tree_392",
+      "position": [
+        392,
+        16
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/pine.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "anchor": [
+          -8,
+          -32
+        ],
+        "visual_size": [
+          32,
+          48
+        ]
+      }
+    },
+    {
+      "id": "north_tree_424",
+      "position": [
+        424,
+        16
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/pine.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "anchor": [
+          -8,
+          -32
+        ],
+        "visual_size": [
+          32,
+          48
+        ]
+      }
+    },
+    {
+      "id": "lab_door",
+      "position": [
+        144,
+        128
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "trigger": {
+        "scene": "lab",
+        "spawn": "entry"
+      },
+      "flatland": {
+        "body": "pass"
+      }
+    },
+    {
+      "id": "home_door",
+      "position": [
+        240,
+        256
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "trigger": {
+        "scene": "home",
+        "spawn": "entry"
+      },
+      "flatland": {
+        "body": "pass"
+      }
+    },
+    {
+      "id": "left_door",
+      "position": [
+        144,
+        400
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "trigger": {
+        "scene": "friend_home",
+        "spawn": "entry"
+      },
+      "flatland": {
+        "body": "pass"
+      }
+    },
+    {
+      "id": "right_door",
+      "position": [
+        304,
+        400
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "trigger": {
+        "scene": "friend_home_right",
+        "spawn": "entry"
+      },
+      "flatland": {
+        "body": "pass"
+      }
+    },
+    {
+      "id": "rival",
+      "position": [
+        272,
+        288
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/friend_down_0.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "fixed",
+        "depth": true,
+        "anchor": [
+          -4,
+          -16
+        ],
+        "visual_size": [
+          24,
+          32
+        ]
+      },
+      "tags": [
+        "rival"
+      ],
+      "interaction": {
+        "range": 18,
+        "dialogue": ""
+      }
+    },
+    {
+      "id": "guide",
+      "position": [
+        176,
+        176
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/professor_down_0.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "fixed",
+        "depth": true,
+        "anchor": [
+          -4,
+          -16
+        ],
+        "visual_size": [
+          24,
+          32
+        ]
+      },
+      "tags": [
+        "journal"
+      ],
+      "interaction": {
+        "range": 18,
+        "dialogue": ""
+      }
+    },
+    {
+      "id": "coast_sign",
+      "position": [
+        272,
+        416
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/sign.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "fixed",
+        "depth": true,
+        "anchor": [
+          0,
+          -8
+        ],
+        "visual_size": [
+          16,
+          24
+        ]
+      },
+      "tags": [
+        "tour"
+      ],
+      "interaction": {
+        "range": 18,
+        "dialogue": ""
+      }
+    },
+    {
+      "id": "view_sign",
+      "position": [
+        304,
+        176
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/sign.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "fixed",
+        "depth": true,
+        "anchor": [
+          0,
+          -8
+        ],
+        "visual_size": [
+          16,
+          24
+        ]
+      },
+      "tags": [
+        "view"
+      ],
+      "interaction": {
+        "range": 18,
+        "dialogue": ""
+      }
+    },
+    {
+      "id": "town_mailbox",
+      "position": [
+        192,
+        256
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/mailbox.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "fixed",
+        "depth": true,
+        "anchor": [
+          0,
+          -8
+        ],
+        "visual_size": [
+          16,
+          24
+        ]
+      },
+      "tags": [
+        "mail"
+      ],
+      "interaction": {
+        "range": 18,
+        "dialogue": ""
+      }
+    },
+    {
+      "id": "walker",
+      "position": [
+        368,
+        336
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/friend_down_0.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "anchor": [
+          -4,
+          -16
+        ],
+        "visual_size": [
+          24,
+          32
+        ],
+        "ai": {
+          "mode": "patrol",
+          "speed": 24,
+          "patrol": [
+            [
+              23,
+              20
+            ],
+            [
+              25,
+              20
+            ],
+            [
+              25,
+              22
+            ],
+            [
+              23,
+              22
+            ]
+          ]
+        },
+        "animation": {
+          "frames": [
+            "assets/friend_down_0.png",
+            "assets/friend_down_1.png",
+            "assets/friend_down_0.png",
+            "assets/friend_down_2.png"
+          ],
+          "ticks": 10,
+          "directions": {
+            "left": [
+              "assets/friend_left_0.png",
+              "assets/friend_left_1.png",
+              "assets/friend_left_0.png",
+              "assets/friend_left_2.png"
+            ],
+            "right": [
+              "assets/friend_right_0.png",
+              "assets/friend_right_1.png",
+              "assets/friend_right_0.png",
+              "assets/friend_right_2.png"
+            ],
+            "up": [
+              "assets/friend_up_0.png",
+              "assets/friend_up_1.png",
+              "assets/friend_up_0.png",
+              "assets/friend_up_2.png"
+            ]
+          }
+        }
+      },
+      "interaction": {
+        "range": 16,
+        "dialogue": "마을을 천천히 순찰 중이야. 손을 떼면 네 캐릭터는 멈추지만 나는 정해진 경로를 계속 걸어!"
+      }
+    }
+  ],
+  "map": {
+    "cell": 16,
+    "rows": [
+      "###################...##########",
+      "###################...##########",
+      "###################...##########",
+      "###.........................####",
+      "###..########...............####",
+      "###..########...............####",
+      "###..########...............####",
+      "###..####.###...............####",
+      "###.........................####",
+      "###................FFFF.....####",
+      "###.........................####",
+      "###.........................####",
+      "###..........#####..........####",
+      "###..........#####..........####",
+      "###..........#####..........####",
+      "###..........##.##..........####",
+      "###.........................####",
+      "###.........................####",
+      "###.........................####",
+      "###.........................####",
+      "###.........................####",
+      "###....#####.....#####......####",
+      "###....#####.....#####......####",
+      "###....#####.....#####......####",
+      "###....##.##.....##.##......####",
+      "###.........................####",
+      "###.........................####",
+      "###.........................####",
+      "################################",
+      "################################",
+      "################################",
+      "################################",
+      "################################",
+      "################################",
+      "################################",
+      "################################"
+    ],
+    "tiles": {
+      ".": {
+        "color": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "#": {
+        "color": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "solid": true
+      },
+      "F": {
+        "color": [
+          145,
+          124,
+          83,
+          255
+        ],
+        "solid": true,
+        "planes": [
+          0
+        ]
+      }
+    }
+  },
+  "gameplay": {
+    "seed": 7303,
+    "items": {
+      "potion": {
+        "name": "회복약",
+        "stack": 20,
+        "use_actions": [
+          {
+            "op": "heal",
+            "entity": "$player",
+            "amount": 12
+          }
+        ]
+      },
+      "badge": {
+        "name": "실험 인증 배지",
+        "stack": 1
+      },
+      "coin": {
+        "name": "연구 포인트",
+        "stack": 99
+      },
+      "blade": {
+        "name": "연습봉",
+        "stack": 1,
+        "slot": "weapon",
+        "attack_bonus": 2
+      }
+    },
+    "quests": {
+      "research": {
+        "name": "마름꽃 연구 기록",
+        "objectives": {
+          "battle": 1,
+          "view": 1,
+          "crate": 1,
+          "combat": 1
+        },
+        "objective_labels": {
+          "battle": "친구와 턴제 대결",
+          "view": "상층 시점 관찰",
+          "crate": "상자 밀기",
+          "combat": "연습 인형 타격"
+        },
+        "rewards": [
+          {
+            "op": "give",
+            "item": "badge",
+            "count": 1
+          },
+          {
+            "op": "set",
+            "key": "town.completed",
+            "value": true
+          }
+        ]
+      }
+    },
+    "attacks": {
+      "tap": {
+        "damage": 3,
+        "range": 24,
+        "startup": 5,
+        "active": 3,
+        "recovery": 18,
+        "immunity": 12,
+        "knockback": 0,
+        "on_hit": [
+          {
+            "op": "sound",
+            "cue": "hit"
+          }
+        ]
+      }
+    },
+    "events": {
+      "battle_sprout": [
+        {
+          "op": "battle",
+          "stage": {
+            "background": "assets/battle_field.png",
+            "hold_result": true
+          },
+          "fighters": [
+            {
+              "id": "hero",
+              "name": "새싹이",
+              "hp": 32,
+              "attack": 9,
+              "defense": 2,
+              "speed": 12,
+              "sprite": "assets/sprout.png",
+              "back_sprite": "assets/sprout_back.png",
+              "moves": [
+                {
+                  "id": "tackle",
+                  "name": "몸통박치기",
+                  "power": 100,
+                  "pp": 25
+                },
+                {
+                  "id": "burst",
+                  "name": "잎새 바람",
+                  "power": 140,
+                  "pp": 10
+                }
+              ]
+            },
+            {
+              "id": "rival",
+              "name": "풀숲 친구",
+              "hp": 36,
+              "attack": 6,
+              "defense": 2,
+              "speed": 9,
+              "enemy": true,
+              "sprite": "assets/moss.png"
+            }
+          ],
+          "victory": [
+            {
+              "op": "set",
+              "key": "town.won",
+              "value": true
+            }
+          ],
+          "defeat": [
+            {
+              "op": "say",
+              "text": "괜찮아. 연구소에서 다시 연습하자!"
+            }
+          ]
+        },
+        {
+          "op": "return"
+        }
+      ],
+      "battle_ember": [
+        {
+          "op": "battle",
+          "stage": {
+            "background": "assets/battle_field.png",
+            "hold_result": true
+          },
+          "fighters": [
+            {
+              "id": "hero",
+              "name": "불씨",
+              "hp": 32,
+              "attack": 9,
+              "defense": 2,
+              "speed": 12,
+              "sprite": "assets/ember.png",
+              "back_sprite": "assets/ember_back.png",
+              "moves": [
+                {
+                  "id": "tackle",
+                  "name": "몸통박치기",
+                  "power": 100,
+                  "pp": 25
+                },
+                {
+                  "id": "burst",
+                  "name": "불꽃 튀기기",
+                  "power": 140,
+                  "pp": 10
+                }
+              ]
+            },
+            {
+              "id": "rival",
+              "name": "풀숲 친구",
+              "hp": 36,
+              "attack": 6,
+              "defense": 2,
+              "speed": 9,
+              "enemy": true,
+              "sprite": "assets/moss.png"
+            }
+          ],
+          "victory": [
+            {
+              "op": "set",
+              "key": "town.won",
+              "value": true
+            }
+          ],
+          "defeat": [
+            {
+              "op": "say",
+              "text": "괜찮아. 연구소에서 다시 연습하자!"
+            }
+          ]
+        },
+        {
+          "op": "return"
+        }
+      ],
+      "battle_tide": [
+        {
+          "op": "battle",
+          "stage": {
+            "background": "assets/battle_field.png",
+            "hold_result": true
+          },
+          "fighters": [
+            {
+              "id": "hero",
+              "name": "물방울",
+              "hp": 32,
+              "attack": 9,
+              "defense": 2,
+              "speed": 12,
+              "sprite": "assets/tide.png",
+              "back_sprite": "assets/tide_back.png",
+              "moves": [
+                {
+                  "id": "tackle",
+                  "name": "몸통박치기",
+                  "power": 100,
+                  "pp": 25
+                },
+                {
+                  "id": "burst",
+                  "name": "물결 쏘기",
+                  "power": 140,
+                  "pp": 10
+                }
+              ]
+            },
+            {
+              "id": "rival",
+              "name": "풀숲 친구",
+              "hp": 36,
+              "attack": 6,
+              "defense": 2,
+              "speed": 9,
+              "enemy": true,
+              "sprite": "assets/moss.png"
+            }
+          ],
+          "victory": [
+            {
+              "op": "set",
+              "key": "town.won",
+              "value": true
+            }
+          ],
+          "defeat": [
+            {
+              "op": "say",
+              "text": "괜찮아. 연구소에서 다시 연습하자!"
+            }
+          ]
+        },
+        {
+          "op": "return"
+        }
+      ],
+      "battle": [
+        {
+          "op": "branch",
+          "when": {
+            "op": "state",
+            "key": "town.starter",
+            "eq": "ember"
+          },
+          "yes": 4,
+          "no": 1
+        },
+        {
+          "op": "branch",
+          "when": {
+            "op": "state",
+            "key": "town.starter",
+            "eq": "tide"
+          },
+          "yes": 6,
+          "no": 2
+        },
+        {
+          "op": "call",
+          "event": "battle_sprout"
+        },
+        {
+          "op": "jump",
+          "next": 7
+        },
+        {
+          "op": "call",
+          "event": "battle_ember"
+        },
+        {
+          "op": "jump",
+          "next": 7
+        },
+        {
+          "op": "call",
+          "event": "battle_tide"
+        },
+        {
+          "op": "return"
+        }
+      ],
+      "starter": [
+        {
+          "op": "choice",
+          "text": "첫 동료를 골라 주세요. 친구와의 전투에서 앞/뒤 스프라이트와 기술 PP를 확인할 수 있어요.",
+          "options": [
+            {
+              "id": "sprout",
+              "text": "새싹이 · 풀",
+              "next": 1,
+              "actions": [
+                {
+                  "op": "set",
+                  "key": "town.starter",
+                  "value": "sprout"
+                }
+              ]
+            },
+            {
+              "id": "ember",
+              "text": "불씨 · 불",
+              "next": 1,
+              "actions": [
+                {
+                  "op": "set",
+                  "key": "town.starter",
+                  "value": "ember"
+                }
+              ]
+            },
+            {
+              "id": "tide",
+              "text": "물방울 · 물",
+              "next": 1,
+              "actions": [
+                {
+                  "op": "set",
+                  "key": "town.starter",
+                  "value": "tide"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "op": "say",
+          "text": "동료가 생겼습니다! 중앙 집 앞의 친구에게 말을 걸어 대결해 보세요. 가방에는 회복약이 있습니다."
+        },
+        {
+          "op": "return"
+        }
+      ],
+      "intro": [
+        {
+          "op": "say",
+          "text": "마름꽃마을 / NUVEMA FIELD STUDY\nZ 또는 SPACE: 대화 · X: 시점 · C: 걷기/달리기\n집과 연구소에 들어갈 수 있습니다. 연구소에서 동료를 고른 뒤 중앙 집 앞 친구와 대결하세요.\n가로/세로는 상단 회전 버튼으로 바꿉니다."
+        },
+        {
+          "op": "return"
+        }
+      ],
+      "view": [
+        {
+          "op": "choice",
+          "text": "시점과 충돌 층을 선택하세요. 경사 시점은 실제 프레임을 확대·기울입니다. 상층에서는 연구소 앞 낮은 울타리를 통과하고 캐릭터가 높아집니다.",
+          "options": [
+            {
+              "id": "plan",
+              "text": "탑뷰 / TOP",
+              "next": 1,
+              "actions": [
+                {
+                  "op": "view",
+                  "mode": "plan"
+                },
+                {
+                  "op": "plane",
+                  "entity": "$player",
+                  "plane": 0
+                },
+                {
+                  "op": "elevate",
+                  "entity": "$player",
+                  "z": 0
+                },
+                {
+                  "op": "set",
+                  "key": "town.viewed",
+                  "value": true
+                }
+              ]
+            },
+            {
+              "id": "depth",
+              "text": "경사 시점 / DEPTH",
+              "next": 1,
+              "actions": [
+                {
+                  "op": "view",
+                  "mode": "depth"
+                },
+                {
+                  "op": "plane",
+                  "entity": "$player",
+                  "plane": 0
+                },
+                {
+                  "op": "elevate",
+                  "entity": "$player",
+                  "z": 0
+                },
+                {
+                  "op": "set",
+                  "key": "town.viewed",
+                  "value": true
+                }
+              ]
+            },
+            {
+              "id": "balcony",
+              "text": "상층 전망 / UPPER",
+              "next": 1,
+              "actions": [
+                {
+                  "op": "view",
+                  "mode": "balcony"
+                },
+                {
+                  "op": "plane",
+                  "entity": "$player",
+                  "plane": 1
+                },
+                {
+                  "op": "elevate",
+                  "entity": "$player",
+                  "z": 24
+                },
+                {
+                  "op": "set",
+                  "key": "town.viewed",
+                  "value": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "op": "return",
+          "retain_view": true
+        }
+      ],
+      "journal": [
+        {
+          "op": "branch",
+          "when": {
+            "op": "state",
+            "key": "town.completed",
+            "eq": true
+          },
+          "yes": 3,
+          "no": 1
+        },
+        {
+          "op": "say",
+          "text": "연구 기록: 친구와 전투 / 시점 전환 / 연구소 상자 밀기 / 연습 인형 타격. 메뉴의 퀘스트에서 진행도를 확인하세요."
+        },
+        {
+          "op": "return"
+        },
+        {
+          "op": "say",
+          "text": "모든 실험 완료! 가방에 연구 인증 배지가 있습니다. 저장한 뒤 재실행하여 상태를 확인하세요."
+        },
+        {
+          "op": "return"
+        }
+      ],
+      "cutscene": [
+        {
+          "op": "camera",
+          "at": [
+            80,
+            0
+          ]
+        },
+        {
+          "op": "wait",
+          "ticks": 45
+        },
+        {
+          "op": "camera",
+          "at": [
+            64,
+            300
+          ]
+        },
+        {
+          "op": "say",
+          "text": "북서쪽 연구소, 가운데 우리 집, 아래 친구들의 집과 남쪽 바다. 컷씬이 끝나면 캐릭터·카메라·시점이 원래대로 복원됩니다."
+        },
+        {
+          "op": "return"
+        }
+      ]
+    },
+    "views": {
+      "plan": {
+        "label": "탑뷰 / TOP",
+        "zoom": 100,
+        "tilt": 100,
+        "shear": 0
+      },
+      "depth": {
+        "label": "경사 시점 / DEPTH",
+        "zoom": 115,
+        "tilt": 75,
+        "shear": 12
+      },
+      "balcony": {
+        "label": "상층 전망 / UPPER",
+        "zoom": 125,
+        "tilt": 70,
+        "shear": 18
+      }
+    },
+    "default_view": "plan",
+    "camera": {
+      "target": "player",
+      "bounds": [
+        0,
+        0,
+        192,
+        336
+      ]
+    },
+    "lua_events": [
+      "action.pace"
+    ]
+  },
+  "rules": [
+    {
+      "id": "walk_event",
+      "on": "action.view",
+      "actions": [
+        {
+          "op": "event_scene",
+          "event": "view"
+        }
+      ]
+    },
+    {
+      "id": "battle_progress",
+      "on": "battle_win",
+      "actions": [
+        {
+          "op": "objective",
+          "quest": "research",
+          "objective": "battle"
+        }
+      ],
+      "when": {
+        "op": "quest_is",
+        "quest": "research",
+        "status": "active"
+      },
+      "once": true
+    },
+    {
+      "id": "camera_progress",
+      "on": "tick",
+      "actions": [
+        {
+          "op": "objective",
+          "quest": "research",
+          "objective": "view"
+        }
+      ],
+      "when": {
+        "op": "all",
+        "conditions": [
+          {
+            "op": "state",
+            "key": "town.viewed",
+            "eq": true
+          },
+          {
+            "op": "quest_is",
+            "quest": "research",
+            "status": "active"
+          }
+        ]
+      },
+      "once": true
+    },
+    {
+      "id": "initial",
+      "on": "start",
+      "actions": [
+        {
+          "op": "quest",
+          "quest": "research",
+          "status": "active"
+        },
+        {
+          "op": "give",
+          "item": "potion",
+          "count": 5
+        },
+        {
+          "op": "give",
+          "item": "blade",
+          "count": 1
+        },
+        {
+          "op": "equip",
+          "slot": "weapon",
+          "item": "blade"
+        },
+        {
+          "op": "music",
+          "cue": "music",
+          "volume": 25
+        },
+        {
+          "op": "event_scene",
+          "event": "intro"
+        }
+      ],
+      "once": true
+    },
+    {
+      "id": "rival",
+      "on": "interact",
+      "actions": [
+        {
+          "op": "event_scene",
+          "event": "battle"
+        }
+      ],
+      "target_tag": "rival"
+    },
+    {
+      "id": "journal",
+      "on": "interact",
+      "actions": [
+        {
+          "op": "event_scene",
+          "event": "journal"
+        }
+      ],
+      "target_tag": "journal"
+    },
+    {
+      "id": "view",
+      "on": "interact",
+      "actions": [
+        {
+          "op": "event_scene",
+          "event": "view"
+        }
+      ],
+      "target_tag": "view"
+    },
+    {
+      "id": "tour",
+      "on": "interact",
+      "actions": [
+        {
+          "op": "event_scene",
+          "event": "cutscene"
+        }
+      ],
+      "target_tag": "tour"
+    },
+    {
+      "id": "mail",
+      "on": "interact",
+      "actions": [
+        {
+          "op": "say",
+          "text": "편지가 도착했습니다. 연구소에 가서 새 동료를 만나 보세요!"
+        }
+      ],
+      "target_tag": "mail"
+    },
+    {
+      "id": "finish_research",
+      "on": "tick",
+      "when": {
+        "op": "all",
+        "conditions": [
+          {
+            "op": "quest_is",
+            "quest": "research",
+            "status": "active"
+          },
+          {
+            "op": "objectives_complete",
+            "quest": "research"
+          }
+        ]
+      },
+      "actions": [
+        {
+          "op": "quest",
+          "quest": "research",
+          "status": "completed"
+        }
+      ]
+    }
+  ],
+  "script": "data/town.lua",
+  "sounds": {
+    "music": "audio/music.wav",
+    "hit": "audio/hit.wav",
+    "door": "audio/door.wav",
+    "quest": "audio/quest.wav"
+  }
+}

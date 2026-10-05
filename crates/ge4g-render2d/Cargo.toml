@@ -8,3 +8,4 @@ license.workspace = true
 ge4g-core = { path = "../ge4g-core" }
 ge4g-project = { path = "../ge4g-project" }
 png = "0.17"
+serde_json.workspace = true

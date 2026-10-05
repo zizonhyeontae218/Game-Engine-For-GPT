@@ -113,30 +113,43 @@ enum Request {
     },
 }
 fn status(session: u64, live: &Session) -> Value {
-    let snapshot = live.world.snapshot();
-    let dialogue = snapshot
-        .events
+    let events = live.world.events();
+    let events_dropped = live.world.event_offset();
+    let dialogue = events
         .iter()
         .rev()
         .find(|e| e.kind == "interaction")
         .and_then(|e| e.data.get("dialogue"))
         .cloned();
-    let action = snapshot
-        .events
+    let action = events
         .iter()
         .rev()
         .find(|e| e.kind == "action_pressed")
         .and_then(|e| e.data.get("action"))
         .cloned();
-    let mut response = json!({"abi_version": ABI_VERSION, "ok": true, "session": session, "tick": snapshot.tick, "scene": snapshot.scene, "width": live.frame.width, "height": live.frame.height, "frame_bytes": live.frame.rgba.len(), "state": snapshot.state, "dialogue": dialogue, "last_action": action});
+    let mut response = json!({"abi_version": ABI_VERSION, "ok": true, "session": session, "tick": live.world.tick, "scene": live.world.scene, "width": live.frame.width, "height": live.frame.height, "frame_bytes": live.frame.rgba.len(), "state": live.world.state.values, "dialogue": dialogue, "last_action": action});
     response["waiting"] = live.world.waiting().unwrap_or(Value::Null);
-    response["systems"]=live.world.flatland.systems.as_ref().map(|s|json!({"inventory":s.inventory,"equipment":s.equipment,"quests":s.quests,"music":s.music,"event":s.events.last().map(|f|json!({"id":f.event,"pc":f.pc}))})).unwrap_or(Value::Null);
+    response["systems"]=live.world.flatland.systems.as_ref().map(|s|json!({"inventory":s.inventory,"equipment":s.equipment,"quests":s.quests,"music":s.music,"view":s.view,"pace":s.pace,"planes":s.planes,"event":s.events.last().map(|f|json!({"id":f.event,"pc":f.pc}))})).unwrap_or(Value::Null);
     response["catalog"] = json!({"items":live.world.project.scenes[&live.world.scene].gameplay.items.iter().map(|(id,i)|(id,json!({"name":i.name,"usable":!i.use_actions.is_empty(),"slot":i.slot}))).collect::<BTreeMap<_,_>>(),"quests":live.world.project.scenes[&live.world.scene].gameplay.quests.iter().map(|(id,q)|(id,json!({"name":q.name,"objectives":q.objectives,"objective_labels":q.objective_labels}))).collect::<BTreeMap<_,_>>()});
+    response["view_label"] = live
+        .world
+        .flatland
+        .systems
+        .as_ref()
+        .and_then(|s| s.view.as_ref())
+        .and_then(|v| {
+            live.world.project.scenes[&live.world.scene]
+                .gameplay
+                .views
+                .get(v)
+        })
+        .map(|v| json!(v.label))
+        .unwrap_or(Value::Null);
     response["game_schema"] = json!(live.world.project.manifest.schema_version);
     response["popup"] = if let Some(p) = &live.world.flatland.popup {
         json!(p)
     } else {
-        snapshot.events.iter().rev().find(|e|e.kind=="interaction").map(|e|json!({"id":format!("{}:{}",e.tick,e.entity.as_deref().unwrap_or("")),"text":e.data["dialogue"]})).unwrap_or(Value::Null)
+        events.iter().rev().find(|e|e.kind=="interaction").map(|e|json!({"id":format!("{}:{}",e.tick,e.entity.as_deref().unwrap_or("")),"text":e.data["dialogue"]})).unwrap_or(Value::Null)
     };
     response["actors"] = json!(
         live.world
@@ -156,19 +169,16 @@ fn status(session: u64, live: &Session) -> Value {
             .collect::<BTreeMap<_, _>>()
     );
     response["stopped"] = json!(live.world.flatland.stopped);
-    let end = snapshot.events_dropped + snapshot.events.len() as u64;
+    let end = events_dropped + events.len() as u64;
     response["event_cursor"] = json!(end);
     response["audio"] = json!(
-        snapshot
-            .events
+        events
             .iter()
             .enumerate()
             .rev()
             .filter(|(_, e)| e.kind == "audio")
             .take(32)
-            .map(
-                |(i, e)| json!({"id":snapshot.events_dropped+i as u64+1,"file":e.data.get("file")})
-            )
+            .map(|(i, e)| json!({"id":events_dropped+i as u64+1,"file":e.data.get("file")}))
             .collect::<Vec<_>>()
     );
     response
@@ -212,7 +222,11 @@ fn dispatch(text: &str) -> Result<Value> {
             for _ in 0..replay.ticks {
                 live.world.step_replay(&replay)?;
             }
-            live.frame = render(&live.world.project, &live.world.snapshot(), live.debug)?;
+            live.frame = render(
+                &live.world.project,
+                &live.world.render_snapshot(),
+                live.debug,
+            )?;
             Ok(status(session, live))
         }
         Request::Choose { session, choice } => {
@@ -221,7 +235,11 @@ fn dispatch(text: &str) -> Result<Value> {
                 .get_mut(&session)
                 .ok_or_else(|| Error("unknown session".into()))?;
             live.world.choose(&choice)?;
-            live.frame = render(&live.world.project, &live.world.snapshot(), live.debug)?;
+            live.frame = render(
+                &live.world.project,
+                &live.world.render_snapshot(),
+                live.debug,
+            )?;
             Ok(status(session, live))
         }
         Request::Command { session, actions } => {
@@ -230,7 +248,11 @@ fn dispatch(text: &str) -> Result<Value> {
                 .get_mut(&session)
                 .ok_or_else(|| Error("unknown session".into()))?;
             live.world.command(&actions)?;
-            live.frame = render(&live.world.project, &live.world.snapshot(), live.debug)?;
+            live.frame = render(
+                &live.world.project,
+                &live.world.render_snapshot(),
+                live.debug,
+            )?;
             Ok(status(session, live))
         }
         Request::Skip { session } => {
@@ -239,7 +261,11 @@ fn dispatch(text: &str) -> Result<Value> {
                 .get_mut(&session)
                 .ok_or_else(|| Error("unknown session".into()))?;
             live.world.skip_event_wait()?;
-            live.frame = render(&live.world.project, &live.world.snapshot(), live.debug)?;
+            live.frame = render(
+                &live.world.project,
+                &live.world.render_snapshot(),
+                live.debug,
+            )?;
             Ok(status(session, live))
         }
         Request::Open { project, load } => {
@@ -252,7 +278,7 @@ fn dispatch(text: &str) -> Result<Value> {
                 Project::load(Path::new(&project))?,
                 load.as_deref().map(Path::new),
             )?;
-            let frame = render(&world.project, &world.snapshot(), false)?;
+            let frame = render(&world.project, &world.render_snapshot(), false)?;
             registry.next = registry
                 .next
                 .checked_add(1)
@@ -288,13 +314,27 @@ fn dispatch(text: &str) -> Result<Value> {
                 .get_mut(&session)
                 .ok_or_else(|| Error(format!("unknown client session {session}")))?;
             let popup = live.world.flatland.popup_serial;
+            let waiting = live
+                .world
+                .waiting()
+                .and_then(|w| w["id"].as_str().map(str::to_owned));
             for _ in 0..ticks {
                 live.world.step_actions(&input.core(), &input.actions)?;
-                if live.world.flatland.popup_serial != popup || live.world.waiting().is_some() {
+                if live.world.flatland.popup_serial != popup
+                    || live
+                        .world
+                        .waiting()
+                        .and_then(|w| w["id"].as_str().map(str::to_owned))
+                        != waiting
+                {
                     break;
                 }
             }
-            live.frame = render(&live.world.project, &live.world.snapshot(), live.debug)?;
+            live.frame = render(
+                &live.world.project,
+                &live.world.render_snapshot(),
+                live.debug,
+            )?;
             Ok(status(session, live))
         }
         Request::Observe {

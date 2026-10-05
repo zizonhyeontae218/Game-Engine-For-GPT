@@ -1,6 +1,7 @@
 # GE4G agent map
 
-The shipped engine is **Basement 0.2 — FlatLand, 0.2.0**.
+The current release candidate is **Basement 0.2 — FlatLand, v0.2 rc3 (0.2.0-rc.3)**.
+The previous claimed final is archived as rc2. Do not label rc3 a final 0.2.0 release.
 Schema 1 remains supported. Actual capabilities and limits: `docs/FLATLAND_AUTHORING.md`.
 For small authoring edits read `docs/FLATLAND_QUICKSTART.md` and query one component.
 
@@ -89,4 +90,6 @@ Fix the cause or document a real blocker in the active ExecPlan.
 
 - Android releases must retain application ID `dev.ge4g.ge4g_client` and the certificate pinned in `client/android/signing-certificate.sha256`; increment the build version code. Restore the original key from the user's private `GE4G Private Signing` Drive folder. Never generate a replacement key or release-sign with ephemeral debug keys. Hosted APKs are unsigned; use `scripts/sign_android.py` before delivery. Private keys/passwords must never enter Git or the public Demos folders.
 
-- Full 0.2 regression: test Signal Yard as well as Pac-Man and the v1 demo. Keep choice/turn resume, RNG rollback, exact parent return and canonical client frames covered. Android 0.2.0 uses versionCode 4 and the rc.1 certificate.
+- Full 0.2 regression: test Nuvema Town and Signal Yard as well as Pac-Man and the v1 demo. Keep choice/turn resume, RNG rollback, exact parent return and canonical client frames covered. Android rc3 uses versionCode 5 and the rc.1 certificate.
+
+- Village-style games should opt into `step_walk` and cardinal touch profiles; preserve maze steering for existing games. Battle presentation must use a dedicated stage rather than a dialogue popup. Viewpoint changes must alter actual CPU frames, and retain_view event returns preserve chosen view/plane/elevation.

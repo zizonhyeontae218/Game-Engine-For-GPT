@@ -38,6 +38,8 @@ pub enum BodyMode {
 #[serde(deny_unknown_fields)]
 pub struct Actor {
     #[serde(default)]
+    pub step_walk: bool,
+    #[serde(default)]
     pub body: BodyMode,
     #[serde(default)]
     pub grid: bool,
@@ -172,6 +174,13 @@ pub enum Condition {
 #[derive(Debug, Clone, Serialize, Deserialize, schemars::JsonSchema)]
 #[serde(tag = "op", rename_all = "snake_case", deny_unknown_fields)]
 pub enum Action {
+    View {
+        mode: Option<String>,
+    },
+    Pace {
+        entity: String,
+        speed: i64,
+    },
     PlayClip {
         entity: String,
         clip: String,
@@ -491,7 +500,7 @@ impl Project {
                 if a.hp.is_some_and(|hp| !(1..=1_000_000).contains(&hp)) {
                     return Err(fail("HP must be 1..1000000"));
                 }
-                if a.grid || a.ai.is_some() {
+                if a.grid || a.step_walk || a.ai.is_some() {
                     let map = scene
                         .map
                         .as_ref()

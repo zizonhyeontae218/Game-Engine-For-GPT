@@ -158,3 +158,26 @@ packages. ABI remains1. Android ID/certificate stay fixed and versionCode increa
 `flatland_task_benchmark.py` measures a controlled author/repair task with real cl100k_base
 tokens, tool calls/failures/time and equal resulting frames. It does not measure model
 sampling time or claim universal savings. Pac-Man and Signal Yard are executable examples.
+
+## rc3 villages and battle presentation
+
+Use actor `step_walk:true` plus a16px map cell and speed48 for three tiles/s. Release
+finishes the current cell then stops; maze `grid:true` retains its original behavior.
+Touch profile joystick may set `cardinal:true`; tune dead_zone separately. Pace overrides
+use `{op:"pace",entity:"$player",speed:72}` in native commands/Lua.
+
+A battle instruction can set `stage:{background:"assets/field.png",hold_result:true}`.
+Each fighter may supply `sprite`, `back_sprite` and up to four moves with stable ID,
+name, power (percentage1..300) and PP. Native choices use `move:<move>:<target>`;
+legacy fighters without moves still use `attack_<target>`. The dedicated client offers
+moves, guard and inventory; `battle_continue` executes victory/defeat effects once.
+Every attack resolves the round in native simulation; the displayed24-tick hit feedback
+uses turn_tick/previous_hp while the parent world stays frozen. Save captures remaining PP.
+
+Gameplay views are named presets: label, zoom100..160, tilt60..100, shear-25..25.
+`view:{mode:"depth"}` projects the padded canonical world. Collision `plane` and visual
+`elevate` remain independent. Default event return restores them; `{op:"return",retain_view:true}`
+retains selected view/planes/elevation for a settings choice. There is no3D geometry.
+Optional gameplay.lua_events filters hook names before creating a Lua VM; empty means
+legacy all-hooks behavior. Packages using these additions declare step_walk, battle_stage
+and view_projection capabilities so old clients reject them clearly.

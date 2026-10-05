@@ -24,8 +24,9 @@ jobs:
       - run: sudo apt-get update && sudo apt-get install -y clang cmake ninja-build libasound2-dev libgtk-3-dev libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev gstreamer1.0-plugins-base gstreamer1.0-plugins-good xvfb xauth python3-pil
       - run: cargo build --locked -p ge4g-cli
       - run: python3 scripts/pack_game.py examples/basement_demo --game-id demo.basement --out dist/basement-demo.ge4g
-      - run: python3 scripts/pack_game.py examples/flatland_pacman --game-id demo.flatland.pacman --version 0.2.0 --out dist/flatland-pacman.ge4g
-      - run: python3 scripts/pack_game.py examples/flatland_signal_yard --game-id demo.flatland.signal-yard --version 0.2.0 --out dist/flatland-signal-yard.ge4g
+      - run: python3 scripts/pack_game.py examples/flatland_pacman --game-id demo.flatland.pacman --version 0.2.0-rc.3 --out dist/flatland-pacman.ge4g
+      - run: python3 scripts/pack_game.py examples/flatland_signal_yard --game-id demo.flatland.signal-yard --version 0.2.0-rc.3 --out dist/flatland-signal-yard.ge4g
+      - run: python3 scripts/pack_game.py examples/flatland_nuvema --game-id demo.flatland.nuvema --version 0.2.0-rc.3 --out dist/flatland-nuvema.ge4g
       - run: flutter pub get && flutter analyze && flutter test
         working-directory: client
       - run: flutter build linux --release
@@ -36,6 +37,15 @@ jobs:
       - run: xvfb-run -a python3 scripts/client_smoke.py dist/ge4g-flatland-linux --project examples/flatland_pacman
       - run: python3 scripts/bundle_desktop.py --client client/build/linux/x64/release/bundle --game dist/flatland-signal-yard.ge4g --platform linux --out dist/ge4g-signal-yard-linux
       - run: xvfb-run -a python3 scripts/client_smoke.py dist/ge4g-signal-yard-linux --project examples/flatland_signal_yard
+      - run: python3 scripts/bundle_desktop.py --client client/build/linux/x64/release/bundle --game dist/flatland-nuvema.ge4g --platform linux --out dist/ge4g-nuvema-linux
+      - run: xvfb-run -a python3 scripts/client_smoke.py dist/ge4g-nuvema-linux --project examples/flatland_nuvema
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ge4g-nuvema-linux-embedded
+          path: |
+            dist/ge4g-nuvema-linux.tar.gz
+            dist/flatland-nuvema.ge4g
+            artifacts/nuvema-smoke/
       - uses: actions/upload-artifact@v4
         with:
           name: ge4g-basement-linux-embedded
@@ -62,8 +72,9 @@ jobs:
           cache: true
       - run: cargo build --locked -p ge4g-cli
       - run: python scripts/pack_game.py examples/basement_demo --game-id demo.basement --validator target/debug/ge4g.exe --out dist/basement-demo.ge4g
-      - run: python scripts/pack_game.py examples/flatland_pacman --game-id demo.flatland.pacman --version 0.2.0 --validator target/debug/ge4g.exe --out dist/flatland-pacman.ge4g
-      - run: python scripts/pack_game.py examples/flatland_signal_yard --game-id demo.flatland.signal-yard --version 0.2.0 --validator target/debug/ge4g.exe --out dist/flatland-signal-yard.ge4g
+      - run: python scripts/pack_game.py examples/flatland_pacman --game-id demo.flatland.pacman --version 0.2.0-rc.3 --validator target/debug/ge4g.exe --out dist/flatland-pacman.ge4g
+      - run: python scripts/pack_game.py examples/flatland_signal_yard --game-id demo.flatland.signal-yard --version 0.2.0-rc.3 --validator target/debug/ge4g.exe --out dist/flatland-signal-yard.ge4g
+      - run: python scripts/pack_game.py examples/flatland_nuvema --game-id demo.flatland.nuvema --version 0.2.0-rc.3 --validator target/debug/ge4g.exe --out dist/flatland-nuvema.ge4g
       - run: flutter pub get
         working-directory: client
       - run: flutter build windows --release
@@ -83,6 +94,11 @@ jobs:
         with:
           name: ge4g-signal-yard-windows-embedded
           path: dist/ge4g-signal-yard-windows.zip
+      - run: python scripts/bundle_desktop.py --client client/build/windows/x64/runner/Release --game dist/flatland-nuvema.ge4g --platform windows --out dist/ge4g-nuvema-windows
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ge4g-nuvema-windows-embedded
+          path: dist/ge4g-nuvema-windows.zip
   android:
     runs-on: ubuntu-24.04
     steps:

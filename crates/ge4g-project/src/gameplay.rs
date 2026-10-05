@@ -41,6 +41,47 @@ pub struct Gameplay {
     pub modules: BTreeMap<String, String>,
     #[serde(default)]
     pub camera: Option<Camera>,
+    #[serde(default)]
+    pub views: BTreeMap<String, View>,
+    #[serde(default)]
+    pub default_view: Option<String>,
+    #[serde(default)]
+    pub lua_events: Vec<String>,
+}
+#[derive(Debug, Clone, Serialize, Deserialize, schemars::JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct View {
+    pub label: String,
+    #[serde(default = "hundred")]
+    pub zoom: i64,
+    #[serde(default = "hundred")]
+    pub tilt: i64,
+    #[serde(default)]
+    pub shear: i64,
+}
+fn hundred() -> i64 {
+    100
+}
+#[derive(Debug, Clone, Serialize, Deserialize, schemars::JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct BattleMove {
+    pub id: String,
+    pub name: String,
+    #[serde(default = "hundred")]
+    pub power: i64,
+    #[serde(default = "default_pp")]
+    pub pp: u32,
+}
+fn default_pp() -> u32 {
+    20
+}
+#[derive(Debug, Clone, Default, Serialize, Deserialize, schemars::JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct BattleStage {
+    #[serde(default)]
+    pub background: Option<String>,
+    #[serde(default)]
+    pub hold_result: bool,
 }
 #[derive(Debug, Clone, Serialize, Deserialize, schemars::JsonSchema)]
 #[serde(deny_unknown_fields)]
@@ -124,6 +165,12 @@ pub struct Choice {
 #[derive(Debug, Clone, Serialize, Deserialize, schemars::JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct Fighter {
+    #[serde(default)]
+    pub sprite: Option<String>,
+    #[serde(default)]
+    pub back_sprite: Option<String>,
+    #[serde(default)]
+    pub moves: Vec<BattleMove>,
     pub id: String,
     pub name: String,
     pub hp: i64,
@@ -166,19 +213,42 @@ pub enum Instruction {
         event: String,
     },
     Battle {
+        #[serde(default)]
+        stage: Option<BattleStage>,
         fighters: Vec<Fighter>,
         #[serde(default)]
         victory: Vec<Action>,
         #[serde(default)]
         defeat: Vec<Action>,
     },
-    Return {},
+    Return {
+        #[serde(default)]
+        retain_view: bool,
+    },
 }
 
 use crate::{Error, Project, Result, Scene, valid_id};
 impl Project {
     pub(crate) fn validate_gameplay(&self, scene: &Scene) -> Result<()> {
         let g = &scene.gameplay;
+        if g.lua_events.len() > 32 || g.lua_events.iter().any(|e| e.is_empty() || e.len() > 64) {
+            return Err(Error("invalid lua_events filter".into()));
+        }
+        if g.views.len() > 8
+            || g.views.iter().any(|(id, v)| {
+                !valid_id(id)
+                    || v.label.is_empty()
+                    || v.label.len() > 128
+                    || !(100..=160).contains(&v.zoom)
+                    || !(60..=100).contains(&v.tilt)
+                    || v.shear.unsigned_abs() > 25
+            })
+            || g.default_view
+                .as_ref()
+                .is_some_and(|v| !g.views.contains_key(v))
+        {
+            return Err(Error("invalid view preset".into()));
+        }
         if let Some(map) = &scene.map {
             let mut ids = std::collections::BTreeSet::new();
             if map.portals.len() > 64 {
@@ -324,7 +394,14 @@ impl Project {
                         fighters,
                         victory,
                         defeat,
+                        stage,
                     } => {
+                        if let Some(bg) = stage.as_ref().and_then(|s| s.background.as_ref()) {
+                            self.path(bg)?;
+                            if !self.textures.contains_key(bg) {
+                                return Err(fail("missing battle background"));
+                            }
+                        }
                         if fighters.len() < 2
                             || fighters.len() > 16
                             || !fighters.iter().any(|f| f.enemy)
@@ -334,6 +411,27 @@ impl Project {
                         }
                         let mut ids = std::collections::BTreeSet::new();
                         for f in fighters {
+                            if f.moves.len() > 4
+                                || f.moves.iter().any(|m| {
+                                    !valid_id(&m.id)
+                                        || m.name.is_empty()
+                                        || !(1..=300).contains(&m.power)
+                                        || m.pp > 100
+                                })
+                                || f.moves
+                                    .iter()
+                                    .map(|m| &m.id)
+                                    .collect::<std::collections::BTreeSet<_>>()
+                                    .len()
+                                    != f.moves.len()
+                            {
+                                return Err(fail("invalid battle moves"));
+                            }
+                            for file in [&f.sprite, &f.back_sprite].into_iter().flatten() {
+                                if !self.textures.contains_key(file) {
+                                    return Err(fail("missing fighter sprite"));
+                                }
+                            }
                             if !valid_id(&f.id)
                                 || !ids.insert(&f.id)
                                 || !(1..=1_000_000).contains(&f.hp)
@@ -411,6 +509,12 @@ impl Project {
                     return Err(fail("invalid item/count"));
                 }
             }
+            Action::Pace { speed, .. } if !(12..=6000).contains(speed) => {
+                return Err(Error("pace speed 12..6000".into()));
+            }
+            Action::View { mode } if mode.as_ref().is_some_and(|id| !g.views.contains_key(id)) => {
+                return Err(Error("unknown view preset".into()));
+            }
             Action::PlayClip { clip, .. } if !g.clips.contains_key(clip) => {
                 return Err(fail("unknown clip"));
             }
@@ -482,7 +586,8 @@ impl Project {
             _ => {}
         }
         let entity = match a {
-            Action::PlayClip { entity, .. }
+            Action::Pace { entity, .. }
+            | Action::PlayClip { entity, .. }
             | Action::Heal { entity, .. }
             | Action::Attack { entity, .. }
             | Action::Plane { entity, .. }

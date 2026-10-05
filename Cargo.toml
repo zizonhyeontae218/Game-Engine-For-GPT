@@ -3,7 +3,7 @@ members = ["crates/ge4g-core", "crates/ge4g-project", "crates/ge4g-runtime", "cr
 resolver = "3"
 
 [workspace.package]
-version = "0.2.0"
+version = "0.2.0-rc.3"
 edition = "2024"
 license = "MIT"
 

@@ -167,6 +167,9 @@ class GameLibrary {
               'atlas',
               'music',
               'lua_rng',
+              'step_walk',
+              'battle_stage',
+              'view_projection',
             ].contains(f),
           )) {
         throw const FormatException('unsupported required engine feature');

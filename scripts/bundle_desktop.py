@@ -38,11 +38,11 @@ def main():
     if args.platform == 'linux':
         (args.out / 'ge4g.desktop').write_text('[Desktop Entry]\nType=Application\nName=' + manifest['name'].replace('\n', ' ') + '\nExec=ge4g_client\nIcon=ge4g\nTerminal=false\nCategories=Game;\n')
         (args.out / 'ge4g_client').chmod(0o755)
-        archive = args.out.with_suffix('.tar.gz')
+        archive = Path(str(args.out) + '.tar.gz')
         with tarfile.open(archive, 'w:gz') as target:
             target.add(args.out, arcname=args.out.name)
     else:
-        archive = args.out.with_suffix('.zip')
+        archive = Path(str(args.out) + '.zip')
         with zipfile.ZipFile(archive, 'w', zipfile.ZIP_DEFLATED) as target:
             for path in sorted(args.out.rglob('*')):
                 if path.is_file():

@@ -40,6 +40,10 @@ pub struct MusicState {
 #[derive(Debug, Clone, Default, Serialize, Deserialize, schemars::JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct Systems {
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub view: Option<String>,
+    #[serde(default, skip_serializing_if = "BTreeMap::is_empty")]
+    pub pace: BTreeMap<String, i64>,
     pub rng: u64,
     #[serde(default)]
     pub event_serial: u64,
@@ -73,6 +77,10 @@ pub struct EventFrame {
     pub waiting: bool,
     pub battle: Option<BattleState>,
     pub parent: BTreeMap<String, LiveEntity>,
+    #[serde(default)]
+    pub parent_view: Option<String>,
+    #[serde(default)]
+    pub parent_pace: BTreeMap<String, i64>,
     pub parent_camera: Option<[i64; 2]>,
     pub parent_planes: BTreeMap<String, i32>,
     pub parent_elevation: BTreeMap<String, i32>,
@@ -81,6 +89,12 @@ pub struct EventFrame {
 #[derive(Debug, Clone, Serialize, Deserialize, schemars::JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct BattleState {
+    #[serde(default)]
+    pub turn_tick: u64,
+    #[serde(default)]
+    pub previous_hp: BTreeMap<String, i64>,
+    #[serde(default)]
+    pub result: Option<bool>,
     pub fighters: Vec<Fighter>,
     pub turn: u64,
     pub log: String,
@@ -366,6 +380,14 @@ impl World {
                 }
                 self.systems().planes.insert(id.clone(), *plane);
                 self.emit("plane", Some(&id), json!({"plane":plane}));
+            }
+            Action::View { mode } => {
+                self.systems().view = mode.clone();
+                self.emit("view_changed", None, json!({"mode":mode}));
+            }
+            Action::Pace { entity, speed } => {
+                let id = self.ref_id(entity, target)?;
+                self.systems().pace.insert(id, *speed);
             }
             Action::Elevate { entity, z } => {
                 let id = self.ref_id(entity, target)?;
@@ -782,6 +804,8 @@ impl World {
         let s = self.systems();
         s.event_serial += 1;
         let serial = s.event_serial;
+        let parent_view = self.systems().view.clone();
+        let parent_pace = self.systems().pace.clone();
         self.systems().events.push(EventFrame {
             serial,
             event: event.into(),
@@ -790,6 +814,8 @@ impl World {
             waiting: false,
             battle: None,
             parent,
+            parent_view,
+            parent_pace,
             parent_camera: camera,
             parent_planes: planes,
             parent_elevation: elevation,
@@ -813,9 +839,41 @@ impl World {
             frame.battle.as_ref().map_or(0, |b| b.turn)
         );
         if let Some(b) = &frame.battle {
-            let options:Vec<_>=b.fighters.iter().filter(|f|f.enemy&&f.hp>0).map(|f|json!({"id":format!("attack_{}",f.id),"text":format!("공격 / {} (HP {})",f.name,f.hp)})).chain(std::iter::once(json!({"id":"guard","text":"방어 / GUARD"}))).chain(self.inventory_battle_choices()).collect();
+            let definitions =
+                match &self.project.scenes[&self.scene].gameplay.events[&frame.event][frame.pc] {
+                    Instruction::Battle { fighters, .. } => fighters,
+                    _ => unreachable!(),
+                };
+            let hero = b.fighters.iter().find(|f| !f.enemy).unwrap();
+            let mut options = Vec::new();
+            if b.result.is_some() {
+                options.push(
+                    json!({"id":"battle_continue","text":"마을로 돌아가기","group":"result"}),
+                );
+            } else {
+                for enemy in b.fighters.iter().filter(|f| f.enemy && f.hp > 0) {
+                    if hero.moves.is_empty() {
+                        options.push(json!({"id":format!("attack_{}",enemy.id),"text":"공격","target":enemy.id,"group":"moves"}));
+                    } else {
+                        for m in hero.moves.iter().filter(|m| m.pp > 0) {
+                            options.push(json!({"id":format!("move:{}:{}",m.id,enemy.id),"text":m.name,"pp":m.pp,"target":enemy.id,"group":"moves"}));
+                        }
+                    }
+                }
+                options.push(json!({"id":"guard","text":"방어","group":"moves"}));
+                options.extend(self.inventory_battle_choices());
+            }
+            let fighters: Vec<_> = b
+                .fighters
+                .iter()
+                .map(|f| {
+                    let mut v = serde_json::to_value(f).unwrap();
+                    v["hp_max"] = json!(definitions.iter().find(|d| d.id == f.id).unwrap().hp);
+                    v
+                })
+                .collect();
             return Some(
-                json!({"id":id,"kind":"battle","text":format!("TURN {}\n{}",b.turn+1,b.log),"options":options,"fighters":b.fighters}),
+                json!({"id":id,"kind":"battle","turn":b.turn+1,"text":b.log,"options":options,"fighters":fighters,"result":b.result,"animation_ticks":self.tick.saturating_sub(b.turn_tick)}),
             );
         }
         match &self.project.scenes[&self.scene].gameplay.events[&frame.event][frame.pc] {
@@ -829,7 +887,7 @@ impl World {
         }
     }
     fn inventory_battle_choices(&self) -> Vec<Value> {
-        self.project.scenes[&self.scene].gameplay.items.iter().filter(|(id,i)|self.inventory(id)>0&&!i.use_actions.is_empty()).map(|(id,i)|json!({"id":format!("item_{id}"),"text":format!("{} ×{}",i.name,self.inventory(id))})).collect()
+        self.project.scenes[&self.scene].gameplay.items.iter().filter(|(id,i)|self.inventory(id)>0&&!i.use_actions.is_empty()).map(|(id,i)|json!({"id":format!("item_{id}"),"text":format!("{} ×{}",i.name,self.inventory(id)),"group":"items"})).collect()
     }
     pub fn choose(&mut self, choice: &str) -> Result<()> {
         if choice.len() > 128 {
@@ -930,14 +988,20 @@ impl World {
             let step = instructions
                 .get(frame.pc)
                 .cloned()
-                .unwrap_or(Instruction::Return {});
+                .unwrap_or(Instruction::Return { retain_view: false });
             match step {
-                Instruction::Return {} => {
+                Instruction::Return { retain_view } => {
                     let frame = self.systems().events.pop().unwrap();
                     self.entities = frame.parent;
                     self.systems().camera = frame.parent_camera;
-                    self.systems().planes = frame.parent_planes;
-                    self.systems().elevation = frame.parent_elevation;
+                    if !retain_view {
+                        self.systems().view = frame.parent_view;
+                    }
+                    self.systems().pace = frame.parent_pace;
+                    if !retain_view {
+                        self.systems().planes = frame.parent_planes;
+                        self.systems().elevation = frame.parent_elevation;
+                    }
                     self.systems().animations = frame.parent_animations;
                     self.flatland.popup = None;
                     self.emit("event_return", None, json!({"event":frame.event}));
@@ -953,11 +1017,15 @@ impl World {
                     return Ok(());
                 }
                 Instruction::Battle { fighters, .. } => {
+                    let tick = self.tick;
                     let f = self.systems().events.last_mut().unwrap();
                     f.battle = Some(BattleState {
                         fighters,
                         turn: 0,
-                        log: "전투 시작 / BATTLE".into(),
+                        log: "전투 시작".into(),
+                        turn_tick: tick,
+                        previous_hp: BTreeMap::new(),
+                        result: None,
                     });
                     f.waiting = true;
                     return Ok(());
@@ -997,8 +1065,51 @@ impl World {
     fn battle_choice(&mut self, choice: &str) -> Result<()> {
         let frame = self.systems().events.last().unwrap().clone();
         let mut battle = frame.battle.unwrap();
+        if let Some(won) = battle.result {
+            if choice != "battle_continue" {
+                return Err(Error("battle ended".into()));
+            }
+            return self.finish_battle(won);
+        }
+        battle.previous_hp = battle
+            .fighters
+            .iter()
+            .map(|f| (f.id.clone(), f.hp))
+            .collect();
+        battle.turn_tick = self.tick;
         let hero = battle.fighters.iter().position(|f| !f.enemy).unwrap();
-        let target = if let Some(id) = choice.strip_prefix("attack_") {
+        let selected_move =
+            battle.fighters[hero]
+                .moves
+                .iter()
+                .enumerate()
+                .find_map(|(index, m)| {
+                    battle
+                        .fighters
+                        .iter()
+                        .find(|f| {
+                            f.enemy
+                                && f.hp > 0
+                                && choice == format!("move:{}:{}", m.id, f.id)
+                                && m.pp > 0
+                        })
+                        .map(|f| (index, f.id.clone()))
+                });
+        let move_power = selected_move
+            .as_ref()
+            .map_or(100, |(index, _)| battle.fighters[hero].moves[*index].power);
+        let move_name = selected_move
+            .as_ref()
+            .map_or("공격".to_owned(), |(index, _)| {
+                battle.fighters[hero].moves[*index].name.clone()
+            });
+        let move_target = selected_move.as_ref().map(|(_, id)| id.as_str());
+        let legacy_target = if battle.fighters[hero].moves.is_empty() {
+            choice.strip_prefix("attack_")
+        } else {
+            None
+        };
+        let target = if let Some(id) = legacy_target.or(move_target) {
             Some(
                 battle
                     .fighters
@@ -1065,13 +1176,17 @@ impl World {
                 } else if let Some(t) = target
                     && battle.fighters[t].hp > 0
                 {
-                    let damage = (battle.fighters[i].attack - battle.fighters[t].defense
+                    if let Some((index, _)) = &selected_move {
+                        battle.fighters[hero].moves[*index].pp -= 1;
+                    }
+                    let damage = (battle.fighters[i].attack * move_power / 100
+                        - battle.fighters[t].defense
                         + self.random(0, 2)?)
                     .max(1);
                     battle.fighters[t].hp = (battle.fighters[t].hp - damage).max(0);
                     log.push(format!(
-                        "{} → {}: {}",
-                        battle.fighters[i].name, battle.fighters[t].name, damage
+                        "{}의 {} → {}: {} 피해",
+                        battle.fighters[i].name, move_name, battle.fighters[t].name, damage
                     ));
                 }
             } else if battle.fighters[hero].hp > 0 {
@@ -1100,32 +1215,45 @@ impl World {
             json!({"turn":battle.turn,"fighters":battle.fighters,"log":battle.log}),
         );
         if won || lost {
-            let effects = match self.project.scenes[&self.scene].gameplay.events[&frame.event]
-                [frame.pc]
-                .clone()
-            {
-                Instruction::Battle {
-                    victory, defeat, ..
-                } => {
-                    if won {
-                        victory
-                    } else {
-                        defeat
-                    }
-                }
-                _ => unreachable!(),
-            };
-            let f = self.systems().events.last_mut().unwrap();
-            f.battle = None;
-            f.waiting = false;
-            f.pc += 1;
-            self.actions(&effects, None)?;
-            self.emit("battle_result", None, json!({"victory":won}));
-            self.flat_event(if won { "battle_win" } else { "battle_loss" }, None)?;
+            let hold = matches!(&self.project.scenes[&self.scene].gameplay.events[&frame.event][frame.pc],Instruction::Battle{stage:Some(stage),..} if stage.hold_result);
+            if hold {
+                battle.result = Some(won);
+                battle.log = if won {
+                    "승리! 실험을 완료했습니다.".into()
+                } else {
+                    "패배했습니다. 다시 도전할 수 있습니다.".into()
+                };
+                self.systems().events.last_mut().unwrap().battle = Some(battle);
+            } else {
+                self.finish_battle(won)?;
+            }
         } else {
             self.systems().events.last_mut().unwrap().battle = Some(battle);
         }
         Ok(())
+    }
+    fn finish_battle(&mut self, won: bool) -> Result<()> {
+        let frame = self.systems().events.last().unwrap().clone();
+        let effects =
+            match &self.project.scenes[&self.scene].gameplay.events[&frame.event][frame.pc] {
+                Instruction::Battle {
+                    victory, defeat, ..
+                } => {
+                    if won {
+                        victory.clone()
+                    } else {
+                        defeat.clone()
+                    }
+                }
+                _ => unreachable!(),
+            };
+        let f = self.systems().events.last_mut().unwrap();
+        f.battle = None;
+        f.waiting = false;
+        f.pc += 1;
+        self.actions(&effects, None)?;
+        self.emit("battle_result", None, json!({"victory":won}));
+        self.flat_event(if won { "battle_win" } else { "battle_loss" }, None)
     }
     pub(super) fn freeze_world_tick(&mut self) {
         for end in self.flatland.timers.values_mut() {
@@ -1290,6 +1418,13 @@ impl World {
         };
         let bad = || Error("invalid saved FlatLand systems".into());
         let g = &self.project.scenes[&self.scene].gameplay;
+        if s.view.as_ref().is_some_and(|id| !g.views.contains_key(id))
+            || s.pace
+                .iter()
+                .any(|(id, speed)| !self.entities.contains_key(id) || !(12..=6000).contains(speed))
+        {
+            return Err(bad());
+        }
         if s.rng == 0
             || s.paused_ticks > self.tick
             || s.events.len() > 8
@@ -1427,11 +1562,17 @@ impl World {
             }
             previous = f.serial;
             self.validate_saved_actors(&f.parent)?;
-            if f.parent_planes
-                .keys()
-                .chain(f.parent_elevation.keys())
-                .chain(f.parent_animations.keys())
-                .any(|id| !f.parent.contains_key(id))
+            if f.parent_view
+                .as_ref()
+                .is_some_and(|id| !g.views.contains_key(id))
+                || f.parent_pace
+                    .iter()
+                    .any(|(id, speed)| !f.parent.contains_key(id) || !(12..=6000).contains(speed))
+                || f.parent_planes
+                    .keys()
+                    .chain(f.parent_elevation.keys())
+                    .chain(f.parent_animations.keys())
+                    .any(|id| !f.parent.contains_key(id))
                 || f.parent_elevation.values().any(|z| z.unsigned_abs() > 4096)
                 || f.parent_camera
                     .is_some_and(|at| at.iter().any(|v| v.unsigned_abs() > 1_000_000))
@@ -1485,6 +1626,21 @@ impl World {
                     || b.fighters.len() != fighters.len()
                     || b.turn > 1_000_000
                     || b.log.len() > 8192
+                    || b.turn_tick > self.tick
+                    || b.previous_hp.iter().any(|(id, hp)| {
+                        fighters
+                            .iter()
+                            .find(|f| &f.id == id)
+                            .is_none_or(|f| *hp < 0 || *hp > f.hp)
+                    })
+                {
+                    return Err(bad());
+                }
+                let hero_alive = b.fighters.iter().any(|f| !f.enemy && f.hp > 0);
+                let enemy_alive = b.fighters.iter().any(|f| f.enemy && f.hp > 0);
+                if b.result
+                    .is_some_and(|won| won != (hero_alive && !enemy_alive))
+                    || (b.result.is_some() && hero_alive && enemy_alive)
                 {
                     return Err(bad());
                 }
@@ -1494,6 +1650,16 @@ impl World {
                         return Err(bad());
                     }
                     expected.hp = actual.hp;
+                    if actual.moves.len() != definition.moves.len() {
+                        return Err(bad());
+                    }
+                    for (actual_move, expected_move) in actual.moves.iter().zip(&mut expected.moves)
+                    {
+                        if actual_move.pp > expected_move.pp {
+                            return Err(bad());
+                        }
+                        expected_move.pp = actual_move.pp;
+                    }
                     if serde_json::to_value(actual).unwrap()
                         != serde_json::to_value(expected).unwrap()
                     {

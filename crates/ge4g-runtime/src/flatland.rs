@@ -330,7 +330,10 @@ impl World {
                 self.emit("rule_fired", target, json!({"rule":r.id}));
             }
         }
-        if let Some(source) = self.project.scripts.get(&self.scene).cloned() {
+        let lua_events = &self.project.scenes[&self.scene].gameplay.lua_events;
+        if (lua_events.is_empty() || lua_events.iter().any(|e| e == on))
+            && let Some(source) = self.project.scripts.get(&self.scene).cloned()
+        {
             let lua = Lua::new_with(
                 StdLib::TABLE | StdLib::STRING | StdLib::UTF8,
                 LuaOptions::default(),
@@ -609,7 +612,7 @@ impl World {
                 .map_err(lua_error)?;
             let ctx = lua
                 .to_value(
-                    &json!({"event":on,"target":target,"tick":self.tick,"state":self.state.values}),
+                    &json!({"event":on,"target":target,"scene":self.scene,"tick":self.tick,"state":self.state.values}),
                 )
                 .map_err(lua_error)?;
             let hook: mlua::Function = lua
@@ -723,18 +726,26 @@ impl World {
         for id in ids {
             let e = &self.entities[&id];
             let ai = e.spec.flatland.as_ref().and_then(|a| a.ai.clone());
-            let speed = ai.as_ref().map_or_else(
+            let base_speed = ai.as_ref().map_or_else(
                 || e.spec.player.as_ref().map_or(0, |p| p.speed),
                 |a| a.speed,
             );
+            let speed = self
+                .flatland
+                .systems
+                .as_ref()
+                .and_then(|s| s.pace.get(&id))
+                .copied()
+                .unwrap_or(base_speed);
+            let step_walk = e.spec.flatland.as_ref().is_some_and(|a| a.step_walk);
             let grid = e
                 .spec
                 .flatland
                 .as_ref()
-                .is_some_and(|a| a.grid || a.ai.is_some());
+                .is_some_and(|a| a.grid || a.step_walk || a.ai.is_some());
             let (x, y) = if ai.is_some() { (0, 0) } else { input.axes() };
             if grid {
-                if x != 0 || y != 0 {
+                if step_walk || x != 0 || y != 0 {
                     self.entities.get_mut(&id).unwrap().actor.queued =
                         if x != 0 { [x, 0] } else { [0, y] };
                 }
@@ -753,11 +764,14 @@ impl World {
                         };
                         let open =
                             |d: [i64; 2]| d != [0, 0] && map.open(at[0] + d[0], at[1] + d[1]);
-                        let dir = if ai.is_some() && desired == [0, 0] {
+                        if step_walk && desired != [0, 0] {
+                            self.face(&id, desired)?;
+                        }
+                        let dir = if (ai.is_some() || step_walk) && desired == [0, 0] {
                             [0, 0]
                         } else if open(desired) {
                             desired
-                        } else if open(e.actor.direction) {
+                        } else if !step_walk && open(e.actor.direction) {
                             e.actor.direction
                         } else {
                             [0, 0]
@@ -857,12 +871,31 @@ impl World {
             }
         }
         if input.interact && !self.interact_held {
-            let candidates: Vec<String> = self
+            let mut candidates: Vec<String> = self
                 .entities
                 .iter()
                 .filter(|(_, e)| e.spec.interaction.is_some())
                 .map(|(id, _)| id.clone())
                 .collect();
+            if self.entities[&player_id]
+                .spec
+                .flatland
+                .as_ref()
+                .is_some_and(|a| a.step_walk)
+            {
+                let p = self.entities[&player_id].position;
+                let face = self.entities[&player_id].actor.facing;
+                candidates.sort_by_key(|id| {
+                    let e = &self.entities[id];
+                    let dx = e.position.x - p.x;
+                    let dy = e.position.y - p.y;
+                    (
+                        dx * face[0] + dy * face[1] < 0,
+                        dx.abs() + dy.abs(),
+                        id.clone(),
+                    )
+                });
+            }
             for target in candidates {
                 let e = &self.entities[&target];
                 let i = e.spec.interaction.clone().unwrap();

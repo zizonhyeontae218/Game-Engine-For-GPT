@@ -85,6 +85,7 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `client/ios/Runner/Runner-Bridging-Header.h` — Repository file; inspect only when relevant to the task.
 - `client/ios/Runner/SceneDelegate.swift` — Repository file; inspect only when relevant to the task.
 - `client/ios/RunnerTests/RunnerTests.swift` — Repository file; inspect only when relevant to the task.
+- `client/lib/battle_screen.dart` — Repository file; inspect only when relevant to the task.
 - `client/lib/control_editor.dart` — Repository file; inspect only when relevant to the task.
 - `client/lib/control_store.dart` — Repository file; inspect only when relevant to the task.
 - `client/lib/controls.dart` — Repository file; inspect only when relevant to the task.
@@ -121,6 +122,7 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `client/test/flatland_test.dart` — Repository file; inspect only when relevant to the task.
 - `client/test/library_test.dart` — Repository file; inspect only when relevant to the task.
 - `client/test/player_test.dart` — Repository file; inspect only when relevant to the task.
+- `client/test/polish_test.dart` — Repository file; inspect only when relevant to the task.
 - `client/test/signal_yard_test.dart` — Repository file; inspect only when relevant to the task.
 - `client/test/widget_test.dart` — Repository file; inspect only when relevant to the task.
 - `client/windows/.gitignore` — Repository file; inspect only when relevant to the task.
@@ -160,10 +162,12 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `crates/ge4g-render2d/Cargo.toml` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-render2d/src/lib.rs` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-runtime/Cargo.toml` — Engine source, package configuration or behavioral verification.
+- `crates/ge4g-runtime/examples/presentation_bench.rs` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-runtime/src/flatland.rs` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-runtime/src/gameplay.rs` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-runtime/src/lib.rs` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-runtime/tests/flatland.rs` — Engine source, package configuration or behavioral verification.
+- `crates/ge4g-runtime/tests/polish.rs` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-runtime/tests/systems.rs` — Engine source, package configuration or behavioral verification.
 - `docs/AGENT_WORKFLOW.md` — Task-specific context/tool discipline guidance.
 - `docs/ARCHITECTURE.md` — Basement architecture and subsystem boundaries.
@@ -182,16 +186,103 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `docs/TESTPLAN.md` — Acceptance and deterministic verification plan.
 - `docs/benchmarks/flatland-task-context.json` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/active/.gitkeep` — Repository file; inspect only when relevant to the task.
+- `docs/exec-plans/active/flatland-polish.md` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/completed/.gitkeep` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/completed/basement.md` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/completed/flatland-rc1.md` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/completed/flatland.md` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/completed/flutter-client.md` — Repository file; inspect only when relevant to the task.
+- `docs/releases/flatland-rc2.md` — Repository file; inspect only when relevant to the task.
 - `examples/basement_demo/ge4g.toml` — Playable reference demo data, replay or inspected framebuffer golden.
 - `examples/basement_demo/golden/room_b.png` — Playable reference demo data, replay or inspected framebuffer golden.
 - `examples/basement_demo/replays/journey.json` — Playable reference demo data, replay or inspected framebuffer golden.
 - `examples/basement_demo/scenes/room_a.json5` — Playable reference demo data, replay or inspected framebuffer golden.
 - `examples/basement_demo/scenes/room_b.json5` — Playable reference demo data, replay or inspected framebuffer golden.
+- `examples/flatland_nuvema/README.md` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/assets/LICENSE.txt` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/assets/battle_field.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/assets/console.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/assets/crate.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/assets/dummy.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/assets/ember.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/assets/ember_back.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/assets/friend_down_0.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/assets/friend_down_1.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/assets/friend_down_2.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/assets/friend_left_0.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/assets/friend_left_1.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/assets/friend_left_2.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/assets/friend_right_0.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/assets/friend_right_1.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/assets/friend_right_2.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/assets/friend_up_0.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/assets/friend_up_1.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/assets/friend_up_2.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/assets/hero_down_0.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/assets/hero_down_1.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/assets/hero_down_2.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/assets/hero_left_0.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/assets/hero_left_1.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/assets/hero_left_2.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/assets/hero_right_0.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/assets/hero_right_1.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/assets/hero_right_2.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/assets/hero_up_0.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/assets/hero_up_1.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/assets/hero_up_2.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/assets/home_ground.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/assets/house_blue.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/assets/lab.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/assets/laboratory_ground.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/assets/mailbox.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/assets/mom_down_0.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/assets/mom_down_1.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/assets/mom_down_2.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/assets/mom_left_0.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/assets/mom_left_1.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/assets/mom_left_2.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/assets/mom_right_0.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/assets/mom_right_1.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/assets/mom_right_2.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/assets/mom_up_0.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/assets/mom_up_1.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/assets/mom_up_2.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/assets/moss.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/assets/moss_back.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/assets/orb.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/assets/pine.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/assets/professor_down_0.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/assets/professor_down_1.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/assets/professor_down_2.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/assets/professor_left_0.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/assets/professor_left_1.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/assets/professor_left_2.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/assets/professor_right_0.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/assets/professor_right_1.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/assets/professor_right_2.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/assets/professor_up_0.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/assets/professor_up_1.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/assets/professor_up_2.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/assets/sign.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/assets/sprout.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/assets/sprout_back.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/assets/tide.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/assets/tide_back.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/assets/town_ground.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/audio/door.wav` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/audio/hit.wav` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/audio/music.wav` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/audio/quest.wav` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/controls/bindings.json` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/controls/layouts.json` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/data/town.lua` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/ge4g.toml` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/replays/journey.json` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/scenes/friend_home.json5` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/scenes/friend_home_right.json5` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/scenes/home.json5` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/scenes/lab.json5` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_nuvema/scenes/town.json5` — Repository file; inspect only when relevant to the task.
 - `examples/flatland_pacman/README.md` — Repository file; inspect only when relevant to the task.
 - `examples/flatland_pacman/assets/LICENSE-CC0.txt` — Repository file; inspect only when relevant to the task.
 - `examples/flatland_pacman/assets/Pacman-Icon.png` — Repository file; inspect only when relevant to the task.
@@ -326,6 +417,7 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `scripts/context_benchmark.py` — Repository file; inspect only when relevant to the task.
 - `scripts/filetree.py` — FILETREE update/lint helper.
 - `scripts/flatland_task_benchmark.py` — Repository file; inspect only when relevant to the task.
+- `scripts/generate_nuvema_assets.py` — Repository file; inspect only when relevant to the task.
 - `scripts/interactive_smoke.py` — Real window/headless replay equivalence check.
 - `scripts/make_signal_yard_assets.py` — Repository file; inspect only when relevant to the task.
 - `scripts/pack_game.py` — Repository file; inspect only when relevant to the task.

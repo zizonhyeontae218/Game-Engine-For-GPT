@@ -12,6 +12,7 @@ class GameAudio {
   Future<void> _musicQueue = Future.value();
   bool muted = false;
   bool _disposed = false;
+  (String?, double, bool, bool)? _desiredMusic;
   Future<void> play(String path, {double volume = .4}) async {
     if (muted || _disposed) return;
     if (_voices.isEmpty) _voices.addAll(List.generate(4, (_) => AudioPlayer()));
@@ -25,6 +26,9 @@ class GameAudio {
     double volume, {
     bool suspended = false,
   }) {
+    final desired = (path, volume, suspended, muted);
+    if (_desiredMusic == desired) return _musicQueue;
+    _desiredMusic = desired;
     final task = _musicQueue.catchError((Object _) {}).then((_) async {
       if (_disposed) return;
       if (path == null) {
@@ -58,6 +62,7 @@ class GameAudio {
   }
 
   void pause() {
+    _desiredMusic = null;
     _musicPaused = true;
     unawaited(_music?.pause().catchError((Object _) {}) ?? Future.value());
     for (final voice in _voices) {

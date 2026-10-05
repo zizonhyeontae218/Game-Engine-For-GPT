@@ -1,0 +1,822 @@
+{
+  "schema_version": 2,
+  "id": "home",
+  "background": [
+    185,
+    170,
+    133,
+    255
+  ],
+  "spawns": {
+    "entry": [
+      144,
+      192
+    ]
+  },
+  "entities": [
+    {
+      "id": "floor",
+      "position": [
+        0,
+        0
+      ],
+      "size": [
+        320,
+        240
+      ],
+      "sprite": {
+        "texture": "assets/home_ground.png",
+        "layer": -10
+      },
+      "flatland": {
+        "body": "pass"
+      }
+    },
+    {
+      "id": "player",
+      "position": [
+        144,
+        192
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/hero_down_0.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "pass",
+        "depth": true,
+        "anchor": [
+          -4,
+          -16
+        ],
+        "visual_size": [
+          24,
+          32
+        ],
+        "step_walk": true,
+        "hp": 30,
+        "team": "hero",
+        "attack": "tap",
+        "animation": {
+          "frames": [
+            "assets/hero_down_0.png",
+            "assets/hero_down_1.png",
+            "assets/hero_down_0.png",
+            "assets/hero_down_2.png"
+          ],
+          "ticks": 8,
+          "directions": {
+            "up": [
+              "assets/hero_up_0.png",
+              "assets/hero_up_1.png",
+              "assets/hero_up_0.png",
+              "assets/hero_up_2.png"
+            ],
+            "left": [
+              "assets/hero_left_0.png",
+              "assets/hero_left_1.png",
+              "assets/hero_left_0.png",
+              "assets/hero_left_2.png"
+            ],
+            "right": [
+              "assets/hero_right_0.png",
+              "assets/hero_right_1.png",
+              "assets/hero_right_0.png",
+              "assets/hero_right_2.png"
+            ]
+          }
+        }
+      },
+      "player": {
+        "speed": 48
+      }
+    },
+    {
+      "id": "exit",
+      "position": [
+        144,
+        224
+      ],
+      "size": [
+        32,
+        16
+      ],
+      "trigger": {
+        "scene": "town",
+        "spawn": "home_exit"
+      },
+      "flatland": {
+        "body": "pass"
+      }
+    },
+    {
+      "id": "mom",
+      "position": [
+        224,
+        112
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "sprite": {
+        "texture": "assets/mom_down_0.png",
+        "layer": 1
+      },
+      "flatland": {
+        "body": "fixed",
+        "depth": true,
+        "anchor": [
+          -4,
+          -16
+        ],
+        "visual_size": [
+          24,
+          32
+        ]
+      },
+      "tags": [
+        "mom"
+      ],
+      "interaction": {
+        "range": 18,
+        "dialogue": ""
+      }
+    }
+  ],
+  "map": {
+    "cell": 16,
+    "rows": [
+      "####################",
+      "####################",
+      "####################",
+      "#..................#",
+      "#..................#",
+      "#..................#",
+      "#..................#",
+      "#..................#",
+      "#..................#",
+      "#..................#",
+      "#..................#",
+      "#..................#",
+      "#..................#",
+      "#..................#",
+      "#########..#########"
+    ],
+    "tiles": {
+      ".": {
+        "color": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "#": {
+        "color": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "solid": true
+      }
+    }
+  },
+  "gameplay": {
+    "seed": 7303,
+    "items": {
+      "potion": {
+        "name": "회복약",
+        "stack": 20,
+        "use_actions": [
+          {
+            "op": "heal",
+            "entity": "$player",
+            "amount": 12
+          }
+        ]
+      },
+      "badge": {
+        "name": "실험 인증 배지",
+        "stack": 1
+      },
+      "coin": {
+        "name": "연구 포인트",
+        "stack": 99
+      },
+      "blade": {
+        "name": "연습봉",
+        "stack": 1,
+        "slot": "weapon",
+        "attack_bonus": 2
+      }
+    },
+    "quests": {
+      "research": {
+        "name": "마름꽃 연구 기록",
+        "objectives": {
+          "battle": 1,
+          "view": 1,
+          "crate": 1,
+          "combat": 1
+        },
+        "objective_labels": {
+          "battle": "친구와 턴제 대결",
+          "view": "상층 시점 관찰",
+          "crate": "상자 밀기",
+          "combat": "연습 인형 타격"
+        },
+        "rewards": [
+          {
+            "op": "give",
+            "item": "badge",
+            "count": 1
+          },
+          {
+            "op": "set",
+            "key": "town.completed",
+            "value": true
+          }
+        ]
+      }
+    },
+    "attacks": {
+      "tap": {
+        "damage": 3,
+        "range": 24,
+        "startup": 5,
+        "active": 3,
+        "recovery": 18,
+        "immunity": 12,
+        "knockback": 0,
+        "on_hit": [
+          {
+            "op": "sound",
+            "cue": "hit"
+          }
+        ]
+      }
+    },
+    "events": {
+      "battle_sprout": [
+        {
+          "op": "battle",
+          "stage": {
+            "background": "assets/battle_field.png",
+            "hold_result": true
+          },
+          "fighters": [
+            {
+              "id": "hero",
+              "name": "새싹이",
+              "hp": 32,
+              "attack": 9,
+              "defense": 2,
+              "speed": 12,
+              "sprite": "assets/sprout.png",
+              "back_sprite": "assets/sprout_back.png",
+              "moves": [
+                {
+                  "id": "tackle",
+                  "name": "몸통박치기",
+                  "power": 100,
+                  "pp": 25
+                },
+                {
+                  "id": "burst",
+                  "name": "잎새 바람",
+                  "power": 140,
+                  "pp": 10
+                }
+              ]
+            },
+            {
+              "id": "rival",
+              "name": "풀숲 친구",
+              "hp": 36,
+              "attack": 6,
+              "defense": 2,
+              "speed": 9,
+              "enemy": true,
+              "sprite": "assets/moss.png"
+            }
+          ],
+          "victory": [
+            {
+              "op": "set",
+              "key": "town.won",
+              "value": true
+            }
+          ],
+          "defeat": [
+            {
+              "op": "say",
+              "text": "괜찮아. 연구소에서 다시 연습하자!"
+            }
+          ]
+        },
+        {
+          "op": "return"
+        }
+      ],
+      "battle_ember": [
+        {
+          "op": "battle",
+          "stage": {
+            "background": "assets/battle_field.png",
+            "hold_result": true
+          },
+          "fighters": [
+            {
+              "id": "hero",
+              "name": "불씨",
+              "hp": 32,
+              "attack": 9,
+              "defense": 2,
+              "speed": 12,
+              "sprite": "assets/ember.png",
+              "back_sprite": "assets/ember_back.png",
+              "moves": [
+                {
+                  "id": "tackle",
+                  "name": "몸통박치기",
+                  "power": 100,
+                  "pp": 25
+                },
+                {
+                  "id": "burst",
+                  "name": "불꽃 튀기기",
+                  "power": 140,
+                  "pp": 10
+                }
+              ]
+            },
+            {
+              "id": "rival",
+              "name": "풀숲 친구",
+              "hp": 36,
+              "attack": 6,
+              "defense": 2,
+              "speed": 9,
+              "enemy": true,
+              "sprite": "assets/moss.png"
+            }
+          ],
+          "victory": [
+            {
+              "op": "set",
+              "key": "town.won",
+              "value": true
+            }
+          ],
+          "defeat": [
+            {
+              "op": "say",
+              "text": "괜찮아. 연구소에서 다시 연습하자!"
+            }
+          ]
+        },
+        {
+          "op": "return"
+        }
+      ],
+      "battle_tide": [
+        {
+          "op": "battle",
+          "stage": {
+            "background": "assets/battle_field.png",
+            "hold_result": true
+          },
+          "fighters": [
+            {
+              "id": "hero",
+              "name": "물방울",
+              "hp": 32,
+              "attack": 9,
+              "defense": 2,
+              "speed": 12,
+              "sprite": "assets/tide.png",
+              "back_sprite": "assets/tide_back.png",
+              "moves": [
+                {
+                  "id": "tackle",
+                  "name": "몸통박치기",
+                  "power": 100,
+                  "pp": 25
+                },
+                {
+                  "id": "burst",
+                  "name": "물결 쏘기",
+                  "power": 140,
+                  "pp": 10
+                }
+              ]
+            },
+            {
+              "id": "rival",
+              "name": "풀숲 친구",
+              "hp": 36,
+              "attack": 6,
+              "defense": 2,
+              "speed": 9,
+              "enemy": true,
+              "sprite": "assets/moss.png"
+            }
+          ],
+          "victory": [
+            {
+              "op": "set",
+              "key": "town.won",
+              "value": true
+            }
+          ],
+          "defeat": [
+            {
+              "op": "say",
+              "text": "괜찮아. 연구소에서 다시 연습하자!"
+            }
+          ]
+        },
+        {
+          "op": "return"
+        }
+      ],
+      "battle": [
+        {
+          "op": "branch",
+          "when": {
+            "op": "state",
+            "key": "town.starter",
+            "eq": "ember"
+          },
+          "yes": 4,
+          "no": 1
+        },
+        {
+          "op": "branch",
+          "when": {
+            "op": "state",
+            "key": "town.starter",
+            "eq": "tide"
+          },
+          "yes": 6,
+          "no": 2
+        },
+        {
+          "op": "call",
+          "event": "battle_sprout"
+        },
+        {
+          "op": "jump",
+          "next": 7
+        },
+        {
+          "op": "call",
+          "event": "battle_ember"
+        },
+        {
+          "op": "jump",
+          "next": 7
+        },
+        {
+          "op": "call",
+          "event": "battle_tide"
+        },
+        {
+          "op": "return"
+        }
+      ],
+      "starter": [
+        {
+          "op": "choice",
+          "text": "첫 동료를 골라 주세요. 친구와의 전투에서 앞/뒤 스프라이트와 기술 PP를 확인할 수 있어요.",
+          "options": [
+            {
+              "id": "sprout",
+              "text": "새싹이 · 풀",
+              "next": 1,
+              "actions": [
+                {
+                  "op": "set",
+                  "key": "town.starter",
+                  "value": "sprout"
+                }
+              ]
+            },
+            {
+              "id": "ember",
+              "text": "불씨 · 불",
+              "next": 1,
+              "actions": [
+                {
+                  "op": "set",
+                  "key": "town.starter",
+                  "value": "ember"
+                }
+              ]
+            },
+            {
+              "id": "tide",
+              "text": "물방울 · 물",
+              "next": 1,
+              "actions": [
+                {
+                  "op": "set",
+                  "key": "town.starter",
+                  "value": "tide"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "op": "say",
+          "text": "동료가 생겼습니다! 중앙 집 앞의 친구에게 말을 걸어 대결해 보세요. 가방에는 회복약이 있습니다."
+        },
+        {
+          "op": "return"
+        }
+      ],
+      "intro": [
+        {
+          "op": "say",
+          "text": "마름꽃마을 / NUVEMA FIELD STUDY\nZ 또는 SPACE: 대화 · X: 시점 · C: 걷기/달리기\n집과 연구소에 들어갈 수 있습니다. 연구소에서 동료를 고른 뒤 중앙 집 앞 친구와 대결하세요.\n가로/세로는 상단 회전 버튼으로 바꿉니다."
+        },
+        {
+          "op": "return"
+        }
+      ],
+      "view": [
+        {
+          "op": "choice",
+          "text": "시점과 충돌 층을 선택하세요. 경사 시점은 실제 프레임을 확대·기울입니다. 상층에서는 연구소 앞 낮은 울타리를 통과하고 캐릭터가 높아집니다.",
+          "options": [
+            {
+              "id": "plan",
+              "text": "탑뷰 / TOP",
+              "next": 1,
+              "actions": [
+                {
+                  "op": "view",
+                  "mode": "plan"
+                },
+                {
+                  "op": "plane",
+                  "entity": "$player",
+                  "plane": 0
+                },
+                {
+                  "op": "elevate",
+                  "entity": "$player",
+                  "z": 0
+                },
+                {
+                  "op": "set",
+                  "key": "town.viewed",
+                  "value": true
+                }
+              ]
+            },
+            {
+              "id": "depth",
+              "text": "경사 시점 / DEPTH",
+              "next": 1,
+              "actions": [
+                {
+                  "op": "view",
+                  "mode": "depth"
+                },
+                {
+                  "op": "plane",
+                  "entity": "$player",
+                  "plane": 0
+                },
+                {
+                  "op": "elevate",
+                  "entity": "$player",
+                  "z": 0
+                },
+                {
+                  "op": "set",
+                  "key": "town.viewed",
+                  "value": true
+                }
+              ]
+            },
+            {
+              "id": "balcony",
+              "text": "상층 전망 / UPPER",
+              "next": 1,
+              "actions": [
+                {
+                  "op": "view",
+                  "mode": "balcony"
+                },
+                {
+                  "op": "plane",
+                  "entity": "$player",
+                  "plane": 1
+                },
+                {
+                  "op": "elevate",
+                  "entity": "$player",
+                  "z": 24
+                },
+                {
+                  "op": "set",
+                  "key": "town.viewed",
+                  "value": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "op": "return",
+          "retain_view": true
+        }
+      ],
+      "journal": [
+        {
+          "op": "branch",
+          "when": {
+            "op": "state",
+            "key": "town.completed",
+            "eq": true
+          },
+          "yes": 3,
+          "no": 1
+        },
+        {
+          "op": "say",
+          "text": "연구 기록: 친구와 전투 / 시점 전환 / 연구소 상자 밀기 / 연습 인형 타격. 메뉴의 퀘스트에서 진행도를 확인하세요."
+        },
+        {
+          "op": "return"
+        },
+        {
+          "op": "say",
+          "text": "모든 실험 완료! 가방에 연구 인증 배지가 있습니다. 저장한 뒤 재실행하여 상태를 확인하세요."
+        },
+        {
+          "op": "return"
+        }
+      ],
+      "cutscene": [
+        {
+          "op": "camera",
+          "at": [
+            80,
+            0
+          ]
+        },
+        {
+          "op": "wait",
+          "ticks": 45
+        },
+        {
+          "op": "camera",
+          "at": [
+            64,
+            300
+          ]
+        },
+        {
+          "op": "say",
+          "text": "북서쪽 연구소, 가운데 우리 집, 아래 친구들의 집과 남쪽 바다. 컷씬이 끝나면 캐릭터·카메라·시점이 원래대로 복원됩니다."
+        },
+        {
+          "op": "return"
+        }
+      ]
+    },
+    "views": {
+      "plan": {
+        "label": "탑뷰 / TOP",
+        "zoom": 100,
+        "tilt": 100,
+        "shear": 0
+      },
+      "depth": {
+        "label": "경사 시점 / DEPTH",
+        "zoom": 115,
+        "tilt": 75,
+        "shear": 12
+      },
+      "balcony": {
+        "label": "상층 전망 / UPPER",
+        "zoom": 125,
+        "tilt": 70,
+        "shear": 18
+      }
+    },
+    "default_view": "plan",
+    "lua_events": [
+      "action.pace"
+    ]
+  },
+  "rules": [
+    {
+      "id": "walk_event",
+      "on": "action.view",
+      "actions": [
+        {
+          "op": "event_scene",
+          "event": "view"
+        }
+      ]
+    },
+    {
+      "id": "battle_progress",
+      "on": "battle_win",
+      "actions": [
+        {
+          "op": "objective",
+          "quest": "research",
+          "objective": "battle"
+        }
+      ],
+      "when": {
+        "op": "quest_is",
+        "quest": "research",
+        "status": "active"
+      },
+      "once": true
+    },
+    {
+      "id": "camera_progress",
+      "on": "tick",
+      "actions": [
+        {
+          "op": "objective",
+          "quest": "research",
+          "objective": "view"
+        }
+      ],
+      "when": {
+        "op": "all",
+        "conditions": [
+          {
+            "op": "state",
+            "key": "town.viewed",
+            "eq": true
+          },
+          {
+            "op": "quest_is",
+            "quest": "research",
+            "status": "active"
+          }
+        ]
+      },
+      "once": true
+    },
+    {
+      "id": "home_chat",
+      "on": "interact",
+      "actions": [
+        {
+          "op": "say",
+          "text": "잘 다녀와! 연구소는 마을 북서쪽에 있어. 걸을 때 손을 떼면 현재 한 칸을 마치고 멈춘단다."
+        }
+      ],
+      "target_tag": "mom"
+    },
+    {
+      "id": "finish_research",
+      "on": "tick",
+      "when": {
+        "op": "all",
+        "conditions": [
+          {
+            "op": "quest_is",
+            "quest": "research",
+            "status": "active"
+          },
+          {
+            "op": "objectives_complete",
+            "quest": "research"
+          }
+        ]
+      },
+      "actions": [
+        {
+          "op": "quest",
+          "quest": "research",
+          "status": "completed"
+        }
+      ]
+    }
+  ],
+  "script": "data/town.lua",
+  "sounds": {
+    "music": "audio/music.wav",
+    "hit": "audio/hit.wav",
+    "door": "audio/door.wav",
+    "quest": "audio/quest.wav"
+  }
+}

@@ -12,6 +12,9 @@ pub const CAPABILITIES: &[&str] = &[
     "atlas",
     "music",
     "lua_rng",
+    "step_walk",
+    "battle_stage",
+    "view_projection",
 ];
 use ge4g_core::{Error, Input, Result, SCHEMA_VERSION, StateDefinition, StateStore};
 use serde::{Deserialize, Serialize};
@@ -456,6 +459,14 @@ impl Project {
                                     paths.insert(f.into());
                                 }
                             }
+                        }
+                        if matches!(
+                            k.as_str(),
+                            "sprite" | "back_sprite" | "background" | "texture"
+                        ) && let Some(file) = v.as_str()
+                            && file.ends_with(".png")
+                        {
+                            paths.insert(file.to_owned());
                         }
                         clips(v, paths);
                     }

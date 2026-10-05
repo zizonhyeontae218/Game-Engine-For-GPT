@@ -4,7 +4,7 @@
 
 Rust로 구현한 실제 엔진입니다. OpenAI 계정, LLM 호출, GPU, 인터넷 연결은 게임 실행에 필요하지 않습니다. 초기 의존성 다운로드에는 인터넷이 필요합니다.
 
-Basement 0.2 — **FlatLand 0.2.0**: 맵·엔티티 분리, 밀기·방향, 전투/적 AI, 아이템/장비/퀘스트, 평면·높이·카메라·아틀라스 애니메이션, 선택 대화·컷씬·턴제 전투와 Lua 5.4를 구현했습니다. 팩맨 스타일 데모와 **[Signal Yard](examples/flatland_signal_yard/README.md)** 기능 실험장이 함께 제공됩니다. 모바일은 `.ge4g` 불러오기, PC는 실행기를 내장한 배포 방식입니다. Android 0.2.0은 rc.1과 같은 서명으로 업데이트됩니다. [짧은 작성 안내](docs/FLATLAND_QUICKSTART.md) · [실제 작성 규격과 제한](docs/FLATLAND_AUTHORING.md).
+Basement 0.2 — **FlatLand v0.2 rc3 (0.2.0-rc.3)**: 맵·엔티티 분리, 밀기·방향, 전투/적 AI, 아이템/장비/퀘스트, 평면·높이·카메라·아틀라스 애니메이션, 선택 대화·컷씬·턴제 전투와 Lua 5.4를 구현했습니다. 팩맨 스타일 데모와 **[Signal Yard](examples/flatland_signal_yard/README.md)** 기능 실험장이 함께 제공됩니다. 모바일은 `.ge4g` 불러오기, PC는 실행기를 내장한 배포 방식입니다. [마름꽃마을](examples/flatland_nuvema/README.md)에는 느린 4방향 보행, 전용 스프라이트 턴제 전투와 실제 시점 전환이 들어갑니다. 이전 배포는 rc2이며 이번도 정식판이 아닙니다. Android rc3는 rc1/rc2와 같은 서명으로 업데이트됩니다. [짧은 작성 안내](docs/FLATLAND_QUICKSTART.md) · [실제 작성 규격과 제한](docs/FLATLAND_AUTHORING.md).
 
 ## 빠른 시작
 

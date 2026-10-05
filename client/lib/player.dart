@@ -265,7 +265,11 @@ class Player extends ChangeNotifier {
 
   /// Fixed 60 Hz authoritative ticks; background gaps never advance the game.
   void tick(Duration elapsed) {
-    if (session == null || loading || paused || popupVisible || error != null) {
+    if (session == null ||
+        loading ||
+        paused ||
+        (popupVisible && popup?['kind'] != 'battle') ||
+        error != null) {
       _lastElapsed = elapsed;
       return;
     }

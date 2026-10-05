@@ -1,10 +1,12 @@
-# Current release — Basement 0.2 FlatLand 0.2.0
+# Current candidate — Basement 0.2 FlatLand v0.2 rc3
 
-See [full release evidence](FLATLAND_RELEASE.md), [implemented authoring contract](FLATLAND_AUTHORING.md),
-and [Signal Yard](../examples/flatland_signal_yard/README.md). User reported rc.1 testing
-complete on 2026-10-05. This final adds quests/items, advanced combat, layered bridges,
-conditional choices, cutscenes and turn battle. Android retains the rc.1 certificate
-and increments versionCode to4. New device acceptance is distinguished from builds.
+This is **0.2.0-rc.3**, not a final 0.2.0 release. The previous claimed final has been
+reclassified as [rc2](releases/flatland-rc2.md); its Drive folder is `0.2.0-rc.2`.
+rc3 adds the Nuvema Town layout demo, dedicated sprite battle/move/PP/bag presentation,
+visible CPU camera projection and opt-in hold-to-walk controls at 48/72px/s.
+Android keeps the rc1/rc2 certificate and application ID and increments versionCode to5.
+See [rc3 evidence](FLATLAND_RELEASE.md). New hardware acceptance remains separate from
+compiled builds and automated desktop execution.
 
 ---
 

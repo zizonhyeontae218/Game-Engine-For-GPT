@@ -1,0 +1,1 @@
+All PNG assets in this directory were created for GE4G and dedicated to the public domain under CC0 1.0 (https://creativecommons.org/publicdomain/zero/1.0/). Generator: scripts/generate_nuvema_assets.py. No Pokémon graphics are bundled. Layout reference: Nuvema Town, Pokémon Black.

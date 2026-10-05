@@ -73,18 +73,24 @@ class TouchButton {
 
 class JoystickLayout {
   final double x, y, size, deadZone;
+  final bool cardinal;
   JoystickLayout.fromJson(Map<String, dynamic> json)
     : x = number(json['x'], 'joystick.x', 0, 1),
       y = number(json['y'], 'joystick.y', 0, 1),
       size = number(json['size'], 'joystick.size', .2, .65),
-      deadZone = number(json['dead_zone'], 'joystick.dead_zone', 0, .8) {
-    fields(json, {'x', 'y', 'size', 'dead_zone'}, 'joystick');
+      deadZone = number(json['dead_zone'], 'joystick.dead_zone', 0, .8),
+      cardinal = json['cardinal'] == true {
+    fields(json, {'x', 'y', 'size', 'dead_zone', 'cardinal'}, 'joystick');
+    if (json.containsKey('cardinal') && json['cardinal'] is! bool) {
+      throw const FormatException('joystick.cardinal must be boolean');
+    }
   }
   Map<String, dynamic> toJson() => {
     'x': x,
     'y': y,
     'size': size,
     'dead_zone': deadZone,
+    if (cardinal) 'cardinal': true,
   };
 }
 
@@ -294,6 +300,7 @@ class GameControls {
 
 /// Pointer ownership, key state and joystick state merge into one normalized input.
 class InputRouter extends ChangeNotifier {
+  bool _stickHorizontal = true;
   GameControls controls;
   final Map<String, Set<int>> _buttons = {};
   final Set<String> _keys = {};
@@ -315,8 +322,20 @@ class InputRouter extends ChangeNotifier {
   }
 
   void joystick(double x, double y) {
+    final fresh =
+        stickX.abs() <= controls.active.joystick.deadZone &&
+        stickY.abs() <= controls.active.joystick.deadZone;
     stickX = x.clamp(-1, 1);
     stickY = y.clamp(-1, 1);
+    if (controls.active.joystick.cardinal) {
+      if (fresh) {
+        _stickHorizontal = stickX.abs() >= stickY.abs();
+      } else if (_stickHorizontal && stickY.abs() > stickX.abs() * 1.12) {
+        _stickHorizontal = false;
+      } else if (!_stickHorizontal && stickX.abs() > stickY.abs() * 1.12) {
+        _stickHorizontal = true;
+      }
+    }
     notifyListeners();
   }
 
@@ -349,10 +368,16 @@ class InputRouter extends ChangeNotifier {
       actions.addAll(binding.keys[key] ?? const []);
     }
     final dead = controls.active.joystick.deadZone;
-    if (stickX < -dead) actions.addAll(binding.joystick['left']!);
-    if (stickX > dead) actions.addAll(binding.joystick['right']!);
-    if (stickY < -dead) actions.addAll(binding.joystick['up']!);
-    if (stickY > dead) actions.addAll(binding.joystick['down']!);
+    final sx = controls.active.joystick.cardinal && !_stickHorizontal
+        ? 0.0
+        : stickX;
+    final sy = controls.active.joystick.cardinal && _stickHorizontal
+        ? 0.0
+        : stickY;
+    if (sx < -dead) actions.addAll(binding.joystick['left']!);
+    if (sx > dead) actions.addAll(binding.joystick['right']!);
+    if (sy < -dead) actions.addAll(binding.joystick['up']!);
+    if (sy > dead) actions.addAll(binding.joystick['down']!);
     const builtins = {'left', 'right', 'up', 'down', 'interact'};
     final named = actions.difference(builtins).toList()..sort();
     return {
