@@ -25,3 +25,9 @@ Record only non-obvious failures that are costly to rediscover. Do not log trans
 ## Flutter loading clock
 
 A real hosted packaged-client smoke exposed tick161 after a nominal 160-step replay when the display was slower than local tests. Session open reset pause before awaiting an in-flight image codec; the host ticker could advance a tick while the loading spinner was visible. `Player.tick` now treats loading as suspended, tracks the elapsed baseline without stepping and does not accumulate hidden time. A native-player regression attempts ticks from the loading frame callback. The embedded smoke must continue asserting exactly tick160 and complete snapshot equality; do not weaken it or subtract a tick.
+
+## Windows Korean project names (rc3)
+
+Python locale-default read_text/subprocess text decoding rejected the Nuvema TOML name
+under Windows cp1252. The packager must decode authored UTF-8 and Rust JSON explicitly
+as UTF-8; never rely on the machine locale. An ASCII-locale package is byte-identical.

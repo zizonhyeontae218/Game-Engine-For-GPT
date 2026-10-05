@@ -10,7 +10,7 @@ For small authoring edits read `docs/FLATLAND_QUICKSTART.md` and query one compo
 Use only the document relevant to the current work:
 - Product intent/scope → `00_MASTER_CONCEPT.md`, `GOAL.md`, `docs/BASEMENT_SPEC.md`
 - FlatLand authoring / current capabilities → `docs/FLATLAND_AUTHORING.md`
-- FlatLand 0.2 design/implementation → `docs/exec-plans/completed/flatland.md`, relevant section of `docs/FLATLAND_SPEC.md`
+- FlatLand 0.2 design/implementation → `docs/exec-plans/completed/flatland.md`, `docs/exec-plans/completed/flatland-polish.md`, relevant section of `docs/FLATLAND_SPEC.md`
 - Architecture/module boundaries → `docs/ARCHITECTURE.md`
 - CLI behavior/output/exit codes → `docs/CLI_CONTRACT.md`
 - Engine-visible durable state IDs → `F(x).md`

@@ -36,5 +36,41 @@ remains still. Mid-turn HP/PP and completed battle resume from disk. Full observ
 minimal rendering snapshots produce identical frames for normal/depth/battle scenes.
 Old Basement, Maze Chase and Signal Yard regressions remain required.
 
-Build, UI and delivery evidence will be recorded after final verification. Hardware
+Local strict Rust checks and48 behavioral tests pass; Flutter analysis and19 tests pass,
+including dedicated battle controls at390×844,800×360 and640×320 with2× text.
+A real Xvfb Flutter button executes a native round (hero PP25→24, enemy HP36→29,
+hero HP32→26), then saves the turn. Scene/frame equality at tick1957 is checked by
+both the local embedded release and hosted Linux smoke. Final RGBA:
+`9a57d2fad6c3a96ecf1e4f1378b751729325b1907f5c89319ada082f4df361c3`.
+
+The local release CPU benchmark runs1000 renders per mode/path. Median snapshot+render
+fell from1.73 to0.58ms in top view and6.40 to2.05ms in depth after moving crop/rotation
+parsing out of each pixel and fast-pathing opaque untinted pixels. Battle input serialization
+shrinks from97065 to33929bytes; minimal battle snapshot+render median0.52ms.
+These are local CPU measurements, not mobile FPS or whole-game frame budgets.
+Reproduce with `cargo run --release -p ge4g-runtime --example presentation_bench`.
+
+The Windows packager previously used the system encoding for Korean TOML names;
+manifest/bindings and validator output now explicitly useUTF-8. ASCII-locale packing
+produces the identical `.ge4g` bytes as UTF-8 Linux packing. Hardware
 Android/Windows/Arch playtesting is not inferred from CI builds or Linux Xvfb execution.
+
+## Verified build and delivery
+
+Build source `53c29ada60e41443bb271fbcbcd55e9ce2c6315f` (gameplay commit61eca9548a).
+[Acceptance37326997024](https://github.com/zizonhyeontae218/Game-Engine-For-GPT/actions/runs/37326997024)
+and [clients37326997058](https://github.com/zizonhyeontae218/Game-Engine-For-GPT/actions/runs/37326997058)
+completed successfully. Client jobs cover Linux/Windows embedded games, Android3ABIs,
+and unsigned iOS. Windows ZIP includes the native DLL/client/game; its unpacked game
+entries and manifest match the portable package (container compression bytes may differ).
+
+Android ID `dev.ge4g.ge4g_client`, versionName `0.2.0-rc.3`, versionCode5.
+APK v2/v3 verification and prior rc2 certificate comparison pass; pinned SHA256 remains
+`d6d5ca948e5c1ed644478d7c4c3243efcfcbc30a196f03c39ef7af7118fc00d4`.
+The release supports updating the installed rc1/rc2 app in place. No signing key was rotated.
+Actual device install/physical audio and Windows/Arch user gameplay are not claimed.
+
+[rc3 Drive delivery](https://drive.google.com/drive/folders/1MxzOZKg-C59aFR3gn3Lqt0IO1RgvGUqH)
+contains APK, portable game, embedded desktop builds, source, real UI captures, CPU
+benchmarks and verification/checksum instructions. [rc2 archive](https://drive.google.com/drive/folders/1YeIJO1SoQ-ncx-mlU6jxm1QLM4vI5XKX)
+is renamed and its README/manifest identify it as rc2; original signed build4 bytes remain intact.

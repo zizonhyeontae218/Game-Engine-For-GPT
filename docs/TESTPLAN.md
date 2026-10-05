@@ -136,3 +136,13 @@ choice/battle and every demo choice resume, Lua RNG fault rollback, temporary cu
 clip progression, exact parent restore and corrupt parent rejection. The real embedded
 Flutter smoke must match headless state and pixels for all three demos. Sign Android
 with the preserved key and `--previous-apk`; inspect app ID and versionCode4.
+
+## FlatLand rc3 polish acceptance
+
+Run `cargo test -p ge4g-runtime --test polish` and `ge4g test examples/flatland_nuvema`.
+They prove one-cell release/blocked-facing/pace, visible projection plus plane rollback,
+move PP/hit frame/save/result resume and1957-tick station completion. Full/minimal
+render snapshots must match byte for byte. Current total: Rust48, Flutter19.
+`flutter test test/polish_test.dart` covers cardinal hysteresis and dedicated battle
+move/bag/save at portrait/landscape with2× text. Native/client smoke checks Nuvema in
+addition to Basement, Pac-Man and Signal Yard. Device acceptance remains separate.
