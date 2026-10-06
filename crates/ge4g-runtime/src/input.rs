@@ -39,3 +39,20 @@ impl DirectionInput {
                 == self.priority.len()
     }
 }
+/// Reversal within an already-entered cell is legal; orthogonal turns wait for alignment.
+pub fn mid_cell_direction(
+    position: ge4g_core::Vec2,
+    cell: i64,
+    current: [i64; 2],
+    desired: [i64; 2],
+) -> [i64; 2] {
+    let horizontal = position.x.rem_euclid(cell) != 0 && position.y.rem_euclid(cell) == 0;
+    let vertical = position.y.rem_euclid(cell) != 0 && position.x.rem_euclid(cell) == 0;
+    if ((horizontal && desired[0] != 0) || (vertical && desired[1] != 0))
+        && (current == [0, 0] || desired == [-current[0], -current[1]])
+    {
+        desired
+    } else {
+        current
+    }
+}

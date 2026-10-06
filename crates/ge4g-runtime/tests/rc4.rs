@@ -253,3 +253,52 @@ fn fainted_combatant_stays_zero_until_explicit_reset_and_rewards_are_once() {
     assert!(w.choose("battle_continue").is_err());
     assert_eq!(w.inventory("potion"), 4);
 }
+#[test]
+fn opposite_input_reverses_mid_cell_without_an_extra_forward_cell() {
+    let mut w = world();
+    let start = w.entities["player"].position;
+    w.step(&Input {
+        right: true,
+        ..Input::default()
+    })
+    .unwrap();
+    assert!(w.entities["player"].position.x > start.x);
+    w.step(&Input {
+        right: true,
+        left: true,
+        direction: Some([-1, 0]),
+        ..Input::default()
+    })
+    .unwrap();
+    assert_eq!(w.entities["player"].position, start);
+    w.step(&Input::default()).unwrap();
+    assert_eq!(w.entities["player"].position, start);
+    assert_eq!(w.entities["player"].actor.direction, [0, 0]);
+}
+#[test]
+fn step_walk_recovers_after_mid_cell_actor_obstruction() {
+    let mut w = world();
+    w.step(&Input {
+        right: true,
+        ..Input::default()
+    })
+    .unwrap();
+    let partial = w.entities["player"].position;
+    // A transient solid actor blocks the remaining part of the entered cell.
+    w.entities.get_mut("minimal_actor").unwrap().position = Vec2 {
+        x: partial.x + 16 * 60,
+        y: partial.y,
+    };
+    w.step(&Input {
+        right: true,
+        ..Input::default()
+    })
+    .unwrap();
+    assert_eq!(w.entities["player"].position, partial);
+    w.entities.get_mut("minimal_actor").unwrap().position = Vec2::pixels(240, 160);
+    for _ in 0..20 {
+        w.step(&Input::default()).unwrap();
+    }
+    assert_eq!(w.entities["player"].position, Vec2::pixels(272, 224));
+    assert_eq!(w.entities["player"].actor.direction, [0, 0]);
+}

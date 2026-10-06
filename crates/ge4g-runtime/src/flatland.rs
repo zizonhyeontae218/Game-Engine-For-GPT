@@ -760,6 +760,15 @@ impl World {
                 }
                 let map = self.effective_map(self.actor_plane(&id)).unwrap();
                 let cell = i64::from(map.cell) * SUBPIXELS;
+                if step_walk {
+                    let e = self.entities.get_mut(&id).unwrap();
+                    e.actor.direction = super::input::mid_cell_direction(
+                        e.position,
+                        cell,
+                        e.actor.direction,
+                        e.actor.queued,
+                    );
+                }
                 let mut budget = speed;
                 for _ in 0..128 {
                     let e = self.entities[&id].clone();
@@ -811,7 +820,9 @@ impl World {
                     if moved.0.position != moved.1.position {
                         self.face(&id, dir)?;
                     } else {
-                        self.entities.get_mut(&id).unwrap().actor.direction = [0, 0];
+                        if !step_walk {
+                            self.entities.get_mut(&id).unwrap().actor.direction = [0, 0];
+                        }
                         break;
                     }
                     budget -= step;
