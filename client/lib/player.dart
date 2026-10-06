@@ -328,7 +328,7 @@ class Player extends ChangeNotifier {
       }
       loading = false;
       error = '게임을 열 수 없습니다: $failure';
-      notifyListeners();
+      if (!_disposed) notifyListeners();
       if (rethrowFailure) rethrow;
     }
   }

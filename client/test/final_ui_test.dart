@@ -79,17 +79,23 @@ void main() {
         final save = library.save('b')..parent.createSync(recursive: true);
         save.writeAsStringSync('progress');
         library.controls('b').createSync(recursive: true);
-        await tester.pumpWidget(
-          MaterialApp(
-            home: GameManager(library: library, player: player),
-          ),
-        );
+        await tester.runAsync(() async {
+          await tester.pumpWidget(
+            MaterialApp(
+              home: GameManager(library: library, player: player),
+            ),
+          );
+          await Future<void>.delayed(const Duration(milliseconds: 150));
+        });
         await settleIo(tester);
         expect(find.text('GAME MANAGER / 게임 관리'), findsOneWidget);
         expect(find.textContaining('b\n'), findsOneWidget);
         await tester.tap(find.byKey(const ValueKey('manage-b')));
         await tester.pumpAndSettle();
-        await tester.tap(find.text('위로 이동'));
+        await tester.runAsync(() async {
+          await tester.tap(find.text('위로 이동'));
+          await library.list();
+        });
         await settleIo(tester);
         expect((await tester.runAsync(library.list))!.map((g) => g.id), [
           'b',
@@ -111,7 +117,10 @@ void main() {
         await tester.pumpAndSettle();
         await tester.tap(find.text(full ? '게임 및 데이터 모두 삭제' : '게임 삭제'));
         await tester.pumpAndSettle();
-        await tester.tap(find.byKey(const Key('confirm-delete')));
+        await tester.runAsync(() async {
+          await tester.tap(find.byKey(const Key('confirm-delete')));
+          await library.list();
+        });
         await settleIo(tester);
         expect(find.text('게임 B'), findsNothing);
         expect((await tester.runAsync(library.list))!.single.id, 'a');

@@ -15,7 +15,7 @@ and stealth games, and turn-based RPGs through reusable systems plus Lua extensi
 “Most games” is a coverage objective, not a promise of arbitrary game fidelity.
 
 Preserve Rust authority, deterministic headless execution, CPU reference rendering,
-Flutter mobile import, embedded Windows/Arch distributions, digital brutalism,
+Flutter Android import, embedded Windows distributions, digital brutalism,
 and live per-game control profiles. Add gameplay rather than another launcher.
 No full 3D engine, multiplayer, general rigid-body physics or authoring GUI in 0.2.
 

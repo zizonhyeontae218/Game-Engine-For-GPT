@@ -43,7 +43,7 @@ The runtime retains the latest 4,096 events; discarded history is counted in `ev
 
 Supported kinds: `scene_loaded`, `entity_spawned`, `collision_started`, `collision_resolved`, `collision_ended`, `trigger_entered`, `trigger_exited`, `interaction`, `state_changed`, `scene_transition`, `save_loaded`, `save_written`, `audio`, `action_pressed`, `action_released`. Events contain `{tick,kind,scene,entity?,data}`. Collision and trigger data include `target`; interaction includes `target` and `dialogue`; state changes include `key`, `before`, `after`; transition includes `from`, `to`, `spawn`.
 
-Native client named-action edges carry `data.action`; explicit input release emits release edges at the current tick without advancing simulation. CLI replays retain their existing directional/interact schema.
+Native client named-action edges carry `data.action`; explicit input release emits release edges at the current tick without advancing simulation. Schema1 CLI replays retain directional/interact input; schema2 FlatLand replays also record named actions and choice/do/skip commands.
 
 Collision contact events describe blocked attempted movement. Stopping input can emit `collision_ended` even while geometrically touching a wall. The current trigger behaviors always transition on entering/crossing; a transition clears previous contact/trigger bookkeeping.
 

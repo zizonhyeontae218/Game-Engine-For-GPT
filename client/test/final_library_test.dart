@@ -204,7 +204,12 @@ void main() {
         player.choose('continue');
         await player.save();
         final newSave = library.save(a.id).readAsBytesSync();
-        await player.installBytes(bBytes);
+        final compatibleBytes = revision(bytes, 'B', '0.2.0+game-update');
+        await player.installBytes(compatibleBytes);
+        expect(player.resumedSave, true);
+        expect(player.archivedSave, false);
+        expect(b.directory.existsSync(), false);
+        await player.installBytes(compatibleBytes);
         expect(player.resumedSave, true);
         expect(player.archivedSave, false);
         expect(library.save(a.id).readAsBytesSync(), newSave);
@@ -215,7 +220,7 @@ void main() {
         expect(player.session, isNull);
         expect(player.game, isNull);
         expect(library.save(a.id).readAsBytesSync(), newSave);
-        await player.installBytes(bBytes);
+        await player.installBytes(compatibleBytes);
         expect(player.resumedSave, true);
         expect(player.store!.current.activeId, 'left_handed');
         await player.removeGame(a.id, allData: true);

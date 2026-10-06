@@ -61,6 +61,7 @@ fn bubble_speaker_is_optional_resolved_metadata_and_resume_exact() {
             json!({"display_name":42,"name":"공방장"}),
             Some("공방장"),
         ),
+        (Some(" "), json!({"display_name":"안내인"}), Some("안내인")),
         (None, json!({}), None),
     ] {
         let mut world = bubble(authored, metadata);

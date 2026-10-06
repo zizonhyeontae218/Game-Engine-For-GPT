@@ -912,6 +912,7 @@ impl World {
             } => {
                 let label = speaker
                     .as_deref()
+                    .filter(|value| !value.trim().is_empty())
                     .or_else(|| {
                         self.entities.get(actor).and_then(|entity| {
                             ["display_name", "name"].into_iter().find_map(|key| {
@@ -920,7 +921,11 @@ impl World {
                                     .metadata
                                     .get(key)
                                     .and_then(Value::as_str)
-                                    .filter(|value| !value.trim().is_empty() && value.len() <= 256)
+                                    .filter(|value| {
+                                        !value.trim().is_empty()
+                                            && value.len() <= 256
+                                            && !value.contains('\0')
+                                    })
                             })
                         })
                     })

@@ -47,3 +47,8 @@ Repo /workspace/Game-Engine-For-GPT. Private stable key /workspace/signing/andro
 never copy to Git/public Drive. Publish new0.2.0 folder under verified FlatLand Demos
 parent1ygYLP34cQx2fwzQAK974fZbGy_JZOYsR; preserve rc1–rc5. Physical acceptance is
 user-reported for rc5; final modified library UI is CI-verified unless later tested.
+
+Review refinements: blank speaker falls through to valid metadata; NUL metadata is
+ignored. Native compatible update (new bundle digest, same game content) must retain
+the save. Management widget IO uses real async execution before assertions. Initial
+Windows Flutter pass still running; restart coherent verification on revised source.
