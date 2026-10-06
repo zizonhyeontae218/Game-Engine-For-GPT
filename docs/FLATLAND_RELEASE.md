@@ -30,11 +30,33 @@ Harbor Workshop stays independently authored with original CC0 assets/provenance
 
 ## Verification / delivery
 
-Pending recorded Android/Windows CI and actual rendered review. Rust tests cover new
-collision/shadow/contact/bubble/scoped-camera cases alongside rc4 save/input/battle,
-Pac-Man and Signal Yard regressions. Windows captures top/depth, occlusion, attempted
-roof traversal in three views, damaging/guard/heal feedback, three actual UI taps,
-and restored view/roster. Korean UTF-8 pipeline remains required.
+Source: `9ead55bd67500e55250974343ff22077266827d2` (2026-10-06).
+[Engine CI](https://github.com/zizonhyeontae218/Game-Engine-For-GPT/actions/runs/37461167770)
+passed63 workspace Rust tests, formatting/strictclippy, headless and replay/save goldens.
+[Client CI](https://github.com/zizonhyeontae218/Game-Engine-For-GPT/actions/runs/37461167767)
+passed Android release build,25 Windows Flutter tests, Windows release/embedded build,
+and Korean UTF-8 authoring-validation-package-import-launch-render pipeline.
+
+Actual Windows portrait/landscape captures were downloaded and visually reviewed:
+feet-attached top shadows, proximity ordering, upright buildings, three-view blocked
+footprint attempts, attack impact/red flash/HP interpolation, guard/heal, three actual
+UI bubble taps and restored view/roster. Completed bubbles cannot reopen as dialogue
+history. Native projected feet keep a lower story bubble clear of its actor.
+CI graphics capture is explicitly muted; audio_device_validation:false. This does
+not verify physical audio or physical Android touch/movement acceptance.
+
+[Drive candidate folder](https://drive.google.com/drive/folders/1gIi8VYH32CkShkqsiXkIFylRh79rw_Du)
+contains signed APK, embedded Harbor Windows ZIP, portable game, game source ZIP,
+rendered screenshots/status/world snapshots, world-state proof, Korean instructions,
+physical acceptance checklist, verification JSON and SHA256 checksums. Uploaded file
+names, sizes and parents were read back. Existing sharing and rc1–rc4 files retained.
+
+Android app ID `dev.ge4g.ge4g_client`, versionCode7; three native ABIs included.
+Certificate SHA256 `d6d5ca948e5c1ed644478d7c4c3243efcfcbc30a196f03c39ef7af7118fc00d4`
+was compared with the existing rc4 APK and is unchanged. APK SHA256
+`dddbc6dbc48bd3b028f7fb532c46d583ef2a8fe6cd72a107261a4e00200fb4b6`.
+Harbor game SHA256 `9d3aad1758b62453b87e35990cb4e9e7db229a08ab657a6d8726e3e8dbd7d80d`;
+Windows ZIP SHA256 `b0213be63033b335864d23118ff2bcc70930dff935729044adace95c02339698`.
 
 ## Final promotion gate
 

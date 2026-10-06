@@ -4,7 +4,7 @@
 
 Rust로 구현한 실제 엔진입니다. OpenAI 계정, LLM 호출, GPU, 인터넷 연결은 게임 실행에 필요하지 않습니다. 초기 의존성 다운로드에는 인터넷이 필요합니다.
 
-Basement 0.2 — **FlatLand 0.2.0-rc.5** 안정화 후보입니다. Android와 Windows를 지원하며, 모바일은 `.ge4g` 불러오기·Windows는 실행기 내장 배포 방식입니다. [바람항 공방](examples/flatland_harbor/README.md)은 독자적인 CC0 데모입니다. 경사 바닥 위에서도 인물·건물이 서 있고, 시점은 위치·충돌을 바꾸지 않으며 장면과 저장을 넘어 유지됩니다. 최근 방향 우선 보행, 빠른 달리기, 기본 전투 연출과 전투 사이 HP/PP 지속을 시험할 수 있습니다. rc5는 건물 footprint 충돌, 접지 그림자·발 위치 가림, 탭으로 진행하는 컷씬 말풍선을 보완합니다. 기존 Basement·Maze Chase·Signal Yard 회귀 검사는 유지합니다. Android versionCode7은 기존 인증서를 유지합니다. 정식 0.2.0으로 승격하지 않습니다. [작성 안내](docs/FLATLAND_QUICKSTART.md) · [규격과 제한](docs/FLATLAND_AUTHORING.md) · [검증 상태](docs/FLATLAND_RELEASE.md).
+Basement 0.2 — **FlatLand 0.2.0-rc.5** 안정화 후보입니다. Android와 Windows를 지원하며, 모바일은 `.ge4g` 불러오기·Windows는 실행기 내장 배포 방식입니다. [바람항 공방](examples/flatland_harbor/README.md)은 독자적인 CC0 데모입니다. 경사 바닥 위에서도 인물·건물이 서 있고, 시점은 위치·충돌을 바꾸지 않으며 장면과 저장을 넘어 유지됩니다. 최근 방향 우선 보행, 빠른 달리기, 기본 전투 연출과 전투 사이 HP/PP 지속을 시험할 수 있습니다. rc5는 건물 footprint 충돌, 접지 그림자·발 위치 가림, 탭으로 진행하는 컷씬 말풍선을 보완합니다. 기존 Basement·Maze Chase·Signal Yard 회귀 검사는 유지합니다. Android versionCode7은 기존 인증서를 유지합니다. 실기기 수용 확인 전에는 정식 0.2.0으로 승격하지 않습니다. [작성 안내](docs/FLATLAND_QUICKSTART.md) · [규격과 제한](docs/FLATLAND_AUTHORING.md) · [검증 상태](docs/FLATLAND_RELEASE.md).
 
 ## 빠른 시작
 

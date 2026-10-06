@@ -37,14 +37,36 @@ South-only validation, actor-linked tap bubbles and scoped12-tick camera easing.
 Heal/guard motion corrected. Original Harbor three-line story and rendered acceptance
 script covers roof/contact/battle/save cases; docs archived/current truth aligned.
 Local63Rust tests, strictclippy, Flutteranalysis and three replay/save goldens pass.
-Next: publish coherent source for Windows tests/render and Android builds; signcode7,
-inspect actual captures, deliver new rc5 Drive folder. Final promotion awaits human.
+Engineering and signed Drive delivery complete at source9ead55b. Actual Windows
+portrait/landscape captures reviewed;25Flutter tests and Android/Windows builds pass.
+Remaining: user physical mobile acceptance, then final version/artifact promotion only.
 
 ## Verification log
 Local tests63passed; strictclippy passed; Flutterstaticanalysis passed. Harbor420-tick
 journey golden568334e7d0aaf36ebd4ed958f431dbfb1da0713e2f1ba4dc3a29f5bc084448a5,
-Pac-Man and SignalYard goldens/save pass. Hosted clients pending.
+Pac-Man and SignalYard goldens/save pass. Hosted engine37461167770 and
+clients37461167767 both pass;25Flutter tests. Signedcode7 matches rc4certificate.
+Drive names/sizes/parents verified; release record contains source and checksums.
 
 ## Handoff
 Repo /workspace/Game-Engine-For-GPT. Signing keys /workspace/signing/android remain
 private. Deliver new Demos/Basement0.2FlatLand/0.2.0-rc.5 directory, preserve rc1-rc4.
+
+## Rendered-review corrections
+Initial Windows/Android CI passed at8a70be6 (63Rust/24Flutter tests). Real Windows
+capture review exposed a below-actor bubble covering its speaker; native projected
+feet now position the lower bubble beneath the body. Completed bubble history is
+cleared, preventing stale continuation. A native-client regression covers this path.
+Windows hosted capture has no usable audio device: graphics evidence explicitly
+mutes audio before opening and records audio_device_validation:false. This is not
+physical audio acceptance. Muted audio no longer allocates a MediaEngine player.
+Updated source9ead55b passed Android/Windows CI and rendered review. Human mobile acceptance
+remains pending and final promotion remains blocked.
+
+## Candidate delivery / pending final gate
+[rc5 artifacts](https://drive.google.com/drive/folders/1gIi8VYH32CkShkqsiXkIFylRh79rw_Du)
+include APK, Windows bundle, game/source, real rendered frames/snapshots, proof,
+checksums and physical checklist. No historical binary overwritten; initial
+preflight rc5 APK retained separately. No suspended-platform client built/tested.
+This plan stays active only for human physical acceptance and final promotion;
+CI cannot satisfy that remaining requirement. See docs/FLATLAND_RELEASE.md.
