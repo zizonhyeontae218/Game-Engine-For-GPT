@@ -63,3 +63,8 @@ ID/name/code8/three ELF ABIs verified. Windows test run was stopped to investiga
 an IO/FakeAsync stall. Keep all assertions, run each filesystem-backed widget flow
 inside one real-async scope, and finish menu transitions before waiting on storage.
 No simulation/render changes. Re-run full Windows/Android verification on that patch.
+
+Hosted Windows14e4d71:35 tests pass, including all new library/speaker/manager tests
+and lifecycle/frame-failure rollback. Remaining old popup/layout test inspected
+after a fixed150ms before first-frame readiness. Replace that wait with bounded
+UI-ready polling, keeping every original popup/orientation/layout assertion.

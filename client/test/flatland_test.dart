@@ -82,8 +82,15 @@ void main() {
         await tester.ensureVisible(find.text('PLAY →'));
         await tester.pump();
         await tester.tap(find.text('PLAY →'));
-        await Future<void>.delayed(const Duration(milliseconds: 150));
-        await tester.pump();
+        // Wait for controls IO and the first decoded frame, rather than a fixed
+        // delay that may expire while the player correctly remains loading.
+        for (var attempt = 0; attempt < 200; attempt++) {
+          await Future<void>.delayed(const Duration(milliseconds: 25));
+          await tester.pump();
+          if (find.text('A separate dialogue popup').evaluate().isNotEmpty) {
+            break;
+          }
+        }
         expect(find.text('A separate dialogue popup'), findsOneWidget);
         await tester.tap(find.byKey(const Key('close-game-popup')));
         await tester.pump();
