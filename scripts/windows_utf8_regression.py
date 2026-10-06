@@ -21,6 +21,7 @@ def launch():
  user32=ctypes.windll.user32
  from ctypes import wintypes
  callback=ctypes.WINFUNCTYPE(wintypes.BOOL,wintypes.HWND,wintypes.LPARAM)
+ user32.GetWindowTextW.argtypes=[wintypes.HWND,wintypes.LPWSTR,ctypes.c_int]
  user32.GetWindowThreadProcessId.argtypes=[wintypes.HWND,ctypes.POINTER(wintypes.DWORD)]
  user32.SetWindowPos.argtypes=[wintypes.HWND,wintypes.HWND,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_uint]
  for label,size in [('portrait',(430,900)),('landscape',(1000,650))]:
@@ -30,7 +31,8 @@ def launch():
   @callback
   def resize(hwnd,_):
    pid=wintypes.DWORD();user32.GetWindowThreadProcessId(hwnd,ctypes.byref(pid))
-   if pid.value==process.pid:user32.SetWindowPos(hwnd,None,30,30,*size,0x0040)
+   title=ctypes.create_unicode_buffer(256);user32.GetWindowTextW(hwnd,title,256)
+   if pid.value==process.pid and title.value=='GE4G / GameEngineForGPT':user32.SetWindowPos(hwnd,None,30,30,*size,0x0040)
    return True
   deadline=time.monotonic()+90
   try:

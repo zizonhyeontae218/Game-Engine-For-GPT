@@ -228,9 +228,8 @@
   "examples/flatland_harbor/audio/hit.wav": "dec14d0f2f70f2e603a5b73d9f7b2cd38b14f7297b823bf2473bbe063762a55b",
   "examples/flatland_harbor/audio/music.wav": "e26c7a79aed3b714ad3ff2af59219f187be80d5d34f9ebfe84a0c18ac2e7f7d3",
   "examples/flatland_harbor/audio/quest.wav": "641d07128f7a36eb43ec616222c7e3ce111724f017df48eb8f3787ad3200b566",
-  "examples/flatland_harbor/controls/bindings.json": "45ee9d22cf7d9283c852166e0a5827093a6c2f971610e4c3860fb11927d72ad4",
-  "examples/flatland_harbor/controls/layouts.json": "7173fdd10a8ad13875291c04517e688afb7129123c73000d710aaa6b3593472a",
-  "examples/flatland_harbor/data/harbor.lua": "93cc21a59c08ff16e4c7f6bc83c81879c08bb91aa7346439dc0cc1f063706f4e",
+  "examples/flatland_harbor/controls/bindings.json": "e3e7eb3776fabdf2fd62ed1fe7793fdd53c9f9a473f5c4fe22717814b3476b0d",
+  "examples/flatland_harbor/controls/layouts.json": "73b6599c4b8a89cbc5d5a87a220f65f1d6afbd8ed50bd384f0f6a52a5b974307",
   "examples/flatland_harbor/data/\uacf5\ubc29.lua": "1e7de5a66f89221d691f200fdc8deffbd5d4e31cdf25ba3756ccfacd1b77f0c1",
   "examples/flatland_harbor/ge4g.toml": "0aed9d0c622b2b72f5f0365ff176e1c36119cbdb469e2962f9a9337a6e0696bd",
   "examples/flatland_harbor/replays/journey.json": "7319e0416b651fcef5054bd6a3d51655daa20b623407fb813d11a473ff9759d8",
@@ -459,7 +458,7 @@
   "scripts/context_benchmark.py": "de232bdf49b6c2bb5c215195593cb1dbe2f7b34c64f0469aa0d5270b90d929f7",
   "scripts/filetree.py": "69286856abd1223879c7779cd07e4192b92fbeaaac81a62fb3fa7f29de199786",
   "scripts/flatland_task_benchmark.py": "db6e2bb7682e2c28986bc9674e9fe98b022e3e688290ba4f9d7447825de61641",
-  "scripts/generate_harbor_demo.py": "f115ce8e14e2f8ac59d05564f47b0015a56764b94c18974e655269ee85f9aa67",
+  "scripts/generate_harbor_demo.py": "ea9ebe19567caeb32a8d52ad3781993b17996788673a6681b961b88ff12c8616",
   "scripts/generate_nuvema_assets.py": "e50ee2248abea98a09d87b823bf541b1e550305e22a0920afe2381999f98214d",
   "scripts/interactive_smoke.py": "942f24e3a87e5756c507952580bf2869a2af88608a091852e708960e2176de32",
   "scripts/make_signal_yard_assets.py": "5ed19f1f73f9582abe5304cdbde40c5da1844221013f59de24648ad8cb507aec",
@@ -467,6 +466,6 @@
   "scripts/package.py": "bbd081eed534c97241196029cfa3ab754e52f89e4bf90b155b7ce1d012abe433",
   "scripts/sign_android.py": "b385d639e440373c52f56e337ec0c4d1cbff633974c514bbdcc99aa595657c85",
   "scripts/verify_audio_adapter.py": "cc75fca6c523188dd48d730a54fb05b8389aed72f439d79459047fbf64e74503",
-  "scripts/windows_utf8_regression.py": "3b80ce98472f735827e08c1268928ee135435849c78e83f1600398a3c1959762",
+  "scripts/windows_utf8_regression.py": "f5326465c47e794ca279ef736a66dc3ac950f3f1a1bf4bbeee2ad12008b62cb0",
   "templates/EXECPLAN_TEMPLATE.md": "c8acc175baebf6e7f7c2ae791ff7728b21b1ed99ea41ddf1e07cfdc3eb83a4e2"
 }

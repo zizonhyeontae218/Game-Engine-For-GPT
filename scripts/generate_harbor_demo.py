@@ -62,7 +62,7 @@ def main():
   p=copy.deepcopy(player);p['position']=[144,160]
   inside.update(id='inside_'+id,spawns={'entry':[144,160]},entities=[p,e],map={'cell':16,'rows':['#'*20]+['#'+'.'*18+'#' for _ in range(13)]+['#'*20],'tiles':{'#':tiles['#'],'.':{'color':[199,181,146,255]}}})
   write(f'scenes/{id}.json5',inside);scenes['inside_'+id]=f'scenes/{id}.json5'
- (OUT/'data').mkdir(exist_ok=True);(OUT/'data/공방.lua').write_text('''return function(ctx)
+ (OUT/'data').mkdir(exist_ok=True);(OUT/'data/harbor.lua').unlink(missing_ok=True);(OUT/'data/공방.lua').write_text('''return function(ctx)
  if ctx.event == "action.pace" then
   local run = not ctx.state["harbor.running"]
   return {{op="set",key="harbor.running",value=run},{op="pace",entity="$player",speed=run and 112 or 68}}
@@ -78,7 +78,16 @@ end
  controls=ROOT/'examples/flatland_nuvema/controls'
  for f in ['layouts.json','bindings.json']:
   data=json.loads((controls/f).read_text());
-  if f=='bindings.json':data['game_id']='demo.flatland.harbor'
+  if f=='bindings.json':
+   data['game_id']='demo.flatland.harbor'
+   for profile in data['profiles'].values():profile['buttons']['space']=['attack'];profile['keys']['Space']=['attack']
+  else:
+   for profile in data['profiles']:
+    mirror=profile['id']=='left_handed'
+    for button in profile['buttons']:
+     x=.72 if button['id']=='z' else .9
+     button.update(x=1-x if mirror else x,y=.9 if button['id']=='c' else .68,width=.16,height=.15)
+    profile['buttons'].append({'id':'space','label':'발사','x':.28 if mirror else .72,'y':.9,'width':.16,'height':.15})
   write('controls/'+f,data)
  write('assets/설명.json',{'title':'바람항 공방','scene':'항구','encoding':'UTF-8'})
  assets=[]

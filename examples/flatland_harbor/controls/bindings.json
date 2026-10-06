@@ -26,6 +26,9 @@
         ],
         "c": [
           "pace"
+        ],
+        "space": [
+          "attack"
         ]
       },
       "keys": {
@@ -39,7 +42,7 @@
           "pace"
         ],
         "Space": [
-          "interact"
+          "attack"
         ],
         "KeyE": [
           "interact"
@@ -94,6 +97,9 @@
         ],
         "c": [
           "pace"
+        ],
+        "space": [
+          "attack"
         ]
       },
       "keys": {
@@ -107,7 +113,7 @@
           "pace"
         ],
         "Space": [
-          "interact"
+          "attack"
         ],
         "KeyE": [
           "interact"

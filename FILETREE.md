@@ -235,7 +235,6 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `examples/flatland_harbor/audio/quest.wav` — Repository file; inspect only when relevant to the task.
 - `examples/flatland_harbor/controls/bindings.json` — Repository file; inspect only when relevant to the task.
 - `examples/flatland_harbor/controls/layouts.json` — Repository file; inspect only when relevant to the task.
-- `examples/flatland_harbor/data/harbor.lua` — Repository file; inspect only when relevant to the task.
 - `examples/flatland_harbor/data/공방.lua` — Repository file; inspect only when relevant to the task.
 - `examples/flatland_harbor/ge4g.toml` — Repository file; inspect only when relevant to the task.
 - `examples/flatland_harbor/replays/journey.json` — Repository file; inspect only when relevant to the task.
