@@ -75,6 +75,10 @@ fn persistent_view_survives_goto_scoped_camera_save_and_scene_without_local_pres
     command(&mut w, json!([{"op":"view","mode":"depth"}]));
     command(&mut w, json!([{"op":"event_scene","event":"tour"}]));
     for _ in 0..46 {
+        assert_eq!(
+            render(&w.project, &w.snapshot(), false).unwrap(),
+            render(&w.project, &w.render_snapshot(), false).unwrap()
+        );
         w.step(&Input::default()).unwrap();
     }
     assert_eq!(w.snapshot().flatland.unwrap()["systems"]["view"], "depth");
