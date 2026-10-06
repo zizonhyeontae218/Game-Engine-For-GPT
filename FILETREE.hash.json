@@ -119,7 +119,7 @@
   "client/pubspec.yaml": "eb8e6561ada6ca62e7ad1454f82436c787dcd31a7b5d95980b933474969858da",
   "client/test/controls_test.dart": "139cbc7225b843bf8c0732c74565e39c79bae5e95f5ae1831ab9197c32d7c251",
   "client/test/final_library_test.dart": "af8adc86a9fde1ea592e65a34a7f050821f44485cb5a16279d5b80a617fc9561",
-  "client/test/final_ui_test.dart": "2277e4f1032717159ab0453befcff2a61ff670ddc9efe7a43af68e3b18f0d83a",
+  "client/test/final_ui_test.dart": "b369ac3eec33dae100ab85ed24277cae01fdadc05f1d4de81be7e97e5e42ba64",
   "client/test/flatland_test.dart": "6958e4accd5b16efeff9084eddcd7f531b15fdc952c0758ed46f56b77ad6f502",
   "client/test/library_test.dart": "11310271855586ec0822a4cab632422df421c54c778937e2e85c2f43ad86c314",
   "client/test/player_test.dart": "c85c1ec5d974e99b7eb41f4d4515353f0a4353670fa4ed2eff2e15d12167534e",

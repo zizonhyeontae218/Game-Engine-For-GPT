@@ -18,9 +18,17 @@ class UnusedEngine implements EngineBridge {
 }
 
 Future<void> settleIo(WidgetTester tester) async {
-  await tester.runAsync(
-    () => Future<void>.delayed(const Duration(milliseconds: 150)),
-  );
+  // Widget callbacks run in FakeAsync while real filesystem futures do not.
+  // Alternate real IO with pumped microtasks until the manager has finished.
+  for (var attempt = 0; attempt < 200; attempt++) {
+    await tester.pump(const Duration(milliseconds: 25));
+    await tester.runAsync(
+      () => Future<void>.delayed(const Duration(milliseconds: 25)),
+    );
+    if (find.byType(LinearProgressIndicator).evaluate().isEmpty) break;
+  }
+  await tester.pump();
+  expect(find.byType(LinearProgressIndicator), findsNothing);
   await tester.pumpAndSettle();
 }
 
@@ -94,7 +102,6 @@ void main() {
         await tester.pumpAndSettle();
         await tester.runAsync(() async {
           await tester.tap(find.text('위로 이동'));
-          await library.list();
         });
         await settleIo(tester);
         expect((await tester.runAsync(library.list))!.map((g) => g.id), [
@@ -119,7 +126,6 @@ void main() {
         await tester.pumpAndSettle();
         await tester.runAsync(() async {
           await tester.tap(find.byKey(const Key('confirm-delete')));
-          await library.list();
         });
         await settleIo(tester);
         expect(find.text('게임 B'), findsNothing);
