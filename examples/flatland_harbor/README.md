@@ -1,4 +1,4 @@
-# 바람항 공방 / Harbor Workshop — FlatLand rc5
+# 바람항 공방 / Harbor Workshop — FlatLand 0.2
 
 Original GE4G sample, CC0-1.0 art, audio and map. No third-party branding/map reference.
 Z interacts/enters; X selects persistent presentation-only view; C toggles 68/112 px/s.

@@ -905,9 +905,32 @@ impl World {
             );
         }
         match &self.project.scenes[&self.scene].gameplay.events[&frame.event][frame.pc] {
-            Instruction::SayBubble { actor, text } => Some(
-                json!({"id":id,"kind":"bubble","actor":actor,"text":text,"options":[{"id":"continue","text":"탭하여 계속"}]}),
-            ),
+            Instruction::SayBubble {
+                actor,
+                speaker,
+                text,
+            } => {
+                let label = speaker
+                    .as_deref()
+                    .or_else(|| {
+                        self.entities.get(actor).and_then(|entity| {
+                            ["display_name", "name"].into_iter().find_map(|key| {
+                                entity
+                                    .spec
+                                    .metadata
+                                    .get(key)
+                                    .and_then(Value::as_str)
+                                    .filter(|value| !value.trim().is_empty() && value.len() <= 256)
+                            })
+                        })
+                    })
+                    .filter(|value| !value.trim().is_empty());
+                let mut bubble = json!({"id":id,"kind":"bubble","actor":actor,"text":text,"options":[{"id":"continue","text":"탭하여 계속"}]});
+                if let Some(label) = label {
+                    bubble["speaker"] = json!(label);
+                }
+                Some(bubble)
+            }
             Instruction::Say { text } => Some(
                 json!({"id":id,"kind":"dialogue","text":text,"options":[{"id":"continue","text":"계속 / CONTINUE"}]}),
             ),

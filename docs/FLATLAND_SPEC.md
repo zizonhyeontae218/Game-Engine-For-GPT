@@ -1,6 +1,6 @@
 # Basement 0.2 — FlatLand
 
-Status: 0.2.0-rc.5 implemented candidate contract and evidence are in `FLATLAND_AUTHORING.md`
+Status: 0.2.0 implemented release contract and evidence are in `FLATLAND_AUTHORING.md`
 and `FLATLAND_RELEASE.md`. This original design retains proposed examples and optional
 future extensions; it must not be mistaken for exact syntax or an unlimited capability claim.
 Current clients are Android/Windows only. References below to iOS/Linux/Arch are

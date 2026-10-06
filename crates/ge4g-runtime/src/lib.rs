@@ -13,6 +13,8 @@ use ge4g_core::{
 };
 use ge4g_project::{Assertion, Entity, Project, Transition, atomic_json, read_text, version};
 use serde::{Deserialize, Serialize};
+mod resume_error;
+pub use resume_error::ResumeError;
 use serde_json::{Value, json};
 use sha2::{Digest, Sha256};
 use std::{
@@ -95,6 +97,12 @@ impl World {
         Self::with_save(project, None)
     }
     pub fn with_save(project: Project, save: Option<&Path>) -> Result<Self> {
+        Self::with_save_checked(project, save).map_err(Error::from)
+    }
+    pub fn with_save_checked(
+        project: Project,
+        save: Option<&Path>,
+    ) -> std::result::Result<Self, ResumeError> {
         let mut state = StateStore::new(project.manifest.state.clone())?;
         if let Some(path) = save.filter(|_| project.manifest.schema_version == 1) {
             load_save(path, &project.manifest.name, &mut state)?;

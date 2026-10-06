@@ -1,160 +1,69 @@
-# Basement acceptance plan
+# FlatLand 0.2.0 acceptance
 
-Tests prove behavior and artifacts, not just command success. Headless verification requires no GPU, display, audio device or interactive input. The canonical Linux checks from a clean checkout are:
+Supported clients: Android and Windows only. Linux-hosted Rust/headless and Android
+cross-compilation are infrastructure. Do not build/test suspended clients until0.3.
+Historical evidence/counts live in docs/releases and completed ExecPlans.
+
+## Engine floor
 
 ```sh
 cargo fmt --all --check
 cargo clippy --locked --workspace --all-targets -- -D warnings
 cargo test --locked --workspace
-cargo run --locked -p ge4g-cli -- validate examples/basement_demo
-cargo run --locked -p ge4g-cli -- test examples/basement_demo
+cargo run --locked -p ge4g-cli -- test examples/basement_demo --json
+cargo run --locked -p ge4g-cli -- test examples/flatland_pacman --json
+cargo run --locked -p ge4g-cli -- test examples/flatland_signal_yard --json
+cargo run --locked -p ge4g-cli -- test examples/flatland_harbor --json
+python3 scripts/release_consistency.py --self-test
 python3 scripts/filetree.py lint
-```
-
-## Automated coverage
-
-The workspace currently has 24 behavioral tests: 3 core, 2 project, 6 runtime, 2 renderer, 2 native-client ABI and 9 CLI integration tests.
-
-| Requirement | Executable evidence |
-| --- | --- |
-| Player movement | Journey checkpoint tick 20: player (64,40), changed from (24,40) |
-| Wall blocks player / observable collision | Tick 50: x=84, max_x=84; `collision_started` target wall. Runtime high-speed test proves no tunneling |
-| NPC interaction | Tick 96: `interaction` target npc, `demo.npc.spoken=true`; held key test proves edge behavior |
-| Door changes scene | Tick 147: room_b at named entry (24,40), trigger event; high-speed test proves crossed triggers fire |
-| Persistent state changes | Journey checks both declared bool keys |
-| Atomic save and restart | Project tests save to a temp directory, restart/load and compare; CLI test verifies one file and no temporary-file leak |
-| Invalid save handling | Corrupt JSON, wrong types, future version and missing persistent keys fail; failed type load does not partially modify store |
-| Real PNG capture | CLI integration decodes RGBA PNG and checks player/wall/door pixels and frame hash; texture/camera and debug captures also checked |
-| Deterministic repeat | Project test and CLI integration compare full final snapshots and ordered event history from two clean runtimes |
-| Exact frame golden | Final RGBA SHA256 `38cc4352e7160dcf9104cbe19acd709e36d8165989b3c99d8b6611f0f76e932b`; reference `examples/basement_demo/golden/room_b.png` |
-| Versioned CLI | Schema fields, JSON argument errors, useful entity/file context, failed assertion exit 1, I/O/data error exit 2 |
-| Bounded/queryable trace | Runtime buffer overflow count; CLI kind filter preserves event order |
-| Validation / diagnosis | Future scene version and absent scene/texture references rejected; diagnosis returns four explicit checks |
-
-The demo `test` command checks seven authored checkpoints across 160 ticks, complete replay repeatability, final frame golden, save/reload and actual PNG output. A deliberately changed expectation proves failed assertions return a failure, not a success report.
-
-## Window adapter verification
-
-Build the default CLI, then with a local display:
-
-```sh
-cargo build --locked -p ge4g-cli
-python3 scripts/interactive_smoke.py
-```
-
-On Linux with Xvfb:
-
-```sh
-cargo build --locked -p ge4g-cli
-xvfb-run -a python3 scripts/interactive_smoke.py
-```
-
-This opens a real minifb window, presents CPU frames, plays the 160-tick replay and compares its snapshot/events with a headless run. It does not constitute human testing. CI runs this plus a build/test with the interactive feature excluded:
-
-```sh
 cargo clippy --locked -p ge4g-cli --no-default-features --all-targets -- -D warnings
 cargo test --locked -p ge4g-cli --no-default-features
 ```
 
-## Actual human acceptance — pending
+Preserve view/simulation separation, billboard anchors, feet/contact ordering,
+solid footprints/no roof access, South-only validation, movement priority/reversal,
+Pac-Man continuous-grid behavior, persistent HP/PP, RNG rollback, exact-once battle
+damage/items/PP/rewards, event return, scoped camera and conservative save validation.
+The rc4/rc5 integration suites remain executable regressions. Final tests cover
+explicit speaker, metadata fallback, absent header, line/actor/name resume and typed
+content-revision failure distinct from corruption. Replay/save golden commands also
+capture canonical PNGs; command success alone is insufficient evidence.
 
-A human must launch `cargo run --locked -p ge4g-cli -- run examples/basement_demo`, move with WASD/arrows, collide with the wall, talk to the NPC using E, enter the door, save with F5 and reload with F9. The title should retain `NPC:true` and `RoomB:true`. Close and relaunch with `--load examples/basement_demo/save.json` to check persistent values again.
+## Windows Flutter and embedded acceptance
 
-Record tester/date/result and any issues in RELEASE_NOTES when performed. Automated Xvfb evidence does not earn the human execution contribution or complete ILCX™ evaluation. See RELEASE_NOTES for the current verified milestone and remaining human sign-off.
+Use Flutter3.47.6. Prepare all four portable demos with scripts/pack_game.py using
+version0.2.0. On Windows run flutter analyze, flutter test, flutter build windows
+--release, bundle_desktop.py for each example, and windows_utf8_regression.py
+--prepare then --launch. The client workflow is the exact reproducible matrix.
 
-## Flutter client acceptance
+Keep actual FFI/canonical pixels, live controls/profile release, portrait/landscape,
+ordinary dialogue, bubble taps/expiration, battle FX/red flash/HP interpolation,
+feedback lock and save UI covered. Final additions exercise same-game two-revision
+update, exact old-save archival/fresh start, compatible duplicate resume, native
+open failure/corruption rollback, unchanged controls, deletion/reinstall/full deletion,
+persisted C-A-B reorder/update order, missing-index repair and confirmation UI.
 
-Use Flutter 3.47.6 and stable Rust. Build the portable demo before Flutter tests:
+Windows UTF-8 checks cover Korean TOML/JSON/JSON5/resources and non-ASCII package,
+import, application-data and embedded executable paths. Real portrait/landscape
+captures assert three UI bubble taps, same top/depth simulation, three blocked
+building attempts, battle phases and restored persistent state. Embedded mode must
+retain allow_library:false and never show import/delete/reorder/manager controls.
+CI graphics capture is explicitly muted; this is not physical audio acceptance.
 
-```sh
-cargo build --locked -p ge4g-cli
-python3 scripts/pack_game.py examples/basement_demo --game-id demo.basement --out dist/basement-demo.ge4g
-cd client
-flutter pub get
-flutter analyze
-flutter test
-flutter build linux --release
-cd ..
-python3 scripts/bundle_desktop.py --client client/build/linux/x64/release/bundle --game dist/basement-demo.ge4g --platform linux --out dist/ge4g-basement-linux
-xvfb-run -a python3 scripts/client_smoke.py dist/ge4g-basement-linux
-```
+## Android final packaging
 
-Flutter tests execute the actual bundled Rust FFI replay, compare canonical frame SHA256, save/reload and live profile/remapping input release through the native player, reject invalid/traversal/hash-corrupt packages, prove settings/save game isolation, reload external JSON while retaining invalid edits, and exercise real button chords, joystick ownership and cancellation widgets. The embedded desktop smoke opens a real Flutter window and compares its full Rust snapshot and decoded frame to CLI/headless.
+Build release APK with arm64-v8a, armeabi-v7a and x86_64 native runtimes. Confirm
+Flutter0.2.0+8, versionCode8, applicationId dev.ge4g.ge4g_client. Sign with the
+preserved private key via scripts/sign_android.py and --previous-apk pointing to
+rc5. Verify certificate against pinned SHA256 and actual rc5 APK. Never regenerate
+keys or upload private material. Preserve all historical binaries.
 
-Hosted client CI additionally builds Windows embedded ZIP, Android APK and unsigned iOS app. Build results do not constitute human touch-device tests, Windows interaction tests or `makepkg`/Wayland acceptance on Arch. Those remain explicit human/platform checks.
+## Human / publication evidence
 
-## FlatLand alpha acceptance
-
-The user confirmed the **previous 0.1** Flutter runners on PC/Linux/Android on 2026-10-03.
-Do not transfer that sign-off to changed alpha builds. Build both portable packages
-before Flutter tests, then run:
-
-```sh
-cargo test --locked --workspace
-cargo run --locked -p ge4g-cli -- test examples/flatland_pacman --json
-python3 scripts/pack_game.py examples/flatland_pacman --game-id demo.flatland.pacman --version 0.2.0-alpha.1 --out dist/flatland-pacman.ge4g
-cd client
-flutter analyze
-flutter test
-flutter build linux --release
-cd ..
-python3 scripts/bundle_desktop.py --client client/build/linux/x64/release/bundle --game dist/flatland-pacman.ge4g --platform linux --out dist/ge4g-flatland-linux
-xvfb-run -a python3 scripts/client_smoke.py dist/ge4g-flatland-linux --project examples/flatland_pacman
-python3 scripts/context_benchmark.py
-```
-
-Linux builds need GStreamer development packages, runtime base/good plugins and GTK3.
-Engine tests check complete push rollback, pass/fixed policies, facing, Lua sandbox
-budgets/rollback, deterministic ghost motion, score/power expiry/HP/win/loss, food
-reachability, queued turns, exact resume and corruption rejection. Native tests compare
-v2 replay/frame with Rust and exercise cursor/entity observation and resume. Flutter
-widgets check modal text and manual layout changes while resizing; no sensor selection.
-Actual audible playback and mobile orientation/device controls require a human check
-on the new builds. Event scenes, choices, turn combat and dedicated quests are not
-alpha acceptance claims; they remain full-0.2 release gates in FLATLAND_SPEC.
-
-## FlatLand 0.2.0 acceptance
-
-User reported rc.1 testing complete on 2026-10-05. Full-release new-device checks remain
-separate. Run the existing floor plus:
-
-```sh
-cargo test --locked --workspace
-cargo run --locked -p ge4g-cli -- test examples/flatland_pacman --json
-cargo run --locked -p ge4g-cli -- test examples/flatland_signal_yard --json
-python3 scripts/pack_game.py examples/flatland_signal_yard --game-id demo.flatland.signal-yard --version 0.2.0 --out dist/flatland-signal-yard.ge4g
-cd client
-flutter analyze
-flutter test
-cd ..
-python3 scripts/flatland_task_benchmark.py
-```
-
-Systems tests prove melee/drop once, projectile wall/plane filtering, atomic batches,
-failed replay command/tick rollback, quest reward once, content revision patches,
-choice/battle and every demo choice resume, Lua RNG fault rollback, temporary cutscene
-clip progression, exact parent restore and corrupt parent rejection. The real embedded
-Flutter smoke must match headless state and pixels for all three demos. Sign Android
-with the preserved key and `--previous-apk`; inspect app ID and current candidate versionCode7.
-
-## FlatLand rc3 polish acceptance
-
-Run `cargo test -p ge4g-runtime --test polish` and `ge4g test examples/flatland_nuvema`.
-They prove one-cell release/blocked-facing/pace, presentation-only projection and persistent view,
-move PP/hit frame/save/result resume and1957-tick station completion. Full/minimal
-render snapshots must match byte for byte. Historical rc3 count: Rust48, Flutter19; current counts are recorded in FLATLAND_RELEASE.md.
-`flutter test test/polish_test.dart` covers cardinal hysteresis and dedicated battle
-move/bag/save at portrait/landscape with2× text. Native/client smoke checks Nuvema in
-addition to Basement, Pac-Man and Signal Yard. Device acceptance remains separate.
-
-
-## rc5 final stabilization gate
-
-Run rc4 and rc5 Rust integration suites and all workspace regressions. Verify contact
-shadow below opaque actors; feet-based ordering despite player layer; footprint/default
-solid bodies; no roof access in top/depth/alternate before/after save and scene change;
-unsupported building facing rejection; three bubble lines with exact save/resume,
-12-tick scoped camera/full-min frame equality; old battle/PP/reward/FX/input cases.
-Windows runs Flutter tests, actual portrait/landscape capture and Korean UTF-8 import.
-Render review must inspect shadows/occlusion/blocked roofs/story UI/battle feedback.
-Mobile human acceptance checklist is mandatory before final promotion. CI is separate.
+User confirmed rc5 engine/cutscene physical acceptance and authorized this focused
+finalization. Keep engine behavior frozen. Record actual final automated results and
+rendered review separately from human testing; new management UI is not physically
+verified by CI. Publish final only after every finalization test/build/signing gate
+passes. Deliver new0.2.0 Drive artifacts, instructions, provenance and checksums.
+3D/pixelization, other building directions, external-storage relocation and online
+updates are future scope.

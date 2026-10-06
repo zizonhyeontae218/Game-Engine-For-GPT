@@ -17,6 +17,7 @@ import 'package:path_provider/path_provider.dart';
 import 'control_editor.dart';
 import 'controls.dart';
 import 'game_library.dart';
+import 'game_manager.dart';
 import 'player.dart';
 import 'touch_controls.dart';
 import 'game_popup.dart';
@@ -24,7 +25,7 @@ import 'cutscene_bubble.dart';
 import 'manual_orientation.dart';
 import 'game_viewport.dart';
 
-final rc5CaptureKey = GlobalKey();
+final releaseCaptureKey = GlobalKey();
 
 Future<void> main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -45,7 +46,7 @@ class GE4GApp extends StatelessWidget {
   Widget build(BuildContext context) => MaterialApp(
     title: 'GE4G / GameEngineForGPT',
     builder: (context, child) =>
-        RepaintBoundary(key: rc5CaptureKey, child: child!),
+        RepaintBoundary(key: releaseCaptureKey, child: child!),
     debugShowCheckedModeBanner: false,
     theme: ThemeData(
       useMaterial3: true,
@@ -148,10 +149,12 @@ class _ClientHomeState extends State<ClientHome>
       );
       library = loaded;
       player = Player(engine, loaded)..addListener(changed);
-      if (widget.arguments.contains('--rc5-evidence')) {
+      if ((widget.arguments.contains('--release-evidence') ||
+          widget.arguments.contains('--rc5-evidence'))) {
         player!.audio.muted = true;
       }
       games = await loaded.list();
+      await loaded.collectOrphans();
       if (Platform.isWindows || Platform.isLinux) {
         final executableRoot = p.dirname(Platform.resolvedExecutable);
         final configFile = File(p.join(executableRoot, 'client_mode.json'));
@@ -175,16 +178,18 @@ class _ClientHomeState extends State<ClientHome>
           }
           embedded = true;
           final gamePath = packagePath(text(config['game'], 'game', max: 240));
-          final game = await loaded.importFile(
+          await player!.installFile(
             File(p.joinAll([executableRoot, ...gamePath.split('/')])),
           );
-          await player!.open(game, load: true);
         }
       }
       if (!mounted) return;
       setState(() => ready = true);
       focus.requestFocus();
-      if (widget.arguments.contains('--rc5-evidence')) unawaited(rc5Evidence());
+      if ((widget.arguments.contains('--release-evidence') ||
+          widget.arguments.contains('--rc5-evidence'))) {
+        unawaited(releaseEvidence());
+      }
       if (widget.arguments.contains('--smoke-test')) unawaited(smoke());
     } catch (error) {
       if (mounted) {
@@ -238,14 +243,33 @@ class _ClientHomeState extends State<ClientHome>
       if (await selected.length() > 64 * 1024 * 1024) {
         throw const FormatException('package exceeds 64 MiB');
       }
-      final game = await library!.importBytes(await selected.readAsBytes());
+      await player!.installBytes(await selected.readAsBytes());
       games = await library!.list();
-      await player!.open(game, load: true);
       if (mounted) focus.requestFocus();
     } catch (error) {
-      if (mounted) setState(() => failure = '불러오기 실패: $error');
+      if (mounted) setState(() => failure = '게임 설치/업데이트 실패: $error');
     } finally {
+      games = await library!.list();
       if (mounted) setState(() => busy = false);
+    }
+  }
+
+  Future<void> manageGames() async {
+    if (embedded || busy || library == null) return;
+    final live = player!;
+    final wasPaused = live.paused;
+    if (live.session != null) live.setPaused(true);
+    await Navigator.push<void>(
+      context,
+      MaterialPageRoute(
+        builder: (_) => GameManager(library: library!, player: live),
+      ),
+    );
+    games = await library!.list();
+    if (live.session != null) live.setPaused(wasPaused);
+    if (mounted) {
+      setState(() {});
+      focus.requestFocus();
     }
   }
 
@@ -382,6 +406,13 @@ class _ClientHomeState extends State<ClientHome>
             style: TextStyle(fontWeight: FontWeight.w900),
           ),
           const SizedBox(height: 12),
+          if (!embedded)
+            OutlinedButton.icon(
+              key: const Key('manage-games'),
+              onPressed: busy ? null : manageGames,
+              icon: const Icon(Icons.view_list),
+              label: const Text('게임 관리 / MANAGE GAMES'),
+            ),
           if (games.isEmpty)
             const Text('첫 게임을 불러오세요.\n조이스틱 + Z / X / C / SPACE 기본 제공.'),
           for (final game in games)
@@ -409,7 +440,11 @@ class _ClientHomeState extends State<ClientHome>
                       onPressed: busy
                           ? null
                           : () async {
-                              await player!.open(game, load: true);
+                              await player!.open(
+                                game,
+                                load: true,
+                                archiveIncompatible: true,
+                              );
                               focus.requestFocus();
                             },
                       child: const Text('PLAY →'),
@@ -426,6 +461,16 @@ class _ClientHomeState extends State<ClientHome>
                   ],
                 ),
               ),
+            ),
+          if (player?.message != null)
+            Padding(
+              padding: const EdgeInsets.only(top: 12),
+              child: Text(player!.message!),
+            ),
+          for (final warning in library?.warnings ?? <String>[])
+            Padding(
+              padding: const EdgeInsets.only(top: 12),
+              child: Text(warning),
             ),
           if (failure != null)
             Padding(
@@ -515,6 +560,12 @@ class _ClientHomeState extends State<ClientHome>
                 ),
               if (!embedded)
                 ListTile(
+                  leading: const Icon(Icons.view_list),
+                  title: const Text('게임 관리'),
+                  onTap: () => Navigator.pop(sheetContext, 'manage'),
+                ),
+              if (!embedded)
+                ListTile(
                   leading: const Icon(Icons.grid_view),
                   title: const Text('보관함'),
                   onTap: () => Navigator.pop(sheetContext, 'library'),
@@ -557,8 +608,10 @@ class _ClientHomeState extends State<ClientHome>
           live.toggleSound();
         case 'debug':
           live.toggleDebug();
+        case 'manage':
+          await manageGames();
         case 'library':
-          live.close();
+          await live.closeAndWait();
           setState(() {});
       }
     } catch (error) {
@@ -904,7 +957,7 @@ class _ClientHomeState extends State<ClientHome>
   );
 
   /// Windows release acceptance: real Flutter UI + canonical native frames.
-  Future<void> rc5Evidence() async {
+  Future<void> releaseEvidence() async {
     try {
       if (!embedded || player?.session == null) {
         throw StateError('embedded game required');
@@ -936,7 +989,7 @@ class _ClientHomeState extends State<ClientHome>
         await SchedulerBinding.instance.endOfFrame;
         await Future<void>.delayed(const Duration(milliseconds: 100));
         final boundary =
-            rc5CaptureKey.currentContext!.findRenderObject()
+            releaseCaptureKey.currentContext!.findRenderObject()
                 as RenderRepaintBoundary;
         final uiImage = await boundary.toImage(pixelRatio: 1);
         final uiBytes = await uiImage.toByteData(
@@ -1133,12 +1186,13 @@ class _ClientHomeState extends State<ClientHome>
       });
       request({'op': 'advance', 'ticks': 12});
       for (var line = 1; line <= 3; line++) {
-        if (live.status['waiting']?['kind'] != 'bubble') {
+        if (live.status['waiting']?['kind'] != 'bubble' ||
+            live.status['waiting']?['speaker'] != '안내인') {
           throw StateError('story line $line missing');
         }
         await capture('17-bubble-$line');
         final box =
-            rc5CaptureKey.currentContext!.findRenderObject() as RenderBox;
+            releaseCaptureKey.currentContext!.findRenderObject() as RenderBox;
         final point = box.localToGlobal(
           Offset(box.size.width / 2, box.size.height - 24),
         );

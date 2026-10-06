@@ -295,10 +295,22 @@ fn dispatch(text: &str) -> Result<Value> {
                     "close an existing game before opening another (8 session limit)".into(),
                 ));
             }
-            let world = World::with_save(
+            let world = match World::with_save_checked(
                 Project::load(Path::new(&project))?,
                 load.as_deref().map(Path::new),
-            )?;
+            ) {
+                Ok(world) => world,
+                Err(error) => {
+                    let code = error.code();
+                    let error = Error::from(error);
+                    if let Some(code) = code {
+                        return Ok(
+                            json!({"abi_version": ABI_VERSION, "ok": false, "error_code":code, "error":error.to_string()}),
+                        );
+                    }
+                    return Err(error);
+                }
+            };
             let frame = render(&world.project, &world.render_snapshot(), false)?;
             registry.next = registry
                 .next

@@ -27,6 +27,7 @@ void main() {
     await tester.pump();
     expect(find.text('GE4G'), findsOneWidget);
     expect(find.byKey(const Key('import-game')), findsOneWidget);
+    expect(find.byKey(const Key('manage-games')), findsOneWidget);
     expect(find.text('YOUR GAMES / 보관함'), findsOneWidget);
     await tester.pumpWidget(const SizedBox());
     root.deleteSync(recursive: true);

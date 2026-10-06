@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/services.dart';
 
@@ -175,13 +176,117 @@ class Player extends ChangeNotifier {
   Duration? _lastElapsed;
   double _accumulator = 0;
   Player(this.engine, this.library);
-  Future<void> open(InstalledGame candidate, {bool load = false}) async {
+  bool resumedSave = false, archivedSave = false;
+  Future<InstalledGame> installBytes(Uint8List bytes) async {
+    String? notice;
+    try {
+      final installed = await library.importBytes(
+        bytes,
+        release: (_) => closeAndWait(),
+        activate: (candidate, previous) async {
+          await open(
+            candidate,
+            load: true,
+            archiveIncompatible: true,
+            rethrowFailure: true,
+          );
+          final operation = previous == null
+              ? '${candidate.name} 설치 완료'
+              : previous.digest == candidate.digest
+              ? '${candidate.name} 이미 설치됨'
+              : '${candidate.name} 업데이트 완료\n${previous.version} → ${candidate.version}';
+          notice =
+              '$operation\n${archivedSave
+                  ? '이전 저장은 보관하고 새 버전으로 시작합니다.'
+                  : resumedSave
+                  ? '기존 저장을 유지했습니다.'
+                  : '새 게임을 시작합니다.'}';
+        },
+      );
+      message = notice;
+      notifyListeners();
+      return installed;
+    } catch (failure) {
+      message = '게임 설치/업데이트 실패: $failure';
+      notifyListeners();
+      rethrow;
+    }
+  }
+
+  Future<InstalledGame> installFile(File file) async {
+    if (await file.length() > 64 * 1024 * 1024) {
+      throw const FormatException('package exceeds64MiB');
+    }
+    return installBytes(await file.readAsBytes());
+  }
+
+  Future<void> removeGame(String id, {bool allData = false}) async {
+    await library.remove(
+      id,
+      allData: allData,
+      release: (id) async {
+        if (game?.id == id) await closeAndWait();
+      },
+    );
+    message = allData
+        ? '게임과 저장·조작 데이터를 모두 삭제했습니다.'
+        : '게임 파일을 삭제했습니다. 저장·조작 설정은 보관합니다.';
+    notifyListeners();
+  }
+
+  Future<void> closeAndWait() async {
     close();
+    final idle = _frameIdle;
+    if (idle != null) await idle.future;
+    await audio.stop();
+    if (_closeFailure != null) throw StateError('게임 종료 실패: $_closeFailure');
+  }
+
+  Future<void> open(
+    InstalledGame candidate, {
+    bool load = false,
+    bool archiveIncompatible = false,
+    bool rethrowFailure = false,
+  }) async {
+    await closeAndWait();
     loading = true;
+    error = null;
+    message = null;
+    resumedSave = false;
+    archivedSave = false;
     notifyListeners();
     final generation = _generation;
     final controls = ControlStore(library.controls(candidate.id), candidate.id);
+    int? openedSession;
     try {
+      final save = library.save(candidate.id);
+      final loadSave = load && await save.exists();
+      Map<String, dynamic> opened;
+      try {
+        opened = engine.request({
+          'op': 'open',
+          'project': candidate.project,
+          if (loadSave) 'load': save.path,
+        });
+        resumedSave = loadSave;
+      } on NativeFailure catch (failure) {
+        if (!loadSave ||
+            !archiveIncompatible ||
+            failure.code != 'save_content_revision_mismatch') {
+          rethrow;
+        }
+        // A new game must open successfully before any old save is moved.
+        opened = engine.request({'op': 'open', 'project': candidate.project});
+        openedSession = opened['session'] as int;
+        final archive = Directory(p.join(save.parent.path, 'archive'));
+        await archive.create(recursive: true);
+        await save.rename(
+          p.join(archive.path, '${DateTime.now().microsecondsSinceEpoch}.json'),
+        );
+        archivedSave = true;
+        message = '게임이 업데이트되어 이전 저장은 보관했습니다. 새 버전으로 새 게임을 시작합니다.';
+      }
+      openedSession = opened['session'] as int;
       final legacyMappings = jsonDecode(
         await rootBundle.loadString('assets/default_bindings.json'),
       ) as Map<String, dynamic>;
@@ -195,42 +300,36 @@ class Player extends ChangeNotifier {
         legacyBindings: jsonEncode(legacyMappings),
       );
       if (_disposed || generation != _generation) {
-        controls.dispose();
-        return;
+        throw StateError('게임 열기가 취소되었습니다');
       }
-      final save = library.save(candidate.id);
-      final loadSave = load && await save.exists();
-      if (_disposed || generation != _generation) {
-        controls.dispose();
-        return;
-      }
-      final opened = engine.request({
-        'op': 'open',
-        'project': candidate.project,
-        if (loadSave) 'load': save.path,
-      });
       game = candidate;
+      library.retain(candidate);
       store = controls;
       input = InputRouter(controls.current);
-      session = opened['session'] as int;
+      session = openedSession;
       status = opened;
       _audioCursor = status['event_cursor'] as int? ?? 0;
-      _presentation();
       paused = false;
-      error = null;
+      _presentation();
       store!.addListener(_controlsChanged);
-      final pending = _frameIdle;
-      if (pending != null) await pending.future;
-      if (_disposed || generation != _generation) return;
       await refreshFrame();
-      if (_disposed || generation != _generation) return;
+      if (_disposed || generation != _generation) {
+        throw StateError('게임 열기가 취소되었습니다');
+      }
+      if (error != null) throw StateError(error!);
       loading = false;
       notifyListeners();
     } catch (failure) {
       controls.dispose();
+      if (session != null) {
+        await closeAndWait();
+      } else if (openedSession != null) {
+        engine.request({'op': 'close', 'session': openedSession});
+      }
       loading = false;
       error = '게임을 열 수 없습니다: $failure';
       notifyListeners();
+      if (rethrowFailure) rethrow;
     }
   }
 
@@ -380,14 +479,21 @@ class Player extends ChangeNotifier {
     notifyListeners();
   }
 
+  Object? _closeFailure;
   void close() {
+    _closeFailure = null;
     release();
     _generation++;
     if (session != null) {
       try {
         engine.request({'op': 'close', 'session': session});
+        if (game != null) library.release(game!);
       } catch (failure) {
+        _closeFailure = failure;
         error = '게임 종료 오류: $failure';
+        audio.pause();
+        if (!_disposed) notifyListeners();
+        return;
       }
     }
     session = null;

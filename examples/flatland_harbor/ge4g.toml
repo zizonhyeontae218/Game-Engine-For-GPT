@@ -1,5 +1,5 @@
 schema_version=2
-name="FlatLand rc5 / 바람항 공방"
+name="FlatLand 0.2 / 바람항 공방"
 start_scene="항구"
 features=["combat","inventory","quests","event_scenes","turn_battle","planes","music","lua_rng","step_walk","battle_stage","view_projection","billboard_projection","persistent_combatants","battle_fx","building_presentation","entity_defaults","cutscene_bubbles","solid_buildings","contact_ordering"]
 [window]
@@ -21,7 +21,7 @@ kind="bool"
 default=false
 
 [[tests]]
-name="harbor-rc5-stabilization"
+name="harbor-final-regression"
 replay="replays/journey.json"
 golden_rgba_sha256="568334e7d0aaf36ebd4ed958f431dbfb1da0713e2f1ba4dc3a29f5bc084448a5"
 [[tests.assertions]]

@@ -45,7 +45,7 @@ Demo stable scene ids: `room_a`, `room_b`; named transition spawn: `entry`. Refe
 - Native `popup` and tick-tagged `audio` carry presentation; historical audio is not replayed on resume/poll.
 - Demo state: `game.score` integer0, `game.pickups` integer0, `game.result` string playing; all v2 saved.
 
-Workspace engine version is now 0.2.0-alpha.1; existing v1 framebuffer goldens remain unchanged.
+Workspace engine version is now 0.2.0; existing v1 framebuffer goldens remain unchanged.
 
 FlatLand rc.1: `flatland.animation.directions` selects fixed-tick up/down/left/right clips from actor facing. Layout schema 2 permits a joystick-only profile; game-local control files are packaged presets. Android identity is fixed by application ID and pinned release certificate, with increasing version code.
 
@@ -67,7 +67,7 @@ FlatLand rc.1: `flatland.animation.directions` selects fixed-tick up/down/left/r
 Actor IDs remain scene-local. Scene transitions finish old-scene pending work; event scenes
 return before world transitions. Save content revision prevents silent schema/content drift.
 
-## FlatLand rc3 presentation and village control additions
+## Presentation and movement state
 
 - Optional actor `step_walk`: held cardinal input queues a cell; release finishes that cell then stops; blocked inputs change facing. Legacy grid steering unchanged.
 - Systems `view`, `pace`: saved preset ID and per-actor px/s overrides. Historical rc3 semantics (superseded by rc4): parent_view/retain_view coupled view and planes. rc4 view state is persistent and cannot change collision/elevation. parent_pace and scoped camera restore separately.
@@ -76,15 +76,22 @@ return before world transitions. Save content revision prevents silent schema/co
 - Battle stage `background`, `hold_result`; native waiting exposes hp_max, option group/target/pp, result and animation_ticks. Client HUD consumes state; simulation remains native.
 - Layout optional joystick.cardinal, defaultfalse: one axis plus12% hysteresis. No changes to existing layout defaults.
 - Feature requirements `step_walk`, `battle_stage`, `view_projection` reject older clients explicitly.
-- Nuvema state town.running/starter/completed/viewed/won/crate; game ID demo.flatland.nuvema, Android versionCode5, unchanged pinned certificate.
+- Isolated historical village fixture state town.running/starter/completed/viewed/won/crate; game ID demo.flatland.nuvema. It is not the public sample.
 
-## FlatLand rc4 stable state
+## Persistent gameplay and presentation state
 
 - Systems gameplay_view: resolved view_id/zoom/tilt/shear; view_initialized preserves explicit reset across scenes. Systems.view remains a compatible preset ID.
 - Systems combatants.<id>: current_hp and remaining_pp.<move>; explicit persistent fighters only.
 - BattleState.fx: typed actor/target/preset/start_tick/before_hp/after_hp events; resolving_until locks cosmetic input, never combat math.
 - ActorState.input: optional deterministic held-key priority for step_walk; core Input.direction is an optional most-recent cardinal intent. Maze steering remains separate.
 - Actor.building: semantic footprint/height/material/roof/facing and optional roof/facade/side surfaces. Sprite.projection separates ground/upright.
-- Public sample game ID demo.flatland.harbor, scene 항구, state harbor.running/completed/crate. Android application ID/certificate unchanged; versionCode6.
+- Public sample game ID demo.flatland.harbor, scene 항구, state harbor.running/completed/crate. Android application ID/certificate unchanged; versionCode8.
 
-rc5 presentation additions: systems.camera_blend {from,start_tick} is scoped cosmetic camera state; waiting.kind=bubble with actor/text/screen_anchor uses event serial/PC and continue. Building footprint normalizes body geometry; it is independent of camera.
+Presentation additions: systems.camera_blend {from,start_tick} is scoped cosmetic camera state; waiting.kind=bubble with actor/text/screen_anchor uses event serial/PC and continue. Building footprint normalizes body geometry; it is independent of camera.
+
+Final0.2.0 waiting.kind=bubble optionally carries resolved speaker, with native
+screen_anchor and screen_foot. Speaker is metadata; actor/text/line remain authored.
+ABI1 errors may include error_code=save_content_revision_mismatch; no string parsing.
+library.json games array persists stable IDs and order; digest owns immutable content.
+saves/<game_id>/archive/<timestamp>.json preserves incompatible revisions. Settings
+remain stable by ID across update/normal delete; full delete is separately confirmed.

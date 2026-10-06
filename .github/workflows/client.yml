@@ -25,9 +25,9 @@ jobs:
       - run: python -m pip install Pillow
       - run: cargo build --locked -p ge4g-cli
       - run: python scripts/pack_game.py examples/basement_demo --game-id demo.basement --validator target/debug/ge4g.exe --out dist/basement-demo.ge4g
-      - run: python scripts/pack_game.py examples/flatland_pacman --game-id demo.flatland.pacman --version 0.2.0-rc.5 --validator target/debug/ge4g.exe --out dist/flatland-pacman.ge4g
-      - run: python scripts/pack_game.py examples/flatland_signal_yard --game-id demo.flatland.signal-yard --version 0.2.0-rc.5 --validator target/debug/ge4g.exe --out dist/flatland-signal-yard.ge4g
-      - run: python scripts/pack_game.py examples/flatland_harbor --game-id demo.flatland.harbor --version 0.2.0-rc.5 --validator target/debug/ge4g.exe --out dist/flatland-harbor.ge4g
+      - run: python scripts/pack_game.py examples/flatland_pacman --game-id demo.flatland.pacman --version 0.2.0 --validator target/debug/ge4g.exe --out dist/flatland-pacman.ge4g
+      - run: python scripts/pack_game.py examples/flatland_signal_yard --game-id demo.flatland.signal-yard --version 0.2.0 --validator target/debug/ge4g.exe --out dist/flatland-signal-yard.ge4g
+      - run: python scripts/pack_game.py examples/flatland_harbor --game-id demo.flatland.harbor --version 0.2.0 --validator target/debug/ge4g.exe --out dist/flatland-harbor.ge4g
       - run: python scripts/windows_utf8_regression.py --prepare
       - run: flutter pub get
         working-directory: client
@@ -57,8 +57,8 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: ge4g-rc5-rendered-evidence
-          path: artifacts/rc5-windows/
+          name: ge4g-final-rendered-evidence
+          path: artifacts/final-windows/
       - uses: actions/upload-artifact@v4
         with:
           name: ge4g-harbor-windows-embedded

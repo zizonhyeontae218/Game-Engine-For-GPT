@@ -36,7 +36,7 @@ Entering a scene loads fresh entities, selects an explicit named spawn for trans
 
 The minifb window presents these CPU pixels. Its clock schedules fixed steps and clamps a delayed display update to 250 ms of catch-up. Keyboard state is normalized to the same `Input` consumed by replays. P pauses, N performs one step while paused. No simulation logic lives in this adapter. The `window` feature can be omitted entirely.
 
-`audio` is an observable event; both adapters currently use a silent sink. Audio devices do not affect gameplay.
+`sound` produces observable cue events; `music` owns serializable logical loop state. Flutter audio adapters and the Rust window audio backend play declared files. Headless records the same events independently of audio devices. Playback completion never controls gameplay.
 
 ## Observation and persistence
 
@@ -44,7 +44,7 @@ All public formats start at schema version 1. The runtime retains the latest 4,0
 
 Snapshots contain the scene, tick, camera, entities/components, state and event history. They are inspectable artifacts, not whole-world save formats. The canonical deterministic hash is SHA256 of serialized snapshot JSON. Paths in `save_written` affect this hash, so gameplay repeatability is compared before save side effects.
 
-Saves contain the project name and the exact declared persistent key set. Types, version and project identity are validated into a temporary store before the live store changes. Load occurs before start-scene entry; `on_enter` then runs normally. Avoid resetting saved flags on entering the start scene if they must survive restart.
+Schema1 legacy saves contain project identity and typed persistent keys. Schema2 saves additionally preserve the whole world, scene, RNG, event/battle controller, persistent view and combatants. Content revision, actor state and candidate collision are validated before committing. Resume does not replay rewards, damage, PP or event advancement. `ResumeError::ContentRevisionMismatch` crosses ABI1 as `error_code:save_content_revision_mismatch`; corrupt/invalid saves remain distinct errors.
 
 Artifact writes use a unique temporary file in the destination directory, flush and sync, then atomic replacement. On Unix the parent directory is also synced. Output directories must already exist. PNGs, saves, traces and snapshots share this path.
 
@@ -59,3 +59,13 @@ File text is limited to 16 MiB, frame and texture dimensions to 2048, scenes to 
 `client/` owns native-platform presentation, import/library storage, keyboard/touch routing, fixed 60 Hz scheduling and live JSON control editing. `ge4g_native` builds the Rust ABI as a bundled code asset. `World::step_actions` wraps the unchanged deterministic step and adds sorted named action edge events. `release_inputs` releases held actions/interact without a simulation tick. The ABI holds at most eight opaque sessions and copies frame bytes into caller-owned buffers; C strings have an explicit free function. Each ABI response identifies version 1. Mobile never spawns the CLI and imported data never supplies executable code.
 
 Game packages, layout profiles, per-game bindings and saves are separate durable surfaces; see [CLIENT](CLIENT.md). Desktop distributions set embedded mode alongside their executable, include the full Flutter bundle and open their game directly.
+
+## Library activation and cutscene labels
+
+GameLibrary validates staged packages, serializes index mutations and preserves stable
+game_id/order. Player closes native sessions, settles frame/audio work and leases
+immutable content until release. Update activation backs up saves/settings and rolls
+back on open failure. Typed incompatible saves are archived and opened fresh; only
+confirmed successful activation retires inactive content. Library manager is separate
+from embedded game presentation. Speakers resolve in Rust; Flutter renders optional
+headers and never owns simulation or save-compatibility decisions.

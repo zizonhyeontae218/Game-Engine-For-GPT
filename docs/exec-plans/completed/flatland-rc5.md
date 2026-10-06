@@ -70,3 +70,8 @@ checksums and physical checklist. No historical binary overwritten; initial
 preflight rc5 APK retained separately. No suspended-platform client built/tested.
 This plan stays active only for human physical acceptance and final promotion;
 CI cannot satisfy that remaining requirement. See docs/FLATLAND_RELEASE.md.
+
+## Subsequent user acceptance
+2026-10-06: user reports physical rc5 acceptance of engine/gameplay/rendering and
+bubble presentation and authorizes focused direct0.2.0 finalization. This historical
+plan is complete; final work follows active/flatland-final.md.

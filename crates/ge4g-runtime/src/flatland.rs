@@ -1061,21 +1061,29 @@ impl World {
         );
         Ok(())
     }
-    pub(super) fn load_flatland(&mut self, path: &Path) -> Result<()> {
+    pub(super) fn load_flatland(
+        &mut self,
+        path: &Path,
+    ) -> std::result::Result<(), super::ResumeError> {
         let save: Resume =
             serde_json::from_str(&read_text(path)?).map_err(|e| Error(format!("resume: {e}")))?;
         if save.schema_version != 2
-            || save.project != self.project.manifest.name
-            || save.content != self.content_hash()?
+            || save.content.len() != 64
+            || !save.content.bytes().all(|c| c.is_ascii_hexdigit())
             || save.tick > 1_000_000
+        {
+            return Err(Error("invalid resume schema/tick/content digest".into()).into());
+        }
+        if save.content != self.content_hash()? {
+            return Err(super::ResumeError::ContentRevisionMismatch);
+        }
+        if save.project != self.project.manifest.name
             || !self.project.scenes.contains_key(&save.scene)
         {
-            return Err(Error(
-                "resume version/project/content/scene mismatch".into(),
-            ));
+            return Err(Error("resume project/scene mismatch".into()).into());
         }
         if save.state.keys().ne(self.state.values.keys()) {
-            return Err(Error("resume state key mismatch".into()));
+            return Err(Error("resume state key mismatch".into()).into());
         }
         let mut state = self.state.clone();
         for (key, value) in save.state {
@@ -1089,7 +1097,7 @@ impl World {
             .count()
             != 1
         {
-            return Err(Error("resume requires one player".into()));
+            return Err(Error("resume requires one player".into()).into());
         }
         for (id, e) in &save.actors {
             let spec = scene
@@ -1112,7 +1120,7 @@ impl World {
                     hp < 0 || hp > spec.flatland.as_ref().and_then(|a| a.hp).unwrap_or(0)
                 })
             {
-                return Err(Error(format!("invalid saved actor {id}")));
+                return Err(Error(format!("invalid saved actor {id}")).into());
             }
         }
         if save
@@ -1126,7 +1134,7 @@ impl World {
                 .as_ref()
                 .is_some_and(|p| p.text.len() > 8192 || p.id > save.runtime.popup_serial)
         {
-            return Err(Error("invalid saved timer/popup".into()));
+            return Err(Error("invalid saved timer/popup".into()).into());
         }
         let mut candidate = self.clone();
         candidate.scene = save.scene.clone();
@@ -1142,7 +1150,7 @@ impl World {
                     .is_some_and(|a| a.body != BodyMode::Pass))
                 && !candidate.actor_clear(id, e.position, candidate.actor_plane(id))
             {
-                return Err(Error("saved actor overlaps map/entity wall".into()));
+                return Err(Error("saved actor overlaps map/entity wall".into()).into());
             }
         }
         self.tick = save.tick;

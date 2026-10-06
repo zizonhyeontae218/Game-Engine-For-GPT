@@ -12,9 +12,12 @@ Uint8List package({
   String id = 'demo.basement',
   bool badHash = false,
   String? extra,
+  String projectText = 'test project',
+  String version = '0.1.0',
+  String name = 'Test game',
 }) {
   final files = <String, Uint8List>{
-    'game/ge4g.toml': Uint8List.fromList(utf8.encode('test project')),
+    'game/ge4g.toml': Uint8List.fromList(utf8.encode(projectText)),
     'controls/layouts.json': File('assets/default_layouts.json')
         .readAsBytesSync(),
     'controls/bindings.json': Uint8List.fromList(
@@ -29,8 +32,8 @@ Uint8List package({
   final manifest = {
     'schema_version': 1,
     'game_id': id,
-    'name': 'Test game',
-    'version': '0.1.0',
+    'name': name,
+    'version': version,
     'engine_abi': 1,
     'project': 'game/ge4g.toml',
     'layouts': 'controls/layouts.json',

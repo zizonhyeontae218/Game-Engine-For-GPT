@@ -33,4 +33,4 @@ An agent should be able to answer these from CLI output without scraping source 
 
 ## Runtime client extension
 
-Flutter mobile import/play clients and Windows/Arch clients embedded in each game distribution are required. Joystick + Z/X/C/Space, digital brutalism and live per-game JSON profiles follow [the permanent launcher philosophy](docs/LAUNCHER_PHILOSOPHY.md).
+Flutter mobile import/play clients and Windows clients (Linux/Arch deferred until0.3) embedded in each game distribution are required. Joystick + Z/X/C/Space, digital brutalism and live per-game JSON profiles follow [the permanent launcher philosophy](docs/LAUNCHER_PHILOSOPHY.md).

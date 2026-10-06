@@ -4,7 +4,7 @@ from pathlib import Path
 import argparse,ctypes,json,os,shutil,subprocess,time
 if hasattr(os.sys.stdout,'reconfigure'):os.sys.stdout.reconfigure(encoding='utf-8')
 ROOT=Path(__file__).resolve().parents[1]
-WORK=ROOT/'dist'/'한글 검증'; PROJECT=WORK/'공방 프로젝트'; PACKAGE=WORK/'바람항 공방.ge4g'; EVIDENCE=ROOT/'artifacts'/'rc5-windows'
+WORK=ROOT/'dist'/'한글 검증'; PROJECT=WORK/'공방 프로젝트'; PACKAGE=WORK/'바람항 공방.ge4g'; EVIDENCE=ROOT/'artifacts'/'final-windows'
 def prepare():
  if WORK.exists():shutil.rmtree(WORK)
  WORK.mkdir(parents=True);shutil.copytree(ROOT/'examples/flatland_harbor',PROJECT)
@@ -12,7 +12,7 @@ def prepare():
  result=subprocess.run([str(validator),'validate',str(PROJECT),'--json'],capture_output=True,encoding='utf-8',check=True)
  report=json.loads(result.stdout);assert report['ok'],report
  assert any('항구' in f for f in report['files_checked'])
- subprocess.run([os.sys.executable,str(ROOT/'scripts/pack_game.py'),str(PROJECT),'--game-id','demo.flatland.harbor','--version','0.2.0-rc.5','--out',str(PACKAGE),'--validator',str(validator)],check=True,encoding='utf-8')
+ subprocess.run([os.sys.executable,str(ROOT/'scripts/pack_game.py'),str(PROJECT),'--game-id','demo.flatland.harbor','--version','0.2.0','--out',str(PACKAGE),'--validator',str(validator)],check=True,encoding='utf-8')
  EVIDENCE.mkdir(parents=True,exist_ok=True);(EVIDENCE/'validator-utf8.json').write_text(result.stdout,encoding='utf-8')
 def launch():
  if os.name!='nt':raise SystemExit('Windows acceptance must run on Windows')
@@ -27,7 +27,7 @@ def launch():
  for label,size in [('portrait',(430,900)),('landscape',(1000,650))]:
   output=EVIDENCE/label
   env=dict(os.environ,GE4G_CLIENT_DATA=str(WORK/f'저장 {label}'),GE4G_SMOKE_OUTPUT=str(output))
-  process=subprocess.Popen([str(destination/'ge4g_client.exe'),'--rc5-evidence',*(['--capture-landscape'] if label=='landscape' else [])],env=env)
+  process=subprocess.Popen([str(destination/'ge4g_client.exe'),'--release-evidence',*(['--capture-landscape'] if label=='landscape' else [])],env=env)
   @callback
   def resize(hwnd,_):
    pid=wintypes.DWORD();user32.GetWindowThreadProcessId(hwnd,ctypes.byref(pid))
@@ -51,7 +51,7 @@ def launch():
    settled_ui=Image.open(output/'07-battle-settle-ui.png').convert('RGBA').tobytes()
    assert before_ui != settled_ui, 'HP/menu feedback must reflect the resolved round'
    stories=[json.loads((output/f'17-bubble-{i}-status.json').read_text(encoding='utf-8'))['waiting'] for i in range(1,4)]
-   assert all(s['kind']=='bubble' and s['actor']=='minimal_actor' and 'screen_anchor' in s for s in stories)
+   assert all(s['kind']=='bubble' and s['actor']=='minimal_actor' and s['speaker']=='안내인' and 'screen_anchor' in s for s in stories)
    assert len({s['id'] for s in stories})==3
    for mode in ['top','depth','alternate']:
     snap=json.loads((output/f'16-roof-{mode}.json').read_text(encoding='utf-8'))

@@ -219,6 +219,8 @@ pub enum Instruction {
     },
     SayBubble {
         actor: String,
+        #[serde(default, skip_serializing_if = "Option::is_none")]
+        speaker: Option<String>,
         text: String,
     },
     Choice {
@@ -454,6 +456,14 @@ impl Project {
                         if text.len() > 8192 =>
                     {
                         return Err(fail("event text too long"));
+                    }
+                    Instruction::SayBubble {
+                        speaker: Some(speaker),
+                        ..
+                    } if speaker.len() > 256 || speaker.contains('\0') => {
+                        return Err(fail(
+                            "bubble speaker exceeds 256 UTF-8 bytes or contains NUL",
+                        ));
                     }
                     Instruction::SayBubble { actor, .. }
                         if !scene.entities.iter().any(|e| &e.id == actor) =>

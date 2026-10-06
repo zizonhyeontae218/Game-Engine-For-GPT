@@ -92,4 +92,4 @@ GE4G is a conventional deterministic engine with an unusually inspectable develo
 
 ## Permanent launcher direction
 
-Human runtime delivery uses the Flutter GE4G client. Mobile imports portable Basement games; Windows/Arch games ship with their client and native Rust runtime already embedded. Digital brutalism and live, separately stored layout/mapping JSON are the common design language. This applies to every future runner; see [LAUNCHER_PHILOSOPHY](docs/LAUNCHER_PHILOSOPHY.md).
+Human runtime delivery uses the Flutter GE4G client. Mobile imports portable Basement games; Windows games (Linux/Arch deferred until0.3) ship with their client and native Rust runtime already embedded. Digital brutalism and live, separately stored layout/mapping JSON are the common design language. This applies to every future runner; see [LAUNCHER_PHILOSOPHY](docs/LAUNCHER_PHILOSOPHY.md).

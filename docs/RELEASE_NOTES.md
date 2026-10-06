@@ -1,16 +1,21 @@
-# Current candidate — FlatLand0.2.0-rc.5
+# Basement 0.2 — FlatLand 0.2.0 FINAL
 
-The final public sample is Harbor Workshop. This candidate fixes contact-shadow
-layering, feet occlusion, solid semantic footprints and cutscene speech bubbles.
-South is the only supported semantic building facing; unsupported variants reject.
-JSON5/declarative events and embedded Lua5.4 are supported. Native runtime remains
-authoritative. Sound adapters play cues/music. Schema2 saves preserve whole-world,
-battle/event resume, persistent view and explicit combatants with HP/PP.
+Completed FlatLand0.2 feature set. Public sample: Harbor Workshop / 바람항 공방,
+original CC0 content/provenance. Presentation-only camera and upright composition,
+contact shadows/feet ordering, solid South-only semantic buildings with fallback,
+step movement, combat/inventory/quests, persistent HP/PP, event scenes, turn battles,
+six built-in battle FX, actor-linked cutscene bubbles with optional semantic speakers,
+Lua5.4 with deterministic RNG, sound/music adapters and schema2 exact resume.
 
-Flutter0.2.0-rc.5+7 / Androidcode7; existing app ID/signing certificate retained.
-Supported releases are Android/Windows. iOS/macOS/Linux deferred until0.3 begins.
-All rc1–rc4 historical binaries are preserved. [Verification/gate](FLATLAND_RELEASE.md).
-[Historical notes](releases/development-history-through-rc4.md) are archived evidence.
+Android .ge4g updates use stable identity, transactional activation/rollback, typed
+incompatible-save archival, duplicate prevention and persisted order. Game Manager
+confirms normal/full deletion; settings survive normal updates/deletion. Embedded
+Windows stays locked to its bundled game.
 
-Final0.2.0 promotion requires all engineering/rendered gates and human physical mobile
-acceptance. No CI-only promotion.3D/pixelized worlds remain possible0.3+ exploration.
+Rust0.2.0 / Flutter0.2.0+8 / Android versionCode8. Existing app ID and signing
+certificate unchanged. Android/Windows are supported clients; iOS/macOS/Linux work
+is deferred until0.3. 3D/pixelized exploration is0.3+ scope. No rc6 introduced.
+User confirmed rc5 physical acceptance and authorized this finalization. New library
+management and speaker semantics require the recorded final automated checks; do
+not claim an additional physical test. [Release evidence](FLATLAND_RELEASE.md).
+Historical rc1–rc5 artifacts remain unchanged under [releases](releases/).

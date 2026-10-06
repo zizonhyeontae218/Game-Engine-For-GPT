@@ -21,7 +21,7 @@ headless simulation remains independent of device audio.
 
 ## Separate control files
 
-Each game uses a stable `game_id`, independently of its package hash or display name. Updating a package retains the game's controls and save. Installed content is immutable per content hash, so an imported update cannot replace the files of a running game.
+Each game uses a stable `game_id`, independently of its package hash or display name. Updating a package retains controls and compatible saves; incompatible content-bound saves are archived, never silently erased. Installed content is immutable per content hash, so an imported update cannot replace the files of a running game.
 
 Under the platform application support directory:
 
@@ -150,6 +150,27 @@ Feature packages use bundle schema3, game schema2 and ABI1. Required capabilitie
 are checked before import. The native waiting model drives Flutter dialogue, conditional
 choices and battle menus. Save within those scenes resumes their exact controller.
 Inventory/quest views use native state and execute validated use/equip commands.
-Music state owns one loop; sound owns four one-shot voices. Final Android versionCode4
+Music state owns one loop; sound owns four one-shot voices. Final Android versionCode8
 uses the rc.1 certificate, enabling an in-place update. Signal Yard embeds its own
 Z/X/C/SPACE presets. Desktop packages launch their game directly.
+
+## Library updates and management
+
+Non-embedded library mode uses game_id as identity and digest as immutable revision.
+Same-digest import opens the existing row. A new digest validates in staging, closes
+the running session and waits for frame/audio work, atomically switches the index,
+and opens the new game. Successful open permits inactive digest cleanup; unrelated
+open failure restores the old index/content/save/settings. Updates keep array order.
+
+Compatible save resumes normally. Only typed `save_content_revision_mismatch`
+archives `saves/<game_id>/save.json` into `archive/<timestamp>.json`, opens fresh and
+shows a non-blocking explanation. Corruption/IO/project errors fail and roll back.
+Validation is never weakened and the client does not parse English error messages.
+
+**게임 관리 / Manage Games** shows name, version, game_id and abbreviated digest.
+Drag handles or move up/down change persisted library order. **게임 삭제** confirms
+the name, releases the session, removes installed content and keeps save/settings.
+**게임 및 데이터 모두 삭제** separately confirms removal of save, archives and
+control settings. Missing index targets are removed with a warning; valid rows remain.
+Embedded Windows retains `mode:embedded,allow_library:false` and exposes no import,
+delete, reorder or manager. No Android external-storage relocation in0.2.

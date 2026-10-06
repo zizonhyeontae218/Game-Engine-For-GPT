@@ -159,7 +159,7 @@ packages. ABI remains1. Android ID/certificate stay fixed and versionCode increa
 tokens, tool calls/failures/time and equal resulting frames. It does not measure model
 sampling time or claim universal savings. Pac-Man and Signal Yard are executable examples.
 
-## rc5 movement, view and reusable presentation
+## Movement, view and reusable presentation
 
 Use actor `step_walk:true`, a16px map cell and speed68; pace112 is visibly faster.
 Newest pressed direction wins; release finishes the current cell without an extra cell.
@@ -203,7 +203,7 @@ Public source examples must include asset-licenses.json with exact provenance/li
 See examples/flatland_harbor for deliberately incomplete but valid presentation input.
 
 
-## rc5 contact geometry and story bubbles
+## Contact geometry and story bubbles
 
 A building's footprint is its body size (overrides redundant entity.size). Omitted
 body defaults fixed. Ordinary semantic buildings do not provide roof platforms.
@@ -223,5 +223,15 @@ from ordinary say/choice. Camera ops are temporary, eased over12 deterministic
 presentation ticks when cutscene_bubbles is declared, restored on return. Bubble
 waiting freezes gameplay and permits only progression/save; animation cannot advance
 story PC or apply gameplay effects. Nested camera overrides restore their parent.
-Declare cutscene_bubbles,solid_buildings,contact_ordering for rc5-authored content so
+Declare cutscene_bubbles,solid_buildings,contact_ordering for authored content so
 older clients reject unsupported content clearly. Existing ABI1 remains unchanged.
+
+## Cutscene speaker metadata
+
+`{op:"say_bubble",actor:"guide",speaker:"안내인",text:"여기가 공방이야."}`
+uses optional `speaker` (at most256 UTF-8 bytes, no NUL). Omitted speaker resolves
+actor metadata `display_name`, then `name`, when a nonempty stable string. Without
+a meaningful label the client omits the header; it never substitutes an entity ID
+or generic story label. Speaker has no effect on gameplay, line progression or
+RNG. Native waiting data carries the resolved label. Old speaker-free rc5 content
+remains valid. Save/resume retains the authored current actor/text/line/name.

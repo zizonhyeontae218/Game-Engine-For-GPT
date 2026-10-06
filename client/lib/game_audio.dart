@@ -70,6 +70,17 @@ class GameAudio {
     }
   }
 
+  Future<void> stop() async {
+    pause();
+    await _musicQueue.catchError((Object _) {});
+    await _music?.stop().catchError((Object _) {});
+    _musicPath = null;
+    _desiredMusic = null;
+    for (final voice in _voices) {
+      await voice.stop().catchError((Object _) {});
+    }
+  }
+
   void dispose() {
     _disposed = true;
     unawaited(_music?.dispose().catchError((Object _) {}) ?? Future.value());

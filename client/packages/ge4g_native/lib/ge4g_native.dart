@@ -23,6 +23,14 @@ external void _freeString(Pointer<Utf8> string);
 )
 external int _frameCopy(int session, Pointer<Uint8> destination, int capacity);
 
+class NativeFailure implements Exception {
+  final String message;
+  final String? code;
+  const NativeFailure(this.message, {this.code});
+  @override
+  String toString() => message;
+}
+
 /// No borrowed Rust pointers cross the bridge. Every response is owned and freed.
 class BasementNative {
   BasementNative() {
@@ -47,9 +55,10 @@ class BasementNative {
         throw StateError('Invalid native ABI response.');
       }
       if (result['ok'] != true) {
-        throw StateError(
+        throw NativeFailure(
           (result['error'] ?? result['errors'] ?? 'Native operation failed')
               .toString(),
+          code: result['error_code'] as String?,
         );
       }
       return result;

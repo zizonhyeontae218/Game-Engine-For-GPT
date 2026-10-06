@@ -28,7 +28,12 @@ never a Lua stack. Replay schema 2 records named inputs and choice/do/skip comma
 Desktop bundles include Flutter and Rust. Mobile imports data-only .ge4g packages.
 
 
-Current candidate:0.2.0-rc.5. Semantic house footprint blocks movement by default;
+Current release:0.2.0. Semantic house footprint blocks movement by default;
 only facing:south is supported. Add say_bubble event instructions for actor-linked
 story flow and declare cutscene_bubbles/solid_buildings/contact_ordering capabilities.
 Harbor Workshop is the public sample.0.2 final waits for real mobile acceptance.
+
+Story: `{op:"say_bubble",actor:"guide",speaker:"안내인",text:"어서 와!"}`.
+Speaker is optional; meaningful actor metadata is the fallback, otherwise no header.
+Android same-game import updates one row in place, preserves controls and archives
+content-incompatible saves. Manage Games reorders/deletes; normal delete keeps data.

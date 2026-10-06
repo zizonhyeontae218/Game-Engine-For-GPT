@@ -96,11 +96,19 @@ class CutsceneBubble extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            bubble['speaker'] as String? ?? '이야기',
-                            style: const TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          const SizedBox(height: 8),
+                          if ((bubble['speaker'] as String?)
+                                  ?.trim()
+                                  .isNotEmpty ??
+                              false) ...[
+                            Text(
+                              bubble['speaker'] as String,
+                              key: const Key('bubble-speaker'),
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                          ],
                           ConstrainedBox(
                             constraints: const BoxConstraints(maxHeight: 140),
                             child: SingleChildScrollView(

@@ -38,7 +38,7 @@ Basement is an engineering proof, not a content-production release.
 - interaction events visible in trace/inspect output
 
 ### Scripting
-Basement may use embedded Lua for small game-specific behaviors.
+FlatLand0.2 includes embedded Lua5.4 for declared project modules/events and deterministic RNG.
 
 Constraints:
 - gameplay scripts execute through a narrow GE4G API
@@ -47,7 +47,7 @@ Constraints:
 - script errors include entity/script/tick context
 - engine correctness must not depend on undocumented Lua globals
 
-If Lua meaningfully delays the first vertical slice, implement built-in declarative behaviors first and add Lua after the deterministic core is proven.
+Use declarative intent for ordinary rules and Lua for compact extensions. Both execute authoritative validated commands.
 
 ### Save
 - explicit schema version
@@ -79,7 +79,7 @@ Text rendering is optional for the first vertical slice. If added, pin the font 
 
 Audio must not be required for simulation correctness.
 
-Basement can expose an audio event API with:
+FlatLand exposes logical audio state/events with:
 - local playback backend when an audio device exists
 - headless event logging/no-op sink
 
@@ -123,4 +123,4 @@ Basement is done only when the acceptance matrix in `TESTPLAN.md` passes from a 
 
 ## Required client extension (2026-10-02)
 
-The user extended Basement with Flutter mobile/Windows/Arch runtime clients. Mobile uses import→play; desktop games embed the client at distribution time. This supersedes any earlier mobile-packaging exclusion. Game-authoring editor GUI stays out of scope; runtime touch-control editing is supported. See [CLIENT](CLIENT.md) and [LAUNCHER_PHILOSOPHY](LAUNCHER_PHILOSOPHY.md).
+The user extended Basement with Flutter Android/Windows runtime clients (iOS/macOS/Linux deferred until0.3). Mobile uses import→play; desktop games embed the client at distribution time. This supersedes any earlier mobile-packaging exclusion. Game-authoring editor GUI stays out of scope; runtime touch-control editing is supported. See [CLIENT](CLIENT.md) and [LAUNCHER_PHILOSOPHY](LAUNCHER_PHILOSOPHY.md).

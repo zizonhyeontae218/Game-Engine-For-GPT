@@ -1,14 +1,16 @@
 # GE4G / GameEngineForGPT
 
-**0.1 “Basement”** — GPT와 코딩 에이전트가 저장소 파일과 CLI로 제작하고 검증할 수 있는 2D 게임 엔진입니다. GUI 편집기 없이 JSON5 장면을 작성하며, 사람이 플레이하는 창과 헤드리스 실행은 같은 결정론적 시뮬레이션·CPU 렌더러를 사용합니다.
+**Basement 0.2 — FlatLand 0.2.0**은 AI가 JSON5·Lua와 CLI로 제작하고 검증하는 결정론적 2D/2.5D 게임 엔진입니다. Rust가 게임 상태를 결정하며, 실행에 LLM 호출·GPU·인터넷이 필요하지 않습니다.
 
-Rust로 구현한 실제 엔진입니다. OpenAI 계정, LLM 호출, GPU, 인터넷 연결은 게임 실행에 필요하지 않습니다. 초기 의존성 다운로드에는 인터넷이 필요합니다.
+Android는 `.ge4g` 불러오기·업데이트·게임 관리, Windows는 게임과 실행기가 함께 들어 있는 배포 방식을 사용합니다. [바람항 공방](examples/flatland_harbor/README.md)은 독립 제작한 CC0 공개 샘플입니다. 시점은 위치·충돌을 바꾸지 않고 장면과 저장을 넘어 유지되며, 인물과 건물은 경사 바닥 위에서도 똑바로 섭니다.
 
-Basement 0.2 — **FlatLand 0.2.0-rc.5** 안정화 후보입니다. Android와 Windows를 지원하며, 모바일은 `.ge4g` 불러오기·Windows는 실행기 내장 배포 방식입니다. [바람항 공방](examples/flatland_harbor/README.md)은 독자적인 CC0 데모입니다. 경사 바닥 위에서도 인물·건물이 서 있고, 시점은 위치·충돌을 바꾸지 않으며 장면과 저장을 넘어 유지됩니다. 최근 방향 우선 보행, 빠른 달리기, 기본 전투 연출과 전투 사이 HP/PP 지속을 시험할 수 있습니다. rc5는 건물 footprint 충돌, 접지 그림자·발 위치 가림, 탭으로 진행하는 컷씬 말풍선을 보완합니다. 기존 Basement·Maze Chase·Signal Yard 회귀 검사는 유지합니다. Android versionCode7은 기존 인증서를 유지합니다. 실기기 수용 확인 전에는 정식 0.2.0으로 승격하지 않습니다. [작성 안내](docs/FLATLAND_QUICKSTART.md) · [규격과 제한](docs/FLATLAND_AUTHORING.md) · [검증 상태](docs/FLATLAND_RELEASE.md).
+접지 그림자와 발 기준 가림, 고정 건물 footprint·표면별 fallback, 반응성 있는 칸 이동, 전투·아이템·퀘스트, 지속 전투원 HP/PP, 턴제 전투 연출, 화자가 있는 배우 연결 컷씬 말풍선, Lua 5.4와 결정론적 RNG, 실제 사운드·음악 재생 어댑터, schema2 저장·재개를 포함합니다. 건물 방향은 south만 지원합니다.
+
+Flutter **0.2.0+8**, Android **versionCode 8**은 기존 앱 ID·서명을 유지합니다. 이전 rc1–rc5 파일을 보존합니다. [작성 안내](docs/FLATLAND_QUICKSTART.md) · [규격과 제한](docs/FLATLAND_AUTHORING.md) · [릴리스 검증](docs/FLATLAND_RELEASE.md).
 
 ## 빠른 시작
 
-안정판 Rust를 [rustup](https://rustup.rs/)으로 설치한 뒤 실행하세요. 기본 창 빌드는 Linux X11, Windows, macOS용 minifb 어댑터를 사용합니다. Linux 창/오디오 빌드에는 ALSA 개발 패키지(`libasound2-dev`, Arch: `alsa-lib`)와 X11 런타임 라이브러리가 필요하며 Wayland에서는 XWayland를 사용할 수 있습니다. CI가 검증하는 플랫폼은 Linux입니다.
+안정판 Rust를 [rustup](https://rustup.rs/)으로 설치한 뒤 실행하세요. 지원 실행기는 Android와 Windows입니다. Linux에서 수행하는 Rust·헤드리스 검증과 Android 크로스 빌드는 개발 인프라입니다. minifb CLI 창은 개발용 어댑터이며 Flutter 게임 배포를 대체하지 않습니다.
 
 ```sh
 git clone https://github.com/zizonhyeontae218/Game-Engine-For-GPT.git
@@ -61,7 +63,7 @@ cargo run --locked -p ge4g-cli -- capture examples/basement_demo \
 - 조회 가능한 상태·컴포넌트·메타데이터와 최대 4,096개 이벤트의 추적
 - 프로젝트 정의 체크포인트, 반복 리플레이 비교, 프레임 골든, 저장·캡처 검증
 
-게임 동작은 선언형 컴포넌트로 작성합니다. Lua, 3D, 네트워킹, 일반 물리 엔진, 게임 제작용 GUI 편집기는 이번 버전 범위에 포함하지 않습니다. 오디오는 관찰 가능한 `audio` 이벤트와 무음 어댑터로 제공하며 실제 음원 재생은 구현하지 않았습니다.
+게임 동작은 선언형 컴포넌트와 선언된 Lua 5.4 모듈·이벤트로 작성합니다. Lua RNG는 엔진의 결정론적 상태를 사용합니다. 사운드 cue와 반복 음악은 클라이언트 어댑터가 실제 재생하며, 헤드리스에서는 같은 논리 오디오 이벤트를 관찰합니다. 장치 재생 성공 여부가 게임 결과를 바꾸지 않습니다. 3D·픽셀화 탐색은 0.3 이후 범위입니다.
 
 참조 리플레이의 160틱 최종 프레임:
 
@@ -80,7 +82,7 @@ python3 scripts/filetree.py lint
 
 [CLI 계약](docs/CLI_CONTRACT.md), [파일 작성법](docs/AUTHORING.md), [구조](docs/ARCHITECTURE.md), [검증 계획](docs/TESTPLAN.md), [릴리스 기록](docs/RELEASE_NOTES.md)을 참고하세요. `AGENTS.md`와 `F(x).md`는 다음 에이전트를 위한 저장소 내 작업 지침·상태 레지스트리입니다.
 
-자동 검증과 가상 디스플레이 창 실행을 기록했습니다. 실제 사람이 키보드로 플레이하는 최종 수용 테스트와 ILCX™ 인간 기여 평가는 아직 수행되지 않았습니다.
+rc5의 엔진·컷씬 실기기 수용은 사용자가 확인했습니다. 정식 버전에 추가한 화자·라이브러리 관리와 각 플랫폼의 검증 상태는 릴리스 문서에 기록합니다.
 
 ## Flutter client: GE4G / GameEngineForGPT
 
@@ -95,7 +97,7 @@ rc1의 과거 [플랫폼 빌드·다운로드](https://github.com/zizonhyeontae2
 ```sh
 cargo run --locked -p ge4g-cli -- run examples/flatland_pacman
 cargo run --locked -p ge4g-cli -- test examples/flatland_pacman --json
-python3 scripts/pack_game.py examples/flatland_pacman --game-id demo.flatland.pacman --version 0.2.0-alpha.1 --out dist/flatland-pacman.ge4g
+python3 scripts/pack_game.py examples/flatland_pacman --game-id demo.flatland.pacman --version 0.2.0 --out dist/flatland-pacman.ge4g
 ```
 
 Flutter 0.2 실행기로 `.ge4g`를 불러오세요. 회전 버튼으로 가로/세로 배치를 선택하며, 대화는 별도 팝업으로 표시됩니다. CC0 스프라이트 출처·라이선스는 데모 `assets/`에 포함됩니다. 0.1 게임도 계속 실행할 수 있습니다.
