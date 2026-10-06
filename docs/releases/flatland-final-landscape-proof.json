@@ -1,0 +1,319 @@
+{
+  "source_commit": "cdb7eb1d336dee95ea2b1e4d82ddc93d478e4098",
+  "platform": "windows",
+  "physical_mobile_acceptance": false,
+  "user_reported_rc5_acceptance": true,
+  "new_library_physical_acceptance": false,
+  "final_promotion_approved": true,
+  "audio_device_validation": false,
+  "capture_audio": "muted (graphics acceptance only)",
+  "view_entities_byte_equal": true,
+  "top_player": {
+    "blocking": false,
+    "color": [
+      255,
+      255,
+      255,
+      255
+    ],
+    "components": [
+      "transform",
+      "sprite",
+      "player"
+    ],
+    "flatland": {
+      "anchor": [
+        0,
+        -8
+      ],
+      "body": "pass",
+      "depth": true,
+      "direction": [
+        0,
+        0
+      ],
+      "facing": [
+        1,
+        0
+      ],
+      "hp": 30,
+      "hp_max": 30,
+      "immune_until": 0,
+      "plane": 0,
+      "queued": [
+        0,
+        0
+      ],
+      "rotate": false,
+      "visual_size": [
+        16,
+        24
+      ]
+    },
+    "id": "player",
+    "layer": 1,
+    "metadata": {},
+    "position": {
+      "x": 15360,
+      "y": 10560
+    },
+    "size": [
+      16,
+      16
+    ],
+    "tags": [],
+    "texture": "assets/walker_right_0.png",
+    "trigger": false
+  },
+  "depth_player": {
+    "blocking": false,
+    "color": [
+      255,
+      255,
+      255,
+      255
+    ],
+    "components": [
+      "transform",
+      "sprite",
+      "player"
+    ],
+    "flatland": {
+      "anchor": [
+        0,
+        -8
+      ],
+      "body": "pass",
+      "depth": true,
+      "direction": [
+        0,
+        0
+      ],
+      "facing": [
+        1,
+        0
+      ],
+      "hp": 30,
+      "hp_max": 30,
+      "immune_until": 0,
+      "plane": 0,
+      "queued": [
+        0,
+        0
+      ],
+      "rotate": false,
+      "visual_size": [
+        16,
+        24
+      ]
+    },
+    "id": "player",
+    "layer": 1,
+    "metadata": {},
+    "position": {
+      "x": 15360,
+      "y": 10560
+    },
+    "size": [
+      16,
+      16
+    ],
+    "tags": [],
+    "texture": "assets/walker_right_0.png",
+    "trigger": false
+  },
+  "roof_attempts": {
+    "16-roof-top": {
+      "position": {
+        "x": 20160,
+        "y": 16320
+      },
+      "size": [
+        16,
+        16
+      ],
+      "plane": 0,
+      "gameplay_z": 0,
+      "direction": [
+        0,
+        1
+      ],
+      "facing": [
+        0,
+        1
+      ]
+    },
+    "16-roof-depth": {
+      "position": {
+        "x": 20160,
+        "y": 16320
+      },
+      "size": [
+        16,
+        16
+      ],
+      "plane": 0,
+      "gameplay_z": 0,
+      "direction": [
+        0,
+        1
+      ],
+      "facing": [
+        0,
+        1
+      ]
+    },
+    "16-roof-alternate": {
+      "position": {
+        "x": 20160,
+        "y": 16320
+      },
+      "size": [
+        16,
+        16
+      ],
+      "plane": 0,
+      "gameplay_z": 0,
+      "direction": [
+        0,
+        1
+      ],
+      "facing": [
+        0,
+        1
+      ]
+    }
+  },
+  "battle_phases": [
+    {
+      "capture": "03-battle-before",
+      "tick": 0,
+      "authoritative_hp": 34,
+      "displayed_hp": 34,
+      "input_locked": false
+    },
+    {
+      "capture": "04-battle-effect",
+      "tick": 12,
+      "authoritative_hp": 22,
+      "displayed_hp": 34,
+      "input_locked": true
+    },
+    {
+      "capture": "05-battle-impact",
+      "tick": 24,
+      "authoritative_hp": 22,
+      "displayed_hp": 34,
+      "input_locked": true
+    },
+    {
+      "capture": "06-battle-hp",
+      "tick": 36,
+      "authoritative_hp": 22,
+      "displayed_hp": 28,
+      "input_locked": true
+    },
+    {
+      "capture": "07-battle-settle",
+      "tick": 108,
+      "authoritative_hp": 22,
+      "displayed_hp": 22,
+      "input_locked": false
+    }
+  ],
+  "saved_combatant": {
+    "current_hp": 29,
+    "remaining_pp": {
+      "pulse": 11,
+      "scratch": 23
+    }
+  },
+  "next_encounter_combatant": {
+    "hp": 29,
+    "pp": {
+      "scratch": 23,
+      "pulse": 11
+    }
+  },
+  "story_bubbles": [
+    {
+      "actor": "minimal_actor",
+      "id": "tour:4:2:0",
+      "kind": "bubble",
+      "options": [
+        {
+          "id": "continue",
+          "text": "탭하여 계속"
+        }
+      ],
+      "screen_anchor": [
+        114,
+        82
+      ],
+      "screen_foot": [
+        114,
+        114
+      ],
+      "speaker": "안내인",
+      "text": "여기가 바람항 공방이야. 집은 발밑의 바닥을 차지하고, 지붕은 그림일 뿐이야."
+    },
+    {
+      "actor": "minimal_actor",
+      "id": "tour:4:3:0",
+      "kind": "bubble",
+      "options": [
+        {
+          "id": "continue",
+          "text": "탭하여 계속"
+        }
+      ],
+      "screen_anchor": [
+        114,
+        82
+      ],
+      "screen_foot": [
+        114,
+        114
+      ],
+      "speaker": "안내인",
+      "text": "시점을 돌려도 길과 벽은 그대로야. 걷기와 달리기를 바꿔서 둘러봐."
+    },
+    {
+      "actor": "minimal_actor",
+      "id": "tour:4:4:0",
+      "kind": "bubble",
+      "options": [
+        {
+          "id": "continue",
+          "text": "탭하여 계속"
+        }
+      ],
+      "screen_anchor": [
+        114,
+        82
+      ],
+      "screen_foot": [
+        114,
+        114
+      ],
+      "speaker": "안내인",
+      "text": "연습 전투의 HP와 PP도 그대로 남아. 지친 연두는 진료소에서 회복시켜 줘."
+    }
+  ],
+  "restored_view": {
+    "shear": 12,
+    "tilt": 68,
+    "view_id": "depth",
+    "zoom": 115
+  },
+  "restored_combatants": {
+    "seedling": {
+      "current_hp": 18,
+      "remaining_pp": {
+        "pulse": 11,
+        "scratch": 19
+      }
+    }
+  },
+  "note": "World coordinates are authoritative fixed-point units; subpixels_per_pixel is 60. UI taps and stale-bubble non-reopening are asserted by the Windows acceptance runner."
+}

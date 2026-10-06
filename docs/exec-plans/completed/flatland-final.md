@@ -32,10 +32,11 @@ and fresh start. Embedded mode remains locked. Authored speaker wins, metadata
 display_name/name follows, otherwise omit header. Engine behavior stays rc5.
 
 ## Progress
-Implemented optional speaker/fallback, typed save revision errors, library leases and
-serialized transactional update/rollback with archive, management/delete/reorder and
-self-healing. Current docs/version/sample promoted for final build verification,
-focused consistency gate passes. No final artifacts published until CI passes.
+Complete. Optional speaker/fallback and typed revision errors are implemented;
+transactional stable-ID updates/archive/rollback, leases, management/delete/reorder
+and self-healing are verified. Current docs/version/sample are coherent. Hosted
+Rust/Flutter/Android/Windows checks pass. Signed final artifacts and14 Drive files
+were uploaded and read back; existing rc1–rc5 artifacts are preserved.
 
 ## Verification log
 Local65Rust tests, strictclippy, format and Flutteranalysis pass. All four replay/save
@@ -68,3 +69,14 @@ Hosted Windows14e4d71:35 tests pass, including all new library/speaker/manager t
 and lifecycle/frame-failure rollback. Remaining old popup/layout test inspected
 after a fixed150ms before first-frame readiness. Replace that wait with bounded
 UI-ready polling, keeping every original popup/orientation/layout assertion.
+
+## Final evidence —2026-10-06
+Verified build cdb7eb1d336dee95ea2b1e4d82ddc93d478e4098:
+engine37483880616 succeeds(65 workspace +9 headless CLI tests/four goldens);
+clients37483880756 succeeds(36 Flutter tests, Android three ABIs, Windows release,
+Korean UTF-8 pipeline and181 real capture evidence files). Signed code8 APK v2/v3
+certificate equals pinned and actual rc5 certificate. Source/portable/embedded game
+entries match; camera/world and battle/bubble/save proofs pass. Real frames reviewed.
+Delivery:0.2.0 folder1iJPNZLzYvo3CRjxqfKQAOmqC0vNIjM_f,14 verified downloadable
+files. See docs/FLATLAND_RELEASE.md for final metadata and measured hashes.
+No new physical-device/audio acceptance is claimed. Promote directly to v0.2.0.

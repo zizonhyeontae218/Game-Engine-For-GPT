@@ -19,3 +19,7 @@ User confirmed rc5 physical acceptance and authorized this finalization. New lib
 management and speaker semantics require the recorded final automated checks; do
 not claim an additional physical test. [Release evidence](FLATLAND_RELEASE.md).
 Historical rc1–rc5 artifacts remain unchanged under [releases](releases/).
+
+Final verification/publication:2026-10-06.65 Rust workspace tests,9 headless CLI
+tests,36 Flutter tests and Android/Windows release+UTF-8/render checks pass.
+[Final delivery and measured evidence](FLATLAND_RELEASE.md).

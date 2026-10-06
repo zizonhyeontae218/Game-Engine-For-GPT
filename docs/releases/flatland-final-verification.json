@@ -1,0 +1,224 @@
+{
+  "product": "Basement 0.2 — FlatLand 0.2.0 FINAL",
+  "versions": {
+    "rust": "0.2.0",
+    "flutter": "0.2.0+8",
+    "android_version_code": 8
+  },
+  "build_source_commit": "cdb7eb1d336dee95ea2b1e4d82ddc93d478e4098",
+  "supported_clients": [
+    "Android",
+    "Windows"
+  ],
+  "deferred_until_0_3": [
+    "iOS",
+    "macOS",
+    "Linux"
+  ],
+  "checks": {
+    "rust_workspace_tests_passed": 65,
+    "headless_cli_tests_passed": 9,
+    "strict_clippy": true,
+    "rust_format": true,
+    "flutter_analysis": true,
+    "flutter_tests_passed": 36,
+    "current_documentation_consistency_documents": 19,
+    "windows_release": true,
+    "android_release": true,
+    "windows_utf8_pipeline": "authoring -> validation -> packaging -> import -> launch -> render",
+    "portable_and_embedded_game_entries_equal": true
+  },
+  "ci": {
+    "engine": "https://github.com/zizonhyeontae218/Game-Engine-For-GPT/actions/runs/37483880616",
+    "clients": "https://github.com/zizonhyeontae218/Game-Engine-For-GPT/actions/runs/37483880756"
+  },
+  "platform_inspection": {
+    "source_commit": "cdb7eb1d336dee95ea2b1e4d82ddc93d478e4098",
+    "windows": {
+      "architecture": "windows-x64",
+      "native_dll_sha256": "8054bf62124b2d6700208adf38395aa5b1cd8977981670a31621fd25e6fc767e",
+      "abi1_exports": true,
+      "embedded_game_entries_equal": true,
+      "client_mode": {
+        "schema_version": 1,
+        "mode": "embedded",
+        "game": "data/basement_game.ge4g",
+        "allow_library": false
+      }
+    },
+    "android": {
+      "application_id": "dev.ge4g.ge4g_client",
+      "version_name": "0.2.0",
+      "version_code": 8,
+      "certificate_sha256": "d6d5ca948e5c1ed644478d7c4c3243efcfcbc30a196f03c39ef7af7118fc00d4",
+      "certificate_matches_actual_rc5": true,
+      "native_abi_sha256": {
+        "arm64-v8a": "77de37373781b7469e4e9015b548aad43325e92ed734b2d1fec6b950f68e7082",
+        "armeabi-v7a": "0c2ac6b982a714d4af7438004efedaee589cf50918c15f33c016611ebe23648b",
+        "x86_64": "56dc0fd6bcf572cb8a02315e858bbfc2a1ae62c939768346b052e72443259044"
+      }
+    }
+  },
+  "game_replay_reports": {
+    "basement": {
+      "errors": [],
+      "ok": true,
+      "results": [
+        {
+          "assertions_checked": 7,
+          "deterministic": true,
+          "deterministic_sha256": "88621adbcfbeebf450ba7feb1a7da664fe274bfb58c294283fb208b813938b40",
+          "frame_rgba_sha256": "38cc4352e7160dcf9104cbe19acd709e36d8165989b3c99d8b6611f0f76e932b",
+          "golden_checked": true,
+          "name": "basement_journey",
+          "ok": true,
+          "png_capture": true,
+          "save_reload": true,
+          "ticks": 160
+        }
+      ],
+      "schema_version": 1,
+      "summary": "GE4G test: 1 of 1 passed"
+    },
+    "pacman": {
+      "errors": [],
+      "ok": true,
+      "results": [
+        {
+          "assertions_checked": 1,
+          "deterministic": true,
+          "deterministic_sha256": "23784f1f394bf160cef8903408bc0689261f254a14de86c1cfd255c769505a59",
+          "frame_rgba_sha256": "a0be5c7fc85ca45c9dd8a54e0fa1bfc6c355a1e7e1d78a7ce5598b447fa43546",
+          "golden_checked": true,
+          "name": "journey",
+          "ok": true,
+          "png_capture": true,
+          "save_reload": true,
+          "ticks": 30
+        }
+      ],
+      "schema_version": 1,
+      "summary": "GE4G test: 1 of 1 passed"
+    },
+    "signal": {
+      "errors": [],
+      "ok": true,
+      "results": [
+        {
+          "assertions_checked": 1,
+          "deterministic": true,
+          "deterministic_sha256": "b77abb97b65188d6c93267e924ced665061931611a50eae9981b72822e7296bd",
+          "frame_rgba_sha256": "f50923d16622d3ee8232739c821d2e8cc6e98acaca9b0dc2c9c174604962a987",
+          "golden_checked": true,
+          "name": "signal-yard-corpus",
+          "ok": true,
+          "png_capture": true,
+          "save_reload": true,
+          "ticks": 714
+        }
+      ],
+      "schema_version": 1,
+      "summary": "GE4G test: 1 of 1 passed"
+    },
+    "harbor": {
+      "errors": [],
+      "ok": true,
+      "results": [
+        {
+          "assertions_checked": 1,
+          "deterministic": true,
+          "deterministic_sha256": "00e00c543b81d2dc1bd43bd4fee3d39db9d5a95c88c6f8c43ceb12634f981425",
+          "frame_rgba_sha256": "568334e7d0aaf36ebd4ed958f431dbfb1da0713e2f1ba4dc3a29f5bc084448a5",
+          "golden_checked": true,
+          "name": "harbor-final-regression",
+          "ok": true,
+          "png_capture": true,
+          "save_reload": true,
+          "ticks": 420
+        }
+      ],
+      "schema_version": 1,
+      "summary": "GE4G test: 1 of 1 passed"
+    }
+  },
+  "rendered_evidence": {
+    "files": 181,
+    "orientations": [
+      "portrait",
+      "landscape"
+    ],
+    "proof_files": [
+      "portrait-proof.json",
+      "landscape-proof.json"
+    ],
+    "speaker": "안내인",
+    "actor_and_view_snapshots_byte_equal": true,
+    "battle_phases_and_hp_interpolation": true,
+    "roof_blocking_across_views": true,
+    "persistent_combatants_and_view_restore": true,
+    "audio_capture_muted": true
+  },
+  "human_acceptance": {
+    "rc5_engine_rendering_controls_cutscene_accepted_by_user": true,
+    "final_speaker_and_library_verified_automatically": true,
+    "new_physical_android_test_performed": false,
+    "physical_audio_device_validation_performed": false
+  },
+  "historical_binaries_preserved": [
+    "rc1",
+    "rc2",
+    "rc3",
+    "rc4",
+    "rc5"
+  ],
+  "files": {
+    "Client-asset-licenses.json": {
+      "bytes": 4440,
+      "sha256": "5e9b5806734bc190a1f79e95158eb597c8f01e19face21234330db1bbc4e397c"
+    },
+    "FlatLand-0.2.0-Windows-Evidence.zip": {
+      "bytes": 1135670,
+      "sha256": "99bd41ad581ef8f06c30c7849a86798dd4c8dad41f3ace326a9c91bc26d91873"
+    },
+    "FlatLand-Harbor-0.2.0-Source.zip": {
+      "bytes": 65468,
+      "sha256": "451269cb9463ff82208b8c534116964f38b33c274749fdafc9a8ad6f41edcf77"
+    },
+    "FlatLand-Harbor-0.2.0.ge4g": {
+      "bytes": 68524,
+      "sha256": "1ec1630ec9e6eed3f4a6ade1609955184b285f416738ce58a77a6d31e97ac23d"
+    },
+    "GE4G-FlatLand-0.2.0-Android.apk": {
+      "bytes": 67627558,
+      "sha256": "772d9dbae32ec32840e525b2df27233a9dc3412bc524b9488d9cf555bfa9775c"
+    },
+    "GE4G-Harbor-0.2.0-Windows.zip": {
+      "bytes": 14518770,
+      "sha256": "bc080ab5d623c632ca1c1fc40a739bb13d34166c6056eeb01cbfaf890a72d61b"
+    },
+    "Harbor-asset-licenses.json": {
+      "bytes": 10603,
+      "sha256": "f97d12d3f89f7abe93df29d049d07c3381ef21ce00e9194ee8b08f70d292bdb1"
+    },
+    "LICENSE-MIT.txt": {
+      "bytes": 1074,
+      "sha256": "cb220854b6d093b5be1bb7ccd2d50c18f92c3617eb7d55ab50a6c3911eb55c3d"
+    },
+    "MaterialIcons-CC-BY-4.0.txt": {
+      "bytes": 18531,
+      "sha256": "be698262aecd042c0de6f886cc0af622f8def446462026992cc530275d8a9e74"
+    },
+    "README-ko.txt": {
+      "bytes": 2968,
+      "sha256": "41c3eec1d3c86e2d6fa344bba4184aea6d175310daee0444a46fbbf14eb2c1e3"
+    },
+    "landscape-proof.json": {
+      "bytes": 5817,
+      "sha256": "f320900a1dbf964a118a2a65b85c07a49c5cbeaccce777effc5bad590b44d786"
+    },
+    "portrait-proof.json": {
+      "bytes": 5817,
+      "sha256": "f320900a1dbf964a118a2a65b85c07a49c5cbeaccce777effc5bad590b44d786"
+    }
+  }
+}

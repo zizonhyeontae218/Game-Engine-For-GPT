@@ -209,9 +209,9 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `docs/TESTPLAN.md` — Acceptance and deterministic verification plan.
 - `docs/benchmarks/flatland-task-context.json` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/active/.gitkeep` — Repository file; inspect only when relevant to the task.
-- `docs/exec-plans/active/flatland-final.md` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/completed/.gitkeep` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/completed/basement.md` — Repository file; inspect only when relevant to the task.
+- `docs/exec-plans/completed/flatland-final.md` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/completed/flatland-polish.md` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/completed/flatland-rc1.md` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/completed/flatland-rc4.md` — Repository file; inspect only when relevant to the task.
@@ -219,6 +219,10 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `docs/exec-plans/completed/flatland.md` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/completed/flutter-client.md` — Repository file; inspect only when relevant to the task.
 - `docs/releases/development-history-through-rc4.md` — Repository file; inspect only when relevant to the task.
+- `docs/releases/flatland-final-drive.json` — Repository file; inspect only when relevant to the task.
+- `docs/releases/flatland-final-landscape-proof.json` — Repository file; inspect only when relevant to the task.
+- `docs/releases/flatland-final-portrait-proof.json` — Repository file; inspect only when relevant to the task.
+- `docs/releases/flatland-final-verification.json` — Repository file; inspect only when relevant to the task.
 - `docs/releases/flatland-rc2.md` — Repository file; inspect only when relevant to the task.
 - `docs/releases/flatland-rc3.md` — Repository file; inspect only when relevant to the task.
 - `docs/releases/flatland-rc4.md` — Repository file; inspect only when relevant to the task.
