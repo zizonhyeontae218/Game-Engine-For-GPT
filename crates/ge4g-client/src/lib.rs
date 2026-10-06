@@ -133,13 +133,21 @@ fn status(session: u64, live: &Session) -> Value {
     let mut response = json!({"abi_version": ABI_VERSION, "ok": true, "session": session, "tick": live.world.tick, "scene": live.world.scene, "width": live.frame.width, "height": live.frame.height, "frame_bytes": live.frame.rgba.len(), "state": live.world.state.values, "dialogue": dialogue, "last_action": action});
     response["waiting"] = live.world.waiting().unwrap_or(Value::Null);
     if response["waiting"]["kind"] == "bubble" {
-        let actor = response["waiting"]["actor"].as_str().unwrap_or("");
+        let actor = response["waiting"]["actor"]
+            .as_str()
+            .unwrap_or("")
+            .to_owned();
         if let Some(anchor) = ge4g_render2d::actor_screen_anchor(
             &live.world.project,
             &live.world.render_snapshot(),
-            actor,
+            &actor,
         ) {
             response["waiting"]["screen_anchor"] = json!(anchor);
+            response["waiting"]["screen_foot"] = json!(ge4g_render2d::actor_screen_foot(
+                &live.world.project,
+                &live.world.render_snapshot(),
+                &actor
+            ));
         }
     }
     response["systems"]=live.world.flatland.systems.as_ref().map(|s|json!({"combatants":s.combatants,"gameplay_view":s.gameplay_view,"inventory":s.inventory,"equipment":s.equipment,"quests":s.quests,"music":s.music,"view":s.view,"pace":s.pace,"planes":s.planes,"event":s.events.last().map(|f|json!({"id":f.event,"pc":f.pc}))})).unwrap_or(Value::Null);

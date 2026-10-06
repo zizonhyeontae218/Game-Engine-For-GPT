@@ -37,6 +37,10 @@ class CutsceneBubble extends StatelessWidget {
         final x = rect.left + (anchor[0] as num) * rect.width / source.width;
         final y =
             44 + rect.top + (anchor[1] as num) * rect.height / source.height;
+        final foot = bubble['screen_foot'] as List?;
+        final footY = foot == null
+            ? y + 44
+            : 44 + rect.top + (foot[1] as num) * rect.height / source.height;
         final width = math.min(320.0, math.max(1.0, c.maxWidth - 24));
         final left = (x - width / 2)
             .clamp(12.0, math.max(12, c.maxWidth - width - 12))
@@ -51,7 +55,7 @@ class CutsceneBubble extends StatelessWidget {
               Positioned(
                 left: left,
                 top: below
-                    ? (y + 16)
+                    ? (footY + 16)
                           .clamp(48.0, math.max(48, c.maxHeight - 220))
                           .toDouble()
                     : null,
@@ -93,7 +97,7 @@ class CutsceneBubble extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            bubble['actor'] as String? ?? '',
+                            bubble['speaker'] as String? ?? '이야기',
                             style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
                           const SizedBox(height: 8),
@@ -116,7 +120,7 @@ class CutsceneBubble extends StatelessWidget {
               ),
               Positioned(
                 left: x.clamp(8.0, math.max(8, c.maxWidth - 16)).toDouble(),
-                top: (y + (below ? 4 : -12))
+                top: ((below ? footY + 4 : y - 12))
                     .clamp(44.0, math.max(44, c.maxHeight - 12))
                     .toDouble(),
                 child: Icon(

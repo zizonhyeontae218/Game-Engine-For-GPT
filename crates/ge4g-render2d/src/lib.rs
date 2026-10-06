@@ -660,6 +660,21 @@ pub fn actor_screen_anchor(project: &Project, snapshot: &Snapshot, id: &str) -> 
     )
 }
 
+/// Project an actor's visual foot for unobscured below-actor bubble placement.
+pub fn actor_screen_foot(project: &Project, snapshot: &Snapshot, id: &str) -> Option<[i64; 2]> {
+    let e = snapshot.entities.iter().find(|e| e.id == id)?;
+    let z = e
+        .flatland
+        .as_ref()
+        .and_then(|a| a["z"].as_i64())
+        .unwrap_or(0);
+    let feet = [
+        e.position.x.div_euclid(SUBPIXELS) + i64::from(e.size[0]) / 2,
+        e.position.y.div_euclid(SUBPIXELS) + i64::from(e.size[1]),
+    ];
+    Some(projection::Projection::new(project, snapshot).upright(feet, [0, -z]))
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

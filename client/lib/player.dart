@@ -64,6 +64,10 @@ class Player extends ChangeNotifier {
     if (candidate is Map && candidate['id'] == _seenPopup && popupVisible) {
       popup = Map<String, dynamic>.from(candidate);
     }
+    if (candidate is! Map && popup?['kind'] == 'bubble') {
+      popup = null;
+      popupVisible = false;
+    }
     final music = (status['systems'] as Map?)?['music'] as Map?;
     String? musicPath;
     if (music?['file'] is String && game != null) {

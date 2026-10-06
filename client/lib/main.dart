@@ -148,6 +148,9 @@ class _ClientHomeState extends State<ClientHome>
       );
       library = loaded;
       player = Player(engine, loaded)..addListener(changed);
+      if (widget.arguments.contains('--rc5-evidence')) {
+        player!.audio.muted = true;
+      }
       games = await loaded.list();
       if (Platform.isWindows || Platform.isLinux) {
         final executableRoot = p.dirname(Platform.resolvedExecutable);
@@ -924,6 +927,8 @@ class _ClientHomeState extends State<ClientHome>
       }
 
       Future<void> capture(String name) async {
+        // Dismiss the transient save acknowledgement, never a runtime error.
+        if (live.message == '저장 완료') live.message = null;
         await Future<void>.delayed(const Duration(milliseconds: 100));
         await live.refreshFrame();
         if (mounted) setState(() {});
@@ -1148,6 +1153,8 @@ class _ClientHomeState extends State<ClientHome>
       if (live.status['waiting'] != null) {
         throw StateError('story tap failed to return');
       }
+      live.showPopup();
+      if (live.popupVisible) throw StateError('completed story reopened');
       for (var i = 0; i < 12; i++) {
         request({'op': 'advance', 'ticks': 1});
       }
@@ -1167,6 +1174,8 @@ class _ClientHomeState extends State<ClientHome>
           'view_entities_equal': true,
           'platform': Platform.operatingSystem,
           'physical_device_acceptance': false,
+          'audio_device_validation': false,
+          'capture_audio': 'muted (graphics acceptance only)',
         }),
         encoding: utf8,
       );

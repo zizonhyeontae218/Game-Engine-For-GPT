@@ -37,12 +37,12 @@ class GameAudio {
         _musicPaused = false;
         return;
       }
-      _music ??= AudioPlayer();
       if (muted || suspended) {
-        await _music!.pause();
+        await _music?.pause();
         _musicPaused = true;
         return;
       }
+      _music ??= AudioPlayer();
       if (_musicPath != path) {
         await _music!.stop();
         await _music!.setReleaseMode(ReleaseMode.loop);
