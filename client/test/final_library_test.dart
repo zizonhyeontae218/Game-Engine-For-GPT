@@ -36,6 +36,7 @@ Uint8List revision(Uint8List source, String marker, String version) {
 
 class RejectOpen implements EngineBridge {
   final NativeEngine actual = NativeEngine();
+  bool rejectFrame = false;
   @override
   Map<String, dynamic> request(Map<String, dynamic> value) {
     if (value['op'] == 'open' &&
@@ -47,11 +48,19 @@ class RejectOpen implements EngineBridge {
         code: 'invalid_project',
       );
     }
+    if (value['op'] == 'open') {
+      rejectFrame = File(value['project'] as String)
+          .readAsStringSync()
+          .contains('# reject frame');
+    }
     return actual.request(value);
   }
 
   @override
-  Uint8List frame(int session, int length) => actual.frame(session, length);
+  Uint8List frame(int session, int length) {
+    if (rejectFrame) throw StateError('deliberate frame failure');
+    return actual.frame(session, length);
+  }
 }
 
 void main() {
@@ -256,6 +265,23 @@ void main() {
           expect((await library.list()).single.digest, a.digest);
           expect(a.directory.existsSync(), true);
           expect(library.save(a.id).readAsBytesSync(), save);
+          await player.open(a, load: true, rethrowFailure: true);
+          expect(player.resumedSave, true);
+          // A cosmetic/frame failure after fresh open and save archival must
+          // close the new session and restore the original save and content.
+          await expectLater(
+            player.installBytes(revision(source, 'reject frame', '0.2.0')),
+            throwsStateError,
+          );
+          expect(player.session, isNull);
+          expect(player.game, isNull);
+          expect((await library.list()).single.digest, a.digest);
+          expect(library.save(a.id).readAsBytesSync(), save);
+          expect(Directory('${root.path}/games/${a.id}').listSync().length, 1);
+          expect(
+            Directory('${library.save(a.id).parent.path}/archive').existsSync(),
+            false,
+          );
           await player.open(a, load: true, rethrowFailure: true);
           expect(player.resumedSave, true);
           await player.closeAndWait();

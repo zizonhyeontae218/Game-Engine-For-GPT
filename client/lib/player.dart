@@ -264,6 +264,7 @@ class Player extends ChangeNotifier {
     final generation = _generation;
     final controls = ControlStore(library.controls(candidate.id), candidate.id);
     int? openedSession;
+    var controlsBound = false;
     try {
       await settling;
       if (_disposed || generation != _generation) {
@@ -315,6 +316,7 @@ class Player extends ChangeNotifier {
       game = candidate;
       library.retain(candidate);
       store = controls;
+      controlsBound = true;
       input = InputRouter(controls.current);
       session = openedSession;
       status = opened;
@@ -330,15 +332,18 @@ class Player extends ChangeNotifier {
       loading = false;
       notifyListeners();
     } catch (failure) {
-      controls.dispose();
-      if (session != null) {
+      final current = !_disposed && generation == _generation;
+      if (!controlsBound) controls.dispose();
+      if (openedSession != null && session == openedSession) {
         await closeAndWait();
-      } else if (openedSession != null) {
+      } else if (!controlsBound && openedSession != null) {
         engine.request({'op': 'close', 'session': openedSession});
       }
-      loading = false;
-      error = '게임을 열 수 없습니다: $failure';
-      if (!_disposed) notifyListeners();
+      if (current && !_disposed) {
+        loading = false;
+        error = '게임을 열 수 없습니다: $failure';
+        notifyListeners();
+      }
       if (rethrowFailure) rethrow;
     }
   }
