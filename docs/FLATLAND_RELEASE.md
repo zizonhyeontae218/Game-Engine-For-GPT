@@ -33,5 +33,43 @@ static analysis are checked before source publication. Windows CI additionally v
 Korean TOML/JSON/JSON5/resource names/scene IDs/storage paths, packages and imports the
 content, launches the real Flutter Windows client and captures portrait/landscape UI,
 top/depth state equality and battle phases. Android CI builds three native ABIs.
-Hosted results and signed delivery are pending until recorded below.
+Engine CI passed (58 Rust tests, strict clippy, schema1/Pac-Man/Signal Yard regressions,
+Harbor deterministic replay/save goldens). Windows Flutter tests (23), release build and rendered portrait/landscape UI
+acceptance passed, including the full Korean UTF-8 pipeline. Android three-ABI build passed;
+code6 APK is signed with the unchanged certificate.
 Physical Android user acceptance is separate and has not been claimed for rc4.
+
+
+## Delivery / reproducible evidence
+
+- [rc4 Drive files](https://drive.google.com/drive/folders/14FhxMy6tjUJr1vlbwFasHb2S3DIclMe_)
+- [Engine acceptance](https://github.com/zizonhyeontae218/Game-Engine-For-GPT/actions/runs/37401561428)
+- [Windows/Android clients and rendered evidence](https://github.com/zizonhyeontae218/Game-Engine-For-GPT/actions/runs/37401395040)
+- Android application ID: `dev.ge4g.ge4g_client`, versionCode `6`.
+- Signing certificate SHA-256: `d6d5ca948e5c1ed644478d7c4c3243efcfcbc30a196f03c39ef7af7118fc00d4` (matches rc3).
+- APK SHA-256: `d0fa15f7b575c3e48d3ac43c0acaae35ee8d5453dfc1bf1784f4529f12adfc69`.
+- Portable game SHA-256: `4d223221aa57faf0a4cb99ab2e744d5316af0f7db340cee205b5929d2981795f`.
+
+Source for the APK is `1f75e300be96313a8b5c5fff6d01d474b5e532a0`.
+Windows source is `2554fdf6b2444a50bad28a482272d7b668e07458`;
+that follow-up changes only the screenshot assertion and failure-artifact upload policy.
+The integrity registry follow-up does not change runtime binaries.
+
+The rendered evidence archive contains actual Windows Flutter portrait/landscape UI,
+canonical frame PNGs, exact world snapshots, and a battle save. Top/depth snapshots
+have identical entities. Native actor pixels may return to their pre-attack positions
+at recovery; HP bars/menu live in Flutter and are verified through UI captures/tests.
+These captures are Windows evidence, not physical Android acceptance.
+
+
+Rendered review: upright player and facade/roof in depth view, visibly projected ground,
+identical player `[256,176]` pixels / plane0 before and after view switch.
+Battle frames at ticks0/12/24/36/108 show slash/lunge, red impact, interpolated
+opponent HP34→28→22 and restored menu. Actual HP commits to22 once at resolution;
+cosmetic ticks do not apply damage again. Windows and mobile game package entries
+are byte-identical. Capture UI is paused for deterministic inspection; `*-frame.png`
+shows the canonical actor unobscured by the pause badge.
+
+Drive delivery readback verified file names, sizes and rc4 parents: signed APK,
+embedded Windows ZIP, portable game, original sample source, rendered evidence,
+world-state proof, verification metadata, Korean instructions and SHA256SUMS.
