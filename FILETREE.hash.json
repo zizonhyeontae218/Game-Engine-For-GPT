@@ -2,7 +2,7 @@
   ".agent/PLANS.md": "26674afca7cdbfceea981b052e20eb2dff3725f335ef789bf47b043f03623890",
   ".gitattributes": "8c1e700d11bb039251a4c4dbcc9c60c645477f40a0f09e9c5ca45058d80c003b",
   ".github/workflows/ci.yml": "e1d563dd4db1e428df744f634e3f582f1d5beb3c663c329e0f905fb93ffbbbed",
-  ".github/workflows/client.yml": "12747fb03ed2c9b6bf80199e25ea821fba940d52f4be327a7755c4494983af46",
+  ".github/workflows/client.yml": "6fc67bdd04180de512252577ac0edc982483d955e7ea614aac7b195dd1ab0831",
   ".gitignore": "16eb9b5a94b22e0dfab06954e1b36e229b1b73303b8ca066a1ba8a0870108e09",
   "00_MASTER_CONCEPT.md": "77e5642b681e353467839be685d63ebacb90addf013f485c7e1b0e2ee8a44764",
   "AGENTS.md": "8795ec7a045640c17c0d36d25507fb8fcd93690864ce00c425e448ca4b851bae",
@@ -468,6 +468,6 @@
   "scripts/package.py": "bbd081eed534c97241196029cfa3ab754e52f89e4bf90b155b7ce1d012abe433",
   "scripts/sign_android.py": "b385d639e440373c52f56e337ec0c4d1cbff633974c514bbdcc99aa595657c85",
   "scripts/verify_audio_adapter.py": "cc75fca6c523188dd48d730a54fb05b8389aed72f439d79459047fbf64e74503",
-  "scripts/windows_utf8_regression.py": "f5326465c47e794ca279ef736a66dc3ac950f3f1a1bf4bbeee2ad12008b62cb0",
+  "scripts/windows_utf8_regression.py": "da2678511f2973551b8f6b6a9ad980c9a9b80abd7f13fa6d9654481f57e845fe",
   "templates/EXECPLAN_TEMPLATE.md": "c8acc175baebf6e7f7c2ae791ff7728b21b1ed99ea41ddf1e07cfdc3eb83a4e2"
 }
