@@ -102,7 +102,7 @@ void main() {
         (project) => native.request({'op': 'validate', 'project': project}),
       );
       final game = await library.importFile(File('../dist/한글 검증/바람항 공방.ge4g'));
-      expect(game.name, 'FlatLand rc4 / 바람항 공방');
+      expect(game.name, 'FlatLand rc5 / 바람항 공방');
       final status = native.request({'op': 'open', 'project': game.project});
       session = status['session'] as int;
       expect(status['scene'], '항구');
