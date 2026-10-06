@@ -159,25 +159,45 @@ packages. ABI remains1. Android ID/certificate stay fixed and versionCode increa
 tokens, tool calls/failures/time and equal resulting frames. It does not measure model
 sampling time or claim universal savings. Pac-Man and Signal Yard are executable examples.
 
-## rc3 villages and battle presentation
+## rc4 movement, view and reusable presentation
 
-Use actor `step_walk:true` plus a16px map cell and speed48 for three tiles/s. Release
-finishes the current cell then stops; maze `grid:true` retains its original behavior.
-Touch profile joystick may set `cardinal:true`; tune dead_zone separately. Pace overrides
-use `{op:"pace",entity:"$player",speed:72}` in native commands/Lua.
+Use actor `step_walk:true`, a16px map cell and speed68; pace112 is visibly faster.
+Newest pressed direction wins; release finishes the current cell without an extra cell.
+Cardinal touch profiles provide hysteresis and an optional native direction intent.
+Legacy `grid:true` maze movement remains unchanged.
 
-A battle instruction can set `stage:{background:"assets/field.png",hold_result:true}`.
-Each fighter may supply `sprite`, `back_sprite` and up to four moves with stable ID,
-name, power (percentage1..300) and PP. Native choices use `move:<move>:<target>`;
-legacy fighters without moves still use `attack_<target>`. The dedicated client offers
-moves, guard and inventory; `battle_continue` executes victory/defeat effects once.
-Every attack resolves the round in native simulation; the displayed24-tick hit feedback
-uses turn_tick/previous_hp while the parent world stays frozen. Save captures remaining PP.
+Views have label, zoom100..160, tilt60..100 and shear-25..25. `{op:"view",mode:"depth"}`
+is persistent presentation-only; `view_reset` explicitly returns to unprojected default.
+Scenes inherit the selected resolved view, even without a matching local preset. Save
+stores its parameters. Event-scene `camera` is scoped and restored on return. Legacy
+`retain_view` still parses; it no longer selects collision/height persistence.
+Use independent `plane`, `portal`, `elevate` gameplay operations for collision/elevation.
+`sprite.projection:"ground"` is appropriate for terrain/decal art; actors/props default to
+upright projected feet. Never create a ground actor merely to configure normal sprites.
 
-Gameplay views are named presets: label, zoom100..160, tilt60..100, shear-25..25.
-`view:{mode:"depth"}` projects the padded canonical world. Collision `plane` and visual
-`elevate` remain independent. Default event return restores them; `{op:"return",retain_view:true}`
-retains selected view/planes/elevation for a settings choice. There is no3D geometry.
-Optional gameplay.lua_events filters hook names before creating a Lua VM; empty means
-legacy all-hooks behavior. Packages using these additions declare step_walk, battle_stage
-and view_projection capabilities so old clients reject them clearly.
+Actor `building:{footprint:[48,32],height:26,roof:"gable",material:"wood"}` receives
+front/side/roof/trim/windows/door/contact-shadow defaults. Roofs: gable,flat,shed;
+materials: wood,plaster,brick,stone,metal. Optional roof_surface/facade_surface/side_surface
+PNG paths replace exactly that component. Missing surfaces fall back; custom transparent
+pixels are preserved. Entity defaults provide feet anchors, depth sorting, contact
+shadows, health feedback and a visible sprite-free projectile.
+
+`gameplay.combatants:{seedling:{name:"연두",max_hp:38,attack:12,defense:4,speed:8,
+moves:[{id:"scratch",name:"할퀴기",power:100,pp:25,fx:"slash"}]}}` defines a persistent
+roster entry. Battle fighters reference `{id:"hero",combatant:"seedling"}`. HP/PP initialize
+once, commit after authoritative resolution and persist across encounters/save. Zero stays
+fainted; explicit `combatant_heal` (amount) or `combatant_reset` restores it. Heal/reset
+roster commands are rejected during an active battle. Inline legacy fighters stay ephemeral.
+Move power retains legacy percentage1..300 semantics, not Pokemon base-power semantics.
+
+Built-in FX: strike(default),slash,projectile,burst,heal,guard. Typed BattleFxEvent includes
+actor,target,preset,start_tick,before_hp,after_hp. Each result has a54-tick cosmetic sequence;
+round results/PP/items are determined once before presentation. HP displays old→new at
+impact. Unskipped FX lock choices. Skip clears cosmetic feedback without repeating math.
+Saving retains exactly-once authoritative results and the deterministic presentation cursor.
+
+Declare new features billboard_projection,persistent_combatants,battle_fx,
+building_presentation,entity_defaults as used; old clients reject unsupported bundles.
+Legacy packages without battle_fx keep their immediate-choice replay timing. ABI remains1.
+Public source examples must include asset-licenses.json with exact provenance/license/hash.
+See examples/flatland_harbor for deliberately incomplete but valid presentation input.

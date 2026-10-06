@@ -4,7 +4,7 @@
 
 Rust로 구현한 실제 엔진입니다. OpenAI 계정, LLM 호출, GPU, 인터넷 연결은 게임 실행에 필요하지 않습니다. 초기 의존성 다운로드에는 인터넷이 필요합니다.
 
-Basement 0.2 — **FlatLand v0.2 rc3 (0.2.0-rc.3)**: 맵·엔티티 분리, 밀기·방향, 전투/적 AI, 아이템/장비/퀘스트, 평면·높이·카메라·아틀라스 애니메이션, 선택 대화·컷씬·턴제 전투와 Lua 5.4를 구현했습니다. 팩맨 스타일 데모와 **[Signal Yard](examples/flatland_signal_yard/README.md)** 기능 실험장이 함께 제공됩니다. 모바일은 `.ge4g` 불러오기, PC는 실행기를 내장한 배포 방식입니다. [마름꽃마을](examples/flatland_nuvema/README.md)에는 느린 4방향 보행, 전용 스프라이트 턴제 전투와 실제 시점 전환이 들어갑니다. 이전 배포는 rc2이며 이번도 정식판이 아닙니다. Android rc3는 rc1/rc2와 같은 서명으로 업데이트됩니다. [짧은 작성 안내](docs/FLATLAND_QUICKSTART.md) · [실제 작성 규격과 제한](docs/FLATLAND_AUTHORING.md).
+Basement 0.2 — **FlatLand 0.2.0-rc.4** 안정화 후보입니다. Android와 Windows를 지원하며, 모바일은 `.ge4g` 불러오기·Windows는 실행기 내장 배포 방식입니다. [바람항 공방](examples/flatland_harbor/README.md)은 독자적인 CC0 데모입니다. 경사 바닥 위에서도 인물·건물이 서 있고, 시점은 위치·충돌을 바꾸지 않으며 장면과 저장을 넘어 유지됩니다. 최근 방향 우선 보행, 빠른 달리기, 기본 전투 연출과 전투 사이 HP/PP 지속을 시험할 수 있습니다. 기존 Basement·Maze Chase·Signal Yard 회귀 검사는 유지합니다. Android versionCode6은 기존 인증서를 유지합니다. 정식 0.2.0으로 승격하지 않습니다. [작성 안내](docs/FLATLAND_QUICKSTART.md) · [규격과 제한](docs/FLATLAND_AUTHORING.md) · [검증 상태](docs/FLATLAND_RELEASE.md).
 
 ## 빠른 시작
 

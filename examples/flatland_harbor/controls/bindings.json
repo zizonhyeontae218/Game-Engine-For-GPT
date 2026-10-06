@@ -1,0 +1,142 @@
+{
+  "schema_version": 1,
+  "game_id": "demo.flatland.harbor",
+  "profiles": {
+    "default": {
+      "joystick": {
+        "left": [
+          "left"
+        ],
+        "right": [
+          "right"
+        ],
+        "up": [
+          "up"
+        ],
+        "down": [
+          "down"
+        ]
+      },
+      "buttons": {
+        "z": [
+          "interact"
+        ],
+        "x": [
+          "view"
+        ],
+        "c": [
+          "pace"
+        ]
+      },
+      "keys": {
+        "KeyZ": [
+          "interact"
+        ],
+        "KeyX": [
+          "view"
+        ],
+        "KeyC": [
+          "pace"
+        ],
+        "Space": [
+          "interact"
+        ],
+        "KeyE": [
+          "interact"
+        ],
+        "KeyA": [
+          "left"
+        ],
+        "KeyD": [
+          "right"
+        ],
+        "KeyW": [
+          "up"
+        ],
+        "KeyS": [
+          "down"
+        ],
+        "ArrowLeft": [
+          "left"
+        ],
+        "ArrowRight": [
+          "right"
+        ],
+        "ArrowUp": [
+          "up"
+        ],
+        "ArrowDown": [
+          "down"
+        ]
+      }
+    },
+    "left_handed": {
+      "joystick": {
+        "left": [
+          "left"
+        ],
+        "right": [
+          "right"
+        ],
+        "up": [
+          "up"
+        ],
+        "down": [
+          "down"
+        ]
+      },
+      "buttons": {
+        "z": [
+          "interact"
+        ],
+        "x": [
+          "view"
+        ],
+        "c": [
+          "pace"
+        ]
+      },
+      "keys": {
+        "KeyZ": [
+          "interact"
+        ],
+        "KeyX": [
+          "view"
+        ],
+        "KeyC": [
+          "pace"
+        ],
+        "Space": [
+          "interact"
+        ],
+        "KeyE": [
+          "interact"
+        ],
+        "KeyA": [
+          "left"
+        ],
+        "KeyD": [
+          "right"
+        ],
+        "KeyW": [
+          "up"
+        ],
+        "KeyS": [
+          "down"
+        ],
+        "ArrowLeft": [
+          "left"
+        ],
+        "ArrowRight": [
+          "right"
+        ],
+        "ArrowUp": [
+          "up"
+        ],
+        "ArrowDown": [
+          "down"
+        ]
+      }
+    }
+  }
+}

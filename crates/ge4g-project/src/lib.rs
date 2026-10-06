@@ -1,4 +1,5 @@
 //! File authoring, version checks and validation before simulation.
+pub mod building;
 pub mod flatland;
 pub mod gameplay;
 pub mod patch;
@@ -15,6 +16,11 @@ pub const CAPABILITIES: &[&str] = &[
     "step_walk",
     "battle_stage",
     "view_projection",
+    "billboard_projection",
+    "persistent_combatants",
+    "battle_fx",
+    "building_presentation",
+    "entity_defaults",
 ];
 use ge4g_core::{Error, Input, Result, SCHEMA_VERSION, StateDefinition, StateStore};
 use serde::{Deserialize, Serialize};
@@ -50,12 +56,20 @@ pub struct Manifest {
 #[derive(Debug, Clone, Serialize, Deserialize, schemars::JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct Sprite {
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub projection: Option<Projection>,
     #[serde(default = "white")]
     pub color: [u8; 4],
     #[serde(default)]
     pub texture: Option<String>,
     #[serde(default)]
     pub layer: i32,
+}
+#[derive(Debug, Clone, Copy, Serialize, Deserialize, schemars::JsonSchema)]
+#[serde(rename_all = "snake_case")]
+pub enum Projection {
+    Ground,
+    Upright,
 }
 fn white() -> [u8; 4] {
     [255; 4]
@@ -334,12 +348,10 @@ pub fn version(actual: u32, kind: &str) -> Result<()> {
 fn coordinate_ok(point: [i64; 2]) -> bool {
     point.iter().all(|v| (-1_000_000..=1_000_000).contains(v))
 }
-fn valid_id(id: &str) -> bool {
+pub fn valid_id(id: &str) -> bool {
     !id.is_empty()
         && id.len() <= 128
-        && id
-            .bytes()
-            .all(|c| c.is_ascii_alphanumeric() || b"_.-".contains(&c))
+        && id.chars().all(|c| c.is_alphanumeric() || "_.-".contains(c))
 }
 impl Project {
     pub fn path(&self, relative: &str) -> Result<PathBuf> {
@@ -443,6 +455,9 @@ impl Project {
                     }
                     paths.extend(a.alternate.clone());
                     paths.extend(a.directions.values().flatten().cloned());
+                }
+                if let Some(b) = e.flatland.as_ref().and_then(|a| a.building.as_ref()) {
+                    paths.extend(b.surfaces().cloned());
                 }
                 paths
             })

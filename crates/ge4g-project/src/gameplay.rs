@@ -28,6 +28,8 @@ pub struct Gameplay {
     #[serde(default = "seed")]
     pub seed: u64,
     #[serde(default)]
+    pub combatants: BTreeMap<String, Fighter>,
+    #[serde(default)]
     pub items: BTreeMap<String, Item>,
     #[serde(default)]
     pub quests: BTreeMap<String, Quest>,
@@ -65,12 +67,27 @@ fn hundred() -> i64 {
 #[derive(Debug, Clone, Serialize, Deserialize, schemars::JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct BattleMove {
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub fx: Option<BattleFxPreset>,
     pub id: String,
     pub name: String,
     #[serde(default = "hundred")]
     pub power: i64,
     #[serde(default = "default_pp")]
     pub pp: u32,
+}
+#[derive(
+    Debug, Clone, Copy, Default, PartialEq, Eq, Serialize, Deserialize, schemars::JsonSchema,
+)]
+#[serde(rename_all = "snake_case")]
+pub enum BattleFxPreset {
+    #[default]
+    Strike,
+    Slash,
+    Projectile,
+    Burst,
+    Heal,
+    Guard,
 }
 fn default_pp() -> u32 {
     20
@@ -165,15 +182,21 @@ pub struct Choice {
 #[derive(Debug, Clone, Serialize, Deserialize, schemars::JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct Fighter {
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub combatant: Option<String>,
     #[serde(default)]
     pub sprite: Option<String>,
     #[serde(default)]
     pub back_sprite: Option<String>,
     #[serde(default)]
     pub moves: Vec<BattleMove>,
+    #[serde(default)]
     pub id: String,
+    #[serde(default)]
     pub name: String,
+    #[serde(default, alias = "max_hp")]
     pub hp: i64,
+    #[serde(default)]
     pub attack: i64,
     #[serde(default)]
     pub defense: i64,
@@ -228,6 +251,30 @@ pub enum Instruction {
 }
 
 use crate::{Error, Project, Result, Scene, valid_id};
+impl Gameplay {
+    pub fn fighter(&self, authored: &Fighter) -> Result<Fighter> {
+        if let Some(id) = &authored.combatant {
+            let mut f = self
+                .combatants
+                .get(id)
+                .cloned()
+                .ok_or_else(|| Error(format!("unknown combatant {id}")))?;
+            if f.combatant.is_some() {
+                return Err(Error("nested combatant reference".into()));
+            }
+            f.id = if authored.id.is_empty() {
+                id.clone()
+            } else {
+                authored.id.clone()
+            };
+            f.enemy = authored.enemy;
+            f.combatant = Some(id.clone());
+            Ok(f)
+        } else {
+            Ok(authored.clone())
+        }
+    }
+}
 impl Project {
     pub(crate) fn validate_gameplay(&self, scene: &Scene) -> Result<()> {
         let g = &scene.gameplay;
@@ -266,6 +313,47 @@ impl Project {
             }
         }
         let fail = |s: &str| Error(format!("scene {} gameplay: {s}", scene.id));
+        if g.combatants.len() > 256 {
+            return Err(fail("combatant limit 256"));
+        }
+        for (id, f) in &g.combatants {
+            if !valid_id(id)
+                || f.combatant.is_some()
+                || !(1..=1_000_000).contains(&f.hp)
+                || !(1..=10000).contains(&f.attack)
+                || !(0..=10000).contains(&f.defense)
+                || !(0..=10000).contains(&f.speed)
+                || f.moves.len() > 4
+                || f.moves.iter().any(|m| {
+                    !valid_id(&m.id)
+                        || m.name.is_empty()
+                        || !(1..=300).contains(&m.power)
+                        || m.pp > 100
+                })
+                || f.moves
+                    .iter()
+                    .map(|m| &m.id)
+                    .collect::<std::collections::BTreeSet<_>>()
+                    .len()
+                    != f.moves.len()
+                || [&f.sprite, &f.back_sprite]
+                    .into_iter()
+                    .flatten()
+                    .any(|t| !self.textures.contains_key(t))
+            {
+                return Err(fail("invalid persistent combatant"));
+            }
+            for other in self
+                .scenes
+                .values()
+                .filter_map(|s| s.gameplay.combatants.get(id))
+            {
+                if serde_json::to_value(f).unwrap() != serde_json::to_value(other).unwrap() {
+                    return Err(fail("combatant definition differs across scenes"));
+                }
+            }
+        }
+
         if [
             g.items.len(),
             g.quests.len(),
@@ -402,6 +490,10 @@ impl Project {
                                 return Err(fail("missing battle background"));
                             }
                         }
+                        let fighters: Vec<_> = fighters
+                            .iter()
+                            .map(|f| g.fighter(f))
+                            .collect::<Result<_>>()?;
                         if fighters.len() < 2
                             || fighters.len() > 16
                             || !fighters.iter().any(|f| f.enemy)
@@ -410,7 +502,7 @@ impl Project {
                             return Err(fail("battle needs one hero and 1..15 enemies"));
                         }
                         let mut ids = std::collections::BTreeSet::new();
-                        for f in fighters {
+                        for f in &fighters {
                             if f.moves.len() > 4
                                 || f.moves.iter().any(|m| {
                                     !valid_id(&m.id)
@@ -459,6 +551,11 @@ impl Project {
         }
         for e in &scene.entities {
             if let Some(a) = &e.flatland {
+                if let Some(b) = &a.building
+                    && (!b.valid() || b.surfaces().any(|t| !self.textures.contains_key(t)))
+                {
+                    return Err(fail("invalid building presentation"));
+                }
                 if a.visual_size
                     .is_some_and(|size| size.iter().any(|n| !(1..=1024).contains(n)))
                     || a.anchor.iter().any(|n| n.unsigned_abs() > 4096)
@@ -501,6 +598,14 @@ impl Project {
         let g = &scene.gameplay;
         let fail = |s: &str| Error(format!("scene {} action: {s}", scene.id));
         match a {
+            Action::CombatantHeal { combatant, amount }
+                if !g.combatants.contains_key(combatant) || !(0..=1_000_000).contains(amount) =>
+            {
+                return Err(fail("invalid combatant heal"));
+            }
+            Action::CombatantReset { combatant } if !g.combatants.contains_key(combatant) => {
+                return Err(fail("unknown combatant"));
+            }
             Action::Heal { amount, .. } if !(0..=1_000_000).contains(amount) => {
                 return Err(fail("invalid healing amount"));
             }

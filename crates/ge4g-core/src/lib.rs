@@ -92,6 +92,8 @@ impl Aabb {
 #[derive(Debug, Clone, Default, PartialEq, Eq, Serialize, Deserialize, schemars::JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct Input {
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub direction: Option<[i64; 2]>,
     #[serde(default)]
     pub left: bool,
     #[serde(default)]

@@ -6,6 +6,8 @@ use mlua::{Lua, LuaOptions, LuaSerdeExt, StdLib};
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, schemars::JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct ActorState {
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub input: Option<super::input::DirectionInput>,
     pub facing: [i64; 2],
     pub direction: [i64; 2],
     pub queued: [i64; 2],
@@ -15,6 +17,7 @@ pub struct ActorState {
 impl ActorState {
     pub fn new(entity: &Entity) -> Self {
         Self {
+            input: None,
             facing: [1, 0],
             direction: [0, 0],
             queued: [0, 0],
@@ -745,7 +748,13 @@ impl World {
                 .is_some_and(|a| a.grid || a.step_walk || a.ai.is_some());
             let (x, y) = if ai.is_some() { (0, 0) } else { input.axes() };
             if grid {
-                if step_walk || x != 0 || y != 0 {
+                if step_walk {
+                    let actor = &mut self.entities.get_mut(&id).unwrap().actor;
+                    actor.queued = actor
+                        .input
+                        .get_or_insert_with(Default::default)
+                        .cardinal(input);
+                } else if x != 0 || y != 0 {
                     self.entities.get_mut(&id).unwrap().actor.queued =
                         if x != 0 { [x, 0] } else { [0, y] };
                 }
@@ -1085,6 +1094,7 @@ impl World {
                 || e.actor.facing.iter().any(|v| !(-1..=1).contains(v))
                 || e.actor.direction.iter().any(|v| !(-1..=1).contains(v))
                 || e.actor.queued.iter().any(|v| !(-1..=1).contains(v))
+                || e.actor.input.as_ref().is_some_and(|i| !i.valid())
                 || e.actor.hp.is_some() != spec.flatland.as_ref().and_then(|a| a.hp).is_some()
                 || e.actor.immune_until > save.tick + 1_000_000
                 || e.actor.hp.is_some_and(|hp| {

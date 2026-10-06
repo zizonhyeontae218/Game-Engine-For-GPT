@@ -2,6 +2,9 @@
 use ge4g_core::{Error, Result, SUBPIXELS, Snapshot};
 use ge4g_project::{Project, atomic_bytes};
 use std::path::Path;
+mod battle_fx;
+mod building;
+mod projection;
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Frame {
@@ -84,54 +87,6 @@ pub fn render(project: &Project, snapshot: &Snapshot, debug: bool) -> Result<Fra
     }
     let width = project.manifest.window.width;
     let height = project.manifest.window.height;
-    let view = snapshot
-        .flatland
-        .as_ref()
-        .and_then(|f| f.get("systems"))
-        .and_then(|s| s.get("view"))
-        .and_then(|v| v.as_str())
-        .and_then(|v| project.scenes[&snapshot.scene].gameplay.views.get(v));
-    if let Some(view) = view
-        && (view.zoom != 100 || view.tilt != 100 || view.shear != 0)
-    {
-        // Render extra world area before projection; never stretch a clipped viewport.
-        let padding = 128;
-        let mut padded = snapshot.clone();
-        padded.camera[0] -= i64::from(padding);
-        padded.camera[1] -= i64::from(padding);
-        let source = render_world(
-            project,
-            &padded,
-            debug,
-            width + padding * 2,
-            height + padding * 2,
-        )?;
-        let mut frame = Frame {
-            width,
-            height,
-            rgba: snapshot.background.repeat((width * height) as usize),
-        };
-        for y in 0..height {
-            for x in 0..width {
-                let dy = i64::from(y) - i64::from(height / 2);
-                let wy = dy * 10000 / (view.zoom * view.tilt);
-                let wx =
-                    ((i64::from(x) - i64::from(width / 2)) * 100 - wy * view.shear) / view.zoom;
-                let sx = wx + i64::from(source.width / 2);
-                let sy = wy + i64::from(source.height / 2);
-                if sx >= 0
-                    && sy >= 0
-                    && sx < i64::from(source.width)
-                    && sy < i64::from(source.height)
-                {
-                    let a = ((sy as u32 * source.width + sx as u32) * 4) as usize;
-                    let b = ((y * width + x) * 4) as usize;
-                    frame.rgba[b..b + 4].copy_from_slice(&source.rgba[a..a + 4]);
-                }
-            }
-        }
-        return Ok(frame);
-    }
     render_world(project, snapshot, debug, width, height)
 }
 fn render_world(
@@ -146,6 +101,7 @@ fn render_world(
         height,
         rgba: snapshot.background.repeat((width * height) as usize),
     };
+    let projection = projection::Projection::new(project, snapshot);
     if let Some(mut map) = project
         .scenes
         .get(&snapshot.scene)
@@ -175,23 +131,26 @@ fn render_world(
             }
         }
         let cell = i64::from(map.cell);
-        let first_y = snapshot.camera[1].div_euclid(cell).max(0) as usize;
-        let last_y =
-            ((snapshot.camera[1] + i64::from(height)).div_euclid(cell) + 1).max(0) as usize;
-        let first_x = snapshot.camera[0].div_euclid(cell).max(0) as usize;
-        let last_x = ((snapshot.camera[0] + i64::from(width)).div_euclid(cell) + 1).max(0) as usize;
-        for (y, row) in map.rows.iter().enumerate().take(last_y).skip(first_y) {
-            for (x, ch) in row.chars().enumerate().take(last_x).skip(first_x) {
-                let tile = &map.tiles[&ch.to_string()];
-                if tile.color[3] == 0 {
-                    continue;
-                }
-                let left = x as i64 * i64::from(map.cell) - snapshot.camera[0];
-                let top = y as i64 * i64::from(map.cell) - snapshot.camera[1];
-                for py in top.max(0)..(top + i64::from(map.cell)).min(i64::from(height)) {
-                    for px in left.max(0)..(left + i64::from(map.cell)).min(i64::from(width)) {
-                        frame.blend(px, py, tile.color);
-                    }
+        let colors: Vec<Vec<[u8; 4]>> = map
+            .rows
+            .iter()
+            .map(|row| {
+                row.chars()
+                    .map(|ch| map.tiles[&ch.to_string()].color)
+                    .collect()
+            })
+            .collect();
+        for py in 0..i64::from(height) {
+            for px in 0..i64::from(width) {
+                let [wx, wy] = projection.inverse(px, py);
+                let tx = wx.div_euclid(cell);
+                let ty = wy.div_euclid(cell);
+                if tx >= 0
+                    && ty >= 0
+                    && let Some(color) =
+                        colors.get(ty as usize).and_then(|row| row.get(tx as usize))
+                {
+                    frame.blend(px, py, *color);
                 }
             }
         }
@@ -214,6 +173,21 @@ fn render_world(
         )
     });
     for entity in &entities {
+        if let Some(b) = entity.flatland.as_ref().and_then(|a| a.get("building")) {
+            let b =
+                serde_json::from_value(b.clone()).map_err(|e| Error(format!("building: {e}")))?;
+            building::render(
+                &mut frame,
+                project,
+                projection,
+                &b,
+                [
+                    entity.position.x.div_euclid(SUBPIXELS),
+                    entity.position.y.div_euclid(SUBPIXELS),
+                ],
+            )?;
+            continue;
+        }
         let anchor = entity
             .flatland
             .as_ref()
@@ -227,14 +201,14 @@ fn render_world(
             .and_then(|a| a.get(1))
             .and_then(|v| v.as_i64())
             .unwrap_or(0);
-        let x = entity.position.x.div_euclid(SUBPIXELS) - snapshot.camera[0] + ax;
+        let world_x = entity.position.x.div_euclid(SUBPIXELS);
         let z = entity
             .flatland
             .as_ref()
             .and_then(|a| a.get("z"))
             .and_then(|v| v.as_i64())
             .unwrap_or(0);
-        let y = entity.position.y.div_euclid(SUBPIXELS) - snapshot.camera[1] - z + ay;
+        let world_y = entity.position.y.div_euclid(SUBPIXELS);
         let visual = entity
             .flatland
             .as_ref()
@@ -248,6 +222,75 @@ fn render_world(
             .and_then(|a| a.get(1))
             .and_then(|v| v.as_u64())
             .unwrap_or(u64::from(entity.size[1])) as u32;
+        let ground = entity
+            .flatland
+            .as_ref()
+            .and_then(|a| a.get("projection"))
+            .and_then(|v| v.as_str())
+            == Some("ground");
+        let feet = [
+            world_x + i64::from(entity.size[0]) / 2,
+            world_y + i64::from(entity.size[1]),
+        ];
+        let [x, y] = if ground {
+            projection.ground(world_x + ax, world_y + ay - z)
+        } else {
+            projection.upright(
+                feet,
+                [
+                    ax - i64::from(entity.size[0]) / 2,
+                    ay - i64::from(entity.size[1]) - z,
+                ],
+            )
+        };
+        let source_w = w;
+        let source_h = h;
+        let w = (i64::from(w) * projection.zoom / 100) as u32;
+        let h = (i64::from(h) * projection.zoom / 100) as u32;
+        let corners = [
+            projection.ground(world_x + ax, world_y + ay - z),
+            projection.ground(world_x + ax + i64::from(source_w), world_y + ay - z),
+            projection.ground(world_x + ax, world_y + ay - z + i64::from(source_h)),
+            projection.ground(
+                world_x + ax + i64::from(source_w),
+                world_y + ay - z + i64::from(source_h),
+            ),
+        ];
+        let left = if ground {
+            corners.iter().map(|c| c[0]).min().unwrap()
+        } else {
+            x
+        };
+        let right = if ground {
+            corners.iter().map(|c| c[0]).max().unwrap()
+        } else {
+            x + i64::from(w)
+        };
+        let top = if ground {
+            corners.iter().map(|c| c[1]).min().unwrap()
+        } else {
+            y
+        };
+        let bottom = if ground {
+            corners.iter().map(|c| c[1]).max().unwrap()
+        } else {
+            y + i64::from(h)
+        };
+        let defaults = project
+            .manifest
+            .features
+            .iter()
+            .any(|f| f == "entity_defaults");
+        if defaults && !ground {
+            let [sx, sy] = projection.ground(feet[0], feet[1]);
+            for dy in -2i64..=2 {
+                for dx in -7i64..=7 {
+                    if dx * dx + dy * dy * 12 < 50 {
+                        frame.blend(sx + dx, sy + dy, [25, 39, 32, 75]);
+                    }
+                }
+            }
+        }
         if let Some(color) = entity.color {
             let texture = entity
                 .texture
@@ -289,12 +332,28 @@ fn render_world(
                 .and_then(|v| v.as_bool())
                 .unwrap_or(false);
             let tint = color != [255; 4];
-            for py in y.max(0)..(y + i64::from(h)).min(i64::from(height)) {
-                for px in x.max(0)..(x + i64::from(w)).min(i64::from(width)) {
+            for py in top.max(0)..bottom.min(i64::from(height)) {
+                for px in left.max(0)..right.min(i64::from(width)) {
+                    let [local_x, local_y] = if ground {
+                        let [wx, wy] = projection.inverse(px, py);
+                        [wx - world_x - ax, wy - world_y - ay + z]
+                    } else {
+                        [
+                            (px - x) * 100 / projection.zoom,
+                            (py - y) * 100 / projection.zoom,
+                        ]
+                    };
+                    if local_x < 0
+                        || local_y < 0
+                        || local_x >= i64::from(source_w)
+                        || local_y >= i64::from(source_h)
+                    {
+                        continue;
+                    }
                     let pixel = if let Some(texture) = texture {
                         let (ox, oy, tw, th) = bounds.unwrap();
-                        let mut tx = (px - x) as u32 * tw / w;
-                        let mut ty = (py - y) as u32 * th / h;
+                        let mut tx = local_x as u32 * tw / source_w;
+                        let mut ty = local_y as u32 * th / source_h;
                         if tw == th && rotate {
                             let max = tw - 1;
                             (tx, ty) = if dx < 0 {
@@ -315,6 +374,26 @@ fn render_world(
                             })
                         } else {
                             texture.rgba[i..i + 4].try_into().unwrap()
+                        }
+                    } else if defaults
+                        && entity.texture.is_none()
+                        && !entity.components.iter().any(|c| c == "sprite")
+                    {
+                        let mid = i64::from(source_w) / 2;
+                        if local_y < i64::from(source_h) / 3 {
+                            if (local_x - mid).pow(2) + (local_y - i64::from(source_h) / 6).pow(2)
+                                < (i64::from(source_w) / 3).max(2).pow(2)
+                            {
+                                color
+                            } else {
+                                [0; 4]
+                            }
+                        } else if local_x >= i64::from(source_w) / 4
+                            && local_x < i64::from(source_w) * 3 / 4
+                        {
+                            color
+                        } else {
+                            [0; 4]
                         }
                     } else {
                         color
@@ -342,6 +421,53 @@ fn render_world(
                         [80, 40, 40, 255]
                     },
                 );
+            }
+        }
+    }
+    if project
+        .manifest
+        .features
+        .iter()
+        .any(|f| f == "entity_defaults")
+        && let Some(attacks) = snapshot
+            .flatland
+            .as_ref()
+            .and_then(|f| f.get("systems"))
+            .and_then(|s| s.get("attacks"))
+            .and_then(|v| v.as_array())
+    {
+        for shot in attacks {
+            if let Some(a) = shot["preset"]
+                .as_str()
+                .and_then(|id| project.scenes[&snapshot.scene].gameplay.attacks.get(id))
+                && a.projectile_speed > 0
+            {
+                let age = snapshot
+                    .tick
+                    .saturating_sub(shot["start"].as_u64().unwrap_or(snapshot.tick));
+                if age < u64::from(a.startup) {
+                    continue;
+                }
+                let travel = (age - u64::from(a.startup)) as i64 * i64::from(a.projectile_speed);
+                let dx = shot["direction"][0].as_i64().unwrap_or(1);
+                let dy = shot["direction"][1].as_i64().unwrap_or(0);
+                let x = (shot["origin"]["x"].as_i64().unwrap_or(0) + travel * dx) / SUBPIXELS + 8;
+                let y = (shot["origin"]["y"].as_i64().unwrap_or(0) + travel * dy) / SUBPIXELS + 8;
+                let [px, py] = projection.ground(x, y);
+                for t in 0..8 {
+                    frame.blend(
+                        px - dx * t,
+                        py - dy * t,
+                        [255, 211, 74, (220 - t * 20) as u8],
+                    );
+                }
+                for oy in -3i64..=3 {
+                    for ox in -3i64..=3 {
+                        if ox * ox + oy * oy <= 9 {
+                            frame.blend(px + ox, py + oy, [255, 225, 93, 255]);
+                        }
+                    }
+                }
             }
         }
     }
@@ -388,7 +514,7 @@ fn blit(
             let i = ((ty * t.width + tx) * 4) as usize;
             let mut c: [u8; 4] = t.rgba[i..i + 4].try_into().unwrap();
             if flash && c[3] > 0 {
-                c = [255, 255, 255, c[3]];
+                c = [255, 72, 75, c[3]];
             }
             frame.blend(px, py, c);
         }
@@ -427,6 +553,8 @@ fn render_battle(
     let fighters = battle["fighters"]
         .as_array()
         .ok_or_else(|| Error("battle fighters missing".into()))?;
+    let fx = battle["fx"].as_array().cloned().unwrap_or_default();
+    let mut centers = std::collections::BTreeMap::new();
     for f in fighters {
         let enemy = f["enemy"].as_bool().unwrap_or(false);
         let hp = f["hp"].as_i64().unwrap_or(0);
@@ -440,11 +568,17 @@ fn render_battle(
         } else {
             0
         };
+        let offsets: Vec<_> = fx
+            .iter()
+            .map(|fx| battle_fx::offset(fx, f["id"].as_str().unwrap_or(""), snapshot.tick))
+            .collect();
+        let motion: i64 = offsets.iter().map(|d| d[0]).sum();
         let x = if enemy {
             i64::from(width) * 65 / 100
         } else {
             i64::from(width) * 13 / 100
-        } + shake;
+        } + shake
+            + if enemy { -motion } else { motion };
         let y = if enemy {
             i64::from(height) * 17 / 100
         } else {
@@ -452,6 +586,10 @@ fn render_battle(
         };
         let w = width * 27 / 100;
         let h = height * 38 / 100;
+        centers.insert(
+            f["id"].as_str().unwrap_or(""),
+            [x + i64::from(w) / 2, y + i64::from(h) / 2],
+        );
         for dy in 0..12i64 {
             for dx in 0..i64::from(w + 16) {
                 let a = (dx - i64::from(w + 16) / 2) * 2;
@@ -461,6 +599,9 @@ fn render_battle(
                 }
             }
         }
+        let flash = fx
+            .iter()
+            .any(|fx| battle_fx::flash(fx, f["id"].as_str().unwrap_or(""), snapshot.tick));
         if hp > 0 || age < 36 {
             let file = if enemy {
                 f["sprite"].as_str()
@@ -474,13 +615,49 @@ fn render_battle(
                     file,
                     [x, y],
                     [w, h],
-                    hurt && age < 24 && age % 8 < 4,
+                    fx.iter().any(|fx| {
+                        battle_fx::flash(fx, f["id"].as_str().unwrap_or(""), snapshot.tick)
+                    }) || (fx.is_empty() && hurt && age < 24 && age % 8 < 4),
                 )?;
             } else {
-                frame.outline(x, y, w, h, [24, 34, 47, 255]);
+                for dy in 0..i64::from(h) {
+                    for dx in 0..i64::from(w) {
+                        let a = dx - i64::from(w) / 2;
+                        let b = dy - i64::from(h) / 2;
+                        if a * a * 4 + b * b * 2 < i64::from(w).pow(2) {
+                            frame.blend(
+                                x + dx,
+                                y + dy,
+                                if flash {
+                                    [255, 72, 75, 255]
+                                } else if enemy {
+                                    [147, 104, 197, 255]
+                                } else {
+                                    [85, 159, 99, 255]
+                                },
+                            );
+                        }
+                    }
+                }
+                frame.outline(
+                    x + i64::from(w) / 3,
+                    y + i64::from(h) / 3,
+                    5,
+                    5,
+                    [25, 35, 37, 255],
+                );
             }
         }
     }
+    for fx in &fx {
+        if let (Some(actor), Some(target)) = (
+            centers.get(fx["actor"].as_str().unwrap_or("")),
+            centers.get(fx["target"].as_str().unwrap_or("")),
+        ) {
+            battle_fx::draw(&mut frame, fx, snapshot.tick, *actor, *target);
+        }
+    }
+
     Ok(frame)
 }
 

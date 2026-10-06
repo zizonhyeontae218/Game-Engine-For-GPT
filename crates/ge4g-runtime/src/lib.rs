@@ -1,6 +1,11 @@
 //! One authoritative fixed-step simulation shared by every adapter.
+mod battle;
+mod battle_fx;
+mod combatants;
 mod flatland;
 mod gameplay;
+mod input;
+mod view;
 pub use flatland::Resume;
 use ge4g_core::{
     Aabb, ENGINE_VERSION, EntitySnapshot, Error, Event, Input, Result, SUBPIXELS, Snapshot,
@@ -185,11 +190,19 @@ impl World {
             s.patrol.clear();
             s.portal_latches.clear();
             s.camera = None;
-            s.view = None;
             s.pace.clear();
         }
-        if let Some(mode) = spec.gameplay.default_view.clone() {
+        if self
+            .flatland
+            .systems
+            .as_ref()
+            .is_none_or(|s| !s.view_initialized && s.view.is_none())
+            && let Some(mode) = spec.gameplay.default_view.clone()
+        {
+            let view = view::GameplayView::new(&mode, &spec.gameplay.views[&mode]);
+            self.systems().view_initialized = true;
             self.systems().view = Some(mode);
+            self.systems().gameplay_view = Some(view);
         }
         self.contacts.clear();
         self.triggers.clear();
@@ -260,6 +273,14 @@ impl World {
                         snapshot.blocking = a.body != ge4g_project::flatland::BodyMode::Pass;
                         if let Some(v) = snapshot.flatland.as_mut().and_then(Value::as_object_mut) {
                             v.insert("depth".into(), json!(a.depth));
+                            if let Some(b)=&a.building {v.insert("building".into(),json!(b));}
+                            if self.project.manifest.features.iter().any(|f|f=="entity_defaults") {
+                                v.insert("depth".into(),json!(true));
+                                if snapshot.color.is_none(){snapshot.color=Some([235,195,115,255]);}
+                            }
+                            if let Some(space) = e.spec.sprite.as_ref().and_then(|s| s.projection) {
+                                v.insert("projection".into(), json!(space));
+                            }
                             v.insert("body".into(), json!(a.body));
                             v.insert("plane".into(), json!(self.actor_plane(&e.spec.id)));
                             let z = self
@@ -269,7 +290,7 @@ impl World {
                                 .and_then(|s| s.elevation.get(&e.spec.id))
                                 .copied()
                                 .unwrap_or(a.z);
-                            if a.health_bar {
+                            if a.health_bar || (a.hp.is_some() && self.project.manifest.features.iter().any(|f|f=="entity_defaults")) {
                                 v.insert("hp_max".into(), json!(a.hp));
                             }
                             if z != 0 {
@@ -277,6 +298,9 @@ impl World {
                             }
                             if let Some(size) = a.visual_size {
                                 v.insert("visual_size".into(), json!(size));
+                            }
+                            if a.anchor == [0,0] && self.project.manifest.features.iter().any(|f|f=="entity_defaults") && let Some(size)=a.visual_size {
+                                v.insert("anchor".into(),json!([(i64::from(e.spec.size[0])-i64::from(size[0]))/2,i64::from(e.spec.size[1])-i64::from(size[1])]));
                             }
                             if a.anchor != [0, 0] {
                                 v.insert("anchor".into(), json!(a.anchor));
@@ -364,7 +388,7 @@ impl World {
             events_dropped: self.events_dropped,
             flatland: (self.project.manifest.schema_version == 2)
                 .then(|| if presentation {
-                    self.flatland.systems.as_ref().map(|s| json!({"systems":{"view":s.view,"patches":s.patches,"events":s.events.last().map(|f| vec![json!({"event":f.event,"pc":f.pc,"battle":f.battle})]).unwrap_or_default()}})).unwrap_or_else(||json!({}))
+                    self.flatland.systems.as_ref().map(|s| json!({"systems":{"view":s.view,"gameplay_view":s.gameplay_view,"attacks":s.attacks,"patches":s.patches,"events":s.events.last().map(|f| vec![json!({"event":f.event,"pc":f.pc,"battle":f.battle})]).unwrap_or_default()}})).unwrap_or_else(||json!({}))
                 } else { serde_json::to_value(&self.flatland).expect("world JSON") }),
         }
     }

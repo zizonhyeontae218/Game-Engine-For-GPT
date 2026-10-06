@@ -510,7 +510,7 @@ dependencies = [
 
 [[package]]
 name = "ge4g-cli"
-version = "0.2.0-rc.3"
+version = "0.2.0-rc.4"
 dependencies = [
  "clap",
  "ge4g-core",
@@ -527,7 +527,7 @@ dependencies = [
 
 [[package]]
 name = "ge4g-client"
-version = "0.2.0-rc.3"
+version = "0.2.0-rc.4"
 dependencies = [
  "ge4g-core",
  "ge4g-project",
@@ -540,7 +540,7 @@ dependencies = [
 
 [[package]]
 name = "ge4g-core"
-version = "0.2.0-rc.3"
+version = "0.2.0-rc.4"
 dependencies = [
  "schemars",
  "serde",
@@ -550,7 +550,7 @@ dependencies = [
 
 [[package]]
 name = "ge4g-platform"
-version = "0.2.0-rc.3"
+version = "0.2.0-rc.4"
 dependencies = [
  "ge4g-core",
  "ge4g-project",
@@ -562,7 +562,7 @@ dependencies = [
 
 [[package]]
 name = "ge4g-project"
-version = "0.2.0-rc.3"
+version = "0.2.0-rc.4"
 dependencies = [
  "ge4g-core",
  "json5",
@@ -577,7 +577,7 @@ dependencies = [
 
 [[package]]
 name = "ge4g-render2d"
-version = "0.2.0-rc.3"
+version = "0.2.0-rc.4"
 dependencies = [
  "ge4g-core",
  "ge4g-project",
@@ -587,7 +587,7 @@ dependencies = [
 
 [[package]]
 name = "ge4g-runtime"
-version = "0.2.0-rc.3"
+version = "0.2.0-rc.4"
 dependencies = [
  "ge4g-core",
  "ge4g-project",

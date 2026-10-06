@@ -1,7 +1,8 @@
 //! Serializable gameplay controllers; authoritative commands, never presentation callbacks.
+use super::battle::BattleState;
 use super::*;
 use ge4g_project::flatland::{Action, BodyMode, Condition, Map};
-use ge4g_project::gameplay::{Fighter, Instruction, QuestStatus};
+use ge4g_project::gameplay::{Instruction, QuestStatus};
 #[derive(Debug, Clone, Serialize, Deserialize, schemars::JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct QuestProgress {
@@ -40,6 +41,12 @@ pub struct MusicState {
 #[derive(Debug, Clone, Default, Serialize, Deserialize, schemars::JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct Systems {
+    #[serde(default, skip_serializing_if = "is_false")]
+    pub view_initialized: bool,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub gameplay_view: Option<super::view::GameplayView>,
+    #[serde(default, skip_serializing_if = "BTreeMap::is_empty")]
+    pub combatants: BTreeMap<String, super::combatants::CombatantState>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub view: Option<String>,
     #[serde(default, skip_serializing_if = "BTreeMap::is_empty")]
@@ -86,18 +93,8 @@ pub struct EventFrame {
     pub parent_elevation: BTreeMap<String, i32>,
     pub parent_animations: BTreeMap<String, AnimationState>,
 }
-#[derive(Debug, Clone, Serialize, Deserialize, schemars::JsonSchema)]
-#[serde(deny_unknown_fields)]
-pub struct BattleState {
-    #[serde(default)]
-    pub turn_tick: u64,
-    #[serde(default)]
-    pub previous_hp: BTreeMap<String, i64>,
-    #[serde(default)]
-    pub result: Option<bool>,
-    pub fighters: Vec<Fighter>,
-    pub turn: u64,
-    pub log: String,
+fn is_false(v: &bool) -> bool {
+    !*v
 }
 impl World {
     pub(super) fn systems(&mut self) -> &mut Systems {
@@ -381,7 +378,24 @@ impl World {
                 self.systems().planes.insert(id.clone(), *plane);
                 self.emit("plane", Some(&id), json!({"plane":plane}));
             }
+            Action::CombatantHeal { combatant, amount } => {
+                self.combatant_heal(combatant, Some(*amount))?
+            }
+            Action::CombatantReset { combatant } => self.combatant_heal(combatant, None)?,
+            Action::ViewReset => {
+                self.systems().view = None;
+                self.systems().gameplay_view = None;
+                self.systems().view_initialized = true;
+            }
             Action::View { mode } => {
+                let resolved = mode.as_ref().map(|id| {
+                    super::view::GameplayView::new(
+                        id,
+                        &self.project.scenes[&self.scene].gameplay.views[id],
+                    )
+                });
+                self.systems().view_initialized = true;
+                self.systems().gameplay_view = resolved;
                 self.systems().view = mode.clone();
                 self.emit("view_changed", None, json!({"mode":mode}));
             }
@@ -868,12 +882,24 @@ impl World {
                 .iter()
                 .map(|f| {
                     let mut v = serde_json::to_value(f).unwrap();
-                    v["hp_max"] = json!(definitions.iter().find(|d| d.id == f.id).unwrap().hp);
+                    let max = definitions
+                        .iter()
+                        .filter_map(|d| self.project.scenes[&self.scene].gameplay.fighter(d).ok())
+                        .find(|d| d.id == f.id)
+                        .unwrap()
+                        .hp;
+                    v["hp_max"] = json!(max);
+                    let shown =
+                        b.fx.iter()
+                            .filter(|fx| fx.target == f.id)
+                            .find(|fx| self.tick < fx.start_tick + super::battle_fx::FX_TICKS)
+                            .map_or(f.hp, |fx| fx.shown_hp(self.tick));
+                    v["display_hp"] = json!(shown);
                     v
                 })
                 .collect();
             return Some(
-                json!({"id":id,"kind":"battle","turn":b.turn+1,"text":b.log,"options":options,"fighters":fighters,"result":b.result,"animation_ticks":self.tick.saturating_sub(b.turn_tick)}),
+                json!({"id":id,"kind":"battle","turn":b.turn+1,"text":b.log,"options":options,"fighters":fighters,"result":b.result,"animation_ticks":self.tick.saturating_sub(b.turn_tick),"presentation_locked":self.tick<b.resolving_until,"fx":b.fx}),
             );
         }
         match &self.project.scenes[&self.scene].gameplay.events[&frame.event][frame.pc] {
@@ -965,6 +991,10 @@ impl World {
     fn skip_wait_inner(&mut self) -> Result<()> {
         if let Some(frame) = self.systems().events.last_mut() {
             frame.wait = 0;
+            if let Some(b) = &mut frame.battle {
+                b.resolving_until = 0;
+                b.fx.clear();
+            }
         } else {
             return Err(Error("no event to skip".into()));
         }
@@ -990,18 +1020,13 @@ impl World {
                 .cloned()
                 .unwrap_or(Instruction::Return { retain_view: false });
             match step {
-                Instruction::Return { retain_view } => {
+                Instruction::Return { retain_view: _ } => {
                     let frame = self.systems().events.pop().unwrap();
                     self.entities = frame.parent;
                     self.systems().camera = frame.parent_camera;
-                    if !retain_view {
-                        self.systems().view = frame.parent_view;
-                    }
                     self.systems().pace = frame.parent_pace;
-                    if !retain_view {
-                        self.systems().planes = frame.parent_planes;
-                        self.systems().elevation = frame.parent_elevation;
-                    }
+                    self.systems().planes = frame.parent_planes;
+                    self.systems().elevation = frame.parent_elevation;
                     self.systems().animations = frame.parent_animations;
                     self.flatland.popup = None;
                     self.emit("event_return", None, json!({"event":frame.event}));
@@ -1017,15 +1042,25 @@ impl World {
                     return Ok(());
                 }
                 Instruction::Battle { fighters, .. } => {
+                    let fighters = self.initialize_fighters(fighters)?;
                     let tick = self.tick;
                     let f = self.systems().events.last_mut().unwrap();
+                    let result = if !fighters.iter().any(|f| !f.enemy && f.hp > 0) {
+                        Some(false)
+                    } else if !fighters.iter().any(|f| f.enemy && f.hp > 0) {
+                        Some(true)
+                    } else {
+                        None
+                    };
                     f.battle = Some(BattleState {
+                        fx: Vec::new(),
+                        resolving_until: 0,
                         fighters,
                         turn: 0,
                         log: "전투 시작".into(),
                         turn_tick: tick,
                         previous_hp: BTreeMap::new(),
-                        result: None,
+                        result,
                     });
                     f.waiting = true;
                     return Ok(());
@@ -1061,199 +1096,6 @@ impl World {
         Err(Error(
             "event instruction budget exceeds 128; possible jump cycle".into(),
         ))
-    }
-    fn battle_choice(&mut self, choice: &str) -> Result<()> {
-        let frame = self.systems().events.last().unwrap().clone();
-        let mut battle = frame.battle.unwrap();
-        if let Some(won) = battle.result {
-            if choice != "battle_continue" {
-                return Err(Error("battle ended".into()));
-            }
-            return self.finish_battle(won);
-        }
-        battle.previous_hp = battle
-            .fighters
-            .iter()
-            .map(|f| (f.id.clone(), f.hp))
-            .collect();
-        battle.turn_tick = self.tick;
-        let hero = battle.fighters.iter().position(|f| !f.enemy).unwrap();
-        let selected_move =
-            battle.fighters[hero]
-                .moves
-                .iter()
-                .enumerate()
-                .find_map(|(index, m)| {
-                    battle
-                        .fighters
-                        .iter()
-                        .find(|f| {
-                            f.enemy
-                                && f.hp > 0
-                                && choice == format!("move:{}:{}", m.id, f.id)
-                                && m.pp > 0
-                        })
-                        .map(|f| (index, f.id.clone()))
-                });
-        let move_power = selected_move
-            .as_ref()
-            .map_or(100, |(index, _)| battle.fighters[hero].moves[*index].power);
-        let move_name = selected_move
-            .as_ref()
-            .map_or("공격".to_owned(), |(index, _)| {
-                battle.fighters[hero].moves[*index].name.clone()
-            });
-        let move_target = selected_move.as_ref().map(|(_, id)| id.as_str());
-        let legacy_target = if battle.fighters[hero].moves.is_empty() {
-            choice.strip_prefix("attack_")
-        } else {
-            None
-        };
-        let target = if let Some(id) = legacy_target.or(move_target) {
-            Some(
-                battle
-                    .fighters
-                    .iter()
-                    .position(|f| f.id == id && f.enemy && f.hp > 0)
-                    .ok_or_else(|| Error("invalid battle target".into()))?,
-            )
-        } else {
-            None
-        };
-        let item = choice.strip_prefix("item_");
-        if target.is_none() && choice != "guard" && item.is_none() {
-            return Err(Error("unknown battle action".into()));
-        }
-        if let Some(item) = item
-            && self.inventory(item) < 1
-        {
-            return Err(Error("battle item missing".into()));
-        }
-        let mut order: Vec<usize> = (0..battle.fighters.len()).collect();
-        order.sort_by_key(|i| (-battle.fighters[*i].speed, battle.fighters[*i].id.clone()));
-        let mut log = Vec::new();
-        for i in order {
-            if battle.fighters[i].hp == 0 {
-                continue;
-            }
-            if i == hero {
-                if let Some(item) = item {
-                    let definition = self.project.scenes[&self.scene]
-                        .gameplay
-                        .items
-                        .get(item)
-                        .cloned()
-                        .ok_or_else(|| Error("battle item undefined".into()))?;
-                    let healing = definition
-                        .use_actions
-                        .iter()
-                        .filter_map(|a| {
-                            if let Action::Heal { amount, .. } = a {
-                                Some(*amount)
-                            } else {
-                                None
-                            }
-                        })
-                        .sum::<i64>();
-                    if healing <= 0 {
-                        return Err(Error("battle item needs a heal effect".into()));
-                    }
-                    self.actions(
-                        &[Action::Take {
-                            item: item.into(),
-                            count: 1,
-                        }],
-                        None,
-                    )?;
-                    let max = match &self.project.scenes[&self.scene].gameplay.events[&frame.event]
-                        [frame.pc]
-                    {
-                        Instruction::Battle { fighters, .. } => fighters[hero].hp,
-                        _ => unreachable!(),
-                    };
-                    battle.fighters[hero].hp = (battle.fighters[hero].hp + healing).min(max);
-                    log.push(format!("{}: +{} HP", definition.name, healing));
-                } else if let Some(t) = target
-                    && battle.fighters[t].hp > 0
-                {
-                    if let Some((index, _)) = &selected_move {
-                        battle.fighters[hero].moves[*index].pp -= 1;
-                    }
-                    let damage = (battle.fighters[i].attack * move_power / 100
-                        - battle.fighters[t].defense
-                        + self.random(0, 2)?)
-                    .max(1);
-                    battle.fighters[t].hp = (battle.fighters[t].hp - damage).max(0);
-                    log.push(format!(
-                        "{}의 {} → {}: {} 피해",
-                        battle.fighters[i].name, move_name, battle.fighters[t].name, damage
-                    ));
-                }
-            } else if battle.fighters[hero].hp > 0 {
-                let damage = (battle.fighters[i].attack - battle.fighters[hero].defense
-                    + self.random(0, 2)?)
-                .max(1);
-                let damage = if choice == "guard" {
-                    (damage / 2).max(1)
-                } else {
-                    damage
-                };
-                battle.fighters[hero].hp = (battle.fighters[hero].hp - damage).max(0);
-                log.push(format!(
-                    "{} → {}: {}",
-                    battle.fighters[i].name, battle.fighters[hero].name, damage
-                ));
-            }
-        }
-        battle.turn += 1;
-        battle.log = log.join("\n");
-        let won = !battle.fighters.iter().any(|f| f.enemy && f.hp > 0);
-        let lost = battle.fighters[hero].hp == 0;
-        self.emit(
-            "battle_turn",
-            None,
-            json!({"turn":battle.turn,"fighters":battle.fighters,"log":battle.log}),
-        );
-        if won || lost {
-            let hold = matches!(&self.project.scenes[&self.scene].gameplay.events[&frame.event][frame.pc],Instruction::Battle{stage:Some(stage),..} if stage.hold_result);
-            if hold {
-                battle.result = Some(won);
-                battle.log = if won {
-                    "승리! 실험을 완료했습니다.".into()
-                } else {
-                    "패배했습니다. 다시 도전할 수 있습니다.".into()
-                };
-                self.systems().events.last_mut().unwrap().battle = Some(battle);
-            } else {
-                self.finish_battle(won)?;
-            }
-        } else {
-            self.systems().events.last_mut().unwrap().battle = Some(battle);
-        }
-        Ok(())
-    }
-    fn finish_battle(&mut self, won: bool) -> Result<()> {
-        let frame = self.systems().events.last().unwrap().clone();
-        let effects =
-            match &self.project.scenes[&self.scene].gameplay.events[&frame.event][frame.pc] {
-                Instruction::Battle {
-                    victory, defeat, ..
-                } => {
-                    if won {
-                        victory.clone()
-                    } else {
-                        defeat.clone()
-                    }
-                }
-                _ => unreachable!(),
-            };
-        let f = self.systems().events.last_mut().unwrap();
-        f.battle = None;
-        f.waiting = false;
-        f.pc += 1;
-        self.actions(&effects, None)?;
-        self.emit("battle_result", None, json!({"victory":won}));
-        self.flat_event(if won { "battle_win" } else { "battle_loss" }, None)
     }
     pub(super) fn freeze_world_tick(&mut self) {
         for end in self.flatland.timers.values_mut() {
@@ -1304,10 +1146,17 @@ impl World {
             self.interact_held,
         );
         self.command_budget = 0;
-        let result = self
-            .actions(actions, None)
-            .and_then(|_| self.death_phase())
-            .and_then(|_| self.event_tick());
+        let view_only = !actions.is_empty()
+            && actions
+                .iter()
+                .all(|a| matches!(a, Action::View { .. } | Action::ViewReset));
+        let result = self.actions(actions, None).and_then(|_| {
+            if view_only {
+                Ok(())
+            } else {
+                self.death_phase().and_then(|_| self.event_tick())
+            }
+        });
         if result.is_err() {
             (
                 self.tick,
@@ -1418,12 +1267,32 @@ impl World {
         };
         let bad = || Error("invalid saved FlatLand systems".into());
         let g = &self.project.scenes[&self.scene].gameplay;
-        if s.view.as_ref().is_some_and(|id| !g.views.contains_key(id))
+        if s.gameplay_view
+            .as_ref()
+            .is_some_and(|v| !v.valid() || s.view.as_ref() != Some(&v.view_id))
+            || s.view.as_ref().is_some_and(|id| {
+                !self
+                    .project
+                    .scenes
+                    .values()
+                    .any(|scene| scene.gameplay.views.contains_key(id))
+            })
             || s.pace
                 .iter()
                 .any(|(id, speed)| !self.entities.contains_key(id) || !(12..=6000).contains(speed))
         {
             return Err(bad());
+        }
+        for (id, state) in &s.combatants {
+            let f = self
+                .project
+                .scenes
+                .values()
+                .find_map(|scene| scene.gameplay.combatants.get(id))
+                .ok_or_else(bad)?;
+            if !state.valid(f) {
+                return Err(bad());
+            }
         }
         if s.rng == 0
             || s.paused_ticks > self.tick
@@ -1562,12 +1431,16 @@ impl World {
             }
             previous = f.serial;
             self.validate_saved_actors(&f.parent)?;
-            if f.parent_view
-                .as_ref()
-                .is_some_and(|id| !g.views.contains_key(id))
-                || f.parent_pace
-                    .iter()
-                    .any(|(id, speed)| !f.parent.contains_key(id) || !(12..=6000).contains(speed))
+            if f.parent_view.as_ref().is_some_and(|id| {
+                !self
+                    .project
+                    .scenes
+                    .values()
+                    .any(|scene| scene.gameplay.views.contains_key(id))
+            }) || f
+                .parent_pace
+                .iter()
+                .any(|(id, speed)| !f.parent.contains_key(id) || !(12..=6000).contains(speed))
                 || f.parent_planes
                     .keys()
                     .chain(f.parent_elevation.keys())
@@ -1622,6 +1495,10 @@ impl World {
                 let Some(Instruction::Battle { fighters, .. }) = steps.get(f.pc) else {
                     return Err(bad());
                 };
+                let fighters: Vec<_> = fighters
+                    .iter()
+                    .map(|f| g.fighter(f))
+                    .collect::<Result<_>>()?;
                 if !f.waiting
                     || b.fighters.len() != fighters.len()
                     || b.turn > 1_000_000
@@ -1636,6 +1513,27 @@ impl World {
                 {
                     return Err(bad());
                 }
+                if b.fx.len() > 16
+                    || b.resolving_until > self.tick + 16 * super::battle_fx::FX_TICKS
+                {
+                    return Err(bad());
+                }
+                for (index, fx) in b.fx.iter().enumerate() {
+                    let max = fighters
+                        .iter()
+                        .find(|f| f.id == fx.target)
+                        .ok_or_else(bad)?
+                        .hp;
+                    if !fighters.iter().any(|f| f.id == fx.actor)
+                        || fx.start_tick != b.turn_tick + index as u64 * super::battle_fx::FX_TICKS
+                        || fx.before_hp < 0
+                        || fx.before_hp > max
+                        || fx.after_hp < 0
+                        || fx.after_hp > max
+                    {
+                        return Err(bad());
+                    }
+                }
                 let hero_alive = b.fighters.iter().any(|f| !f.enemy && f.hp > 0);
                 let enemy_alive = b.fighters.iter().any(|f| f.enemy && f.hp > 0);
                 if b.result
@@ -1644,10 +1542,21 @@ impl World {
                 {
                     return Err(bad());
                 }
-                for (actual, definition) in b.fighters.iter().zip(fighters) {
+                for (actual, definition) in b.fighters.iter().zip(&fighters) {
                     let mut expected = definition.clone();
                     if actual.hp < 0 || actual.hp > definition.hp {
                         return Err(bad());
+                    }
+                    if let Some(id) = &actual.combatant {
+                        let state = s.combatants.get(id).ok_or_else(bad)?;
+                        if state.current_hp != actual.hp
+                            || actual
+                                .moves
+                                .iter()
+                                .any(|m| state.remaining_pp.get(&m.id) != Some(&m.pp))
+                        {
+                            return Err(bad());
+                        }
                     }
                     expected.hp = actual.hp;
                     if actual.moves.len() != definition.moves.len() {
@@ -1695,6 +1604,7 @@ impl World {
                     .chain(e.actor.direction.iter())
                     .chain(e.actor.queued.iter())
                     .any(|v| !(-1..=1).contains(v))
+                || e.actor.input.as_ref().is_some_and(|i| !i.valid())
                 || e.actor.immune_until > self.tick + 1_000_000
             {
                 return Err(fail());

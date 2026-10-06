@@ -170,6 +170,11 @@ class GameLibrary {
               'step_walk',
               'battle_stage',
               'view_projection',
+    'billboard_projection',
+    'persistent_combatants',
+    'battle_fx',
+    'building_presentation',
+    'entity_defaults',
             ].contains(f),
           )) {
         throw const FormatException('unsupported required engine feature');

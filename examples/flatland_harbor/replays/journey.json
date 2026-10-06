@@ -1,0 +1,165 @@
+{
+  "schema_version": 2,
+  "ticks": 420,
+  "inputs": [
+    {
+      "start": 336,
+      "end": 352,
+      "actions": [
+        "right"
+      ]
+    }
+  ],
+  "commands": [
+    {
+      "op": "choice",
+      "tick": 0,
+      "id": "continue"
+    },
+    {
+      "op": "do",
+      "tick": 1,
+      "actions": [
+        {
+          "op": "view",
+          "mode": "depth"
+        }
+      ]
+    },
+    {
+      "op": "do",
+      "tick": 2,
+      "actions": [
+        {
+          "op": "goto",
+          "scene": "inside_home",
+          "spawn": "entry"
+        }
+      ]
+    },
+    {
+      "op": "do",
+      "tick": 3,
+      "actions": [
+        {
+          "op": "goto",
+          "scene": "항구",
+          "spawn": "entry"
+        }
+      ]
+    },
+    {
+      "op": "do",
+      "tick": 4,
+      "actions": [
+        {
+          "op": "event_scene",
+          "event": "battle"
+        }
+      ]
+    },
+    {
+      "op": "choice",
+      "tick": 5,
+      "id": "move:scratch:rival"
+    },
+    {
+      "op": "choice",
+      "tick": 114,
+      "id": "move:pulse:rival"
+    },
+    {
+      "op": "choice",
+      "tick": 223,
+      "id": "move:scratch:rival"
+    },
+    {
+      "op": "choice",
+      "tick": 332,
+      "id": "battle_continue"
+    },
+    {
+      "op": "do",
+      "tick": 333,
+      "actions": [
+        {
+          "op": "view",
+          "mode": "alternate"
+        }
+      ]
+    },
+    {
+      "op": "do",
+      "tick": 334,
+      "actions": [
+        {
+          "op": "view",
+          "mode": "top"
+        }
+      ]
+    },
+    {
+      "op": "do",
+      "tick": 335,
+      "actions": [
+        {
+          "op": "move",
+          "entity": "player",
+          "at": [
+            176,
+            272
+          ]
+        }
+      ]
+    },
+    {
+      "op": "do",
+      "tick": 374,
+      "actions": [
+        {
+          "op": "move",
+          "entity": "player",
+          "at": [
+            272,
+            240
+          ]
+        },
+        {
+          "op": "face",
+          "entity": "player",
+          "vector": [
+            1,
+            0
+          ]
+        },
+        {
+          "op": "attack",
+          "entity": "player",
+          "attack": "tap"
+        }
+      ]
+    },
+    {
+      "op": "do",
+      "tick": 385,
+      "actions": [
+        {
+          "op": "attack",
+          "entity": "player",
+          "attack": "tap"
+        }
+      ]
+    },
+    {
+      "op": "do",
+      "tick": 396,
+      "actions": [
+        {
+          "op": "attack",
+          "entity": "player",
+          "attack": "tap"
+        }
+      ]
+    }
+  ]
+}

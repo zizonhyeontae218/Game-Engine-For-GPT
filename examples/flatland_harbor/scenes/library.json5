@@ -1,0 +1,472 @@
+{
+  "schema_version": 2,
+  "background": [
+    35,
+    54,
+    56,
+    255
+  ],
+  "script": "data/공방.lua",
+  "sounds": {
+    "music": "audio/music.wav",
+    "hit": "audio/hit.wav",
+    "door": "audio/door.wav",
+    "quest": "audio/quest.wav"
+  },
+  "gameplay": {
+    "seed": 19,
+    "combatants": {
+      "seedling": {
+        "name": "연두",
+        "max_hp": 38,
+        "attack": 12,
+        "defense": 4,
+        "speed": 8,
+        "moves": [
+          {
+            "id": "scratch",
+            "name": "할퀴기",
+            "power": 100,
+            "pp": 25,
+            "fx": "slash"
+          },
+          {
+            "id": "pulse",
+            "name": "빛 씨앗",
+            "power": 130,
+            "pp": 12,
+            "fx": "projectile"
+          }
+        ]
+      }
+    },
+    "views": {
+      "top": {
+        "label": "TOP"
+      },
+      "depth": {
+        "label": "DEPTH",
+        "zoom": 115,
+        "tilt": 68,
+        "shear": 12
+      },
+      "alternate": {
+        "label": "ALTERNATE",
+        "zoom": 115,
+        "tilt": 72,
+        "shear": -12
+      }
+    },
+    "default_view": "top",
+    "items": {
+      "potion": {
+        "name": "회복약",
+        "stack": 99,
+        "use_actions": [
+          {
+            "op": "heal",
+            "entity": "$player",
+            "amount": 16
+          }
+        ]
+      },
+      "badge": {
+        "name": "공방 수료증",
+        "stack": 1
+      }
+    },
+    "quests": {
+      "workshop": {
+        "name": "바람항 공방 실습",
+        "objectives": {
+          "battle": 1,
+          "crate": 1,
+          "combat": 1
+        },
+        "rewards": [
+          {
+            "op": "give",
+            "item": "badge",
+            "count": 1
+          },
+          {
+            "op": "set",
+            "key": "harbor.completed",
+            "value": true
+          }
+        ]
+      }
+    },
+    "attacks": {
+      "tap": {
+        "damage": 4,
+        "range": 28,
+        "startup": 1,
+        "active": 1,
+        "recovery": 8
+      },
+      "bolt": {
+        "damage": 3,
+        "range": 8,
+        "projectile_speed": 160,
+        "lifetime": 80
+      }
+    },
+    "events": {
+      "view": [
+        {
+          "op": "choice",
+          "text": "시점은 화면 표현만 바꿉니다. 위치·높이·충돌은 그대로 유지됩니다.",
+          "options": [
+            {
+              "id": "top",
+              "text": "위에서 / TOP",
+              "next": 1,
+              "actions": [
+                {
+                  "op": "view",
+                  "mode": "top"
+                }
+              ]
+            },
+            {
+              "id": "depth",
+              "text": "경사 / DEPTH",
+              "next": 1,
+              "actions": [
+                {
+                  "op": "view",
+                  "mode": "depth"
+                }
+              ]
+            },
+            {
+              "id": "alternate",
+              "text": "반대 경사 / ALTERNATE",
+              "next": 1,
+              "actions": [
+                {
+                  "op": "view",
+                  "mode": "alternate"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "op": "return"
+        }
+      ],
+      "intro": [
+        {
+          "op": "say",
+          "text": "바람항 공방 / RC4\nZ: 대화·입장 / X: 시점 / C: 걷기·달리기\n건물·인물은 경사 시점에서도 서 있습니다. 연두의 HP와 PP는 전투 후에도 유지됩니다. 진료소에서만 명시적으로 회복합니다."
+        },
+        {
+          "op": "return"
+        }
+      ],
+      "battle": [
+        {
+          "op": "battle",
+          "stage": {
+            "hold_result": true
+          },
+          "fighters": [
+            {
+              "id": "hero",
+              "combatant": "seedling"
+            },
+            {
+              "id": "rival",
+              "name": "연습 구름",
+              "hp": 34,
+              "attack": 8,
+              "defense": 2,
+              "speed": 4,
+              "enemy": true
+            }
+          ],
+          "victory": [
+            {
+              "op": "give",
+              "item": "potion",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "op": "return"
+        }
+      ],
+      "tour": [
+        {
+          "op": "camera",
+          "at": [
+            0,
+            0
+          ]
+        },
+        {
+          "op": "wait",
+          "ticks": 45
+        },
+        {
+          "op": "return"
+        }
+      ]
+    },
+    "lua_events": [
+      "action.pace",
+      "tick"
+    ]
+  },
+  "rules": [
+    {
+      "id": "view",
+      "on": "action.view",
+      "actions": [
+        {
+          "op": "event_scene",
+          "event": "view"
+        }
+      ]
+    },
+    {
+      "id": "rival",
+      "on": "interact",
+      "target_tag": "rival",
+      "actions": [
+        {
+          "op": "event_scene",
+          "event": "battle"
+        }
+      ]
+    },
+    {
+      "id": "clinic",
+      "on": "interact",
+      "target_tag": "heal",
+      "actions": [
+        {
+          "op": "combatant_reset",
+          "combatant": "seedling"
+        },
+        {
+          "op": "say",
+          "text": "연두의 HP와 PP를 회복했습니다."
+        }
+      ]
+    },
+    {
+      "id": "tour",
+      "on": "interact",
+      "target_tag": "tour",
+      "actions": [
+        {
+          "op": "event_scene",
+          "event": "tour"
+        }
+      ]
+    },
+    {
+      "id": "attack",
+      "on": "action.attack",
+      "actions": [
+        {
+          "op": "attack",
+          "entity": "$player",
+          "attack": "bolt"
+        }
+      ]
+    },
+    {
+      "id": "battle_progress",
+      "on": "battle_win",
+      "once": true,
+      "when": {
+        "op": "quest_is",
+        "quest": "workshop",
+        "status": "active"
+      },
+      "actions": [
+        {
+          "op": "objective",
+          "quest": "workshop",
+          "objective": "battle"
+        }
+      ]
+    },
+    {
+      "id": "combat_progress",
+      "on": "death",
+      "target_tag": "dummy",
+      "once": true,
+      "actions": [
+        {
+          "op": "objective",
+          "quest": "workshop",
+          "objective": "combat"
+        }
+      ]
+    },
+    {
+      "id": "finish",
+      "on": "tick",
+      "once": true,
+      "when": {
+        "op": "all",
+        "conditions": [
+          {
+            "op": "quest_is",
+            "quest": "workshop",
+            "status": "active"
+          },
+          {
+            "op": "objectives_complete",
+            "quest": "workshop"
+          }
+        ]
+      },
+      "actions": [
+        {
+          "op": "quest",
+          "quest": "workshop",
+          "status": "completed"
+        },
+        {
+          "op": "sound",
+          "cue": "quest"
+        }
+      ]
+    }
+  ],
+  "id": "inside_library",
+  "spawns": {
+    "entry": [
+      144,
+      160
+    ]
+  },
+  "entities": [
+    {
+      "id": "player",
+      "position": [
+        144,
+        160
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "flatland": {
+        "body": "pass",
+        "step_walk": true,
+        "hp": 30,
+        "team": "hero",
+        "attack": "tap",
+        "visual_size": [
+          16,
+          24
+        ],
+        "anchor": [
+          0,
+          -8
+        ],
+        "animation": {
+          "frames": [
+            "assets/walker_down_0.png",
+            "assets/walker_down_1.png",
+            "assets/walker_down_0.png",
+            "assets/walker_down_2.png"
+          ],
+          "ticks": 7,
+          "directions": {
+            "up": [
+              "assets/walker_up_0.png",
+              "assets/walker_up_1.png",
+              "assets/walker_up_0.png",
+              "assets/walker_up_2.png"
+            ],
+            "left": [
+              "assets/walker_left_0.png",
+              "assets/walker_left_1.png",
+              "assets/walker_left_0.png",
+              "assets/walker_left_2.png"
+            ],
+            "right": [
+              "assets/walker_right_0.png",
+              "assets/walker_right_1.png",
+              "assets/walker_right_0.png",
+              "assets/walker_right_2.png"
+            ]
+          }
+        }
+      },
+      "sprite": {
+        "texture": "assets/walker_down_0.png",
+        "layer": 1
+      },
+      "player": {
+        "speed": 68
+      }
+    },
+    {
+      "id": "exit",
+      "position": [
+        144,
+        176
+      ],
+      "size": [
+        16,
+        16
+      ],
+      "flatland": {
+        "body": "pass"
+      },
+      "trigger": {
+        "scene": "항구",
+        "spawn": "library_exit"
+      }
+    }
+  ],
+  "map": {
+    "cell": 16,
+    "rows": [
+      "####################",
+      "#..................#",
+      "#..................#",
+      "#..................#",
+      "#..................#",
+      "#..................#",
+      "#..................#",
+      "#..................#",
+      "#..................#",
+      "#..................#",
+      "#..................#",
+      "#..................#",
+      "#..................#",
+      "#..................#",
+      "####################"
+    ],
+    "tiles": {
+      "#": {
+        "color": [
+          38,
+          69,
+          66,
+          255
+        ],
+        "solid": true
+      },
+      ".": {
+        "color": [
+          199,
+          181,
+          146,
+          255
+        ]
+      }
+    }
+  }
+}

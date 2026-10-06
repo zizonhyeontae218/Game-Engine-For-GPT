@@ -31,7 +31,7 @@ class _BattleScreenState extends State<BattleScreen> {
   String? selectedTarget;
   double healthWidth = 220;
   Widget health(Map f) {
-    final hp = (f['hp'] as num).toDouble();
+    final hp = ((f['display_hp'] ?? f['hp']) as num).toDouble();
     final max = (f['hp_max'] as num).toDouble();
     return Container(
       constraints: BoxConstraints(maxWidth: healthWidth),
@@ -76,6 +76,7 @@ class _BattleScreenState extends State<BattleScreen> {
         ? selectedTarget
         : targets.firstOrNull?['id'];
     final result = widget.battle['result'];
+    final locked = widget.battle['presentation_locked'] == true;
     final moves = options
         .where(
           (o) =>
@@ -100,7 +101,7 @@ class _BattleScreenState extends State<BattleScreen> {
               style: const TextStyle(fontWeight: FontWeight.w900),
             ),
             const SizedBox(height: 8),
-            Text(widget.battle['text'] as String? ?? ''),
+            Text(locked ? '공격 연출 중…' : widget.battle['text'] as String? ?? ''),
             const Divider(color: ink, thickness: 2),
             if (targets.length > 1)
               Wrap(
@@ -127,10 +128,12 @@ class _BattleScreenState extends State<BattleScreen> {
                           : size.maxWidth,
                       child: FilledButton(
                         key: Key('battle-${o['id']}'),
-                        onPressed: () {
-                          setState(() => bag = false);
-                          widget.onChoose(o['id'] as String);
-                        },
+                        onPressed: locked
+                            ? null
+                            : () {
+                                setState(() => bag = false);
+                                widget.onChoose(o['id'] as String);
+                              },
                         child: Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8),
                           child: Text(
@@ -145,7 +148,7 @@ class _BattleScreenState extends State<BattleScreen> {
             if (bag && items.isEmpty) const Text('사용할 아이템이 없습니다.'),
             if (result == null)
               TextButton(
-                onPressed: () => setState(() => bag = !bag),
+                onPressed: locked ? null : () => setState(() => bag = !bag),
                 child: Text(bag ? '← 기술' : '가방 / BAG'),
               ),
             OutlinedButton(

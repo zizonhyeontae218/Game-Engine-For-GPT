@@ -81,6 +81,7 @@ pub fn play(world: &mut World, options: PlayOptions<'_>) -> Result<()> {
             accumulated = Duration::ZERO;
         }
         let live = Input {
+            direction: None,
             left: window.is_key_down(Key::A) || window.is_key_down(Key::Left),
             right: window.is_key_down(Key::D) || window.is_key_down(Key::Right),
             up: window.is_key_down(Key::W) || window.is_key_down(Key::Up),

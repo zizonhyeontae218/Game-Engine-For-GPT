@@ -59,45 +59,36 @@ fn walking_releases_at_one_cell_faces_blocked_objects_and_uses_authored_pace() {
     assert_eq!(w.entities["player"].position.y, 320 * 60 + 72);
 }
 #[test]
-fn view_choice_retains_projection_plane_and_elevation_and_rejects_occupied_lower_plane() {
+fn explicit_view_changes_are_presentation_only_and_save_projection() {
     let mut w = world();
+    let before = w.entities["player"].clone();
     let top = render(&w.project, &w.snapshot(), false).unwrap();
-    command(&mut w, json!([{"op":"event_scene","event":"view"}]));
-    w.choose("depth").unwrap();
+    for mode in ["depth", "balcony", "plan", "depth"] {
+        command(&mut w, json!([{"op":"view","mode":mode}]));
+        assert_eq!(
+            serde_json::to_value(&before).unwrap(),
+            serde_json::to_value(&w.entities["player"]).unwrap()
+        );
+        assert_eq!(
+            w.snapshot()
+                .entities
+                .iter()
+                .find(|e| e.id == "player")
+                .unwrap()
+                .flatland
+                .as_ref()
+                .unwrap()["plane"],
+            0
+        );
+    }
     let depth = render(&w.project, &w.snapshot(), false).unwrap();
-    assert_ne!(top.rgba, depth.rgba);
+    assert_ne!(top, depth);
+    let dir = tempfile::tempdir().unwrap();
+    let path = dir.path().join("save.json");
+    w.save(&path).unwrap();
+    let resumed = World::with_save(Project::load(&town()).unwrap(), Some(&path)).unwrap();
     assert_eq!(
         depth,
-        render(&w.project, &w.render_snapshot(), false).unwrap()
-    );
-    command(&mut w, json!([{"op":"event_scene","event":"view"}]));
-    w.choose("balcony").unwrap();
-    assert_eq!(
-        w.snapshot()
-            .entities
-            .iter()
-            .find(|e| e.id == "player")
-            .unwrap()
-            .flatland
-            .as_ref()
-            .unwrap()["plane"],
-        1
-    );
-    command(
-        &mut w,
-        json!([{"op":"move","entity":"player","at":[304,144]}]),
-    );
-    let before = w.snapshot();
-    let blocked: Vec<Action> =
-        serde_json::from_value(json!([{"op":"plane","entity":"player","plane":0}])).unwrap();
-    assert!(w.command(&blocked).is_err());
-    assert_eq!(before, w.snapshot());
-    let dir = tempfile::tempdir().unwrap();
-    let save = dir.path().join("save.json");
-    w.save(&save).unwrap();
-    let resumed = World::with_save(Project::load(&town()).unwrap(), Some(&save)).unwrap();
-    assert_eq!(
-        render(&w.project, &w.snapshot(), false).unwrap(),
         render(&resumed.project, &resumed.snapshot(), false).unwrap()
     );
 }

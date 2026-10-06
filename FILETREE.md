@@ -123,6 +123,7 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `client/test/library_test.dart` — Repository file; inspect only when relevant to the task.
 - `client/test/player_test.dart` — Repository file; inspect only when relevant to the task.
 - `client/test/polish_test.dart` — Repository file; inspect only when relevant to the task.
+- `client/test/rc4_test.dart` — Repository file; inspect only when relevant to the task.
 - `client/test/signal_yard_test.dart` — Repository file; inspect only when relevant to the task.
 - `client/test/widget_test.dart` — Repository file; inspect only when relevant to the task.
 - `client/windows/.gitignore` — Repository file; inspect only when relevant to the task.
@@ -155,19 +156,29 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `crates/ge4g-platform/src/audio.rs` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-platform/src/lib.rs` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-project/Cargo.toml` — Engine source, package configuration or behavioral verification.
+- `crates/ge4g-project/src/building.rs` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-project/src/flatland.rs` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-project/src/gameplay.rs` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-project/src/lib.rs` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-project/src/patch.rs` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-render2d/Cargo.toml` — Engine source, package configuration or behavioral verification.
+- `crates/ge4g-render2d/src/battle_fx.rs` — Engine source, package configuration or behavioral verification.
+- `crates/ge4g-render2d/src/building.rs` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-render2d/src/lib.rs` — Engine source, package configuration or behavioral verification.
+- `crates/ge4g-render2d/src/projection.rs` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-runtime/Cargo.toml` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-runtime/examples/presentation_bench.rs` — Engine source, package configuration or behavioral verification.
+- `crates/ge4g-runtime/src/battle.rs` — Engine source, package configuration or behavioral verification.
+- `crates/ge4g-runtime/src/battle_fx.rs` — Engine source, package configuration or behavioral verification.
+- `crates/ge4g-runtime/src/combatants.rs` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-runtime/src/flatland.rs` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-runtime/src/gameplay.rs` — Engine source, package configuration or behavioral verification.
+- `crates/ge4g-runtime/src/input.rs` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-runtime/src/lib.rs` — Engine source, package configuration or behavioral verification.
+- `crates/ge4g-runtime/src/view.rs` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-runtime/tests/flatland.rs` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-runtime/tests/polish.rs` — Engine source, package configuration or behavioral verification.
+- `crates/ge4g-runtime/tests/rc4.rs` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-runtime/tests/systems.rs` — Engine source, package configuration or behavioral verification.
 - `docs/AGENT_WORKFLOW.md` — Task-specific context/tool discipline guidance.
 - `docs/ARCHITECTURE.md` — Basement architecture and subsystem boundaries.
@@ -194,11 +205,44 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `docs/exec-plans/completed/flatland.md` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/completed/flutter-client.md` — Repository file; inspect only when relevant to the task.
 - `docs/releases/flatland-rc2.md` — Repository file; inspect only when relevant to the task.
+- `docs/releases/flatland-rc3.md` — Repository file; inspect only when relevant to the task.
+- `examples/basement_demo/asset-licenses.json` — Playable reference demo data, replay or inspected framebuffer golden.
 - `examples/basement_demo/ge4g.toml` — Playable reference demo data, replay or inspected framebuffer golden.
 - `examples/basement_demo/golden/room_b.png` — Playable reference demo data, replay or inspected framebuffer golden.
 - `examples/basement_demo/replays/journey.json` — Playable reference demo data, replay or inspected framebuffer golden.
 - `examples/basement_demo/scenes/room_a.json5` — Playable reference demo data, replay or inspected framebuffer golden.
 - `examples/basement_demo/scenes/room_b.json5` — Playable reference demo data, replay or inspected framebuffer golden.
+- `examples/flatland_harbor/README.md` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_harbor/asset-licenses.json` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_harbor/assets/walker_down_0.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_harbor/assets/walker_down_1.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_harbor/assets/walker_down_2.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_harbor/assets/walker_left_0.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_harbor/assets/walker_left_1.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_harbor/assets/walker_left_2.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_harbor/assets/walker_right_0.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_harbor/assets/walker_right_1.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_harbor/assets/walker_right_2.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_harbor/assets/walker_up_0.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_harbor/assets/walker_up_1.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_harbor/assets/walker_up_2.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_harbor/assets/벽면.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_harbor/assets/설명.json` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_harbor/assets/지붕.png` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_harbor/audio/door.wav` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_harbor/audio/hit.wav` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_harbor/audio/music.wav` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_harbor/audio/quest.wav` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_harbor/controls/bindings.json` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_harbor/controls/layouts.json` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_harbor/data/harbor.lua` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_harbor/data/공방.lua` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_harbor/ge4g.toml` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_harbor/replays/journey.json` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_harbor/scenes/home.json5` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_harbor/scenes/library.json5` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_harbor/scenes/workshop.json5` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_harbor/scenes/항구.json5` — Repository file; inspect only when relevant to the task.
 - `examples/flatland_nuvema/README.md` — Repository file; inspect only when relevant to the task.
 - `examples/flatland_nuvema/assets/LICENSE.txt` — Repository file; inspect only when relevant to the task.
 - `examples/flatland_nuvema/assets/battle_field.png` — Repository file; inspect only when relevant to the task.
@@ -285,6 +329,7 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `examples/flatland_nuvema/scenes/lab.json5` — Repository file; inspect only when relevant to the task.
 - `examples/flatland_nuvema/scenes/town.json5` — Repository file; inspect only when relevant to the task.
 - `examples/flatland_pacman/README.md` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_pacman/asset-licenses.json` — Repository file; inspect only when relevant to the task.
 - `examples/flatland_pacman/assets/LICENSE-CC0.txt` — Repository file; inspect only when relevant to the task.
 - `examples/flatland_pacman/assets/Pacman-Icon.png` — Repository file; inspect only when relevant to the task.
 - `examples/flatland_pacman/assets/Pacman-Icon.svg` — Repository file; inspect only when relevant to the task.
@@ -374,6 +419,7 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `examples/flatland_pacman/maze.json5` — Repository file; inspect only when relevant to the task.
 - `examples/flatland_pacman/replays/journey.json` — Repository file; inspect only when relevant to the task.
 - `examples/flatland_signal_yard/README.md` — Repository file; inspect only when relevant to the task.
+- `examples/flatland_signal_yard/asset-licenses.json` — Repository file; inspect only when relevant to the task.
 - `examples/flatland_signal_yard/assets/LICENSE-CC0.txt` — Repository file; inspect only when relevant to the task.
 - `examples/flatland_signal_yard/assets/canopy.png` — Repository file; inspect only when relevant to the task.
 - `examples/flatland_signal_yard/assets/crate.png` — Repository file; inspect only when relevant to the task.
@@ -418,6 +464,7 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `scripts/context_benchmark.py` — Repository file; inspect only when relevant to the task.
 - `scripts/filetree.py` — FILETREE update/lint helper.
 - `scripts/flatland_task_benchmark.py` — Repository file; inspect only when relevant to the task.
+- `scripts/generate_harbor_demo.py` — Repository file; inspect only when relevant to the task.
 - `scripts/generate_nuvema_assets.py` — Repository file; inspect only when relevant to the task.
 - `scripts/interactive_smoke.py` — Real window/headless replay equivalence check.
 - `scripts/make_signal_yard_assets.py` — Repository file; inspect only when relevant to the task.
@@ -425,4 +472,5 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `scripts/package.py` — Bundle a built executable, demo and user documentation.
 - `scripts/sign_android.py` — Repository file; inspect only when relevant to the task.
 - `scripts/verify_audio_adapter.py` — Repository file; inspect only when relevant to the task.
+- `scripts/windows_utf8_regression.py` — Repository file; inspect only when relevant to the task.
 - `templates/EXECPLAN_TEMPLATE.md` — Template for checked-in execution plans.

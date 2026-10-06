@@ -68,10 +68,18 @@ Android user acceptance remains separate; never infer it from CI/screenshots.
 
 ## Progress
 
-Completed locally: support policy recorded in AGENTS/client/launcher docs; removed
-Linux/iOS client jobs and Linux archive publication; Windows owns Flutter checks.
-Next: verify/publish policy slice, then implement view and projection milestone.
-No rc4 gameplay changes or rc4 candidate binaries exist yet.
+Implemented locally: ground/upright composition, persistent resolved view and explicit
+reset, scoped camera return, deterministic newest-direction input, persistent roster
+and typed battle FX, locked feedback and HP interpolation, semantic partial-surface
+building fallback, minimal actor/shadow/health/projectile defaults, original Harbor
+sample with Korean resource/scene names and asset manifests. Runtime gameplay.rs is
+smaller than rc3; battle/roster/FX/view/input have separate modules. Schema1, maze and
+Signal Yard remain regression fixtures. Flutter version rc.4+6, ABI1 unchanged.
+
+Next: publish implementation to main for native Windows/Android CI; inspect actual
+Windows portrait/landscape view/battle captures, resolve CI failures, sign code6 APK,
+verify its previous certificate, and deliver separate rc4 Drive artifacts. Do not claim
+candidate completion or physical acceptance before those gates pass.
 
 ## Verification log
 
@@ -79,6 +87,12 @@ No rc4 gameplay changes or rc4 candidate binaries exist yet.
 Windows runs Flutter analysis/tests; Android retains APK builds; engine workflow has
 no Linux archive publication. `git diff --check` and FILETREE update/lint pass.
 No suspended client builds were run. Hosted Windows/Android CI remains pending.
+2026-10-06: local Rust workspace tests and strict clippy passed during implementation;
+Flutter static analysis passes. Harbor420-tick deterministic journey completes battle,
+crate/dummy objectives and reward, exact save/reload, RGBA
+5445b0b8855fb54f9da20f1825fb547528b816d0e380d66c8cf06a8faa379aef.
+New rc4 integration cases cover view/scene/cutscene/save, input, persistent HP/PP,
+feedback locking/skip, exactly-once resume, fainting/heal/reset/reward duplication.
 
 ## Handoff
 

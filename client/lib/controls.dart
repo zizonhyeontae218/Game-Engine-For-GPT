@@ -301,6 +301,9 @@ class GameControls {
 /// Pointer ownership, key state and joystick state merge into one normalized input.
 class InputRouter extends ChangeNotifier {
   bool _stickHorizontal = true;
+  final Map<String, int> _pressedAt = {};
+  int _inputClock = 0;
+  String? _stickDirection;
   GameControls controls;
   final Map<String, Set<int>> _buttons = {};
   final Set<String> _keys = {};
@@ -309,6 +312,7 @@ class InputRouter extends ChangeNotifier {
   bool isPressed(String id) => _buttons[id]?.isNotEmpty ?? false;
   void button(String id, int pointer, bool down) {
     if (down) {
+      if (!isPressed(id)) _pressedAt["button:$id"] = ++_inputClock;
       (_buttons[id] ??= {}).add(pointer);
     } else {
       _buttons[id]?.remove(pointer);
@@ -317,6 +321,7 @@ class InputRouter extends ChangeNotifier {
   }
 
   void key(String code, bool down) {
+    if (down && !_keys.contains(code)) _pressedAt["key:$code"] = ++_inputClock;
     down ? _keys.add(code) : _keys.remove(code);
     notifyListeners();
   }
@@ -336,10 +341,20 @@ class InputRouter extends ChangeNotifier {
         _stickHorizontal = true;
       }
     }
+    final dead = controls.active.joystick.deadZone;
+    final direction = _stickHorizontal
+        ? (stickX.abs() > dead ? (stickX < 0 ? 'left' : 'right') : null)
+        : (stickY.abs() > dead ? (stickY < 0 ? 'up' : 'down') : null);
+    if (direction != _stickDirection) {
+      _stickDirection = direction;
+      _pressedAt['stick'] = ++_inputClock;
+    }
     notifyListeners();
   }
 
   void clear() {
+    _pressedAt.clear();
+    _stickDirection = null;
     _buttons.clear();
     _keys.clear();
     stickX = 0;
@@ -348,6 +363,8 @@ class InputRouter extends ChangeNotifier {
   }
 
   void activate(GameControls candidate) {
+    _pressedAt.clear();
+    _stickDirection = null;
     _buttons.clear();
     _keys.clear();
     stickX = 0;
@@ -380,7 +397,40 @@ class InputRouter extends ChangeNotifier {
     if (sy > dead) actions.addAll(binding.joystick['down']!);
     const builtins = {'left', 'right', 'up', 'down', 'interact'};
     final named = actions.difference(builtins).toList()..sort();
+    final ordered = <String, int>{};
+    const directions = {
+      'left': [-1, 0],
+      'right': [1, 0],
+      'up': [0, -1],
+      'down': [0, 1],
+    };
+    void consider(Iterable<String> names, int order) {
+      for (final name in names) {
+        if (directions.containsKey(name) && order >= (ordered[name] ?? -1)) {
+          ordered[name] = order;
+        }
+      }
+    }
+
+    for (final entry in _buttons.entries) {
+      if (entry.value.isNotEmpty) {
+        consider(
+          binding.buttons[entry.key] ?? [],
+          _pressedAt['button:${entry.key}'] ?? 0,
+        );
+      }
+    }
+    for (final key in _keys) {
+      consider(binding.keys[key] ?? [], _pressedAt['key:$key'] ?? 0);
+    }
+    if (_stickDirection != null && actions.contains(_stickDirection)) {
+      consider([_stickDirection!], _pressedAt['stick'] ?? 0);
+    }
+    final sorted = ordered.keys.toList()
+      ..sort((a, b) => ordered[a]!.compareTo(ordered[b]!));
     return {
+      if (controls.active.joystick.cardinal && sorted.isNotEmpty)
+        'direction': directions[sorted.last],
       for (final name in builtins) name: actions.contains(name),
       'actions': named,
     };

@@ -70,10 +70,19 @@ return before world transitions. Save content revision prevents silent schema/co
 ## FlatLand rc3 presentation and village control additions
 
 - Optional actor `step_walk`: held cardinal input queues a cell; release finishes that cell then stops; blocked inputs change facing. Legacy grid steering unchanged.
-- Systems `view`, `pace`: saved preset ID and per-actor px/s overrides. Event parent_view/parent_pace restore on return; `return.retain_view=true` retains selected view/planes/elevation.
+- Systems `view`, `pace`: saved preset ID and per-actor px/s overrides. Historical rc3 semantics (superseded by rc4): parent_view/retain_view coupled view and planes. rc4 view state is persistent and cannot change collision/elevation. parent_pace and scoped camera restore separately.
 - Gameplay `views`, `default_view`, `lua_events`: bounded affine CPU camera presets and optional Lua event whitelist (empty preserves existing hooks).
 - Battle fighters `sprite`, `back_sprite`, `moves{id,name,power,pp}`; save stores remaining PP. BattleState `turn_tick`, `previous_hp`, `result` drive deterministic hit feedback/held result; result continue executes reward once.
 - Battle stage `background`, `hold_result`; native waiting exposes hp_max, option group/target/pp, result and animation_ticks. Client HUD consumes state; simulation remains native.
 - Layout optional joystick.cardinal, defaultfalse: one axis plus12% hysteresis. No changes to existing layout defaults.
 - Feature requirements `step_walk`, `battle_stage`, `view_projection` reject older clients explicitly.
 - Nuvema state town.running/starter/completed/viewed/won/crate; game ID demo.flatland.nuvema, Android versionCode5, unchanged pinned certificate.
+
+## FlatLand rc4 stable state
+
+- Systems gameplay_view: resolved view_id/zoom/tilt/shear; view_initialized preserves explicit reset across scenes. Systems.view remains a compatible preset ID.
+- Systems combatants.<id>: current_hp and remaining_pp.<move>; explicit persistent fighters only.
+- BattleState.fx: typed actor/target/preset/start_tick/before_hp/after_hp events; resolving_until locks cosmetic input, never combat math.
+- ActorState.input: optional deterministic held-key priority for step_walk; core Input.direction is an optional most-recent cardinal intent. Maze steering remains separate.
+- Actor.building: semantic footprint/height/material/roof/facing and optional roof/facade/side surfaces. Sprite.projection separates ground/upright.
+- Public sample game ID demo.flatland.harbor, scene 항구, state harbor.running/completed/crate. Android application ID/certificate unchanged; versionCode6.

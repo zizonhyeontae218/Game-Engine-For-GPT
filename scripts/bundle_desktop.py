@@ -32,11 +32,11 @@ def main():
     shutil.copy2(Path(__file__).resolve().parents[1] / 'packaging/arch/ge4g.png', args.out / 'ge4g.png')
     (args.out / 'data').mkdir(exist_ok=True)
     shutil.copy2(args.game, args.out / 'data/basement_game.ge4g')
-    (args.out / 'client_mode.json').write_text(json.dumps({'schema_version': 1, 'mode': 'embedded', 'game': 'data/basement_game.ge4g', 'allow_library': False}, indent=2) + '\n')
-    (args.out / 'PLAY.txt').write_text('GE4G / GameEngineForGPT — Basement / FlatLand\n\nStart ge4g_client' + ('.exe' if args.platform == 'windows' else '') + '. Your game starts directly.\nJoystick / WASD / arrows: move. Z / E: interact. X, C, Space: game actions.\nUse the in-game control editor to switch or edit per-game JSON profiles.\nSaves and controls live in your user application data directory.\n')
+    (args.out / 'client_mode.json').write_text(json.dumps({'schema_version': 1, 'mode': 'embedded', 'game': 'data/basement_game.ge4g', 'allow_library': False}, indent=2) + '\n', encoding='utf-8')
+    (args.out / 'PLAY.txt').write_text('GE4G / GameEngineForGPT — Basement / FlatLand\n\nStart ge4g_client' + ('.exe' if args.platform == 'windows' else '') + '. Your game starts directly.\nJoystick / WASD / arrows: move. Z / E: interact. X, C, Space: game actions.\nUse the in-game control editor to switch or edit per-game JSON profiles.\nSaves and controls live in your user application data directory.\n', encoding='utf-8')
     # Ordinary Linux desktop dependencies are supplied by Arch; the engine is embedded.
     if args.platform == 'linux':
-        (args.out / 'ge4g.desktop').write_text('[Desktop Entry]\nType=Application\nName=' + manifest['name'].replace('\n', ' ') + '\nExec=ge4g_client\nIcon=ge4g\nTerminal=false\nCategories=Game;\n')
+        (args.out / 'ge4g.desktop').write_text('[Desktop Entry]\nType=Application\nName=' + manifest['name'].replace('\n', ' ') + '\nExec=ge4g_client\nIcon=ge4g\nTerminal=false\nCategories=Game;\n', encoding='utf-8')
         (args.out / 'ge4g_client').chmod(0o755)
         archive = Path(str(args.out) + '.tar.gz')
         with tarfile.open(archive, 'w:gz') as target:

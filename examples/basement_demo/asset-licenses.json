@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "assets": [
+    {
+      "file": "golden/room_b.png",
+      "source_url": "https://github.com/zizonhyeontae218/Game-Engine-For-GPT/blob/main/crates/ge4g-render2d/src/lib.rs",
+      "author": "GE4G project",
+      "license": "CC0-1.0",
+      "license_version": "1.0",
+      "modification_allowed": true,
+      "attribution_required": false,
+      "modified": false,
+      "sha256": "151e9762ad1a0948ec8094304de150c02a4f45c60f096184d1318caddc80f247",
+      "provenance": "Original GE4G generated artwork/audio or canonical engine golden; no externally sourced artwork."
+    }
+  ]
+}

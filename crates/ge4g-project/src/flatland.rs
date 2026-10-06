@@ -37,6 +37,8 @@ pub enum BodyMode {
 #[derive(Debug, Clone, Default, Serialize, Deserialize, schemars::JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct Actor {
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub building: Option<crate::building::Building>,
     #[serde(default)]
     pub step_walk: bool,
     #[serde(default)]
@@ -174,6 +176,14 @@ pub enum Condition {
 #[derive(Debug, Clone, Serialize, Deserialize, schemars::JsonSchema)]
 #[serde(tag = "op", rename_all = "snake_case", deny_unknown_fields)]
 pub enum Action {
+    ViewReset,
+    CombatantHeal {
+        combatant: String,
+        amount: i64,
+    },
+    CombatantReset {
+        combatant: String,
+    },
     View {
         mode: Option<String>,
     },

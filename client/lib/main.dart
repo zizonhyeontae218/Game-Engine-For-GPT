@@ -7,6 +7,7 @@ import 'dart:ui' as ui;
 
 import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:path/path.dart' as p;
@@ -20,6 +21,8 @@ import 'touch_controls.dart';
 import 'game_popup.dart';
 import 'manual_orientation.dart';
 import 'game_viewport.dart';
+
+final rc4CaptureKey = GlobalKey();
 
 Future<void> main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,6 +42,8 @@ class GE4GApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) => MaterialApp(
     title: 'GE4G / GameEngineForGPT',
+    builder: (context, child) =>
+        RepaintBoundary(key: rc4CaptureKey, child: child!),
     debugShowCheckedModeBanner: false,
     theme: ThemeData(
       useMaterial3: true,
@@ -174,6 +179,7 @@ class _ClientHomeState extends State<ClientHome>
       if (!mounted) return;
       setState(() => ready = true);
       focus.requestFocus();
+      if (widget.arguments.contains('--rc4-evidence')) unawaited(rc4Evidence());
       if (widget.arguments.contains('--smoke-test')) unawaited(smoke());
     } catch (error) {
       if (mounted) {
@@ -876,6 +882,138 @@ class _ClientHomeState extends State<ClientHome>
       ),
     ),
   );
+
+  /// Windows release acceptance: real Flutter UI + canonical native frames.
+  Future<void> rc4Evidence() async {
+    try {
+      if (!embedded || player?.session == null) {
+        throw StateError('embedded game required');
+      }
+      ticker.stop();
+      final live = player!;
+      await live.open(live.game!);
+      live.setPaused(true);
+      if (widget.arguments.contains('--capture-landscape')) {
+        await orientation.toggle();
+      }
+      final output = Directory(Platform.environment['GE4G_SMOKE_OUTPUT']!);
+      await output.create(recursive: true);
+      void request(Map<String, dynamic> data) {
+        live.status = live.engine.request({'session': live.session, ...data});
+        live.popup = live.status['waiting'] is Map
+            ? Map<String, dynamic>.from(live.status['waiting'])
+            : null;
+        live.popupVisible = live.popup != null;
+      }
+
+      Future<void> capture(String name) async {
+        await Future<void>.delayed(const Duration(milliseconds: 100));
+        await live.refreshFrame();
+        if (mounted) setState(() {});
+        SchedulerBinding.instance.scheduleFrame();
+        await SchedulerBinding.instance.endOfFrame;
+        await Future<void>.delayed(const Duration(milliseconds: 100));
+        final boundary =
+            rc4CaptureKey.currentContext!.findRenderObject()
+                as RenderRepaintBoundary;
+        final uiImage = await boundary.toImage(pixelRatio: 1);
+        final uiBytes = await uiImage.toByteData(
+          format: ui.ImageByteFormat.png,
+        );
+        await File(p.join(output.path, '$name-ui.png'))
+            .writeAsBytes(uiBytes!.buffer.asUint8List());
+        uiImage.dispose();
+        final frame = await live.image!.toByteData(
+          format: ui.ImageByteFormat.png,
+        );
+        await File(p.join(output.path, '$name-frame.png'))
+            .writeAsBytes(frame!.buffer.asUint8List());
+        final snapshot = live.engine.request({
+          'op': 'observe',
+          'session': live.session,
+        })['snapshot'];
+        await File(p.join(output.path, '$name.json'))
+            .writeAsString(jsonEncode(snapshot), encoding: utf8);
+      }
+
+      request({'op': 'choose', 'choice': 'continue'});
+      request({
+        'op': 'command',
+        'actions': [
+          {
+            'op': 'move',
+            'entity': 'player',
+            'at': [256, 176],
+          },
+        ],
+      });
+      await capture('01-top');
+      final before = live.engine.request({
+        'op': 'observe',
+        'session': live.session,
+      })['snapshot']['entities'];
+      request({
+        'op': 'command',
+        'actions': [
+          {'op': 'view', 'mode': 'depth'},
+        ],
+      });
+      await capture('02-depth');
+      final after = live.engine.request({
+        'op': 'observe',
+        'session': live.session,
+      })['snapshot']['entities'];
+      if (jsonEncode(before) != jsonEncode(after)) {
+        throw StateError('view mutated actors');
+      }
+      request({
+        'op': 'command',
+        'actions': [
+          {'op': 'event_scene', 'event': 'battle'},
+        ],
+      });
+      await capture('03-battle-before');
+      request({'op': 'choose', 'choice': 'move:scratch:rival'});
+      for (final entry in <String, int>{
+        '04-battle-effect': 12,
+        '05-battle-impact': 12,
+        '06-battle-hp': 12,
+        '07-battle-settle': 72,
+      }.entries) {
+        var remaining = entry.value;
+        while (remaining > 0) {
+          final ticks = remaining > 15 ? 15 : remaining;
+          request({'op': 'advance', 'ticks': ticks});
+          remaining -= ticks;
+        }
+        await capture(entry.key);
+      }
+      await live.save();
+      final saved = await library!
+          .save(live.game!.id)
+          .readAsString(encoding: utf8);
+      await File(p.join(output.path, 'battle-save.json'))
+          .writeAsString(saved, encoding: utf8);
+      request({'op': 'choose', 'choice': 'move:pulse:rival'});
+      request({'op': 'advance', 'ticks': 12});
+      await capture('08-projectile');
+      await File(p.join(output.path, 'result.json')).writeAsString(
+        jsonEncode({
+          'ok': true,
+          'game_id': live.game!.id,
+          'view_entities_equal': true,
+          'platform': Platform.operatingSystem,
+          'physical_device_acceptance': false,
+        }),
+        encoding: utf8,
+      );
+      exit(0);
+    } catch (error) {
+      stderr.writeln('RC4 rendered acceptance failed: $error');
+      exit(1);
+    }
+  }
+
   Future<void> smoke() async {
     try {
       if (!embedded || player?.session == null) {

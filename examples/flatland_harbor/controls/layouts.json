@@ -1,0 +1,80 @@
+{
+  "schema_version": 2,
+  "active_profile": "default",
+  "profiles": [
+    {
+      "id": "default",
+      "name": "기본 / RIGHT HANDED",
+      "joystick": {
+        "x": 0.18,
+        "y": 0.76,
+        "size": 0.38,
+        "dead_zone": 0.22,
+        "cardinal": true
+      },
+      "buttons": [
+        {
+          "id": "z",
+          "label": "대화",
+          "x": 0.77,
+          "y": 0.73,
+          "width": 0.19,
+          "height": 0.17
+        },
+        {
+          "id": "x",
+          "label": "시점",
+          "x": 0.9,
+          "y": 0.61,
+          "width": 0.19,
+          "height": 0.17
+        },
+        {
+          "id": "c",
+          "label": "걷기",
+          "x": 0.9,
+          "y": 0.85,
+          "width": 0.19,
+          "height": 0.17
+        }
+      ]
+    },
+    {
+      "id": "left_handed",
+      "name": "왼손 / LEFT HANDED",
+      "joystick": {
+        "x": 0.82,
+        "y": 0.76,
+        "size": 0.38,
+        "dead_zone": 0.22,
+        "cardinal": true
+      },
+      "buttons": [
+        {
+          "id": "z",
+          "label": "대화",
+          "x": 0.23,
+          "y": 0.73,
+          "width": 0.19,
+          "height": 0.17
+        },
+        {
+          "id": "x",
+          "label": "시점",
+          "x": 0.1,
+          "y": 0.61,
+          "width": 0.19,
+          "height": 0.17
+        },
+        {
+          "id": "c",
+          "label": "걷기",
+          "x": 0.1,
+          "y": 0.85,
+          "width": 0.19,
+          "height": 0.17
+        }
+      ]
+    }
+  ]
+}
