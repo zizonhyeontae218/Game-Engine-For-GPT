@@ -55,6 +55,7 @@ jobs:
       - run: python scripts/bundle_desktop.py --client client/build/windows/x64/runner/Release --game dist/flatland-harbor.ge4g --platform windows --out dist/ge4g-harbor-windows
       - run: python scripts/windows_utf8_regression.py --launch
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: ge4g-rc4-rendered-evidence
           path: artifacts/rc4-windows/

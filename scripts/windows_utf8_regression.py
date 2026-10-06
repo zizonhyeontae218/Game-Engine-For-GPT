@@ -44,7 +44,12 @@ def launch():
    assert top['entities']==depth['entities'] and top['scene']=='항구'
    from PIL import Image
    images={name:Image.open(output/f'{name}-frame.png').convert('RGBA').tobytes() for name in ['01-top','02-depth','03-battle-before','04-battle-effect','05-battle-impact','06-battle-hp','07-battle-settle']}
-   assert len(set(images.values()))==len(images),'rendered phases must visibly differ'
+   assert images['01-top'] != images['02-depth'], 'ground projection must visibly change'
+   assert len({images[n] for n in ['03-battle-before','04-battle-effect','05-battle-impact','06-battle-hp']}) == 4, 'attack phases must visibly differ'
+   # HP bars/menu are Flutter overlays; settled canonical actors may match pre-attack.
+   before_ui=Image.open(output/'03-battle-before-ui.png').convert('RGBA').tobytes()
+   settled_ui=Image.open(output/'07-battle-settle-ui.png').convert('RGBA').tobytes()
+   assert before_ui != settled_ui, 'HP/menu feedback must reflect the resolved round'
   finally:
    if process.poll() is None:process.kill();process.wait()
  print(json.dumps({'ok':True,'platform':'windows','utf8_pipeline':'authoring-validation-package-import-launch','physical_android_acceptance':False,'evidence':str(EVIDENCE)},ensure_ascii=False))
