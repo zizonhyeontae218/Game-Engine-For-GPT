@@ -18,13 +18,12 @@ class UnusedEngine implements EngineBridge {
 }
 
 Future<void> settleIo(WidgetTester tester) async {
-  // Widget callbacks run in FakeAsync while real filesystem futures do not.
-  // Alternate real IO with pumped microtasks until the manager has finished.
+  // Called inside one real-async scope: storage and callback futures share it.
+  // Finish menu transitions before waiting for the manager's IO.
+  await tester.pump(const Duration(milliseconds: 500));
   for (var attempt = 0; attempt < 200; attempt++) {
     await tester.pump(const Duration(milliseconds: 25));
-    await tester.runAsync(
-      () => Future<void>.delayed(const Duration(milliseconds: 25)),
-    );
+    await Future<void>.delayed(const Duration(milliseconds: 25));
     if (find.byType(LinearProgressIndicator).evaluate().isEmpty) break;
   }
   await tester.pump();
@@ -77,65 +76,56 @@ void main() {
     testWidgets(
       'manager reorder and explicit ${full ? 'full' : 'normal'} delete confirmation',
       (tester) async {
-        final root = Directory.systemTemp.createTempSync('ge4g-manager-');
-        final library = GameLibrary(root, (_) {});
-        final player = Player(UnusedEngine(), library);
         await tester.runAsync(() async {
+          final root = Directory.systemTemp.createTempSync('ge4g-manager-');
+          final library = GameLibrary(root, (_) {});
+          final player = Player(UnusedEngine(), library);
           await library.importBytes(fixture.package(id: 'a', name: '게임 A'));
           await library.importBytes(fixture.package(id: 'b', name: '게임 B'));
-        });
-        final save = library.save('b')..parent.createSync(recursive: true);
-        save.writeAsStringSync('progress');
-        library.controls('b').createSync(recursive: true);
-        await tester.runAsync(() async {
+          final save = library.save('b')..parent.createSync(recursive: true);
+          save.writeAsStringSync('progress');
+          library.controls('b').createSync(recursive: true);
           await tester.pumpWidget(
             MaterialApp(
               home: GameManager(library: library, player: player),
             ),
           );
           await Future<void>.delayed(const Duration(milliseconds: 150));
-        });
-        await settleIo(tester);
-        expect(find.text('GAME MANAGER / 게임 관리'), findsOneWidget);
-        expect(find.textContaining('b\n'), findsOneWidget);
-        await tester.tap(find.byKey(const ValueKey('manage-b')));
-        await tester.pumpAndSettle();
-        await tester.runAsync(() async {
+          await settleIo(tester);
+          expect(find.text('GAME MANAGER / 게임 관리'), findsOneWidget);
+          expect(find.textContaining('b\n'), findsOneWidget);
+          await tester.tap(find.byKey(const ValueKey('manage-b')));
+          await tester.pumpAndSettle();
           await tester.tap(find.text('위로 이동'));
-        });
-        await settleIo(tester);
-        expect((await tester.runAsync(library.list))!.map((g) => g.id), [
-          'b',
-          'a',
-        ]);
-        await tester.tap(find.byKey(const ValueKey('manage-b')));
-        await tester.pumpAndSettle();
-        await tester.tap(find.text(full ? '게임 및 데이터 모두 삭제' : '게임 삭제'));
-        await tester.pumpAndSettle();
-        expect(save.existsSync(), true);
-        expect(
-          find.textContaining(full ? '보관된 이전 저장' : '저장 데이터와 조작 설정은 보관'),
-          findsOneWidget,
-        );
-        await tester.tap(find.text('취소'));
-        await tester.pumpAndSettle();
-        expect((await tester.runAsync(library.list))!.length, 2);
-        await tester.tap(find.byKey(const ValueKey('manage-b')));
-        await tester.pumpAndSettle();
-        await tester.tap(find.text(full ? '게임 및 데이터 모두 삭제' : '게임 삭제'));
-        await tester.pumpAndSettle();
-        await tester.runAsync(() async {
+          await settleIo(tester);
+          expect((await library.list()).map((g) => g.id), ['b', 'a']);
+          await tester.tap(find.byKey(const ValueKey('manage-b')));
+          await tester.pumpAndSettle();
+          await tester.tap(find.text(full ? '게임 및 데이터 모두 삭제' : '게임 삭제'));
+          await tester.pumpAndSettle();
+          expect(save.existsSync(), true);
+          expect(
+            find.textContaining(full ? '보관된 이전 저장' : '저장 데이터와 조작 설정은 보관'),
+            findsOneWidget,
+          );
+          await tester.tap(find.text('취소'));
+          await tester.pumpAndSettle();
+          expect((await library.list()).length, 2);
+          await tester.tap(find.byKey(const ValueKey('manage-b')));
+          await tester.pumpAndSettle();
+          await tester.tap(find.text(full ? '게임 및 데이터 모두 삭제' : '게임 삭제'));
+          await tester.pumpAndSettle();
           await tester.tap(find.byKey(const Key('confirm-delete')));
+          await settleIo(tester);
+          expect(find.text('게임 B'), findsNothing);
+          expect((await library.list()).single.id, 'a');
+          expect(save.existsSync(), !full);
+          expect(library.controls('b').existsSync(), !full);
+          expect(tester.takeException(), isNull);
+          await tester.pumpWidget(const SizedBox());
+          player.dispose();
+          root.deleteSync(recursive: true);
         });
-        await settleIo(tester);
-        expect(find.text('게임 B'), findsNothing);
-        expect((await tester.runAsync(library.list))!.single.id, 'a');
-        expect(save.existsSync(), !full);
-        expect(library.controls('b').existsSync(), !full);
-        expect(tester.takeException(), isNull);
-        await tester.pumpWidget(const SizedBox());
-        player.dispose();
-        root.deleteSync(recursive: true);
       },
     );
   }

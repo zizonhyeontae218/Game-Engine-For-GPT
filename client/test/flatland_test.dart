@@ -66,64 +66,61 @@ void main() {
   testWidgets(
     'FlatLand import, modal dismissal and manual layout survive window resizing',
     (tester) async {
-      final root = Directory.systemTemp.createTempSync('flatland-ui-');
-      final engine = PlayEngine();
-      final library = GameLibrary(root, (_) => {});
+      // Filesystem, session shutdown and decode callbacks need one real zone.
       await tester.runAsync(() async {
+        final root = Directory.systemTemp.createTempSync('flatland-ui-');
+        final engine = PlayEngine();
+        final library = GameLibrary(root, (_) => {});
         await library.importFile(File('../dist/flatland-pacman.ge4g'));
-      });
-      tester.view.devicePixelRatio = 1;
-      tester.view.physicalSize = const Size(360, 740);
-      addTearDown(tester.view.resetPhysicalSize);
-      addTearDown(tester.view.resetDevicePixelRatio);
-      await tester.runAsync(() async {
+        tester.view.devicePixelRatio = 1;
+        tester.view.physicalSize = const Size(360, 740);
+        addTearDown(tester.view.resetPhysicalSize);
+        addTearDown(tester.view.resetDevicePixelRatio);
         await tester.pumpWidget(GE4GApp(engine: engine, dataDirectory: root));
         await Future<void>.delayed(const Duration(milliseconds: 150));
-      });
-      await tester.pump();
-      await tester.ensureVisible(find.text('PLAY →'));
-      await tester.pump();
-      await tester.runAsync(() async {
+        await tester.pump();
+        await tester.ensureVisible(find.text('PLAY →'));
+        await tester.pump();
         await tester.tap(find.text('PLAY →'));
         await Future<void>.delayed(const Duration(milliseconds: 150));
+        await tester.pump();
+        expect(find.text('A separate dialogue popup'), findsOneWidget);
+        await tester.tap(find.byKey(const Key('close-game-popup')));
+        await tester.pump();
+        expect(find.text('A separate dialogue popup'), findsNothing);
+        expect(find.byTooltip('가로모드'), findsOneWidget);
+        expect(tester.getSize(find.byKey(const Key('game-frame'))).width, 360);
+        expect(find.text('SPACE'), findsNothing);
+        expect(find.text('Z'), findsNothing);
+        expect(find.textContaining('ACTION:'), findsNothing);
+        tester.view.physicalSize = const Size(740, 360);
+        await tester.pump();
+        expect(
+          find.byTooltip('가로모드'),
+          findsOneWidget,
+        ); // Resize does not select landscape.
+        final frame = tester.getSize(find.byKey(const Key('game-frame')));
+        expect(frame.height, 316);
+        expect(frame.width, closeTo(316 * 380 / 420, .01));
+        final releases = engine.releases;
+        await tester.tap(find.byKey(const Key('manual-rotation')));
+        await tester.pump();
+        expect(find.byTooltip('세로모드'), findsOneWidget);
+        expect(engine.releases, greaterThan(releases));
+        tester.view.physicalSize = const Size(360, 740);
+        await tester.pump();
+        expect(find.byTooltip('세로모드'), findsOneWidget);
+        tester.platformDispatcher.textScaleFactorTestValue = 2;
+        addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
+        await tester.pump();
+        expect(tester.takeException(), isNull);
+        await tester.tap(find.byKey(const Key('play-settings')));
+        await tester.pump(const Duration(milliseconds: 500));
+        expect(find.byKey(const Key('profile-select')), findsOneWidget);
+        expect(find.text('게임 기본 프리셋 적용'), findsOneWidget);
+        await tester.pumpWidget(const SizedBox());
+        root.deleteSync(recursive: true);
       });
-      await tester.pump();
-      expect(find.text('A separate dialogue popup'), findsOneWidget);
-      await tester.tap(find.byKey(const Key('close-game-popup')));
-      await tester.pump();
-      expect(find.text('A separate dialogue popup'), findsNothing);
-      expect(find.byTooltip('가로모드'), findsOneWidget);
-      expect(tester.getSize(find.byKey(const Key('game-frame'))).width, 360);
-      expect(find.text('SPACE'), findsNothing);
-      expect(find.text('Z'), findsNothing);
-      expect(find.textContaining('ACTION:'), findsNothing);
-      tester.view.physicalSize = const Size(740, 360);
-      await tester.pump();
-      expect(
-        find.byTooltip('가로모드'),
-        findsOneWidget,
-      ); // Resize does not select landscape.
-      final frame = tester.getSize(find.byKey(const Key('game-frame')));
-      expect(frame.height, 316);
-      expect(frame.width, closeTo(316 * 380 / 420, .01));
-      final releases = engine.releases;
-      await tester.tap(find.byKey(const Key('manual-rotation')));
-      await tester.pump();
-      expect(find.byTooltip('세로모드'), findsOneWidget);
-      expect(engine.releases, greaterThan(releases));
-      tester.view.physicalSize = const Size(360, 740);
-      await tester.pump();
-      expect(find.byTooltip('세로모드'), findsOneWidget);
-      tester.platformDispatcher.textScaleFactorTestValue = 2;
-      addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
-      await tester.pump();
-      expect(tester.takeException(), isNull);
-      await tester.tap(find.byKey(const Key('play-settings')));
-      await tester.pump(const Duration(milliseconds: 500));
-      expect(find.byKey(const Key('profile-select')), findsOneWidget);
-      expect(find.text('게임 기본 프리셋 적용'), findsOneWidget);
-      await tester.pumpWidget(const SizedBox());
-      root.deleteSync(recursive: true);
     },
   );
 }

@@ -57,3 +57,9 @@ Hosted regressions caught delayed loading publication while awaiting frame/audio
 shutdown. Restore synchronous loading/session-clear contract before awaiting work;
 keep the existing lifecycle assertions. Update only the Korean sample title assertion
 to its intentional final name, preserving import/launch/render coverage.
+
+Latest source9974501 passes hosted engine acceptance and Android release; Android
+ID/name/code8/three ELF ABIs verified. Windows test run was stopped to investigate
+an IO/FakeAsync stall. Keep all assertions, run each filesystem-backed widget flow
+inside one real-async scope, and finish menu transitions before waiting on storage.
+No simulation/render changes. Re-run full Windows/Android verification on that patch.
