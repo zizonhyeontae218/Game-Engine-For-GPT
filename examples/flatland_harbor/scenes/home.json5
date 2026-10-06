@@ -311,6 +311,22 @@
       ]
     },
     {
+      "id": "restore_pace",
+      "on": "start",
+      "when": {
+        "op": "state",
+        "key": "harbor.running",
+        "eq": true
+      },
+      "actions": [
+        {
+          "op": "pace",
+          "entity": "$player",
+          "speed": 112
+        }
+      ]
+    },
+    {
       "id": "finish",
       "on": "tick",
       "once": true,
