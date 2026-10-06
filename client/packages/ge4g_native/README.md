@@ -4,4 +4,4 @@ Dart FFI bindings to the version 1 GE4G native client ABI in `crates/ge4g-client
 
 `BasementNative.request` sends versioned JSON operations; `frame` copies the canonical Rust RGBA pixels. Returned C strings and temporary buffers are freed deterministically. No mobile subprocess, downloaded executable or Dart gameplay implementation is involved.
 
-Supported targets: Android arm64/armv7/x64, iOS arm64 device/simulator and x64 simulator, Windows x64/arm64, Linux x64/arm64. Install the corresponding Rust target and Flutter platform tools before building. Actual release CI covers Android, iOS device, Windows x64 and Linux x64.
+FlatLand 0.2 release targets and CI: Android arm64/armv7/x64 and Windows x64. Install the corresponding Rust target and Flutter platform tools before building. Existing iOS, macOS and Linux hooks are preserved, but client builds, tests and distribution for those platforms are deferred until 0.3.0 development begins.

@@ -3,8 +3,8 @@
 Status: 0.2.0 implemented release contract and evidence are in `FLATLAND_AUTHORING.md`
 and `FLATLAND_RELEASE.md`. This original design retains proposed examples and optional
 future extensions; it must not be mistaken for exact syntax or an unlimited capability claim.
-Current clients are Android/Windows only. References below to iOS/Linux/Arch are
-historical design targets, suspended until 0.3.0 development begins.
+Current clients are Android/Windows only. iOS/macOS/Linux/Arch client work is
+suspended until 0.3.0 development begins.
 
 ## Product outcome
 
@@ -149,8 +149,8 @@ algorithms should use short Lua functions. Both compile/dispatch into the same c
 
 ## 6. Lua extension contract
 
-Use embedded Lua 5.4 through a Rust binding (candidate `mlua`, vendored build). Pin
-versions after Android/iOS/Windows/Linux build probes. LuaJIT is not required on mobile.
+Embedded Lua 5.4 uses `mlua` with a vendored build and versions pinned in Cargo.lock.
+Release verification covers Android/Windows. LuaJIT is not required on mobile.
 Package source only, not platform-specific bytecode or native modules.
 
 Expose bounded world queries, integer math, declared persistent state, deterministic
@@ -279,7 +279,7 @@ Behavioral tests prove exact positions/HP/quest rewards, once-only events, stabl
 paths, collision-plane separation, transaction rollback, Lua budget failures and RNG
 repeatability. Save during a dialogue choice/turn and compare resumed execution.
 Compare headless and Flutter states/CPU frames; keep v1 demo goldens unchanged.
-Build/package and inspect Android/iOS/Windows/Linux artifacts. Physical-device/audio
+Build/package and inspect Android/Windows artifacts. Physical-device/audio
 checks are distinct from CI compilation; report actual evidence without inference.
 
 A broader corpus covers action adventure, item-gated puzzle, stealth patrol and turn

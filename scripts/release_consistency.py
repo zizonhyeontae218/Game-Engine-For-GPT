@@ -14,6 +14,7 @@ CURRENT = [
     "docs/RELEASE_NOTES.md", "docs/ARCHITECTURE.md", "docs/BASEMENT_SPEC.md",
     "docs/FLATLAND_SPEC.md", "docs/LAUNCHER_PHILOSOPHY.md",
     "examples/flatland_harbor/README.md", "F(x).md", "docs/AUTHORING.md",
+    "client/README.md", "client/packages/ge4g_native/README.md",
 ]
 RULES = {
     "obsolete Lua claim": r"Lua.{0,30}(?:not (?:yet )?(?:implemented|included)|미구현)|Lua, 3D,.*이번 버전 범위에 포함하지",
@@ -22,7 +23,7 @@ RULES = {
     "candidate current version": r"(?:current (?:release|candidate|product)|현재.{0,20}버전|Current candidate):?[^\n]{0,100}0\.2\.0-rc\.[345]",
     "old current versionCode": r"(?:versionCode|Androidcode)\s*[:=]?\s*(?:[0-7]|[0-9]{2,})(?![0-9])",
     "third-party current sample": r"(?:current|public|공개|현재).{0,40}(?:sample|demo|샘플|데모).{0,40}(?:Nuvema|Pokémon|누베마)",
-    "suspended client build": r"flutter build (?:linux|ios|macos)|unsigned iOS app|Windows/Arch clients.*required",
+    "suspended client build": r"flutter build (?:linux|ios|macos)|unsigned iOS app|Windows/Arch clients.*required|Actual release CI covers Android, iOS",
 }
 
 def violations(text):
