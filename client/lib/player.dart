@@ -248,7 +248,13 @@ class Player extends ChangeNotifier {
     bool archiveIncompatible = false,
     bool rethrowFailure = false,
   }) async {
-    await closeAndWait();
+    if (_disposed) {
+      if (rethrowFailure) throw StateError('게임 실행기가 종료되었습니다');
+      return;
+    }
+    // Close synchronously and publish loading before awaiting pending work.
+    // Frame decoding/audio still settle before the next session is opened.
+    final settling = closeAndWait();
     loading = true;
     error = null;
     message = null;
@@ -259,6 +265,10 @@ class Player extends ChangeNotifier {
     final controls = ControlStore(library.controls(candidate.id), candidate.id);
     int? openedSession;
     try {
+      await settling;
+      if (_disposed || generation != _generation) {
+        throw StateError('게임 열기가 취소되었습니다');
+      }
       final save = library.save(candidate.id);
       final loadSave = load && await save.exists();
       Map<String, dynamic> opened;

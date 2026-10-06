@@ -52,3 +52,8 @@ Review refinements: blank speaker falls through to valid metadata; NUL metadata 
 ignored. Native compatible update (new bundle digest, same game content) must retain
 the save. Management widget IO uses real async execution before assertions. Initial
 Windows Flutter pass still running; restart coherent verification on revised source.
+
+Hosted regressions caught delayed loading publication while awaiting frame/audio
+shutdown. Restore synchronous loading/session-clear contract before awaiting work;
+keep the existing lifecycle assertions. Update only the Korean sample title assertion
+to its intentional final name, preserving import/launch/render coverage.
