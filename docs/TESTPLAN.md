@@ -135,14 +135,26 @@ failed replay command/tick rollback, quest reward once, content revision patches
 choice/battle and every demo choice resume, Lua RNG fault rollback, temporary cutscene
 clip progression, exact parent restore and corrupt parent rejection. The real embedded
 Flutter smoke must match headless state and pixels for all three demos. Sign Android
-with the preserved key and `--previous-apk`; inspect app ID and versionCode4.
+with the preserved key and `--previous-apk`; inspect app ID and current candidate versionCode7.
 
 ## FlatLand rc3 polish acceptance
 
 Run `cargo test -p ge4g-runtime --test polish` and `ge4g test examples/flatland_nuvema`.
-They prove one-cell release/blocked-facing/pace, visible projection plus plane rollback,
+They prove one-cell release/blocked-facing/pace, presentation-only projection and persistent view,
 move PP/hit frame/save/result resume and1957-tick station completion. Full/minimal
-render snapshots must match byte for byte. Current total: Rust48, Flutter19.
+render snapshots must match byte for byte. Historical rc3 count: Rust48, Flutter19; current counts are recorded in FLATLAND_RELEASE.md.
 `flutter test test/polish_test.dart` covers cardinal hysteresis and dedicated battle
 move/bag/save at portrait/landscape with2× text. Native/client smoke checks Nuvema in
 addition to Basement, Pac-Man and Signal Yard. Device acceptance remains separate.
+
+
+## rc5 final stabilization gate
+
+Run rc4 and rc5 Rust integration suites and all workspace regressions. Verify contact
+shadow below opaque actors; feet-based ordering despite player layer; footprint/default
+solid bodies; no roof access in top/depth/alternate before/after save and scene change;
+unsupported building facing rejection; three bubble lines with exact save/resume,
+12-tick scoped camera/full-min frame equality; old battle/PP/reward/FX/input cases.
+Windows runs Flutter tests, actual portrait/landscape capture and Korean UTF-8 import.
+Render review must inspect shadows/occlusion/blocked roofs/story UI/battle feedback.
+Mobile human acceptance checklist is mandatory before final promotion. CI is separate.

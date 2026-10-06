@@ -51,7 +51,7 @@ impl Building {
     pub fn valid(&self) -> bool {
         self.footprint.iter().all(|n| (8..=256).contains(n))
             && (8..=128).contains(&self.height)
-            && ["south", "north", "east", "west"].contains(&self.facing.as_str())
+            && self.facing == "south"
     }
     pub fn surfaces(&self) -> impl Iterator<Item = &String> {
         [&self.roof_surface, &self.facade_surface, &self.side_surface]

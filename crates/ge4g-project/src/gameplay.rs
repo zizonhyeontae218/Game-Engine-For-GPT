@@ -217,6 +217,10 @@ pub enum Instruction {
     Say {
         text: String,
     },
+    SayBubble {
+        actor: String,
+        text: String,
+    },
     Choice {
         text: String,
         options: Vec<Choice>,
@@ -444,10 +448,17 @@ impl Project {
                     Instruction::Wait { ticks } if *ticks > 10000 => {
                         return Err(fail("wait exceeds 10000 ticks"));
                     }
-                    Instruction::Say { text } | Instruction::Choice { text, .. }
+                    Instruction::Say { text }
+                    | Instruction::SayBubble { text, .. }
+                    | Instruction::Choice { text, .. }
                         if text.len() > 8192 =>
                     {
                         return Err(fail("event text too long"));
+                    }
+                    Instruction::SayBubble { actor, .. }
+                        if !scene.entities.iter().any(|e| &e.id == actor) =>
+                    {
+                        return Err(fail("say_bubble actor must exist in the scene"));
                     }
                     Instruction::Choice { options, .. } => {
                         if options.is_empty() || options.len() > 16 {
@@ -554,7 +565,9 @@ impl Project {
                 if let Some(b) = &a.building
                     && (!b.valid() || b.surfaces().any(|t| !self.textures.contains_key(t)))
                 {
-                    return Err(fail("invalid building presentation"));
+                    return Err(fail(
+                        "invalid building presentation (0.2 supports facing=south only)",
+                    ));
                 }
                 if a.visual_size
                     .is_some_and(|size| size.iter().any(|n| !(1..=1024).contains(n)))

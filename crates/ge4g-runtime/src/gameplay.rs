@@ -73,6 +73,8 @@ pub struct Systems {
     pub events: Vec<EventFrame>,
     pub music: Option<MusicState>,
     pub camera: Option<[i64; 2]>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub camera_blend: Option<super::view::CameraBlend>,
 }
 #[derive(Debug, Clone, Serialize, Deserialize, schemars::JsonSchema)]
 #[serde(deny_unknown_fields)]
@@ -903,6 +905,9 @@ impl World {
             );
         }
         match &self.project.scenes[&self.scene].gameplay.events[&frame.event][frame.pc] {
+            Instruction::SayBubble { actor, text } => Some(
+                json!({"id":id,"kind":"bubble","actor":actor,"text":text,"options":[{"id":"continue","text":"탭하여 계속"}]}),
+            ),
             Instruction::Say { text } => Some(
                 json!({"id":id,"kind":"dialogue","text":text,"options":[{"id":"continue","text":"계속 / CONTINUE"}]}),
             ),
@@ -961,7 +966,9 @@ impl World {
             let step =
                 self.project.scenes[&self.scene].gameplay.events[&frame.event][frame.pc].clone();
             let next = match step {
-                Instruction::Say { .. } if choice == "continue" => frame.pc + 1,
+                Instruction::Say { .. } | Instruction::SayBubble { .. } if choice == "continue" => {
+                    frame.pc + 1
+                }
                 Instruction::Choice { options, .. } => {
                     let c = options
                         .iter()
@@ -1023,7 +1030,7 @@ impl World {
                 Instruction::Return { retain_view: _ } => {
                     let frame = self.systems().events.pop().unwrap();
                     self.entities = frame.parent;
-                    self.systems().camera = frame.parent_camera;
+                    self.blend_camera(frame.parent_camera);
                     self.systems().pace = frame.parent_pace;
                     self.systems().planes = frame.parent_planes;
                     self.systems().elevation = frame.parent_elevation;
@@ -1031,7 +1038,9 @@ impl World {
                     self.flatland.popup = None;
                     self.emit("event_return", None, json!({"event":frame.event}));
                 }
-                Instruction::Say { .. } | Instruction::Choice { .. } => {
+                Instruction::Say { .. }
+                | Instruction::SayBubble { .. }
+                | Instruction::Choice { .. } => {
                     self.systems().events.last_mut().unwrap().waiting = true;
                     if self
                         .waiting()
@@ -1079,7 +1088,7 @@ impl World {
                     self.actions(&actions, None)?;
                 }
                 Instruction::Camera { at } => {
-                    self.systems().camera = Some(at);
+                    self.blend_camera(Some(at));
                     self.systems().events.last_mut().unwrap().pc += 1;
                 }
                 Instruction::Branch { when, yes, no } => {
@@ -1236,7 +1245,7 @@ impl World {
         }
         Ok(())
     }
-    pub(super) fn camera_position(&self) -> [i64; 2] {
+    pub(super) fn target_camera_position(&self) -> [i64; 2] {
         if let Some(at) = self.flatland.systems.as_ref().and_then(|s| s.camera) {
             return at;
         }
@@ -1404,6 +1413,11 @@ impl World {
                 return Err(bad());
             }
         }
+        if s.camera_blend.as_ref().is_some_and(|b| {
+            b.start_tick > self.tick || b.from.iter().any(|n| n.unsigned_abs() > 1_000_000)
+        }) {
+            return Err(bad());
+        }
         if s.camera
             .is_some_and(|at| at.iter().any(|n| n.unsigned_abs() > 1_000_000))
         {
@@ -1484,6 +1498,7 @@ impl World {
                     steps.get(f.pc),
                     Some(
                         Instruction::Say { .. }
+                            | Instruction::SayBubble { .. }
                             | Instruction::Choice { .. }
                             | Instruction::Battle { .. }
                     )

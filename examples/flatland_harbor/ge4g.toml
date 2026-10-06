@@ -1,7 +1,7 @@
 schema_version=2
-name="FlatLand rc4 / 바람항 공방"
+name="FlatLand rc5 / 바람항 공방"
 start_scene="항구"
-features=["combat","inventory","quests","event_scenes","turn_battle","planes","music","lua_rng","step_walk","battle_stage","view_projection","billboard_projection","persistent_combatants","battle_fx","building_presentation","entity_defaults"]
+features=["combat","inventory","quests","event_scenes","turn_battle","planes","music","lua_rng","step_walk","battle_stage","view_projection","billboard_projection","persistent_combatants","battle_fx","building_presentation","entity_defaults","cutscene_bubbles","solid_buildings","contact_ordering"]
 [window]
 width=320
 height=240
@@ -21,9 +21,9 @@ kind="bool"
 default=false
 
 [[tests]]
-name="harbor-rc4-stabilization"
+name="harbor-rc5-stabilization"
 replay="replays/journey.json"
-golden_rgba_sha256="be2fbd11439929f2682bb801ce2a07ff6e9e99cf3197988ac451b8d74c72bce5"
+golden_rgba_sha256="568334e7d0aaf36ebd4ed958f431dbfb1da0713e2f1ba4dc3a29f5bc084448a5"
 [[tests.assertions]]
 tick=420
 scene="항구"

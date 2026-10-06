@@ -46,6 +46,9 @@ impl Projection {
         if systems
             .and_then(|s| s.get("camera"))
             .is_none_or(|v| v.is_null())
+            && systems.and_then(|s| s.get("camera_blend")).is_none_or(|v| {
+                v.is_null() || snapshot.tick >= v["start_tick"].as_u64().unwrap_or(0) + 12
+            })
             && let Some(actor) = scene
                 .gameplay
                 .camera

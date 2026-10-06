@@ -429,6 +429,18 @@ pub(crate) fn expand_scene(mut value: Value) -> Result<Value> {
             .unwrap()
             .extend(spawned);
     }
+    for entity in value["entities"].as_array_mut().unwrap() {
+        if let Some(building) = entity.get("flatland").and_then(|a| a.get("building")) {
+            let b: crate::building::Building = serde_json::from_value(building.clone())
+                .map_err(|e| Error(format!("building: {e}")))?;
+            entity["size"] = serde_json::json!(b.footprint);
+            entity["flatland"]
+                .as_object_mut()
+                .unwrap()
+                .entry("body")
+                .or_insert_with(|| Value::from("fixed"));
+        }
+    }
     Ok(value)
 }
 pub(crate) fn merge(base: &mut Value, patch: Value) {

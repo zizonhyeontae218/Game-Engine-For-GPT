@@ -190,6 +190,7 @@ impl World {
             s.patrol.clear();
             s.portal_latches.clear();
             s.camera = None;
+            s.camera_blend = None;
             s.pace.clear();
         }
         if self
@@ -391,7 +392,7 @@ impl World {
             events_dropped: self.events_dropped,
             flatland: (self.project.manifest.schema_version == 2)
                 .then(|| if presentation {
-                    self.flatland.systems.as_ref().map(|s| json!({"systems":{"view":s.view,"gameplay_view":s.gameplay_view,"camera":s.camera,"attacks":s.attacks,"patches":s.patches,"events":s.events.last().map(|f| vec![json!({"event":f.event,"pc":f.pc,"battle":f.battle})]).unwrap_or_default()}})).unwrap_or_else(||json!({}))
+                    self.flatland.systems.as_ref().map(|s| json!({"systems":{"view":s.view,"gameplay_view":s.gameplay_view,"camera":s.camera,"camera_blend":s.camera_blend,"attacks":s.attacks,"patches":s.patches,"events":s.events.last().map(|f| vec![json!({"event":f.event,"pc":f.pc,"battle":f.battle})]).unwrap_or_default()}})).unwrap_or_else(||json!({}))
                 } else { serde_json::to_value(&self.flatland).expect("world JSON") }),
         }
     }

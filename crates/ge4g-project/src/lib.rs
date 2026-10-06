@@ -19,6 +19,9 @@ pub const CAPABILITIES: &[&str] = &[
     "billboard_projection",
     "persistent_combatants",
     "battle_fx",
+    "cutscene_bubbles",
+    "solid_buildings",
+    "contact_ordering",
     "building_presentation",
     "entity_defaults",
 ];

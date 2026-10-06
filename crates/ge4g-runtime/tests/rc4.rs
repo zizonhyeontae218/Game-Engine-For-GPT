@@ -81,6 +81,9 @@ fn persistent_view_survives_goto_scoped_camera_save_and_scene_without_local_pres
         );
         w.step(&Input::default()).unwrap();
     }
+    while w.waiting().is_some_and(|v| v["kind"] == "bubble") {
+        w.choose("continue").unwrap();
+    }
     assert_eq!(w.snapshot().flatland.unwrap()["systems"]["view"], "depth");
     command(
         &mut w,

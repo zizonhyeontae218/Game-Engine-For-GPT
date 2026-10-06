@@ -91,6 +91,7 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `client/lib/control_editor.dart` — Repository file; inspect only when relevant to the task.
 - `client/lib/control_store.dart` — Repository file; inspect only when relevant to the task.
 - `client/lib/controls.dart` — Repository file; inspect only when relevant to the task.
+- `client/lib/cutscene_bubble.dart` — Repository file; inspect only when relevant to the task.
 - `client/lib/game_audio.dart` — Repository file; inspect only when relevant to the task.
 - `client/lib/game_library.dart` — Repository file; inspect only when relevant to the task.
 - `client/lib/game_popup.dart` — Repository file; inspect only when relevant to the task.
@@ -126,6 +127,7 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `client/test/player_test.dart` — Repository file; inspect only when relevant to the task.
 - `client/test/polish_test.dart` — Repository file; inspect only when relevant to the task.
 - `client/test/rc4_test.dart` — Repository file; inspect only when relevant to the task.
+- `client/test/rc5_test.dart` — Repository file; inspect only when relevant to the task.
 - `client/test/signal_yard_test.dart` — Repository file; inspect only when relevant to the task.
 - `client/test/widget_test.dart` — Repository file; inspect only when relevant to the task.
 - `client/windows/.gitignore` — Repository file; inspect only when relevant to the task.
@@ -166,6 +168,7 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `crates/ge4g-render2d/Cargo.toml` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-render2d/src/battle_fx.rs` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-render2d/src/building.rs` — Engine source, package configuration or behavioral verification.
+- `crates/ge4g-render2d/src/contact.rs` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-render2d/src/lib.rs` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-render2d/src/projection.rs` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-runtime/Cargo.toml` — Engine source, package configuration or behavioral verification.
@@ -181,6 +184,7 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `crates/ge4g-runtime/tests/flatland.rs` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-runtime/tests/polish.rs` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-runtime/tests/rc4.rs` — Engine source, package configuration or behavioral verification.
+- `crates/ge4g-runtime/tests/rc5.rs` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-runtime/tests/systems.rs` — Engine source, package configuration or behavioral verification.
 - `docs/AGENT_WORKFLOW.md` — Task-specific context/tool discipline guidance.
 - `docs/ARCHITECTURE.md` — Basement architecture and subsystem boundaries.
@@ -199,6 +203,7 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `docs/TESTPLAN.md` — Acceptance and deterministic verification plan.
 - `docs/benchmarks/flatland-task-context.json` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/active/.gitkeep` — Repository file; inspect only when relevant to the task.
+- `docs/exec-plans/active/flatland-rc5.md` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/completed/.gitkeep` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/completed/basement.md` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/completed/flatland-polish.md` — Repository file; inspect only when relevant to the task.
@@ -206,8 +211,10 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `docs/exec-plans/completed/flatland-rc4.md` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/completed/flatland.md` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/completed/flutter-client.md` — Repository file; inspect only when relevant to the task.
+- `docs/releases/development-history-through-rc4.md` — Repository file; inspect only when relevant to the task.
 - `docs/releases/flatland-rc2.md` — Repository file; inspect only when relevant to the task.
 - `docs/releases/flatland-rc3.md` — Repository file; inspect only when relevant to the task.
+- `docs/releases/flatland-rc4.md` — Repository file; inspect only when relevant to the task.
 - `examples/basement_demo/asset-licenses.json` — Playable reference demo data, replay or inspected framebuffer golden.
 - `examples/basement_demo/ge4g.toml` — Playable reference demo data, replay or inspected framebuffer golden.
 - `examples/basement_demo/golden/room_b.png` — Playable reference demo data, replay or inspected framebuffer golden.

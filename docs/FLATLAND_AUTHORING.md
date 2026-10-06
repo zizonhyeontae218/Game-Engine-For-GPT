@@ -159,7 +159,7 @@ packages. ABI remains1. Android ID/certificate stay fixed and versionCode increa
 tokens, tool calls/failures/time and equal resulting frames. It does not measure model
 sampling time or claim universal savings. Pac-Man and Signal Yard are executable examples.
 
-## rc4 movement, view and reusable presentation
+## rc5 movement, view and reusable presentation
 
 Use actor `step_walk:true`, a16px map cell and speed68; pace112 is visibly faster.
 Newest pressed direction wins; release finishes the current cell without an extra cell.
@@ -201,3 +201,27 @@ building_presentation,entity_defaults as used; old clients reject unsupported bu
 Legacy packages without battle_fx keep their immediate-choice replay timing. ABI remains1.
 Public source examples must include asset-licenses.json with exact provenance/license/hash.
 See examples/flatland_harbor for deliberately incomplete but valid presentation input.
+
+
+## rc5 contact geometry and story bubbles
+
+A building's footprint is its body size (overrides redundant entity.size). Omitted
+body defaults fixed. Ordinary semantic buildings do not provide roof platforms.
+Explicit body:pass authors a non-solid prop only; it does not create a walkable roof.
+0.2 facing supports only south (default); north/east/west reject validation.
+Roof forms gable/flat/shed and wood/plaster/brick/stone/metal materials remain supported.
+
+With entity_defaults, upright sorting ignores sprite layer priority and uses plane,
+gameplay elevation, body-foot Y and stable ID. Contact shadows live below every
+upright entity. sprite.projection:ground remains the terrain/decal band. Preserve
+legacy layer behavior when entity_defaults is absent.
+
+Event scene: {op:"say_bubble",actor:"guide",text:"여기가 공방이야."}.
+The actor must exist in the scene; tap/continue advances one instruction. Chain lines
+as independent instructions; save retains the exact line/PC. Bubble UI is distinct
+from ordinary say/choice. Camera ops are temporary, eased over12 deterministic
+presentation ticks when cutscene_bubbles is declared, restored on return. Bubble
+waiting freezes gameplay and permits only progression/save; animation cannot advance
+story PC or apply gameplay effects. Nested camera overrides restore their parent.
+Declare cutscene_bubbles,solid_buildings,contact_ordering for rc5-authored content so
+older clients reject unsupported content clearly. Existing ABI1 remains unchanged.

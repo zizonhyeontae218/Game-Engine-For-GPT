@@ -268,7 +268,9 @@ class Player extends ChangeNotifier {
     if (session == null ||
         loading ||
         paused ||
-        (popupVisible && popup?['kind'] != 'battle') ||
+        (popupVisible &&
+            popup?['kind'] != 'battle' &&
+            popup?['kind'] != 'bubble') ||
         error != null) {
       _lastElapsed = elapsed;
       return;
@@ -286,7 +288,9 @@ class Player extends ChangeNotifier {
         'op': 'advance',
         'session': session,
         'ticks': ticks,
-        'input': input!.input,
+        'input': popupVisible && popup?['kind'] == 'bubble'
+            ? <String, dynamic>{}
+            : input!.input,
       });
       _presentation();
       refreshFrame();

@@ -61,18 +61,6 @@ pub(super) fn render(
     let back = p.ground(origin[0], origin[1]);
     let right = p.ground(origin[0] + w, origin[1] + d);
     let rear = p.ground(origin[0] + w, origin[1]);
-    polygon(
-        frame,
-        project,
-        &[
-            [front[0] - 3, front[1] + 3],
-            [right[0] + 5, right[1] + 3],
-            [rear[0] + 5, rear[1] + 3],
-            [back[0] - 3, back[1] + 3],
-        ],
-        [28, 35, 29, 65],
-        None,
-    )?;
     let base = match b.material {
         Material::Wood => [176, 126, 76, 255],
         Material::Plaster => [220, 211, 183, 255],

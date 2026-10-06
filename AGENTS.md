@@ -1,7 +1,7 @@
 # GE4G agent map
 
-The current release candidate is **Basement 0.2 — FlatLand, v0.2 rc4 (0.2.0-rc.4)**.
-The previous claimed final is archived as rc2. Preserve rc1/rc2/rc3 binaries. Do not label rc4 a final 0.2.0 release.
+The current release candidate is **Basement 0.2 — FlatLand, v0.2 rc5 (0.2.0-rc.5)**.
+The previous claimed final is archived as rc2. Preserve rc1/rc2/rc3/rc4 binaries. Do not label rc5 a final 0.2.0 release.
 Schema 1 remains supported. Actual capabilities and limits: `docs/FLATLAND_AUTHORING.md`.
 For small authoring edits read `docs/FLATLAND_QUICKSTART.md` and query one component.
 
@@ -38,7 +38,7 @@ Do not read every document before every edit.
 ## Supported platforms through FlatLand 0.2
 
 - Active client support, build verification and distribution: **Android and Windows only**.
-- iOS, macOS and Linux/Arch support work is suspended until **0.3.0 development begins**; do not build, test, package or publish clients for those platforms during rc4.
+- iOS, macOS and Linux/Arch support work is suspended until **0.3.0 development begins**; do not build, test, package or publish clients for those platforms during rc5.
 - Preserve existing platform source and every historical artifact. Reconsider the support matrix explicitly at 0.3.0; do not automatically resume suspended jobs.
 - Linux-hosted Rust/headless checks and Android cross-compilation are development infrastructure, not Linux client support.
 
@@ -97,6 +97,16 @@ Fix the cause or document a real blocker in the active ExecPlan.
 
 - Android releases must retain application ID `dev.ge4g.ge4g_client` and the certificate pinned in `client/android/signing-certificate.sha256`; increment the build version code. Restore the original key from the user's private `GE4G Private Signing` Drive folder. Never generate a replacement key or release-sign with ephemeral debug keys. Hosted APKs are unsigned; use `scripts/sign_android.py` before delivery. Private keys/passwords must never enter Git or the public Demos folders.
 
-- Full 0.2 regression: test Harbor Workshop and Signal Yard as well as Pac-Man and the v1 demo. Keep choice/turn resume, RNG rollback, exact parent return and canonical client frames covered. Android rc4 uses versionCode 6 and the rc.1 certificate.
+- Full 0.2 regression: test Harbor Workshop and Signal Yard as well as Pac-Man and the v1 demo. Keep choice/turn resume, RNG rollback, exact parent return and canonical client frames covered. Android rc5 uses versionCode 7 and the rc.1 certificate.
 
 - Village-style games should opt into `step_walk` and cardinal touch profiles; preserve maze steering for existing games. Battle presentation must use a dedicated stage rather than a dialogue popup. Viewpoint changes are presentation-only and persistent. Project ground and actor/building feet during composition, never tilt the completed framebuffer. Cutscene cameras restore the persistent gameplay view. Legacy retain_view parses but cannot couple view to plane/elevation. Keep battle simulation, roster, FX, camera, input and building fallback responsibilities separate.
+
+
+## rc5 stabilization / final gate
+
+Semantic footprints are solid by default and define body geometry. Roof pixels never
+create gameplay walkability. South-only facing in0.2; other variants must reject.
+Contact ordering/shadows and cutscene bubble presentation remain separate modules.
+Preserve exact-once state and view invariants. Ship rc5; promote final only after user
+physical mobile acceptance. Never infer mobile acceptance from CI/rendered screenshots.
+3D/pixelization is0.3+ exploration, not a0.2 blocker.

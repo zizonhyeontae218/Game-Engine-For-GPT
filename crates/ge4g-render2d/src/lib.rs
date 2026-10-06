@@ -4,6 +4,7 @@ use ge4g_project::{Project, atomic_bytes};
 use std::path::Path;
 mod battle_fx;
 mod building;
+mod contact;
 mod projection;
 
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -156,23 +157,20 @@ fn render_world(
         }
     }
     let mut entities: Vec<_> = snapshot.entities.iter().collect();
-    entities.sort_by_key(|e| {
-        (
-            e.layer,
-            if e.flatland
-                .as_ref()
-                .and_then(|a| a.get("depth"))
-                .and_then(|v| v.as_bool())
-                .unwrap_or(false)
-            {
-                e.position.y + i64::from(e.size[1]) * SUBPIXELS
-            } else {
-                0
-            },
-            &e.id,
-        )
-    });
+    let defaults = project
+        .manifest
+        .features
+        .iter()
+        .any(|f| f == "entity_defaults");
+    entities.sort_by_key(|e| contact::sort_key(e, defaults));
+    let mut shadowed = false;
     for entity in &entities {
+        if defaults && !contact::ground(entity) && !shadowed {
+            for owner in &entities {
+                contact::shadow(&mut frame, owner, projection);
+            }
+            shadowed = true;
+        }
         if let Some(b) = entity.flatland.as_ref().and_then(|a| a.get("building")) {
             let b =
                 serde_json::from_value(b.clone()).map_err(|e| Error(format!("building: {e}")))?;
@@ -276,21 +274,6 @@ fn render_world(
         } else {
             y + i64::from(h)
         };
-        let defaults = project
-            .manifest
-            .features
-            .iter()
-            .any(|f| f == "entity_defaults");
-        if defaults && !ground {
-            let [sx, sy] = projection.ground(feet[0], feet[1]);
-            for dy in -2i64..=2 {
-                for dx in -7i64..=7 {
-                    if dx * dx + dy * dy * 12 < 50 {
-                        frame.blend(sx + dx, sy + dy, [25, 39, 32, 75]);
-                    }
-                }
-            }
-        }
         if let Some(color) = entity.color {
             let texture = entity
                 .texture
@@ -659,6 +642,22 @@ fn render_battle(
     }
 
     Ok(frame)
+}
+
+/// Canonical presentation anchor for client speech bubbles; no gameplay mutation.
+pub fn actor_screen_anchor(project: &Project, snapshot: &Snapshot, id: &str) -> Option<[i64; 2]> {
+    let e = snapshot.entities.iter().find(|e| e.id == id)?;
+    let a = e.flatland.as_ref();
+    let ay = a.and_then(|a| a["anchor"][1].as_i64()).unwrap_or(0);
+    let z = a.and_then(|a| a["z"].as_i64()).unwrap_or(0);
+    let feet = [
+        e.position.x.div_euclid(SUBPIXELS) + i64::from(e.size[0]) / 2,
+        e.position.y.div_euclid(SUBPIXELS) + i64::from(e.size[1]),
+    ];
+    Some(
+        projection::Projection::new(project, snapshot)
+            .upright(feet, [0, ay - i64::from(e.size[1]) - z - 4]),
+    )
 }
 
 #[cfg(test)]

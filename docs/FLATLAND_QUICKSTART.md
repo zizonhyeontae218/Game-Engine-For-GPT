@@ -26,3 +26,9 @@ Event instructions: do, wait, say, choice, branch, jump, call, camera, battle, r
 Use schema queries for precise fields/defaults. Saveable waits use the event controller,
 never a Lua stack. Replay schema 2 records named inputs and choice/do/skip commands.
 Desktop bundles include Flutter and Rust. Mobile imports data-only .ge4g packages.
+
+
+Current candidate:0.2.0-rc.5. Semantic house footprint blocks movement by default;
+only facing:south is supported. Add say_bubble event instructions for actor-linked
+story flow and declare cutscene_bubbles/solid_buildings/contact_ordering capabilities.
+Harbor Workshop is the public sample.0.2 final waits for real mobile acceptance.

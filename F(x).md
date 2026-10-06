@@ -86,3 +86,5 @@ return before world transitions. Save content revision prevents silent schema/co
 - ActorState.input: optional deterministic held-key priority for step_walk; core Input.direction is an optional most-recent cardinal intent. Maze steering remains separate.
 - Actor.building: semantic footprint/height/material/roof/facing and optional roof/facade/side surfaces. Sprite.projection separates ground/upright.
 - Public sample game ID demo.flatland.harbor, scene 항구, state harbor.running/completed/crate. Android application ID/certificate unchanged; versionCode6.
+
+rc5 presentation additions: systems.camera_blend {from,start_tick} is scoped cosmetic camera state; waiting.kind=bubble with actor/text/screen_anchor uses event serial/PC and continue. Building footprint normalizes body geometry; it is independent of camera.

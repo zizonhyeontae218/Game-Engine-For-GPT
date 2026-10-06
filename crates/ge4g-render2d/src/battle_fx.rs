@@ -7,6 +7,9 @@ pub(super) fn offset(fx: &Value, id: &str, tick: u64) -> [i64; 2] {
         return [0, 0];
     }
     let age = tick - start;
+    if matches!(fx["preset"].as_str(), Some("heal" | "guard")) {
+        return [0, 0];
+    }
     if fx["actor"] == id && age < 22 {
         let travel = if age < 8 {
             -(age as i64) / 2

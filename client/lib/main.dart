@@ -7,6 +7,7 @@ import 'dart:ui' as ui;
 
 import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
@@ -19,10 +20,11 @@ import 'game_library.dart';
 import 'player.dart';
 import 'touch_controls.dart';
 import 'game_popup.dart';
+import 'cutscene_bubble.dart';
 import 'manual_orientation.dart';
 import 'game_viewport.dart';
 
-final rc4CaptureKey = GlobalKey();
+final rc5CaptureKey = GlobalKey();
 
 Future<void> main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -43,7 +45,7 @@ class GE4GApp extends StatelessWidget {
   Widget build(BuildContext context) => MaterialApp(
     title: 'GE4G / GameEngineForGPT',
     builder: (context, child) =>
-        RepaintBoundary(key: rc4CaptureKey, child: child!),
+        RepaintBoundary(key: rc5CaptureKey, child: child!),
     debugShowCheckedModeBanner: false,
     theme: ThemeData(
       useMaterial3: true,
@@ -179,7 +181,7 @@ class _ClientHomeState extends State<ClientHome>
       if (!mounted) return;
       setState(() => ready = true);
       focus.requestFocus();
-      if (widget.arguments.contains('--rc4-evidence')) unawaited(rc4Evidence());
+      if (widget.arguments.contains('--rc5-evidence')) unawaited(rc5Evidence());
       if (widget.arguments.contains('--smoke-test')) unawaited(smoke());
     } catch (error) {
       if (mounted) {
@@ -859,6 +861,21 @@ class _ClientHomeState extends State<ClientHome>
                         orientation.toggle();
                       },
                     )
+                  : player!.popup?['kind'] == 'bubble'
+                  ? CutsceneBubble(
+                      bubble: player!.popup!,
+                      source: Size(
+                        (player!.status['width'] as int).toDouble(),
+                        (player!.status['height'] as int).toDouble(),
+                      ),
+                      onAdvance: () {
+                        player!.choose('continue');
+                        focus.requestFocus();
+                      },
+                      onSave: () {
+                        player!.save();
+                      },
+                    )
                   : GamePopup(
                       text: player!.popup!['text'] as String,
                       choices: (player!.popup!['options'] as List? ?? [])
@@ -884,7 +901,7 @@ class _ClientHomeState extends State<ClientHome>
   );
 
   /// Windows release acceptance: real Flutter UI + canonical native frames.
-  Future<void> rc4Evidence() async {
+  Future<void> rc5Evidence() async {
     try {
       if (!embedded || player?.session == null) {
         throw StateError('embedded game required');
@@ -892,7 +909,7 @@ class _ClientHomeState extends State<ClientHome>
       ticker.stop();
       final live = player!;
       await live.open(live.game!);
-      live.setPaused(true);
+      live.setPaused(false);
       if (widget.arguments.contains('--capture-landscape')) {
         await orientation.toggle();
       }
@@ -914,7 +931,7 @@ class _ClientHomeState extends State<ClientHome>
         await SchedulerBinding.instance.endOfFrame;
         await Future<void>.delayed(const Duration(milliseconds: 100));
         final boundary =
-            rc4CaptureKey.currentContext!.findRenderObject()
+            rc5CaptureKey.currentContext!.findRenderObject()
                 as RenderRepaintBoundary;
         final uiImage = await boundary.toImage(pixelRatio: 1);
         final uiBytes = await uiImage.toByteData(
@@ -932,6 +949,8 @@ class _ClientHomeState extends State<ClientHome>
           'op': 'observe',
           'session': live.session,
         })['snapshot'];
+        await File(p.join(output.path, '$name-status.json'))
+            .writeAsString(jsonEncode(live.status), encoding: utf8);
         await File(p.join(output.path, '$name.json'))
             .writeAsString(jsonEncode(snapshot), encoding: utf8);
       }
@@ -997,6 +1016,150 @@ class _ClientHomeState extends State<ClientHome>
       request({'op': 'choose', 'choice': 'move:pulse:rival'});
       request({'op': 'advance', 'ticks': 12});
       await capture('08-projectile');
+      request({'op': 'skip'});
+      request({'op': 'choose', 'choice': 'move:scratch:rival'});
+      request({'op': 'skip'});
+      request({'op': 'choose', 'choice': 'battle_continue'});
+      await live.save();
+      await capture('09-persistent-save');
+      request({
+        'op': 'command',
+        'actions': [
+          {'op': 'event_scene', 'event': 'battle'},
+        ],
+      });
+      await capture('10-persistent-encounter');
+      request({'op': 'choose', 'choice': 'guard'});
+      request({'op': 'advance', 'ticks': 12});
+      await capture('11-guard');
+      request({'op': 'skip'});
+      request({'op': 'choose', 'choice': 'item_potion'});
+      request({'op': 'advance', 'ticks': 12});
+      await capture('12-heal');
+      request({'op': 'skip'});
+      while (live.status['waiting']['result'] == null) {
+        request({'op': 'choose', 'choice': 'move:scratch:rival'});
+        request({'op': 'skip'});
+      }
+      request({'op': 'choose', 'choice': 'battle_continue'});
+      request({
+        'op': 'command',
+        'actions': [
+          {'op': 'view', 'mode': 'top'},
+          {
+            'op': 'move',
+            'entity': 'player',
+            'at': [256, 160],
+          },
+        ],
+      });
+      await capture('13-top-shadow');
+      request({
+        'op': 'command',
+        'actions': [
+          {'op': 'view', 'mode': 'depth'},
+          {
+            'op': 'move',
+            'entity': 'player',
+            'at': [256, 144],
+          },
+        ],
+      });
+      await capture('14-occlusion-behind');
+      request({
+        'op': 'command',
+        'actions': [
+          {
+            'op': 'move',
+            'entity': 'player',
+            'at': [256, 176],
+          },
+        ],
+      });
+      await capture('15-occlusion-front');
+      request({
+        'op': 'command',
+        'actions': [
+          {
+            'op': 'move',
+            'entity': 'player',
+            'at': [336, 272],
+          },
+        ],
+      });
+      for (final mode in ['top', 'depth', 'alternate']) {
+        request({
+          'op': 'command',
+          'actions': [
+            {'op': 'view', 'mode': mode},
+          ],
+        });
+        for (var i = 0; i < 4; i++) {
+          request({
+            'op': 'advance',
+            'ticks': 15,
+            'input': {'down': true},
+          });
+        }
+        final snapshot = live.engine.request({
+          'op': 'observe',
+          'session': live.session,
+        })['snapshot'];
+        final entity = (snapshot['entities'] as List).firstWhere(
+          (e) => e['id'] == 'player',
+        );
+        if (entity['position']['x'] != 336 * 60 ||
+            entity['position']['y'] != 272 * 60) {
+          throw StateError('roof access $mode');
+        }
+        await capture('16-roof-$mode');
+      }
+      request({
+        'op': 'command',
+        'actions': [
+          {
+            'op': 'move',
+            'entity': 'player',
+            'at': [256, 176],
+          },
+          {'op': 'view', 'mode': 'depth'},
+          {'op': 'event_scene', 'event': 'tour'},
+        ],
+      });
+      request({'op': 'advance', 'ticks': 12});
+      for (var line = 1; line <= 3; line++) {
+        if (live.status['waiting']?['kind'] != 'bubble') {
+          throw StateError('story line $line missing');
+        }
+        await capture('17-bubble-$line');
+        final box =
+            rc5CaptureKey.currentContext!.findRenderObject() as RenderBox;
+        final point = box.localToGlobal(
+          Offset(box.size.width / 2, box.size.height - 24),
+        );
+        GestureBinding.instance.handlePointerEvent(
+          PointerDownEvent(pointer: 77, position: point),
+        );
+        GestureBinding.instance.handlePointerEvent(
+          PointerUpEvent(pointer: 77, position: point),
+        );
+        await Future<void>.delayed(const Duration(milliseconds: 220));
+      }
+      if (live.status['waiting'] != null) {
+        throw StateError('story tap failed to return');
+      }
+      for (var i = 0; i < 12; i++) {
+        request({'op': 'advance', 'ticks': 1});
+      }
+      await live.save();
+      final beforeLoad = live.status['systems'];
+      await live.open(live.game!, load: true);
+      if (jsonEncode(live.status['systems']['combatants']) !=
+              jsonEncode(beforeLoad['combatants']) ||
+          live.status['systems']['view'] != beforeLoad['view']) {
+        throw StateError('save persistence regression');
+      }
+      await capture('18-restored');
       await File(p.join(output.path, 'result.json')).writeAsString(
         jsonEncode({
           'ok': true,
@@ -1009,7 +1172,7 @@ class _ClientHomeState extends State<ClientHome>
       );
       exit(0);
     } catch (error) {
-      stderr.writeln('RC4 rendered acceptance failed: $error');
+      stderr.writeln('RC5 rendered acceptance failed: $error');
       exit(1);
     }
   }
