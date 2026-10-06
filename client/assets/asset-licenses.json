@@ -1,0 +1,91 @@
+{
+  "schema_version": 1,
+  "assets": [
+    {
+      "file": "fonts/MaterialIcons-Regular.otf",
+      "author": "Google / Material Design Icons",
+      "source_url": "https://storage.googleapis.com/flutter_infra_release/flutter/fonts/3012db47f3130e62f7cc0beabff968a33cbec8d8/fonts.zip",
+      "source_revision": "3012db47f3130e62f7cc0beabff968a33cbec8d8",
+      "source_sha256": "d9865b671a09d683d13a863089d8825e0f61a37696ce5d7d448bc8023aa62453",
+      "license": "CC-BY-4.0",
+      "license_version": "4.0",
+      "modification_allowed": true,
+      "attribution_required": true,
+      "modified": true,
+      "modification": "Flutter release icon font subsetting. Material Design Icons by Google, licensed CC BY 4.0; no endorsement implied."
+    },
+    {
+      "file": "client/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png",
+      "author": "GE4G project",
+      "source_url": "https://github.com/zizonhyeontae218/Game-Engine-For-GPT/blob/main/scripts/client_icons.py",
+      "license": "CC0-1.0",
+      "license_version": "1.0",
+      "modification_allowed": true,
+      "attribution_required": false,
+      "modified": false,
+      "source_sha256": "4d1b45ed1daf20c4d15191c8d975cd9e45be94e7d0363006150d5df804dc43bb",
+      "provenance": "Original geometric GE4G launcher mark; platform build tooling may re-encode resource bytes."
+    },
+    {
+      "file": "client/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png",
+      "author": "GE4G project",
+      "source_url": "https://github.com/zizonhyeontae218/Game-Engine-For-GPT/blob/main/scripts/client_icons.py",
+      "license": "CC0-1.0",
+      "license_version": "1.0",
+      "modification_allowed": true,
+      "attribution_required": false,
+      "modified": false,
+      "source_sha256": "be5d632032426736012b355b94b36768c21567c039f15126bc5e30754de5a707",
+      "provenance": "Original geometric GE4G launcher mark; platform build tooling may re-encode resource bytes."
+    },
+    {
+      "file": "client/android/app/src/main/res/mipmap-hdpi/ic_launcher.png",
+      "author": "GE4G project",
+      "source_url": "https://github.com/zizonhyeontae218/Game-Engine-For-GPT/blob/main/scripts/client_icons.py",
+      "license": "CC0-1.0",
+      "license_version": "1.0",
+      "modification_allowed": true,
+      "attribution_required": false,
+      "modified": false,
+      "source_sha256": "f154fd9f807db46207eb45f558ea8827b162880c63e8337d458288dd270dc914",
+      "provenance": "Original geometric GE4G launcher mark; platform build tooling may re-encode resource bytes."
+    },
+    {
+      "file": "client/android/app/src/main/res/mipmap-xhdpi/ic_launcher.png",
+      "author": "GE4G project",
+      "source_url": "https://github.com/zizonhyeontae218/Game-Engine-For-GPT/blob/main/scripts/client_icons.py",
+      "license": "CC0-1.0",
+      "license_version": "1.0",
+      "modification_allowed": true,
+      "attribution_required": false,
+      "modified": false,
+      "source_sha256": "86410fc38041ba6da9a38917073c9a4100729cc1a4bbf8b0bdd482b7e96dca2e",
+      "provenance": "Original geometric GE4G launcher mark; platform build tooling may re-encode resource bytes."
+    },
+    {
+      "file": "client/android/app/src/main/res/mipmap-mdpi/ic_launcher.png",
+      "author": "GE4G project",
+      "source_url": "https://github.com/zizonhyeontae218/Game-Engine-For-GPT/blob/main/scripts/client_icons.py",
+      "license": "CC0-1.0",
+      "license_version": "1.0",
+      "modification_allowed": true,
+      "attribution_required": false,
+      "modified": false,
+      "source_sha256": "ac26745eb0a931e6dbbf86a0759711da3926ffbf7e933bd79039c431fa7916d6",
+      "provenance": "Original geometric GE4G launcher mark; platform build tooling may re-encode resource bytes."
+    },
+    {
+      "file": "client/windows/runner/resources/app_icon.ico",
+      "author": "GE4G project",
+      "source_url": "https://github.com/zizonhyeontae218/Game-Engine-For-GPT/blob/main/scripts/client_icons.py",
+      "license": "CC0-1.0",
+      "license_version": "1.0",
+      "modification_allowed": true,
+      "attribution_required": false,
+      "modified": false,
+      "source_sha256": "3f6c43c7d8a8080bc8df7877469e0d9cf6618ca89e6c7038a51db2bb2805de87",
+      "provenance": "Original geometric GE4G launcher mark; platform build tooling may re-encode resource bytes."
+    }
+  ],
+  "dependency_notices": "Flutter embeds NOTICES.Z for third-party library notices; engine source is MIT."
+}

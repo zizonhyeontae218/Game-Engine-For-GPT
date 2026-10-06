@@ -43,8 +43,10 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `client/android/gradle/wrapper/gradle-wrapper.properties` — Repository file; inspect only when relevant to the task.
 - `client/android/settings.gradle.kts` — Repository file; inspect only when relevant to the task.
 - `client/android/signing-certificate.sha256` — Repository file; inspect only when relevant to the task.
+- `client/assets/asset-licenses.json` — Repository file; inspect only when relevant to the task.
 - `client/assets/default_bindings.json` — Repository file; inspect only when relevant to the task.
 - `client/assets/default_layouts.json` — Repository file; inspect only when relevant to the task.
+- `client/assets/licenses/MaterialIcons-CC-BY-4.0.txt` — Repository file; inspect only when relevant to the task.
 - `client/ios/.gitignore` — Repository file; inspect only when relevant to the task.
 - `client/ios/Flutter/AppFrameworkInfo.plist` — Repository file; inspect only when relevant to the task.
 - `client/ios/Flutter/Debug.xcconfig` — Repository file; inspect only when relevant to the task.

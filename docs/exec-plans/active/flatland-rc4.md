@@ -90,7 +90,7 @@ No suspended client builds were run. Hosted Windows/Android CI remains pending.
 2026-10-06: local Rust workspace tests and strict clippy passed during implementation;
 Flutter static analysis passes. Harbor420-tick deterministic journey completes battle,
 crate/dummy objectives and reward, exact save/reload, RGBA
-5445b0b8855fb54f9da20f1825fb547528b816d0e380d66c8cf06a8faa379aef.
+be2fbd11439929f2682bb801ce2a07ff6e9e99cf3197988ac451b8d74c72bce5.
 New rc4 integration cases cover view/scene/cutscene/save, input, persistent HP/PP,
 feedback locking/skip, exactly-once resume, fainting/heal/reset/reward duplication.
 

@@ -27,3 +27,5 @@ flutter:
   assets:
     - assets/default_layouts.json
     - assets/default_bindings.json
+    - assets/asset-licenses.json
+    - assets/licenses/

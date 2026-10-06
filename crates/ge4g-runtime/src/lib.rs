@@ -269,6 +269,9 @@ impl World {
                 .values()
                 .map(|e| {
                     let mut snapshot = e.snapshot();
+                    if let Some(space)=e.spec.sprite.as_ref().and_then(|s|s.projection) {
+                        snapshot.flatland.get_or_insert_with(||json!({}))["projection"]=json!(space);
+                    }
                     if let Some(a) = &e.spec.flatland {
                         snapshot.blocking = a.body != ge4g_project::flatland::BodyMode::Pass;
                         if let Some(v) = snapshot.flatland.as_mut().and_then(Value::as_object_mut) {

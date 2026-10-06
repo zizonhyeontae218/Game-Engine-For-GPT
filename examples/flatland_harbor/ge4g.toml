@@ -23,7 +23,7 @@ default=false
 [[tests]]
 name="harbor-rc4-stabilization"
 replay="replays/journey.json"
-golden_rgba_sha256="5445b0b8855fb54f9da20f1825fb547528b816d0e380d66c8cf06a8faa379aef"
+golden_rgba_sha256="be2fbd11439929f2682bb801ce2a07ff6e9e99cf3197988ac451b8d74c72bce5"
 [[tests.assertions]]
 tick=420
 scene="항구"

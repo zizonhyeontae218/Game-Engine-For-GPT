@@ -117,18 +117,60 @@ pub(super) fn render(
         Roof::Gable => 15,
     } * p.zoom
         / 100;
-    polygon(
-        frame,
-        project,
-        &[
-            [front[0] - 3, front[1] - h],
-            [right[0] + 3, right[1] - h],
-            [rear[0] + 3, rear[1] - h - rise],
-            [back[0] - 3, back[1] - h - rise],
-        ],
-        [103, 123, 157, 255],
-        b.roof_surface.as_deref(),
-    )?;
+    if matches!(b.roof, Roof::Gable) {
+        let ridge_front = [(front[0] + right[0]) / 2, front[1] - h - rise];
+        let ridge_back = [(back[0] + rear[0]) / 2, back[1] - h - rise];
+        if b.facade_surface.is_none() {
+            polygon(
+                frame,
+                project,
+                &[
+                    [front[0], front[1] - h],
+                    [right[0], right[1] - h],
+                    ridge_front,
+                ],
+                base,
+                None,
+            )?;
+        }
+        polygon(
+            frame,
+            project,
+            &[
+                [front[0] - 3, front[1] - h],
+                [back[0] - 3, back[1] - h],
+                ridge_back,
+                ridge_front,
+            ],
+            [81, 102, 138, 255],
+            b.roof_surface.as_deref(),
+        )?;
+        polygon(
+            frame,
+            project,
+            &[
+                ridge_front,
+                ridge_back,
+                [rear[0] + 3, rear[1] - h],
+                [right[0] + 3, right[1] - h],
+            ],
+            [119, 143, 175, 255],
+            b.roof_surface.as_deref(),
+        )?;
+    } else {
+        polygon(
+            frame,
+            project,
+            &[
+                [front[0] - 3, front[1] - h],
+                [right[0] + 3, right[1] - h],
+                [rear[0] + 3, rear[1] - h - rise],
+                [back[0] - 3, back[1] - h - rise],
+            ],
+            [103, 123, 157, 255],
+            b.roof_surface.as_deref(),
+        )?;
+    }
     // Authored transparent facade remains transparent; details only belong to fallback.
     if b.facade_surface.is_none() {
         let span = right[0] - front[0];

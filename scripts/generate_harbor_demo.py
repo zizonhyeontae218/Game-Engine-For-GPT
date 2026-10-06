@@ -104,7 +104,7 @@ end
  do(333,[{'op':'view','mode':'alternate'}]);do(334,[{'op':'view','mode':'top'}]);do(335,[{'op':'move','entity':'player','at':[176,272]}])
  do(374,[{'op':'move','entity':'player','at':[272,240]},{'op':'face','entity':'player','vector':[1,0]},{'op':'attack','entity':'player','attack':'tap'}]);do(385,[{'op':'attack','entity':'player','attack':'tap'}]);do(396,[{'op':'attack','entity':'player','attack':'tap'}])
  write('replays/journey.json',{'schema_version':2,'ticks':420,'inputs':[{'start':336,'end':352,'actions':['right']}],'commands':commands})
- (OUT/'ge4g.toml').write_text(manifest+'\n[[tests]]\nname="harbor-rc4-stabilization"\nreplay="replays/journey.json"\ngolden_rgba_sha256="5445b0b8855fb54f9da20f1825fb547528b816d0e380d66c8cf06a8faa379aef"\n[[tests.assertions]]\ntick=420\nscene="항구"\nstate={"harbor.crate"=true,"harbor.completed"=true}\n',encoding='utf-8')
+ (OUT/'ge4g.toml').write_text(manifest+'\n[[tests]]\nname="harbor-rc4-stabilization"\nreplay="replays/journey.json"\ngolden_rgba_sha256="be2fbd11439929f2682bb801ce2a07ff6e9e99cf3197988ac451b8d74c72bce5"\n[[tests.assertions]]\ntick=420\nscene="항구"\nstate={"harbor.crate"=true,"harbor.completed"=true}\n',encoding='utf-8')
  (OUT/'README.md').write_text('''# 바람항 공방 / Harbor Workshop — FlatLand rc4
 
 Original GE4G sample, CC0-1.0 art, audio and map. No third-party branding/map reference.
