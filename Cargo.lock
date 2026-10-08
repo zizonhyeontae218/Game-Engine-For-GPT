@@ -549,6 +549,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "ge4g-pentomino"
+version = "0.2.0"
+dependencies = [
+ "serde",
+ "serde_json",
+ "sha2",
+ "thiserror 2.0.21",
+]
+
+[[package]]
 name = "ge4g-platform"
 version = "0.2.0"
 dependencies = [
