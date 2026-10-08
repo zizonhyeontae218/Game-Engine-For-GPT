@@ -20,12 +20,17 @@ jobs:
       - run: cargo fmt --all --check
       - run: cargo clippy --locked --workspace --all-targets -- -D warnings
       - run: cargo test --locked --workspace
+      - run: python3 scripts/check_p2_boundaries.py
+      - run: python3 scripts/check_p3_boundaries.py
+      - run: cargo run --locked -p ge4g-pentomino-view --example p3_public
+      - run: cargo run --locked -p ge4g-pentomino-view-legacy --example fifth_demo -- examples/flatland_nuvema $RUNNER_TEMP/p3-fifth-frames
       - run: cargo run --locked -p ge4g-cli -- validate examples/basement_demo --json
       - run: cargo run --locked -p ge4g-cli -- test examples/basement_demo --json
       - run: cargo run --locked -p ge4g-cli -- validate examples/flatland_pacman --json
       - run: cargo run --locked -p ge4g-cli -- test examples/flatland_pacman --json
       - run: cargo run --locked -p ge4g-cli -- test examples/flatland_signal_yard --json
       - run: cargo run --locked -p ge4g-cli -- test examples/flatland_harbor --json
+      - run: cargo run --locked -p ge4g-cli -- test examples/flatland_nuvema --json
       - run: python3 scripts/filetree.py lint
       - run: cargo clippy --locked -p ge4g-cli --no-default-features --all-targets -- -D warnings
       - run: cargo test --locked -p ge4g-cli --no-default-features

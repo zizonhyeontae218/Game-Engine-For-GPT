@@ -1,0 +1,132 @@
+{
+  "source_base": "2159304ad464db488731592f643b21147708a0fb",
+  "main": "2d1ffd060389109f341fb5854ce07890f445f3f9",
+  "P2_Core_external": "ACCEPTED23/23; no blocking defect",
+  "maintenance": "293ba513f5727d4a7a0a59476c9a98eb193aaa25",
+  "preserved_files": [
+    {
+      "path": "crates/ge4g-pentomino/src/lib.rs",
+      "sha256": "2cd89fa107be8f3e0924533535dbda70671340fe849dc0bef1e95982559769fc"
+    },
+    {
+      "path": "crates/ge4g-pentomino/src/p2/host.rs",
+      "sha256": "e56d4dc66a978a26e8714ef4d90369cc2eb912eeaa1427174239dfc6132df723"
+    },
+    {
+      "path": "crates/ge4g-pentomino/src/p2/mod.rs",
+      "sha256": "32a4d91c0d387959e0850cb4f38f45e8cdab90dd4b4e458649d762a2984ad594"
+    },
+    {
+      "path": "crates/ge4g-pentomino/src/p2/transaction.rs",
+      "sha256": "c265f3f83fc0f79dc4f43436a4508fd853dded93b5727e1800c6a863a7932381"
+    },
+    {
+      "path": "crates/ge4g-pentomino/src/p2/types.rs",
+      "sha256": "8c80ced0ee3bd2b8df8af6e93a8c3e0473530737ef81a22725932988ea498700"
+    },
+    {
+      "path": "crates/ge4g-pentomino/src/p2/validation.rs",
+      "sha256": "6d67f24e29737552420e89c0f19450eef8bba6e28096f181c2c086f1c540ea84"
+    },
+    {
+      "path": "crates/ge4g-pentomino/tests/lifecycle_contract.rs",
+      "sha256": "ce87260ccd1c7c5fe98daac774d70db90f7c6aed981c6c1767e953a288e8461a"
+    },
+    {
+      "path": "crates/ge4g-pentomino/tests/p2_contract.rs",
+      "sha256": "46e1c0a44f29b4784ecfef32044375f79a875341ee5c36cd1f0a7598ffb3f943"
+    },
+    {
+      "path": "crates/ge4g-pentomino-legacy/src/lib.rs",
+      "sha256": "a1c6f4207e6b59491dbdc3627b9f3373348ca2f7c17265cbe8808e3490373f75"
+    },
+    {
+      "path": "crates/ge4g-pentomino-legacy/tests/bridge_contract.rs",
+      "sha256": "ab8fabf31bf164372bf8af50e4b62bf377fe3c271f992b5c28af9844da1127b4"
+    },
+    {
+      "path": "crates/ge4g-core/src/lib.rs",
+      "sha256": "cc1f999c9dff97c0f98163a277fc996c56cb8a9189c33cddcbe173d7986642a2"
+    },
+    {
+      "path": "crates/ge4g-project/src/building.rs",
+      "sha256": "0f3c8c46929993cf89467784ff115b80d0ee5c3242b258a75aaab68a8ffdea92"
+    },
+    {
+      "path": "crates/ge4g-project/src/flatland.rs",
+      "sha256": "8216f9881c4c6590bbb102a7cf72ea07ca4745cac9fff8bc8a7c7384860e9ea3"
+    },
+    {
+      "path": "crates/ge4g-project/src/gameplay.rs",
+      "sha256": "7c2551c353bf7210552f32b15c5af533cd3aa5653d48a116828e27e5b88d7715"
+    },
+    {
+      "path": "crates/ge4g-project/src/lib.rs",
+      "sha256": "d123aa101c7d4380c57e48954701d1897a6ff86de5b4c457e422409f549690e8"
+    },
+    {
+      "path": "crates/ge4g-project/src/patch.rs",
+      "sha256": "0dbeb25409c574b048ef8138056c8f9e9b0df0a43bdedb9727471ce0285506f4"
+    },
+    {
+      "path": "crates/ge4g-runtime/src/battle.rs",
+      "sha256": "82d95aadf48292e14931c7bea9eb62d2db1682184305094c6859dc1773f634d4"
+    },
+    {
+      "path": "crates/ge4g-runtime/src/battle_fx.rs",
+      "sha256": "4059d33e3f89f6d3073dcfc471a0a49bdcea3c36f622f7f1fb0cf5f7e2535e27"
+    },
+    {
+      "path": "crates/ge4g-runtime/src/combatants.rs",
+      "sha256": "d8fa6cf848cb87ea26375db3cba3463a105225a601bbb5f58e8bb4478f67e837"
+    },
+    {
+      "path": "crates/ge4g-runtime/src/flatland.rs",
+      "sha256": "0c8e20a2268f74ba5d35b3d71d76ad7be9f8be42a776390dbaf88a4b092fc14c"
+    },
+    {
+      "path": "crates/ge4g-runtime/src/gameplay.rs",
+      "sha256": "732728d42ed6424fc27067b9ada3687e01878d602b68d0992b2c829e9669f0d7"
+    },
+    {
+      "path": "crates/ge4g-runtime/src/input.rs",
+      "sha256": "fce8e40c84b028a7648dc555797b9bdb4f186d04609db0a690c89d6c2febf846"
+    },
+    {
+      "path": "crates/ge4g-runtime/src/lib.rs",
+      "sha256": "fc2126c3ab8f96a2c4c5845dd4f79065b7c24d9d0d137a16a8d987e668a80bca"
+    },
+    {
+      "path": "crates/ge4g-runtime/src/resume_error.rs",
+      "sha256": "0a8bdce89838e6d68a5378c0268078ca06398f4e6c869bcd112529b7da822878"
+    },
+    {
+      "path": "crates/ge4g-runtime/src/view.rs",
+      "sha256": "61c02f21614bc88e0486ca2b9c1cf0169b6c7373d07bfab50c5bbb3ae99720fe"
+    },
+    {
+      "path": "crates/ge4g-render2d/src/battle_fx.rs",
+      "sha256": "66fe2f41a67a7b1330ff3463608c2398168151fba2a2de7c8191ee19e932f893"
+    },
+    {
+      "path": "crates/ge4g-render2d/src/building.rs",
+      "sha256": "f78dc3cdf39fe2700f3e8e7ebb15e2391bc8cf643f61f759a471e4cbab0a816b"
+    },
+    {
+      "path": "crates/ge4g-render2d/src/contact.rs",
+      "sha256": "700b6baf693bdf7ed1b98bb1c78555472038a2170efd74e9fd9427a14cca1cca"
+    },
+    {
+      "path": "crates/ge4g-render2d/src/lib.rs",
+      "sha256": "90e0724ab932144592c6abb21ea3545ac681c1dce89c8f263eb91f29d172d96f"
+    },
+    {
+      "path": "crates/ge4g-render2d/src/projection.rs",
+      "sha256": "d8d639cdee130ec3e74c41191be1fb79a6466cc6b4179f42a223ce7e54eddd48"
+    },
+    {
+      "path": "crates/ge4g-client/src/lib.rs",
+      "sha256": "55da62ffccea312d9c68462681fb2935447563098d94f1a1b1009a22cbcbc52d"
+    }
+  ]
+}

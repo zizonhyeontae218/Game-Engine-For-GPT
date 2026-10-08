@@ -1,0 +1,19 @@
+[package]
+name = "ge4g-pentomino-view-legacy"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+ge4g-pentomino = { path = "../ge4g-pentomino" }
+ge4g-pentomino-view = { path = "../ge4g-pentomino-view" }
+ge4g-core = { path = "../ge4g-core" }
+ge4g-project = { path = "../ge4g-project" }
+ge4g-runtime = { path = "../ge4g-runtime" }
+ge4g-render2d = { path = "../ge4g-render2d" }
+serde.workspace = true
+serde_json.workspace = true
+sha2.workspace = true
+
+[dev-dependencies]
+ge4g-pentomino-legacy = { path = "../ge4g-pentomino-legacy" }

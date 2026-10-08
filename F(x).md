@@ -146,3 +146,13 @@ ABI1 errors may include error_code=save_content_revision_mismatch; no string par
 library.json games array persists stable IDs and order; digest owns immutable content.
 saves/<game_id>/archive/<timestamp>.json preserves incompatible revisions. Settings
 remain stable by ID across update/normal delete; full delete is separately confirmed.
+
+## Experimental P3 presentation (contract1 / presentation save1)
+
+ViewId/CameraId/FormatId identify the current presentation namespace, not Core
+object authority or stale-handle generations. Camera IDs may be reused after
+remove. Stable source SceneRef/EntityRef are only read. ViewHost content binding,
+local presentation tick, base/transition endpoints/progress, tracking history and
+keyed shake count are presentation state, saved independently from P2 Core.
+CameraStatus.current is base; CameraFrame.target is effective presentation pose.
+Exact contracts/limits: docs/pentomino/P3_CONTRACT.md. External gate PENDING.

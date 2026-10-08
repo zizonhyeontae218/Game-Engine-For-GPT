@@ -9,12 +9,16 @@ Pentomino는 GE4G 0.3.0의 버전명입니다. Tiny Core → View/Format → Gam
 records/input actions, 플러그인별 history와 save2를 구현합니다. 별도의 legacy
 adapter는 기존 World의 검증된 스냅샷을 가져오며 기존 실행 권위를 유지합니다.
 외부 GPT Work의 공개 Core SDK23/23 PASS를 반영해 P2를 완료했습니다.
-레거시 외부 실행은 UNVERIFIED이며 Camera & View/Format은 다음 P3입니다.
+레거시 외부 실행은 UNVERIFIED입니다. P3는 독립 Camera/View, 네 View 정책,
+기본 smooth2.5D 전환과 기존 다섯 번째 콘텐츠 호환 검증을 내부 완료했습니다.
+P3는 **EXTERNAL VALIDATION PENDING**이며 별도 GPT Work 검증을 기다립니다.
+현재 P2 PR3는 OPEN, P3는 accepted P2 branch에 쌓이며 main은 P0/P1입니다.
 
 - [현재 개발 상태와 다음 작업](docs/pentomino/STATUS.md)
 - [P1 공개 계약](docs/pentomino/P1_CONTRACT.md) · [P1 검증 기록](docs/pentomino/P1_RUNDOWN.md)
 - [P2 공개 SDK 안내](docs/public/pentomino-p2/README.md) · [P2 공개 계약](docs/pentomino/P2_CONTRACT.md)
-- [P2 Rundown](docs/pentomino/P2_RUNDOWN.md) · [P3 인계](docs/pentomino/P3_HANDOFF.md)
+- [P2 Rundown](docs/pentomino/P2_RUNDOWN.md) · [P3 Rundown](docs/pentomino/P3_RUNDOWN.md)
+- [P3 공개 SDK 안내](docs/public/pentomino-p3/README.md) · [Camera/View 계약](docs/pentomino/P3_CONTRACT.md)
 - [작업자 시작 안내](QUICKSTART.ko.md) · [인수인계](docs/pentomino/HANDOFF.md)
 - [0.2 유지보수 브랜치](https://github.com/zizonhyeontae218/Game-Engine-For-GPT/tree/release/0.2)
   · [0.2.0 정식 릴리스](https://github.com/zizonhyeontae218/Game-Engine-For-GPT/releases/tag/v0.2.0)

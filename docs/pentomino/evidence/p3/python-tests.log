@@ -1,0 +1,11 @@
+COMMAND: python3 -m unittest discover -s tests -v
+test_allowlist_guards (test_tooling.Tests.test_allowlist_guards) ... ok
+test_gate_evidence (test_tooling.Tests.test_gate_evidence) ... ok
+test_roles (test_tooling.Tests.test_roles) ... ok
+test_staging (test_tooling.Tests.test_staging) ... ok
+test_symlink_block (test_tooling.Tests.test_symlink_block) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.004s
+
+OK

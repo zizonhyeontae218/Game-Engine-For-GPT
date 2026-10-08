@@ -16,6 +16,8 @@ signed alpha delivery or physical acceptance is claimed.
   never bulk-merge alpha version/architecture changes back into release/0.2.
 - Short milestone branches/PRs target main. Old P0/P1 branch names are historical.
   Save/archive/schema migration decisions are explicit, not inferred from version.
+  P3 is stacked on accepted P2 branch2159304 while P2 PR3 remains open; main
+  still contains P0/P1 until that integration occurs.
 
 ## Implemented and missing
 
@@ -41,17 +43,26 @@ uses inherited FlatLand code. Preserve schema/save/ABI1 and release/0.2.
 External source-free public Core GPT Work23/23 is ACCEPTED from the user's
 separate report; the tested Core rlib hash matches the delivered SDK. External
 legacy runtime/game execution remains UNVERIFIED. See P2_RUNDOWN.md for concrete internal evidence and
-../public/pentomino-p2/ for public test package instructions. Camera/View/
-Format, Gameplay, dynamic loading and client execution through Core are
-unimplemented / UNVERIFIED. P2 is not a final release or client support expansion.
+../public/pentomino-p2/ for public test package instructions. P2 is not a final release or client support expansion.
+
+P3 internal candidate adds separate ge4g-pentomino-view and -view-legacy crates:
+four replaceable Format/View policies, independent multiCamera lifecycle,
+explicit World/View/Camera/Screen-depth transforms, orthographic/perspective,
+composable follow/bounds/zoom/shake and default tick-based smooth2.5D transitions,
+canonical presentation save1 and structured discovery. Native production consumes
+only ReadFrame; Core and legacy source remain unchanged. Existing fifth Nuvema
+content drives real legacy-compatible ground/upright raster composition.
+P3_RUNDOWN.md records actual evidence and limitations. **EXTERNAL VALIDATION
+PENDING**: internal150 Rust tests (34 new), five legacy regressions and source
+audits do not substitute for a separate GPT Work consumer report.
+Gameplay, dynamic loading and client execution through Core remain UNVERIFIED.
 
 ## Next slice
 
-P2 acceptance is complete. P3 is focused
-Camera & View/Format design and implementation outside Tiny Core; P3_HANDOFF.md
-defines the boundary. Follow Core → View/Format → Gameplay; Forge belongs to0.4.
-No P3 code is implemented in P2. Preserve deterministic Rust authority/data-only
-imports and existing legacy behavior through verified adapter slices.
+P3 external consumer validation is the active gate. Public SDK instructions are
+../public/pentomino-p3/. Gameplay plugins are the next development stage AFTER
+this Camera/View gate; combat/world/interaction/platformer and Forge are not
+implemented here. Follow Core → View/Format → Gameplay; Forge belongs to0.4.
 
 ## Verification and release policy
 
@@ -60,6 +71,8 @@ imports and existing legacy behavior through verified adapter slices.
 - cargo test --locked -p ge4g-pentomino verifies unchanged P1 and typed P2.
 - cargo test --locked -p ge4g-pentomino-legacy verifies projection/replay boundary.
 - python3 scripts/check_p2_boundaries.py verifies dependency/preservation direction.
+- python3 scripts/check_p3_boundaries.py verifies readonly native direction and
+  unchanged P2/legacy production/tests. P3_CONTRACT.md defines presentation save1.
 - Android/Windows are the current client CI matrix; no automatic platform expansion.
 - scripts/release_consistency.py checks alpha manifests/lockfile and branch-facing
   documentation while retaining historical FlatLand documentation sanity checks.

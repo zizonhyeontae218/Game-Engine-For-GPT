@@ -1,0 +1,3 @@
+COMMAND: python3 scripts/validate_pentaworks.py
+PASS: project config, 10 custom Codex roles, 2 skills, design/brief/report templates
+NOT TESTED: actual Codex spawning, GE4G runtime, plugin functionality or release gates

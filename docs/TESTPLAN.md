@@ -8,6 +8,9 @@ Existing acceptance checks remain regressions; also run
 `cargo test --locked -p ge4g-pentomino` for unchanged P1 plus typed P2 contracts,
 `cargo test --locked -p ge4g-pentomino-legacy` for the compatibility boundary,
 and `python3 scripts/check_p2_boundaries.py` for P2 dependency/preservation checks.
+P3 adds cargo tests for ge4g-pentomino-view and ge4g-pentomino-view-legacy,
+python3 scripts/check_p3_boundaries.py, public p3_public/fifth_demo examples and
+existing flatland_nuvema CLI replay regression. P3 external consumer gate is PENDING.
 Android/Windows remain the client verification matrix. No alpha binary is published here.
 
 ## FlatLand 0.2.0 acceptance
