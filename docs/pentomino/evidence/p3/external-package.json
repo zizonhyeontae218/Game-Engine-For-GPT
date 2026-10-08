@@ -1,0 +1,57 @@
+{
+  "archive": "GE4G-P3-camera-public.zip",
+  "sha256": "e462a7268c19805ca36dc2aec304476e4d034054d6122a536d97e8f82e80f178",
+  "bytes": 29765917,
+  "manifest_commit": "b43a251d78ecc55c3605b98874aee04888327ceb",
+  "declared_files": 194,
+  "archive_files": 196,
+  "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)\nbinary: rustc\ncommit-hash: b940084d7eb6a299eb4bfeb8e34901bc051e7ac4\ncommit-date: 2026-09-28\nhost: x86_64-unknown-linux-gnu\nrelease: 1.99.0\nLLVM version: 23.1.1\n",
+  "compression": "ZIP_LZMA",
+  "native_libraries": [
+    "native/liblua5.4.a"
+  ],
+  "public_libraries": {
+    "serde_json": "226e4ef010bbe5fc5a254cf72ae0f04f0bcc3e9594b0db1f13f4b0298001ae08",
+    "sha2": "194266dd2919029f94c22186a4d49f84644b35844432d8e2c8b00f505986c3a0",
+    "ge4g_core": "df6cedd1a60aba08d627413f5b06d278b2647eed629719dcffed74618e46e6ec",
+    "ge4g_project": "90c952bb866d578bb0da7c7d7a7de9076b5ba9f144891175f747293dd5382356",
+    "ge4g_pentomino": "464e0a453e5e48f0e111ddf6b5eacf8bf615fb3dbdd409966074963a49fd8357",
+    "ge4g_pentomino_view": "e357c9ba4b40df5126d062a03d6ca18ed9cd50a6f3c631a89694c20769556a43",
+    "ge4g_runtime": "d6c4614baacd8b478b6dc578e1849c0695de4c7029628ed493e43c00444dfdd6",
+    "ge4g_render2d": "0572f4bafdac899c38ba116c1ad6aeedfebdbf88a4751189484448ed6893c931",
+    "ge4g_pentomino_view_legacy": "6ac0fa373bf4acb7c1d3faa9cbc0f023e5a85b6c81d6536a7ab42902cdb9d48a"
+  },
+  "selfchecks": [
+    {
+      "command": [
+        "python3",
+        "/workspace/scratch/p3-sourcefree-lua-complete/run_public.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "log": "sdk-check.log",
+      "scope": "INTERNAL packaging selfcheck; NOT external GPT Work"
+    },
+    {
+      "command": [
+        "python3",
+        "/workspace/scratch/p3-sourcefree-lua-complete/run_public.py"
+      ],
+      "exit_code": 0,
+      "log": "sdk-native-example.log",
+      "scope": "INTERNAL packaging selfcheck; NOT external GPT Work"
+    },
+    {
+      "command": [
+        "python3",
+        "/workspace/scratch/p3-sourcefree-lua-complete/run_public.py",
+        "--example",
+        "fifth_demo"
+      ],
+      "exit_code": 0,
+      "log": "sdk-fifth-example.log",
+      "scope": "INTERNAL packaging selfcheck; NOT external GPT Work"
+    }
+  ],
+  "external_validation": "EXTERNAL VALIDATION PENDING"
+}

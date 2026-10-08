@@ -1,0 +1,44 @@
+{
+  "statusCheckRollup": [
+    {
+      "__typename": "CheckRun",
+      "completedAt": "0001-01-01T00:00:00Z",
+      "conclusion": "",
+      "detailsUrl": "https://github.com/zizonhyeontae218/Game-Engine-For-GPT/actions/runs/37805427365/job/113408628503",
+      "name": "windows",
+      "startedAt": "2026-10-08T16:01:34Z",
+      "status": "IN_PROGRESS",
+      "workflowName": "GE4G Flutter clients"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-10-08T16:03:41Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/zizonhyeontae218/Game-Engine-For-GPT/actions/runs/37805427292/job/113408318520",
+      "name": "acceptance",
+      "startedAt": "2026-10-08T16:00:54Z",
+      "status": "COMPLETED",
+      "workflowName": "Basement acceptance"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-10-08T16:03:31Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/zizonhyeontae218/Game-Engine-For-GPT/actions/runs/37805413378/job/113408271184",
+      "name": "acceptance",
+      "startedAt": "2026-10-08T16:00:48Z",
+      "status": "COMPLETED",
+      "workflowName": "Basement acceptance"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-10-08T16:07:47Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/zizonhyeontae218/Game-Engine-For-GPT/actions/runs/37805427365/job/113408628929",
+      "name": "android",
+      "startedAt": "2026-10-08T16:01:34Z",
+      "status": "COMPLETED",
+      "workflowName": "GE4G Flutter clients"
+    }
+  ]
+}

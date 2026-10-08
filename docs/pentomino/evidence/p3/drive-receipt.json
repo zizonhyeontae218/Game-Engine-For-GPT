@@ -1,0 +1,11 @@
+{
+  "folder": "https://drive.google.com/drive/folders/1nNGas54kIfYe2R6iVVizLwo8ku9g_OTR",
+  "zip": "https://drive.google.com/file/d/17ZT-5vmP8b-sqMqgs3JpcD7jVs5E0w9X/view",
+  "sha256_file": "https://drive.google.com/file/d/1Aao1R7n74ksxxP0gdPNBkEKNFosPSw09/view",
+  "manifest": "https://drive.google.com/file/d/1KuW8sxTiIUhXTwlBZHGVFPigb7T93AQ8/view",
+  "external_tester_task": "https://drive.google.com/file/d/10urAgj18UUNBXvnexLTGT5o43vGcXe5J/view",
+  "readback_bytes": 29765917,
+  "readback_sha256": "e462a7268c19805ca36dc2aec304476e4d034054d6122a536d97e8f82e80f178",
+  "upload_download_identity": "PASS",
+  "external_validation": "PENDING"
+}

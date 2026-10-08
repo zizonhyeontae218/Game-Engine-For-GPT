@@ -1,2 +1,2 @@
-COMMAND: python3 /workspace/scratch/p3-sourcefree-unpacked/run_public.py --check
-{"checksums": "PASS", "compiler": "PASS", "commit": "0c8bbdbdf1cde6281a8344dea2065cde70bb2cf6", "external_gate": "UNVERIFIED"}
+COMMAND: python3 /workspace/scratch/p3-sourcefree-lua-complete/run_public.py --check
+{"checksums": "PASS", "compiler": "PASS", "commit": "b43a251d78ecc55c3605b98874aee04888327ceb", "external_gate": "UNVERIFIED"}

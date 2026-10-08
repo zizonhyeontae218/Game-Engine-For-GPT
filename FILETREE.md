@@ -322,9 +322,14 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `docs/pentomino/evidence/p2/test-workspace.log` — Repository file; inspect only when relevant to the task.
 - `docs/pentomino/evidence/p2/tooling.log` — Repository file; inspect only when relevant to the task.
 - `docs/pentomino/evidence/p2/verification.json` — Repository file; inspect only when relevant to the task.
+- `docs/pentomino/evidence/p3/DELIVERY.ko.txt` — Repository file; inspect only when relevant to the task.
 - `docs/pentomino/evidence/p3/basement_demo-regression.log` — Repository file; inspect only when relevant to the task.
+- `docs/pentomino/evidence/p3/candidate-evidence.json` — Repository file; inspect only when relevant to the task.
+- `docs/pentomino/evidence/p3/ci-checks-0c8bbdb.json` — Repository file; inspect only when relevant to the task.
 - `docs/pentomino/evidence/p3/ci-shallow-baseline-failure.log` — Repository file; inspect only when relevant to the task.
 - `docs/pentomino/evidence/p3/clippy.log` — Repository file; inspect only when relevant to the task.
+- `docs/pentomino/evidence/p3/drive-receipt.json` — Repository file; inspect only when relevant to the task.
+- `docs/pentomino/evidence/p3/external-package.json` — Repository file; inspect only when relevant to the task.
 - `docs/pentomino/evidence/p3/fifth-baseline.log` — Repository file; inspect only when relevant to the task.
 - `docs/pentomino/evidence/p3/fifth-camera-example.log` — Repository file; inspect only when relevant to the task.
 - `docs/pentomino/evidence/p3/flatland_harbor-regression.log` — Repository file; inspect only when relevant to the task.

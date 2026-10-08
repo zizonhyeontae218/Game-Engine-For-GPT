@@ -1,4 +1,4 @@
-# Rundown — Pentomino P3 Camera / internal candidate
+# Rundown — Pentomino P3 Camera / internal candidate891306b
 
 **TL;DR:** 같은 Core 게임 상태를 유지하면서 Camera/View를 교체하는 독립 계층을
 완성했다. 기본 smooth2.5D 전환과 기존 다섯 번째 데모의 실제 화면·저장 연속성을
@@ -52,7 +52,10 @@ minimap UI, new renderer/client 배포는 구현하지 않았다.
 
 ## Tests
 
-실제 명령/결과 원본: evidence/p3/internal-checks.json 및 *.log.
+Production commit891306b993b05206fa01c8c90bc367dda14cd1f7.
+SDK/tooling commitb43a251d78ecc55c3605b98874aee04888327ceb.
+명령/결과·artifact hash 묶음: evidence/p3/candidate-evidence.json,
+internal-checks.json 및 *.log.
 - cargo fmt --all --check: PASS.
 - cargo clippy --locked --workspace --all-targets -- -D warnings: PASS.
 - cargo test --locked --workspace:150PASS/0FAIL/0ignored, 새 독립34개 포함.
@@ -88,7 +91,7 @@ legacy 정수 arithmetic 안전 범위를 구현 전에 수정했다.
 
 7. Source-free legacy example 링크에서 vendored Lua static archive가 빠진
    SDK packaging 결함을 재현했다. Cargo native linked_paths archive도 포함하고
-   runner에 native search path를 지정하여 실제 unpacked consumer로 다시 검증한다.
+   runner에 native search path를 지정하여 실제 unpacked consumer가 PASS했다.
 
 실제 pre-fix repro와 failure: evidence/p3/lens-reproducer.rs,
 lens-prefixed-failure.log. 저장된 impossible progress/tick0 tracking 검증도 보강했다.
@@ -117,8 +120,29 @@ ordinary Core transaction으로 같은 owner objects/records를 초기화하며 
 
 Source-free compiled artifacts, PUBLIC_API/Camera contract/Core contract, discovery,
 consumer examples, 기존 fifth 콘텐츠, runner, MANIFEST/SHA256/exact toolchain를
-scripts/package_p3_external.py로 준비한다. Packaging/upload identity와 selfcheck
-결과는 candidate evidence에 추가한다. Separate GPT Work가 새로운 consumer test를
+scripts/package_p3_external.py로 생성했다. Native Lua static archive도 포함한다.
+압축 해제 후 checksum/compiler/public native/fifth examples selfcheck PASS;
+Drive 업로드를 다시 내려받아 동일 SHA256을 확인했다. 이 검사는 내부 검사다.
+
+- [Drive package folder](https://drive.google.com/drive/folders/1nNGas54kIfYe2R6iVVizLwo8ku9g_OTR)
+- [ZIP](https://drive.google.com/file/d/17ZT-5vmP8b-sqMqgs3JpcD7jVs5E0w9X/view):29,765,917bytes, ZIP_LZMA
+- SHA256: `e462a7268c19805ca36dc2aec304476e4d034054d6122a536d97e8f82e80f178`
+- MANIFEST declared194files; ZIP196files = declared194 + MANIFEST + SHA256SUMS.
+- rustc1.99.0 b940084d7, x86_64-unknown-linux-gnu, LLVM23.1.1; exact-vV in MANIFEST.
+
+```sh
+python3 -m zipfile -e GE4G-P3-camera-public.zip p3-sdk
+cd p3-sdk
+python3 run_public.py --check
+python3 run_public.py
+python3 run_public.py --example fifth_demo
+python3 run_public.py --source my_camera_tests.rs --test
+```
+
+[Draft PR4](https://github.com/zizonhyeontae218/Game-Engine-For-GPT/pull/4) targets
+P2 branch. GitHub acceptance checks on0c8bbdb SUCCESS after fetch-depth correction;
+Android CI SUCCESS, Windows CI still IN_PROGRESS at evidence capture (UNVERIFIED).
+Later report-only/packaging commits have no source changes. Separate GPT Work가 새로운 consumer test를
 작성해야 하며 repo/internal implementation/existing tests를 읽지 않는다.
 
 **P3 외부 테스트가 필요합니다.** ../public/pentomino-p3/EXTERNAL_TESTER_TASK.md를
