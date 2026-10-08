@@ -189,7 +189,287 @@
         "status": "COMPLETED",
         "workflowName": "GE4G Flutter clients"
       }
-    ]
+    ],
+    "client_run_latest_observation": {
+      "conclusion": "success",
+      "jobs": [
+        {
+          "completedAt": "2026-10-08T16:10:34Z",
+          "conclusion": "success",
+          "databaseId": 113408628503,
+          "name": "windows",
+          "startedAt": "2026-10-08T16:01:34Z",
+          "status": "completed",
+          "steps": [
+            {
+              "conclusion": "success",
+              "name": "Set up job",
+              "number": 1,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/checkout@v4",
+              "number": 2,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run ilammy/msvc-dev-cmd@v1",
+              "number": 3,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run dtolnay/rust-toolchain@stable",
+              "number": 4,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run subosito/flutter-action@v2",
+              "number": 5,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run python -m pip install Pillow",
+              "number": 6,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run cargo build --locked -p ge4g-cli",
+              "number": 7,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run python scripts/pack_game.py examples/basement_demo --game-id demo.basement --validator target/debug/ge4g.exe --out dist/basement-demo.ge4g",
+              "number": 8,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run python scripts/pack_game.py examples/flatland_pacman --game-id demo.flatland.pacman --version 0.2.0 --validator target/debug/ge4g.exe --out dist/flatland-pacman.ge4g",
+              "number": 9,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run python scripts/pack_game.py examples/flatland_signal_yard --game-id demo.flatland.signal-yard --version 0.2.0 --validator target/debug/ge4g.exe --out dist/flatland-signal-yard.ge4g",
+              "number": 10,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run python scripts/pack_game.py examples/flatland_harbor --game-id demo.flatland.harbor --version 0.2.0 --validator target/debug/ge4g.exe --out dist/flatland-harbor.ge4g",
+              "number": 11,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run python scripts/windows_utf8_regression.py --prepare",
+              "number": 12,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run flutter pub get",
+              "number": 13,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run flutter analyze",
+              "number": 14,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run flutter test",
+              "number": 15,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run flutter build windows --release",
+              "number": 16,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run python scripts/bundle_desktop.py --client client/build/windows/x64/runner/Release --game dist/basement-demo.ge4g --platform windows --out dist/ge4g-basement-windows",
+              "number": 17,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/upload-artifact@v4",
+              "number": 18,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run python scripts/bundle_desktop.py --client client/build/windows/x64/runner/Release --game dist/flatland-pacman.ge4g --platform windows --out dist/ge4g-flatland-windows",
+              "number": 19,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/upload-artifact@v4",
+              "number": 20,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run python scripts/bundle_desktop.py --client client/build/windows/x64/runner/Release --game dist/flatland-signal-yard.ge4g --platform windows --out dist/ge4g-signal-yard-windows",
+              "number": 21,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/upload-artifact@v4",
+              "number": 22,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run python scripts/bundle_desktop.py --client client/build/windows/x64/runner/Release --game dist/flatland-harbor.ge4g --platform windows --out dist/ge4g-harbor-windows",
+              "number": 23,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run python scripts/windows_utf8_regression.py --launch",
+              "number": 24,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/upload-artifact@v4",
+              "number": 25,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/upload-artifact@v4",
+              "number": 26,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Post Run subosito/flutter-action@v2",
+              "number": 51,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Post Run actions/checkout@v4",
+              "number": 52,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Complete job",
+              "number": 53,
+              "status": "completed"
+            }
+          ],
+          "url": "https://github.com/zizonhyeontae218/Game-Engine-For-GPT/actions/runs/37805427365/job/113408628503"
+        },
+        {
+          "completedAt": "2026-10-08T16:07:47Z",
+          "conclusion": "success",
+          "databaseId": 113408628929,
+          "name": "android",
+          "startedAt": "2026-10-08T16:01:34Z",
+          "status": "completed",
+          "steps": [
+            {
+              "conclusion": "success",
+              "name": "Set up job",
+              "number": 1,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/checkout@v4",
+              "number": 2,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/setup-java@v4",
+              "number": 3,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run android-actions/setup-android@v3",
+              "number": 4,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run dtolnay/rust-toolchain@stable",
+              "number": 5,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run subosito/flutter-action@v2",
+              "number": 6,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run flutter pub get",
+              "number": 7,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run flutter build apk --release",
+              "number": 8,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/upload-artifact@v4",
+              "number": 9,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Post Run subosito/flutter-action@v2",
+              "number": 16,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Post Run actions/setup-java@v4",
+              "number": 17,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Post Run actions/checkout@v4",
+              "number": 18,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Complete job",
+              "number": 19,
+              "status": "completed"
+            }
+          ],
+          "url": "https://github.com/zizonhyeontae218/Game-Engine-For-GPT/actions/runs/37805427365/job/113408628929"
+        }
+      ],
+      "status": "completed"
+    }
   },
   "evidence_file_sha256": {
     "basement_demo-regression.log": "53a35104da0b396901453ec04f5e6460ac53ecb0cb423de04b739526701a53eb",

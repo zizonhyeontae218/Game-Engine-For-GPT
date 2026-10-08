@@ -65,7 +65,7 @@ Source-free SDKb43a251 produced:194declaredfiles/196ZIPentries,29,765,917bytes.
 Unpacked native/fifth examples and compiler/hash selfchecks PASS internally.
 Drive upload/download SHAe462a726… matches. Draft PR4 stacks on P2. New CI
 shallow-history defect fixed with fetch-depth0;0c8bbdb acceptance/AndroidSUCCESS,
-WindowsIN_PROGRESS atcapture. External Gate is PENDING; plan remains active until
+WindowslaterSUCCESS run37805427365; oldpendingcapture+latestobservationretained. External Gate is PENDING; plan remains active until
 separate GPT Work evidence, no milestone completion claimed.
 
 ## Verification log

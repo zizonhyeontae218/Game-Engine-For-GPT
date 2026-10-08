@@ -141,7 +141,8 @@ python3 run_public.py --source my_camera_tests.rs --test
 
 [Draft PR4](https://github.com/zizonhyeontae218/Game-Engine-For-GPT/pull/4) targets
 P2 branch. GitHub acceptance checks on0c8bbdb SUCCESS after fetch-depth correction;
-Android CI SUCCESS, Windows CI still IN_PROGRESS at evidence capture (UNVERIFIED).
+Android/Windows CI 모두 SUCCESS (run37805427365); 자세한 job URLs는
+evidence/p3/ci-checks-0c8bbdb.json. 실제 device acceptance는 UNVERIFIED.
 Later report-only/packaging commits have no source changes. Separate GPT Work가 새로운 consumer test를
 작성해야 하며 repo/internal implementation/existing tests를 읽지 않는다.
 
