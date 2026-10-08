@@ -15,6 +15,7 @@ CURRENT = [
     "docs/FLATLAND_SPEC.md", "docs/LAUNCHER_PHILOSOPHY.md",
     "examples/flatland_harbor/README.md", "F(x).md", "docs/AUTHORING.md",
     "client/README.md", "client/packages/ge4g_native/README.md",
+    "docs/pentomino/STATUS.md", "CODEX_START_PROMPT.md",
 ]
 RULES = {
     "obsolete Lua claim": r"Lua.{0,30}(?:not (?:yet )?(?:implemented|included)|미구현)|Lua, 3D,.*이번 버전 범위에 포함하지",
@@ -48,10 +49,20 @@ def main():
         for label in violations((ROOT/name).read_text(encoding="utf-8")):
             errors.append(f"{name}: {label}")
     workspace = tomllib.loads((ROOT/"Cargo.toml").read_text(encoding="utf-8"))
-    if workspace["workspace"]["package"]["version"] != "0.2.0":
-        errors.append("Rust workspace must be0.2.0")
-    if not re.search(r"(?m)^version: 0\.2\.0\+8$", (ROOT/"client/pubspec.yaml").read_text(encoding="utf-8")):
-        errors.append("Flutter must be0.2.0+8")
+    if workspace["workspace"]["package"]["version"] != "0.3.0-alpha.1":
+        errors.append("Rust workspace must be0.3.0-alpha.1")
+    if not re.search(r"(?m)^version: 0\.3\.0-alpha\.1\+9$", (ROOT/"client/pubspec.yaml").read_text(encoding="utf-8")):
+        errors.append("Flutter must be0.3.0-alpha.1+9")
+    lock = tomllib.loads((ROOT/"Cargo.lock").read_text(encoding="utf-8"))
+    members = workspace["workspace"]["members"]
+    names = {tomllib.loads((ROOT/member/"Cargo.toml").read_text(encoding="utf-8"))["package"]["name"] for member in members}
+    locked = {item["name"]: item["version"] for item in lock["package"] if item["name"] in names}
+    if set(locked) != names or any(v != "0.3.0-alpha.1" for v in locked.values()):
+        errors.append("Workspace lockfile must match0.3.0-alpha.1")
+    for name in ("README.md", "AGENTS.md", "GOAL.md", "CODEX_START_PROMPT.md", "docs/pentomino/STATUS.md"):
+        text = (ROOT/name).read_text(encoding="utf-8")
+        if "Pentomino" not in text or "0.3.0-alpha.1" not in text:
+            errors.append(f"{name}: missing Pentomino alpha development identity")
     android = (ROOT/"client/android/app/build.gradle.kts").read_text(encoding="utf-8")
     if 'applicationId = "dev.ge4g.ge4g_client"' not in android or "versionCode = flutter.versionCode" not in android:
         errors.append("Android identity/versionCode source changed")
@@ -60,7 +71,7 @@ def main():
     if errors:
         print("\n".join(errors), file=sys.stderr)
         return 1
-    print(f"FlatLand0.2.0 consistency: {len(CURRENT)} current documents and release identity passed; historical documents excluded")
+    print(f"Pentomino0.3.0-alpha.1 consistency: {len(CURRENT)} current documents and release identity passed; historical documents excluded")
     return 0
 
 if __name__ == "__main__":

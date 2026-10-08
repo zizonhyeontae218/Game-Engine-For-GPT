@@ -1,4 +1,14 @@
-# Basement 0.2 — FlatLand 0.2.0 FINAL
+# GE4G 0.3.0 — Pentomino alpha development
+
+Current main version: 0.3.0-alpha.1; Flutter 0.3.0-alpha.1+9.
+See [Pentomino status](pentomino/STATUS.md) for implemented scope and next work.
+The FlatLand material below is the inherited implementation/released 0.2 baseline.
+Its historical versions, delivery instructions and evidence are not a new alpha release.
+Existing acceptance checks remain regressions; also run
+`cargo test --locked -p ge4g-pentomino` for the experimental scalar host.
+Android/Windows remain the client verification matrix. No alpha binary is published here.
+
+## Basement 0.2 — FlatLand 0.2.0 FINAL
 
 Completed FlatLand0.2 feature set. Public sample: Harbor Workshop / 바람항 공방,
 original CC0 content/provenance. Presentation-only camera and upright composition,
