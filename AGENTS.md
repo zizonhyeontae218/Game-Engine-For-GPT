@@ -1,7 +1,11 @@
 # GE4G agent map
 
-The current product is **Basement 0.2 — FlatLand 0.2.0**.
-The previous claimed final is archived as rc2. Preserve rc1/rc2/rc3/rc4/rc5 binaries. Final uses Flutter0.2.0+8 / Android versionCode8.
+The main development line is **GE4G 0.3.0 — Pentomino**, currently
+**0.3.0-alpha.1** (Flutter 0.3.0-alpha.1+9). Pentomino is the version name,
+not a separate product. Read `docs/pentomino/STATUS.md` for implemented scope.
+`release/0.2` preserves the FlatLand maintenance line and v0.2.0 remains released.
+P0/P1 are merged; do not restart them or claim the legacy CLI runs Pentomino.
+The previous claimed final is archived as rc2. Preserve rc1/rc2/rc3/rc4/rc5 binaries. Historical FlatLand final uses Flutter0.2.0+8 / Android versionCode8.
 Schema 1 remains supported. Actual capabilities and limits: `docs/FLATLAND_AUTHORING.md`.
 For small authoring edits read `docs/FLATLAND_QUICKSTART.md` and query one component.
 
@@ -122,8 +126,9 @@ never exposes game management. Speaker metadata is presentation-only and optiona
 
 ## Pentomino 0.3 worker entrypoint
 
-The shipped product remains FlatLand 0.2.0. The installed PentaWorks files prepare
-0.3 development; they are not implemented plugin/view capabilities.
+main targets Pentomino 0.3.0 alpha; the latest stable release remains FlatLand 0.2.0.
+P1 implements only the scalar host subset documented in P1_CONTRACT.md; view and
+gameplay capabilities are not implemented. Read STATUS.md before choosing a slice.
 When the user invokes `$pentomino-orchestrate`, read
 `docs/pentomino/HANDOFF.md` and `docs/pentomino/BRIEF.md`, then dispatch
 `pentomino_scout` read-only before architecture or implementation.

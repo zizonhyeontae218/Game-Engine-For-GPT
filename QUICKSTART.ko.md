@@ -1,15 +1,15 @@
 # PentaWorks v1.0 — 한국어 실행 안내
 
-**용도:** 실제 GE4G 저장소에 적용하는 Codex 멀티에이전트 설정 패키지. 아직 게임 엔진 구현물이 아니다.
+**현재 상태:** main = GE4G 0.3.0 Pentomino 알파 개발선. P0/P1과 에이전트 설정은 이미 병합됐다. `docs/pentomino/STATUS.md`부터 읽고 다음 작업을 시작한다.
 
 ## 적용
 
-1. 압축을 풀고 **내부 파일**을 GE4G 프로젝트 루트에 복사한다. 기존 `AGENTS.md`, `.codex/config.toml`이 있다면 덮어쓰기 대신 내용을 병합한다.
-2. 새 Codex 세션에서 프로젝트를 연다. 현재 Codex는 `.codex/agents/*.toml`의 작업자 파일과 `.agents/skills/*/SKILL.md`를 지원한다. 클라이언트 버전에 따라 재시작이 필요할 수 있다.
-3. 아래 첫 작업 지시문을 Codex에 전달한다. 편의상 모델명은 고정하지 않았다.
+새 Codex 세션에서 최신 main 프로젝트 루트를 열고 아래 명령을 전달한다.
+설정 파일을 다시 복사하거나 P0/P1을 반복하지 않는다.
 
 ```text
-$pentomino-orchestrate를 사용해 GE4G v0.3 Pentomino P0 작업을 시작해.
+$pentomino-orchestrate를 사용해 GE4G 0.3.0 Pentomino 알파의 다음 Tiny Core 작업을 시작해.
+docs/pentomino/STATUS.md와 P1_CONTRACT.md를 읽고, 완료된 P0/P1은 반복하지 마.
 실제 저장소의 언어, 빌드 시스템, 테스트와 모듈 구성을 확인하기 위해
 pentomino_scout를 읽기 전용으로 먼저 호출해.
 내부 구현을 추측하지 말고, docs/pentomino/BRIEF.md에 맞춰

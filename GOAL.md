@@ -1,4 +1,13 @@
-# Goal — GE4G 0.1 "Basement"
+# Goal — GE4G 0.3.0 "Pentomino" (alpha)
+
+main develops the small independent Core, replaceable View/Format and composable
+Gameplay described in `docs/pentomino/BRIEF.md`. Current version is
+0.3.0-alpha.1. P1 is a scalar lifecycle subset; remaining Tiny Core/view/gameplay
+work follows `docs/pentomino/STATUS.md`. Forge is deferred to 0.4.
+
+## Preserved Basement foundation goal
+
+The original goal below describes the inherited implementation and regression baseline.
 
 Build the smallest real engine foundation that demonstrates this claim:
 

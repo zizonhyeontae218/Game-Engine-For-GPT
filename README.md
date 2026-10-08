@@ -1,12 +1,31 @@
-# GE4G / GameEngineForGPT
+# GE4G 0.3.0 — Pentomino (alpha development)
 
-**Basement 0.2 — FlatLand 0.2.0**은 AI가 JSON5·Lua와 CLI로 제작하고 검증하는 결정론적 2D/2.5D 게임 엔진입니다. Rust가 게임 상태를 결정하며, 실행에 LLM 호출·GPU·인터넷이 필요하지 않습니다.
+**main은 GE4G 0.3.0 Pentomino의 알파 개발선입니다.** 현재 개발 버전은
+`0.3.0-alpha.1`이며 정식 0.3.0 릴리스나 배포 완료를 뜻하지 않습니다.
 
-Android는 `.ge4g` 불러오기·업데이트·게임 관리, Windows는 게임과 실행기가 함께 들어 있는 배포 방식을 사용합니다. [바람항 공방](examples/flatland_harbor/README.md)은 독립 제작한 CC0 공개 샘플입니다. 시점은 위치·충돌을 바꾸지 않고 장면과 저장을 넘어 유지되며, 인물과 건물은 경사 바닥 위에서도 똑바로 섭니다.
+Pentomino는 GE4G 0.3.0의 버전명입니다. Tiny Core → View/Format → Gameplay
+순서로 엔진을 모듈화합니다. P0 설계와 P1의 독립 `ge4g-pentomino` 호스트가
+병합됐습니다. 플러그인 등록/언로드, 결정적 RNG, 실패 복구와 save/restore는
+scalar subset에 구현됐고, Scene/Entity/input actions, View/Format, Gameplay 및
+기존 게임 실행 경로와의 연결은 아직 미구현입니다.
 
-접지 그림자와 발 기준 가림, 고정 건물 footprint·표면별 fallback, 반응성 있는 칸 이동, 전투·아이템·퀘스트, 지속 전투원 HP/PP, 턴제 전투 연출, 화자가 있는 배우 연결 컷씬 말풍선, Lua 5.4와 결정론적 RNG, 실제 사운드·음악 재생 어댑터, schema2 저장·재개를 포함합니다. 건물 방향은 south만 지원합니다.
+- [현재 개발 상태와 다음 작업](docs/pentomino/STATUS.md)
+- [P1 공개 계약](docs/pentomino/P1_CONTRACT.md) · [P1 검증 기록](docs/pentomino/P1_RUNDOWN.md)
+- [작업자 시작 안내](QUICKSTART.ko.md) · [인수인계](docs/pentomino/HANDOFF.md)
+- [0.2 유지보수 브랜치](https://github.com/zizonhyeontae218/Game-Engine-For-GPT/tree/release/0.2)
+  · [0.2.0 정식 릴리스](https://github.com/zizonhyeontae218/Game-Engine-For-GPT/releases/tag/v0.2.0)
 
-Flutter **0.2.0+8**, Android **versionCode 8**은 기존 앱 ID·서명을 유지합니다. 이전 rc1–rc5 파일을 보존합니다. [작성 안내](docs/FLATLAND_QUICKSTART.md) · [규격과 제한](docs/FLATLAND_AUTHORING.md) · [릴리스 검증](docs/FLATLAND_RELEASE.md).
+Rust workspace `0.3.0-alpha.1`, Flutter `0.3.0-alpha.1+9`입니다.
+Android 앱 ID와 기존 서명 인증서를 유지합니다. 현재 클라이언트 검증 대상은
+Android/Windows이며 플랫폼 확대는 별도 결정입니다. 빌드가 성공해도 새
+Pentomino 게임 실행 기능이나 실기기 검증을 뜻하지 않습니다.
+
+## 이어받은 FlatLand 실행 경로
+
+아래 CLI·샘플 안내는 main에 남아 있는 기존 FlatLand 구현을 사용합니다.
+Pentomino host로 연결된 게임 실행 예제가 아닙니다. 기존 schema/save/ABI 계약과
+바람항 공방 CC0 샘플을 회귀 검증용으로 유지합니다. 0.2.0 배포 파일은
+[FlatLand 릴리스 기록](docs/FLATLAND_RELEASE.md)에 보존합니다.
 
 ## 빠른 시작
 
@@ -20,7 +39,7 @@ cargo run --locked -p ge4g-cli -- test examples/basement_demo
 cargo run --locked -p ge4g-cli -- run examples/basement_demo
 ```
 
-FlatLand 0.2의 현재 배포 대상은 Android와 Windows입니다. iOS·macOS·Linux/Arch 지원 작업은 0.3.0 개발 시작 전까지 중단합니다. 이전 배포 파일과 플랫폼 소스는 보존합니다. Linux에서 실행되는 엔진·헤드리스 CI는 개발 검증용입니다.
+현재 알파 클라이언트 검증 대상은 Android와 Windows입니다. iOS·macOS·Linux/Arch 지원 작업은 별도 결정 전까지 중단합니다. 이전 배포 파일과 플랫폼 소스는 보존합니다. Linux에서 실행되는 엔진·헤드리스 CI는 개발 검증용입니다.
 
 창에서 **WASD / 방향키**로 이동하고 **E / Space**로 NPC와 대화합니다. 파란 사각형이 플레이어, 주황색이 NPC, 초록색이 다음 방으로 가는 문입니다. 오른쪽 벽에 부딪힌 뒤 벽 아래로 내려가 NPC에 접근하고 문으로 이동하세요. 대사와 저장 상태는 창 제목에 표시됩니다.
 

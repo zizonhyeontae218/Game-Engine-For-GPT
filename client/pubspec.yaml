@@ -1,7 +1,7 @@
 name: ge4g_client
 description: GE4G Basement native player with live per-game touch profiles.
 publish_to: none
-version: 0.2.0+8
+version: 0.3.0-alpha.1+9
 environment:
   sdk: '>=3.13.0 <4.0.0'
 dependencies:

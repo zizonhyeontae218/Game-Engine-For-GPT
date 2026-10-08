@@ -228,6 +228,7 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `docs/TESTPLAN.md` — Acceptance and deterministic verification plan.
 - `docs/benchmarks/flatland-task-context.json` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/active/.gitkeep` — Repository file; inspect only when relevant to the task.
+- `docs/exec-plans/active/pentomino-main-transition.md` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/active/pentomino-p0-packets.md` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/active/pentomino-p0.md` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/completed/.gitkeep` — Repository file; inspect only when relevant to the task.
@@ -257,6 +258,7 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `docs/pentomino/PUBLIC_CONTRACT_PROPOSAL.md` — Repository file; inspect only when relevant to the task.
 - `docs/pentomino/ROUTING.md` — Repository file; inspect only when relevant to the task.
 - `docs/pentomino/SETUP.md` — Repository file; inspect only when relevant to the task.
+- `docs/pentomino/STATUS.md` — Repository file; inspect only when relevant to the task.
 - `docs/releases/development-history-through-rc4.md` — Repository file; inspect only when relevant to the task.
 - `docs/releases/flatland-final-drive.json` — Repository file; inspect only when relevant to the task.
 - `docs/releases/flatland-final-landscape-proof.json` — Repository file; inspect only when relevant to the task.
