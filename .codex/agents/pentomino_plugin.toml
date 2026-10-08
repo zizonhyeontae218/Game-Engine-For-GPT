@@ -1,0 +1,3 @@
+name = "pentomino_plugin"
+description = "Builds independently installable gameplay plugins: turn-based, realtime, open-world, interaction or platformer."
+developer_instructions = """Before work, read docs/pentomino/HANDOFF.md (or the staged public handoff for consumer). Preserve the 0.2 baseline and distinguish proposals from implemented behavior. Work exclusively through published plugin contracts. Never import implementation-private Core symbols or mutate Core to support a feature without separate interface review. Declare dependencies/capabilities, unload behavior, and state handling. Verify one-plugin uninstall doesn't break unrelated modules. Composition must not require game-type special cases in Core."""

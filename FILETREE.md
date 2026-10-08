@@ -5,6 +5,19 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 `FILETREE.md` and `FILETREE.hash.json` are excluded from their own hash registry.
 
 - `.agent/PLANS.md` — ExecPlan policy for long/multi-stage work.
+- `.agents/skills/pentomino-consumer-eval/SKILL.md` — Repository file; inspect only when relevant to the task.
+- `.agents/skills/pentomino-orchestrate/SKILL.md` — Repository file; inspect only when relevant to the task.
+- `.codex/agents/pentomino_architect.toml` — Repository file; inspect only when relevant to the task.
+- `.codex/agents/pentomino_auditor.toml` — Repository file; inspect only when relevant to the task.
+- `.codex/agents/pentomino_consumer.toml` — Repository file; inspect only when relevant to the task.
+- `.codex/agents/pentomino_core.toml` — Repository file; inspect only when relevant to the task.
+- `.codex/agents/pentomino_optimizer.toml` — Repository file; inspect only when relevant to the task.
+- `.codex/agents/pentomino_plugin.toml` — Repository file; inspect only when relevant to the task.
+- `.codex/agents/pentomino_release.toml` — Repository file; inspect only when relevant to the task.
+- `.codex/agents/pentomino_scout.toml` — Repository file; inspect only when relevant to the task.
+- `.codex/agents/pentomino_test.toml` — Repository file; inspect only when relevant to the task.
+- `.codex/agents/pentomino_view.toml` — Repository file; inspect only when relevant to the task.
+- `.codex/config.toml` — Repository file; inspect only when relevant to the task.
 - `.gitattributes` — Repository file; inspect only when relevant to the task.
 - `.github/workflows/ci.yml` — Clean-checkout headless and window acceptance CI.
 - `.github/workflows/client.yml` — Repository file; inspect only when relevant to the task.
@@ -18,6 +31,7 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `F(x).md` — Implemented stable cross-system state/identifier registry.
 - `GOAL.md` — Basement observable product goal and scope.
 - `LICENSE` — Repository file; inspect only when relevant to the task.
+- `QUICKSTART.ko.md` — Repository file; inspect only when relevant to the task.
 - `README.md` — Human entry point and ILCX target.
 - `client/.gitignore` — Repository file; inspect only when relevant to the task.
 - `client/.metadata` — Repository file; inspect only when relevant to the task.
@@ -151,6 +165,8 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `client/windows/runner/utils.h` — Repository file; inspect only when relevant to the task.
 - `client/windows/runner/win32_window.cpp` — Repository file; inspect only when relevant to the task.
 - `client/windows/runner/win32_window.h` — Repository file; inspect only when relevant to the task.
+- `consumer/ALLOWLIST.example.txt` — Repository file; inspect only when relevant to the task.
+- `consumer/CONSUMER_TASKS.md` — Repository file; inspect only when relevant to the task.
 - `crates/ge4g-cli/Cargo.toml` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-cli/src/main.rs` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-cli/tests/acceptance.rs` — Engine source, package configuration or behavioral verification.
@@ -218,6 +234,15 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `docs/exec-plans/completed/flatland-rc5.md` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/completed/flatland.md` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/completed/flutter-client.md` — Repository file; inspect only when relevant to the task.
+- `docs/exec-plans/completed/pentaworks-agent-setup.md` — Repository file; inspect only when relevant to the task.
+- `docs/pentomino/BOOTSTRAP_PACKETS.md` — Repository file; inspect only when relevant to the task.
+- `docs/pentomino/BRIEF.md` — Repository file; inspect only when relevant to the task.
+- `docs/pentomino/GATES.md` — Repository file; inspect only when relevant to the task.
+- `docs/pentomino/HANDOFF.md` — Repository file; inspect only when relevant to the task.
+- `docs/pentomino/PHASES.md` — Repository file; inspect only when relevant to the task.
+- `docs/pentomino/PUBLIC_CONTRACT_PROPOSAL.md` — Repository file; inspect only when relevant to the task.
+- `docs/pentomino/ROUTING.md` — Repository file; inspect only when relevant to the task.
+- `docs/pentomino/SETUP.md` — Repository file; inspect only when relevant to the task.
 - `docs/releases/development-history-through-rc4.md` — Repository file; inspect only when relevant to the task.
 - `docs/releases/flatland-final-drive.json` — Repository file; inspect only when relevant to the task.
 - `docs/releases/flatland-final-landscape-proof.json` — Repository file; inspect only when relevant to the task.
@@ -479,6 +504,7 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `packaging/arch/PKGBUILD` — Repository file; inspect only when relevant to the task.
 - `packaging/arch/ge4g.png` — Repository file; inspect only when relevant to the task.
 - `scripts/bundle_desktop.py` — Repository file; inspect only when relevant to the task.
+- `scripts/check_gate_report.py` — Repository file; inspect only when relevant to the task.
 - `scripts/client_icons.py` — Repository file; inspect only when relevant to the task.
 - `scripts/client_smoke.py` — Repository file; inspect only when relevant to the task.
 - `scripts/context_benchmark.py` — Repository file; inspect only when relevant to the task.
@@ -492,6 +518,14 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `scripts/package.py` — Bundle a built executable, demo and user documentation.
 - `scripts/release_consistency.py` — Repository file; inspect only when relevant to the task.
 - `scripts/sign_android.py` — Repository file; inspect only when relevant to the task.
+- `scripts/stage_consumer_bundle.py` — Repository file; inspect only when relevant to the task.
+- `scripts/validate_pentaworks.py` — Repository file; inspect only when relevant to the task.
 - `scripts/verify_audio_adapter.py` — Repository file; inspect only when relevant to the task.
 - `scripts/windows_utf8_regression.py` — Repository file; inspect only when relevant to the task.
+- `templates/CONSUMER_REPORT.md` — Repository file; inspect only when relevant to the task.
 - `templates/EXECPLAN_TEMPLATE.md` — Template for checked-in execution plans.
+- `templates/GATE_REPORT.example.json` — Repository file; inspect only when relevant to the task.
+- `templates/HANDOFF.md` — Repository file; inspect only when relevant to the task.
+- `templates/RUNDOWN.md` — Repository file; inspect only when relevant to the task.
+- `templates/TASK_PACKET.md` — Repository file; inspect only when relevant to the task.
+- `tests/test_tooling.py` — Repository file; inspect only when relevant to the task.

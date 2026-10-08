@@ -118,3 +118,32 @@ duplicate. Validate before closing, atomically activate, archive only typed revi
 mismatch, roll back failures, and retire old content only after successful open.
 Normal delete keeps user data; full delete confirms and removes it. Embedded Windows
 never exposes game management. Speaker metadata is presentation-only and optional.
+
+
+## Pentomino 0.3 worker entrypoint
+
+The shipped product remains FlatLand 0.2.0. The installed PentaWorks files prepare
+0.3 development; they are not implemented plugin/view capabilities.
+When the user invokes `$pentomino-orchestrate`, read
+`docs/pentomino/HANDOFF.md` and `docs/pentomino/BRIEF.md`, then dispatch
+`pentomino_scout` read-only before architecture or implementation.
+The current user request authorizes preparation for 0.3; Soul.md's previous
+wait-for-new-instructions note does not cancel a subsequent explicit P0 start.
+
+- Follow Tiny Core → View/Format → Gameplay, with Forge deferred to 0.4.
+- Keep existing deterministic Rust simulation, data-only game imports, public
+  schema/save/ABI compatibility, Android identity and pinned signing certificate.
+- Define bounded packets and disjoint file ownership using
+  `templates/TASK_PACKET.md`; parent integrates shared contracts sequentially.
+- Review the minimum public API proposal with `pentomino_architect`, then
+  `pentomino_auditor`, before functionality changes. Approval here is the parent
+  orchestrator's technical review, not a new user confirmation for routine work.
+- Use `docs/pentomino/GATES.md` for contract/release changes and
+  `templates/RUNDOWN.md` for results. Unimplemented behavior or unrun checks are
+  UNVERIFIED. Tooling checks do not prove the engine works.
+- Preserve the known tag Windows test failure in the handoff; investigate fixture
+  ZIP bytes/timestamps without weakening digest/save validation.
+- Reconsider platform support explicitly in the 0.3 plan; do not automatically
+  enable suspended client jobs.
+- External consumer validation requires a separate source-free workspace/session
+  and public artifacts; ordinary in-repo workers cannot certify it.

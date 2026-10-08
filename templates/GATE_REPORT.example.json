@@ -1,0 +1,52 @@
+{
+  "release_id": "EXAMPLE-ONLY-DO-NOT-SHIP",
+  "source_commit": "",
+  "gates": [
+    {
+      "id": "G0",
+      "status": "UNVERIFIED",
+      "evidence": []
+    },
+    {
+      "id": "G1",
+      "status": "UNVERIFIED",
+      "evidence": []
+    },
+    {
+      "id": "G2",
+      "status": "UNVERIFIED",
+      "evidence": []
+    },
+    {
+      "id": "G3",
+      "status": "UNVERIFIED",
+      "evidence": []
+    },
+    {
+      "id": "G4",
+      "status": "UNVERIFIED",
+      "evidence": []
+    },
+    {
+      "id": "G5",
+      "status": "UNVERIFIED",
+      "evidence": []
+    },
+    {
+      "id": "G6",
+      "status": "UNVERIFIED",
+      "evidence": []
+    },
+    {
+      "id": "G7",
+      "status": "UNVERIFIED",
+      "evidence": []
+    },
+    {
+      "id": "G8",
+      "status": "UNVERIFIED",
+      "evidence": []
+    }
+  ],
+  "note": "This is a schema illustration, not actual test evidence."
+}

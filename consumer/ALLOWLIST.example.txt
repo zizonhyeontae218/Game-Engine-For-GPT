@@ -1,0 +1,7 @@
+# Paths relative to the GE4G source repository.
+# List ONLY public documentation and versioned distributable builds.
+# Replace these examples after the real repository has been inspected.
+# README.md
+# docs/public/index.md
+# dist/ge4g-alpha.whl
+# The staging command will refuse an empty allowlist.
