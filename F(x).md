@@ -1,5 +1,30 @@
 # F(x) — implemented stable state / identifier registry
 
+## Experimental Pentomino scalar host (isolated Rust API)
+
+`ge4g-pentomino` is an additive first lifecycle slice, not the shipped runtime or
+a new native ABI. Its save format1/contract1.0.0 is separate from existing
+schema1/schema2 and ABI1. No legacy identifier changes.
+
+| Identifier | Owner / persistence | Implemented contract |
+|---|---|---|
+| PluginId / CapabilityId | linked plugin descriptor / canonical save-discovery | Distinct validated dotted ASCII IDs <=128 bytes; exact capability version/provider binding |
+| OwnerToken | Host / runtime only | Private host nonce + monotonic generation; different-host/removed/reinstalled/pre-restore tokens reject; excluded from bytes/hash |
+| resources local keys | owning plugin / authoritative canonical save | Declared one-segment ASCII <=128 bytes; signed i64 values; <=64 declared records; own writer only |
+| Event owner/kind/value | owning plugin / pending and retained canonical history | Stable PluginId + declared local kind + i64; reads only own or explicitly bound provider |
+| tick | Host / canonical save | Starts0; step accepts only committed+1; checked overflow; failed ticks retry with no committed effects |
+| rng_state | plugin / canonical save | SHA256(seed LE || PluginId) prefix initializes per-owner SplitMix64; writes/draws roll back with callback/tick |
+| format_version / contract_version | Host serializer / artifact | Exactly1 /1.0.0; compact canonical JSON, strict unknown/duplicate/noncanonical rejection; separate from legacy schemas |
+| content_binding / seed | Host::new / canonical save | Immutable supplied binding <=128 validated bytes, exact saved binding/seed required |
+| next_sequence / events_dropped | Host / canonical save-history | Sequence never renumbered; history<=256, pending<=128; checked next_sequence=history.len+dropped; eviction/purge explicit |
+| first_retained_sequence | observation / derived runtime | Whole-host history first sequence or next_sequence if empty; owner-filtered history is affected by global retention |
+
+Install/tick/restore use atomic staging. Restore requires the exact installed
+descriptor/binding set and complete current-tick pending history, and revokes old
+tokens after full validation. Numeric limits and public Rust surface:
+`docs/pentomino/P1_CONTRACT.md`. Views, Scene/Entity contracts, input actions,
+gameplay composition, dynamic loading and source-free consumer remain UNVERIFIED.
+
 CLI/control/ABI transport stays v1. Game/scene/replay/snapshot/save data supports explicit v1 and FlatLand v2. The first table preserves the v1 baseline; FlatLand additions follow below. This registry records identifiers that are actually implemented and cross subsystem/serialization boundaries. Entity positions use 60 subpixels per pixel; scene authoring and test assertion coordinates use pixels.
 
 | ID / public path | Kind | Default | Owner | Scope | Persistence | Writers | Readers | Reset | Range | Migration |
