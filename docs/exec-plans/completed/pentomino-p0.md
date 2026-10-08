@@ -1,3 +1,5 @@
+> Archived after P0/P1 main integration on 2026-10-08. The baseline/tool results below are historical. Current alpha scope and next work are in docs/pentomino/STATUS.md.
+
 # Pentomino P0 — discovery and minimum contract
 
 ## Outcome

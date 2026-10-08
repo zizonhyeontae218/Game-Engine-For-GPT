@@ -24,7 +24,7 @@ CI on the changed alpha tree is distinct from pre-change P0/P1 CI.
 ## Milestones
 1. Preserve0.2 branch: COMPLETE, release/0.2 at293ba51.
 2. Prepare alpha manifests/docs/gates: COMPLETE.
-3. Verify and integrate main: pending publish/readback.
+3. Verify and integrate main: COMPLETE, PR#1 merge8f0abe7; engine/client CI PASS.
 
 ## Decisions
 - User's option3 replaces earlier recommendation to keep main a0.2 product.
@@ -36,12 +36,29 @@ CI on the changed alpha tree is distinct from pre-change P0/P1 CI.
 - Android build9 preserves update ordering and signing identity.
 
 ## Progress
-Prepared identity and next-worker entrypoints; maintenance branch created.
+Identity/entrypoints published; release/0.2 preserved; PR#1 merged into main.
+Engine and Android/Windows client CI on8f0abe7 PASS.
+Archived P0 plan/packets to completed; next development slice is STATUS.md.
 
 ## Verification log
-To be finalized before commit. No local Cargo/Flutter toolchain in this environment;
-use GitHub CI for product/build checks without claiming unrun local results.
+- Strict alpha identity/docs/lockfile: PASS. Tooling5/5, settings and FILETREE/diff checks PASS.
+- Injected stable0.3 identity, stale host lock version and client build8 were each rejected;
+  original files were restored before publication.
+- Engine CI https://github.com/zizonhyeontae218/Game-Engine-For-GPT/actions/runs/37732408794
+  on8f0abe74449b9dbd8cafcf48dcea2b577dcfa461: PASS. Rust workspace91 tests,
+  including26 host cases; fmt/clippy, four replay/save/frame regressions and
+  no-default-features9 CLI tests all PASS.
+- Client CI https://github.com/zizonhyeontae218/Game-Engine-For-GPT/actions/runs/37732408873
+  on8f0abe7: Android and Windows both PASS. Windows analyze/test/build, embedded
+  package/UTF-8 regression launch and artifacts succeeded; Android APK build succeeded.
+  These are automatic CI checks, not new physical-device/audio acceptance.
+- main remote8f0abe7 and release/0.2 remote293ba51 read back.
+- No local Cargo/Flutter toolchain; product checks above ran in GitHub CI.
+- No signed binary release, physical device/audio test or consumer test performed.
 
 ## Handoff
 STATUS.md → P1_CONTRACT.md → next reviewed Tiny Core slice. Do not restart P0/P1.
 Do not publish the development identity as a completed0.3 release.
+
+Completion: 2026-10-08 (Asia/Seoul). Final documentation/index commit does not
+change the manifests, lockfile, engine/client sources or workflows tested at8f0abe7.

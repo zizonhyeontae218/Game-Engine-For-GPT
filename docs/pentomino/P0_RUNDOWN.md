@@ -1,3 +1,5 @@
+> Integration note (2026-10-08): P0/P1 are merged into main. The P0 plan/packets were moved from active/ to completed/; the original changed-path record below refers to the P0 commit. See STATUS.md for current alpha scope.
+
 # Rundown — Pentomino P0 / baseline 293ba513
 
 **TL;DR:** 실제 main 저장소를 읽기 전용으로 조사하고 Tiny Core → View/Format → Gameplay 계획과 최소 공개 API 제안을 작성했다. 독립 감사의 계약 보완 3건 및 이력 규칙을 반영하고 재검토 기술 승인을 받았다. 엔진 기능 구현 완료를 의미하지 않는다.

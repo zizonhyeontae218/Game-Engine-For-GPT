@@ -228,9 +228,6 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `docs/TESTPLAN.md` — Acceptance and deterministic verification plan.
 - `docs/benchmarks/flatland-task-context.json` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/active/.gitkeep` — Repository file; inspect only when relevant to the task.
-- `docs/exec-plans/active/pentomino-main-transition.md` — Repository file; inspect only when relevant to the task.
-- `docs/exec-plans/active/pentomino-p0-packets.md` — Repository file; inspect only when relevant to the task.
-- `docs/exec-plans/active/pentomino-p0.md` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/completed/.gitkeep` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/completed/basement.md` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/completed/flatland-final.md` — Repository file; inspect only when relevant to the task.
@@ -241,6 +238,9 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `docs/exec-plans/completed/flatland.md` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/completed/flutter-client.md` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/completed/pentaworks-agent-setup.md` — Repository file; inspect only when relevant to the task.
+- `docs/exec-plans/completed/pentomino-main-transition.md` — Repository file; inspect only when relevant to the task.
+- `docs/exec-plans/completed/pentomino-p0-packets.md` — Repository file; inspect only when relevant to the task.
+- `docs/exec-plans/completed/pentomino-p0.md` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/completed/pentomino-p1-packets.md` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/completed/pentomino-p1.md` — Repository file; inspect only when relevant to the task.
 - `docs/pentomino/BOOTSTRAP_PACKETS.md` — Repository file; inspect only when relevant to the task.
