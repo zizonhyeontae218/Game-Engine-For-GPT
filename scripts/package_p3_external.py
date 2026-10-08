@@ -37,7 +37,7 @@ if args.check:
 else:
     source = args.source.resolve() if args.source else root / ("examples/" + args.example + ".rs")
     output = root / "consumer-output"
-    command = ["rustc", "--edition=2024", str(source), "-L", "dependency=" + str(root / "lib"), "-o", str(output)]
+    command = ["rustc", "--edition=2024", str(source), "-L", "dependency=" + str(root / "lib"), "-L", "native=" + str(root / "native"), "-o", str(output)]
     for name, artifact in sorted(manifest["extern_crates"].items()):
         command.extend(["--extern", name + "=" + str(root / artifact)])
     if args.test:
@@ -75,11 +75,22 @@ def main():
     artifacts = [json.loads(line) for line in build.stdout.splitlines() if line.startswith("{")]
     out.mkdir(parents=True)
     (out / "lib").mkdir()
+    (out / "native").mkdir()
     (out / "examples").mkdir()
     extern_crates = {}
     public_crates = {"ge4g_pentomino", "ge4g_pentomino_view", "ge4g_pentomino_view_legacy",
                      "ge4g_core", "ge4g_project", "ge4g_runtime", "ge4g_render2d", "serde_json", "sha2"}
     for artifact in artifacts:
+        if artifact.get("reason") == "build-script-executed":
+            for linked in artifact.get("linked_paths", []):
+                if linked.startswith("native="):
+                    for archive in sorted(Path(linked.removeprefix("native=")).glob("*.a")):
+                        if archive.is_symlink() or not archive.is_file():
+                            raise ValueError("unsafe native build artifact")
+                        destination = out / "native" / archive.name
+                        if destination.exists() and destination.read_bytes() != archive.read_bytes():
+                            raise ValueError("conflicting native archive names")
+                        shutil.copyfile(archive, destination)
         if artifact.get("reason") != "compiler-artifact":
             continue
         for filename in artifact["filenames"]:
@@ -93,6 +104,8 @@ def main():
             name = artifact["target"]["name"]
             if name in public_crates and path.suffix == ".rlib":
                 extern_crates[name] = str(target.relative_to(out))
+    if not (out / "native/liblua5.4.a").is_file():
+        raise ValueError("missing legacy vendored Lua static archive")
     if set(extern_crates) != public_crates:
         raise ValueError("missing public library artifacts: " + str(public_crates-set(extern_crates)))
     for path in sorted((ROOT / "docs/public/pentomino-p3").glob("*.md")):
@@ -113,7 +126,8 @@ def main():
                 "contract_version": 1, "presentation_save_version": 1, "core_save_version": 2,
                 "external_gate": "EXTERNAL VALIDATION PENDING", "source_free": True, "archive_compression": "ZIP_LZMA",
                 "rustc": command("rustc", "-vV"), "cargo": command("cargo", "-V"),
-                "extern_crates": extern_crates, "fixture": "existing fifth flatland_nuvema", "files": files}
+                "extern_crates": extern_crates,
+                "native_libraries": [str(p.relative_to(out)) for p in sorted((out / "native").glob("*.a"))], "fixture": "existing fifth flatland_nuvema", "files": files}
     (out / "MANIFEST.json").write_text(json.dumps(manifest, indent=2) + "\n")
     (out / "SHA256SUMS").write_text("".join(f'{entry["sha256"]}  {entry["path"]}\n' for entry in files)
                                    + hashlib.sha256((out / "MANIFEST.json").read_bytes()).hexdigest()

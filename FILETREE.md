@@ -351,6 +351,10 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `docs/pentomino/evidence/p3/public-example.log` — Repository file; inspect only when relevant to the task.
 - `docs/pentomino/evidence/p3/python-tests.log` — Repository file; inspect only when relevant to the task.
 - `docs/pentomino/evidence/p3/release-consistency.log` — Repository file; inspect only when relevant to the task.
+- `docs/pentomino/evidence/p3/sdk-check.log` — Repository file; inspect only when relevant to the task.
+- `docs/pentomino/evidence/p3/sdk-fifth-example.log` — Repository file; inspect only when relevant to the task.
+- `docs/pentomino/evidence/p3/sdk-lua-link-failure.log` — Repository file; inspect only when relevant to the task.
+- `docs/pentomino/evidence/p3/sdk-native-example.log` — Repository file; inspect only when relevant to the task.
 - `docs/pentomino/evidence/p3/workspace-tests.log` — Repository file; inspect only when relevant to the task.
 - `docs/public/pentomino-p2/EXTERNAL_TESTER_TASK.md` — Repository file; inspect only when relevant to the task.
 - `docs/public/pentomino-p2/PLUGIN_DISCOVERY.md` — Repository file; inspect only when relevant to the task.

@@ -86,6 +86,10 @@ legacy 정수 arithmetic 안전 범위를 구현 전에 수정했다.
 6. 신규 CI 보존 검사에서 shallow checkout에 baseline commit이 없어 실패했다.
    actions/checkout fetch-depth0로 비교 이력을 제공하며 검사를 약화하지 않는다.
 
+7. Source-free legacy example 링크에서 vendored Lua static archive가 빠진
+   SDK packaging 결함을 재현했다. Cargo native linked_paths archive도 포함하고
+   runner에 native search path를 지정하여 실제 unpacked consumer로 다시 검증한다.
+
 실제 pre-fix repro와 failure: evidence/p3/lens-reproducer.rs,
 lens-prefixed-failure.log. 저장된 impossible progress/tick0 tracking 검증도 보강했다.
 
