@@ -1,6 +1,8 @@
 //! Experimental deterministic scalar plugin host, independent of GE4G adapters.
 //! Native callbacks are trusted code; command limits are not a native sandbox.
 
+pub mod p2;
+
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
 use std::collections::{BTreeMap, BTreeSet};

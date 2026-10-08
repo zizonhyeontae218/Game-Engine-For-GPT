@@ -559,6 +559,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "ge4g-pentomino-legacy"
+version = "0.3.0-alpha.1"
+dependencies = [
+ "ge4g-core",
+ "ge4g-pentomino",
+ "ge4g-project",
+ "ge4g-runtime",
+ "sha2",
+]
+
+[[package]]
 name = "ge4g-platform"
 version = "0.3.0-alpha.1"
 dependencies = [
