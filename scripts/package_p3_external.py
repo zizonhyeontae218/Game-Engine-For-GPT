@@ -111,7 +111,7 @@ def main():
              for path in sorted(out.rglob("*")) if path.is_file()]
     manifest = {"artifact": "GE4G0.3.0-alpha.1-P3-camera-public-candidate", "commit": commit,
                 "contract_version": 1, "presentation_save_version": 1, "core_save_version": 2,
-                "external_gate": "EXTERNAL VALIDATION PENDING", "source_free": True,
+                "external_gate": "EXTERNAL VALIDATION PENDING", "source_free": True, "archive_compression": "ZIP_LZMA",
                 "rustc": command("rustc", "-vV"), "cargo": command("cargo", "-V"),
                 "extern_crates": extern_crates, "fixture": "existing fifth flatland_nuvema", "files": files}
     (out / "MANIFEST.json").write_text(json.dumps(manifest, indent=2) + "\n")
@@ -121,7 +121,7 @@ def main():
     archive = out.with_suffix(".zip")
     if archive.exists():
         raise ValueError("archive destination exists")
-    with zipfile.ZipFile(archive, "w", zipfile.ZIP_DEFLATED) as bundle:
+    with zipfile.ZipFile(archive, "w", zipfile.ZIP_LZMA) as bundle:
         for path in sorted(out.rglob("*")):
             if path.is_file():
                 bundle.write(path, str(path.relative_to(out)))

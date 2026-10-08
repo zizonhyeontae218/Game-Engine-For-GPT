@@ -83,6 +83,9 @@ legacy 정수 arithmetic 안전 범위를 구현 전에 수정했다.
 5. View 교체가 현재 pose만 검증하던 경로에서 pending endpoints도 새 정책으로
    검증하여 향후 overflow가 있는 replacement를 atomic rejection한다.
 
+6. 신규 CI 보존 검사에서 shallow checkout에 baseline commit이 없어 실패했다.
+   actions/checkout fetch-depth0로 비교 이력을 제공하며 검사를 약화하지 않는다.
+
 실제 pre-fix repro와 failure: evidence/p3/lens-reproducer.rs,
 lens-prefixed-failure.log. 저장된 impossible progress/tick0 tracking 검증도 보강했다.
 

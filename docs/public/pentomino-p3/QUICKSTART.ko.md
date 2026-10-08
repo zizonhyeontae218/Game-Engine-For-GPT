@@ -4,7 +4,11 @@
 MANIFEST.json의 정확한 Rust compiler/target이 필요하다. 이 SDK는 Linux-hosted
 Rust 개발 검증용이며 새 Linux 클라이언트 배포가 아니다.
 
+ZIP_LZMA 압축을 사용한다. Python 표준 라이브러리로 압축을 푼다.
+
 ```sh
+python3 -m zipfile -e GE4G-P3-camera-public.zip p3-sdk
+cd p3-sdk
 python3 run_public.py --check
 python3 run_public.py
 python3 run_public.py --example fifth_demo
