@@ -1,7 +1,8 @@
-# Pentomino P2 public test candidate
+# Pentomino P2 public Core SDK
 
 GE4G 0.3.0-alpha.1 adds the experimental typed API `ge4g_pentomino::p2`.
-P2 is a completion candidate pending the user's separate GPT Work test. This is
+The user's separate public Core GPT Work report accepts23/23 tests.
+P2 milestone is complete; external legacy execution remains UNVERIFIED. This is
 an SDK test package, not a new game client or final release.
 
 Start with [QUICKSTART.ko.md](QUICKSTART.ko.md), then
@@ -35,7 +36,7 @@ connectors. Internal packaging checks do not satisfy this external gate.
 - Legacy compatibility is a separate snapshot projection crate. Existing `World`
   stays authoritative; imported plugins do not continuously execute legacy games.
 - Camera & View/Format are P3 work. Gameplay/Forge and native dynamic loading are
-  not implemented by this candidate.
+  not implemented by P2.
 
 From a full repository checkout, internal validation commands are:
 

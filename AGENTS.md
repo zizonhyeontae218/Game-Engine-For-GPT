@@ -129,7 +129,8 @@ never exposes game management. Speaker metadata is presentation-only and optiona
 main targets Pentomino 0.3.0 alpha; the latest stable release remains FlatLand 0.2.0.
 P1 preserves the scalar host subset documented in P1_CONTRACT.md. P2 adds the
 experimental typed p2::CoreHost and explicit legacy snapshot adapter; read
-P2_CONTRACT.md and P2_RUNDOWN.md. External GPT Work acceptance is pending.
+P2_CONTRACT.md and P2_RUNDOWN.md. External public Core GPT Work23/23 accepted;
+external legacy execution remains UNVERIFIED. P2 milestone is accepted.
 Camera & View/Format belong to P3; gameplay remains unimplemented. Read STATUS.md.
 When the user invokes `$pentomino-orchestrate`, read
 `docs/pentomino/HANDOFF.md` and `docs/pentomino/BRIEF.md`, then dispatch

@@ -1,11 +1,12 @@
 # Continue GE4G 0.3.0 Pentomino alpha development
 
 Read AGENTS.md and docs/pentomino/STATUS.md, then use $pentomino-orchestrate
-for the next bounded slice. P0/P1 are merged; P2 has an active completion candidate
-awaiting the user's separate external GPT Work report. Do not recreate setup,
+for the next bounded slice. P0/P1 are merged; P2 has passed internal acceptance and the user's separate
+public Core GPT Work23/23 gate. P2 plans are completed; external legacy execution
+remains UNVERIFIED. Do not recreate setup,
 scalar lifecycle or typed Scene/Entity/records/actions. Read P2_RUNDOWN.md,
 P2_CONTRACT.md and P3_HANDOFF.md. Verify actual HEAD and external gate state.
-Camera & View/Format are the next P3 focus after the P2 gate; do not start
+Camera & View/Format are the next P3 focus; do not start
 Gameplay or move legacy camera structures into Tiny Core.
 Architect proposal and auditor review precede implementation. Use an active
 ExecPlan, disjoint ownership, honest gate evidence and templates/RUNDOWN.md.

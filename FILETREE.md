@@ -238,8 +238,6 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `docs/TESTPLAN.md` — Acceptance and deterministic verification plan.
 - `docs/benchmarks/flatland-task-context.json` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/active/.gitkeep` — Repository file; inspect only when relevant to the task.
-- `docs/exec-plans/active/pentomino-p2-packets.md` — Repository file; inspect only when relevant to the task.
-- `docs/exec-plans/active/pentomino-p2.md` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/completed/.gitkeep` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/completed/basement.md` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/completed/flatland-final.md` — Repository file; inspect only when relevant to the task.
@@ -255,6 +253,8 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `docs/exec-plans/completed/pentomino-p0.md` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/completed/pentomino-p1-packets.md` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/completed/pentomino-p1.md` — Repository file; inspect only when relevant to the task.
+- `docs/exec-plans/completed/pentomino-p2-packets.md` — Repository file; inspect only when relevant to the task.
+- `docs/exec-plans/completed/pentomino-p2.md` — Repository file; inspect only when relevant to the task.
 - `docs/pentomino/BOOTSTRAP_PACKETS.md` — Repository file; inspect only when relevant to the task.
 - `docs/pentomino/BRIEF.md` — Repository file; inspect only when relevant to the task.
 - `docs/pentomino/GATES.md` — Repository file; inspect only when relevant to the task.
@@ -283,6 +283,10 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `docs/pentomino/evidence/p2/current-doc-links.log` — Repository file; inspect only when relevant to the task.
 - `docs/pentomino/evidence/p2/current-release-consistency.log` — Repository file; inspect only when relevant to the task.
 - `docs/pentomino/evidence/p2/documentation-checks.json` — Repository file; inspect only when relevant to the task.
+- `docs/pentomino/evidence/p2/external/P2_External_Test_Report.ko.md` — Repository file; inspect only when relevant to the task.
+- `docs/pentomino/evidence/p2/external/acceptance.json` — Repository file; inspect only when relevant to the task.
+- `docs/pentomino/evidence/p2/external/ci-before-acceptance.json` — Repository file; inspect only when relevant to the task.
+- `docs/pentomino/evidence/p2/external/followup-checks.json` — Repository file; inspect only when relevant to the task.
 - `docs/pentomino/evidence/p2/fmt.log` — Repository file; inspect only when relevant to the task.
 - `docs/pentomino/evidence/p2/legacy-basement_demo.log` — Repository file; inspect only when relevant to the task.
 - `docs/pentomino/evidence/p2/legacy-flatland_harbor.log` — Repository file; inspect only when relevant to the task.

@@ -1,8 +1,9 @@
 # Rundown — GE4G v0.3 Pentomino P2 / 48d7f4a
 
 **TL;DR:** P2 Tiny Core와 별도 legacy snapshot adapter를 구현했고 workspace116개
-테스트 및 네 게임 regression이 통과했다. P2는 **내부 검증 완료 후보**이며 사용자의
-별도 GPT Work 외부 검증 전에는 최종 완료로 처리하지 않는다.
+테스트 및 네 게임 regression이 통과했다. 사용자의
+별도 GPT Work 공개 Core SDK **23/23 PASS / Gate ACCEPTED**를 반영해 P2를 완료했다.
+외부 레거시 실행은 UNVERIFIED이며, main 병합·정식 릴리스·P3 구현은 별도 작업이다.
 
 Source artifact: `48d7f4aa6932c9031afee722e0c58f7756b864c8`,
 GE4G `0.3.0-alpha.1`, branch `pentomino/p2-tiny-core`.
@@ -20,7 +21,8 @@ FlatLand maintenance: `293ba513f5727d4a7a0a59476c9a98eb193aaa25` (unchanged).
 - [x] 별도 legacy adapter의 World→typed projection/actions, 실제 Core install과 ref remapping.
 - [x] P1 26개 테스트 및 원래 root 구현 보존, schema/save/ABI1·release/0.2 유지.
 - [x] 내부 검증·독립 감사·공개 예제·source-free ZIP과 업로드 후 checksum 확인.
-- [ ] 외부 GPT Work 테스트: **UNVERIFIED — 사용자 보고서 대기**.
+- [x] 외부 GPT Work 공개 Core SDK: **23/23 PASS / Gate ACCEPTED** — 사용자 보고서.
+- [ ] 외부 레거시 실행: **UNVERIFIED** — 보고서 승인 범위에서 제외.
 - [ ] Camera/View/Format/Gameplay: **미구현, UNVERIFIED — P3 이후**.
 
 **Changed — 변경된 public contracts**
@@ -114,8 +116,9 @@ projection rejection과 save equality를 검증한다. P1 테스트 checksum:
 
 **Risks — 알려진 위험 / UNVERIFIED**
 
-- **Gate:** 외부 GPT Work consumer 검증은 UNVERIFIED. Codex는 이를 스스로 수행했다고
-  주장하지 않는다. 내부 worker와 저장소 밖 unpack 점검도 외부 세션을 대신하지 않는다.
+- **범위:** 외부 public Core Gate는 ACCEPTED다. Codex가 외부 테스트를 수행한 것은
+  아니다. 외부 legacy/game 실행·exhaustive/fuzz·모든 수치 quota 조합은 승인 범위 밖이다.
+  보고서가 나열한 신규 test source/raw logs는 이번 세션에 첨부되지 않았다.
 - **제한:** snapshot adapter의 continuous synchronization/legacy save migration,
   Core 경유 CLI/client 실행은 미구현. 기존 regression의 성공은 새 실행 경로의 성공이 아니다.
 - **제한:** per-owner eviction은 격리하지만 shared8MiB save cap 소진은 전체 commit을
@@ -123,30 +126,53 @@ projection rejection과 save equality를 검증한다. P1 테스트 checksum:
   sandbox는 UNVERIFIED. 제공 플러그인은 trusted deterministic linked code다.
 - **제한:** SDK rlib는 정확한 compiler와 Linux x86_64 target에 고정된다.
   다른 platform/compiler SDK 및 외부 source-free legacy 실행은 UNVERIFIED.
-- **미실행:** Flutter/Windows/Android builds·실기기·서명·배포 검증은 UNVERIFIED.
+- **CI:** b05c082의 GitHub acceptance·Windows·Android jobs는 모두 SUCCESS로 확인했다.
+  실기기·최종 서명·배포 검증은 UNVERIFIED.
   알려진 Windows ZIP fixture timestamp/digest intermittent failure의 원인/수정도
   UNVERIFIED로 보존한다. 지원 플랫폼 확대나 기존 바이너리 교체는 하지 않았다.
 
 **Next branch — P3로 넘길 항목**
 
 [P3_HANDOFF.md](P3_HANDOFF.md): **Camera & View/Format 집중 개발이 다음 단계**다.
-외부 P2 보고서를 먼저 받아 필요한 결함을 수정한 뒤 P3 공개 계약을 scout→architect→
-auditor로 설계한다. Camera lifetime/save, coordinate transforms, replaceable
+외부 공개 Core23/23 보고서를 반영했고 blocking 기능 결함은 없다. P3 공개 계약은
+scout→architect→auditor로 설계한다. Camera lifetime/save, coordinate transforms, replaceable
 Classic2D/Side/Vertical Scroll/Top-down과 backend/asset capabilities는 Core 밖의
 플러그인/어댑터에서 다룬다. P2에 P3 카메라/renderer/Gameplay를 선행 구현하지 않았다.
 Forge/generation/dynamic native loading도 구현하지 않았다.
 
-**외부 GPT Work 테스트 요청**
+**외부 GPT Work 테스트 결과 — 사용자 보고서 반영**
 
-[외부 검증 ZIP](https://drive.google.com/file/d/1vC9BBFuC3Hl_7miMpUqlMrF3WpyBTlTn/view)
-과 [SHA256](https://drive.google.com/file/d/1xsfj3U9D_92jzTU4-BMDo7iGyqkEZp73/view)을
-별도 GPT Work 세션에 전달하고 ZIP의 `EXTERNAL_TESTER_TASK.md`를 따라 새로운
-public-only 테스트를 수행해 주세요. 내부 구현 저장소/공유 source mount/private
-connectors 접근 없이 README/Quickstart/API/discovery/example/compiled SDK만 사용합니다.
+[사용자가 반환한 원본 보고서](evidence/p2/external/P2_External_Test_Report.ko.md),
+[acceptance provenance](evidence/p2/external/acceptance.json),
+[검증 전 PR CI readback](evidence/p2/external/ci-before-acceptance.json).
 
-ZIP SHA256: `717c27399d794b8a2a8615070a06ae3a19ae6c640492b76215f0f940ae89e6d0`.
-업로드한 ZIP을 실제 다시 내려받아 같은 hash임을 확인했다. 패키지32개 allowlisted
-files(+manifest/checksums); Rust source는 공개 예제1개뿐이다. Tester가 command,
-artifact commit/checksum, 새 test files, 실제 결과와 PASS/FAIL/BLOCKED/UNVERIFIED를
-포함한 보고서를 돌려주면 후속 결함을 수정하고 P2 최종 Gate를 판단한다.
-이 요청은 사용자의 개발 프로세스9번 외부 Gate 요구를 따르며 최종 완료 승인이 아니다.
+별도 source-free 세션에서 신규23개 테스트와 공개 예제/checksum/compiler 검사를
+실행했고6개 공개 SDK challenge가 PASS했다. 최종 판정은 **ACCEPTED — public Core SDK**.
+레거시 adapter/게임, 기존 scalar P1, P3 및 미실행 경계는 외부 인증하지 않았다.
+
+실제 외부 명령: `python3 run_public.py --check`, `python3 run_public.py`,
+`python3 run_public.py --source external_tests.rs --test`, `./consumer-output --nocapture`,
+`python3 run_public.py --source api_error_probe.rs`. 관찰:23 passed/0 failed.
+Tested commit48d7f4aa6932c9031afee722e0c58f7756b864c8; Core rlib SHA256
+`bd0b89a7855ccd5cf6ad8b5839002cbe3f79c38c875e4559e70eba9fe2c8bd35`는 전달본과 일치한다.
+
+원본 [배포 ZIP](https://drive.google.com/file/d/1vC9BBFuC3Hl_7miMpUqlMrF3WpyBTlTn/view)
+SHA256은 `717c27399d794b8a2a8615070a06ae3a19ae6c640492b76215f0f940ae89e6d0`.
+외부 report의 테스트 ZIP SHA256은
+`da0c744914c910479d49a5dbe017526e8366736cede1931515f2e2b851e9c76d`이며,
+사용자가 **재압축**했다고 확인했다. 두 archive 해시를 동일하다고 주장하지 않는다.
+보고서의 manifest30개와 원본32개 차이는 원본 report 그대로 기록한다; 새 manifest는
+미수신이다. Core 동일성은 정확한 rlib hash로 검증했다. 원래 ZIP/runner의
+external_gate UNVERIFIED는 패키지 생성 시점의 immutable 기록으로 유지한다.
+
+Gate-blocking 결함은 없었다. 소비자 피드백으로 declared field bound InvalidRecord와
+canonical/transaction quota BudgetExceeded, input frame InvalidInput, unknown selected
+owner StaleHandle을 명시한 공개 오류 표를 추가했다. Contract의 proposed/runtime
+UNVERIFIED 표기를 구현/검증 상태로 갱신했고, 향후 runner는 rustc 부재를 traceback
+대신 BLOCKED로 안내한다. Core/adapter Rust 구현·save bytes·버전은 바꾸지 않았다.
+문서/runner 후속 점검은 내부 실행이며 외부23개 테스트의 재실행으로 주장하지 않는다.
+
+후속 내부 검증: [followup-checks.json](evidence/p2/external/followup-checks.json)에
+missing-rustc BLOCKED 출력, exact compiler/checksum PASS, release consistency,
+Pentaworks/tooling/dependency PASS command/result를 기록했다. FILETREE update/lint와
+문서 링크 검사도 통과했다. Core/adapter implementation diff 없음.

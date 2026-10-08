@@ -1,7 +1,7 @@
 # P2 independent audit — technical integration accepted
 
 Scope: frozen P2_CONTRACT.md and production Core/adapter source; user external
-GPT Work gate is separate and remains UNVERIFIED. Source artifact:
+GPT Work gate is separate: user public Core23/23 accepted; external legacy UNVERIFIED. Source artifact:
 `48d7f4aa6932c9031afee722e0c58f7756b864c8` (0.3.0-alpha.1).
 Scout/architect/auditor had no production-source write ownership. Test author
 owned only new P2 and bridge tests; implementers owned distinct Core/adapter paths.

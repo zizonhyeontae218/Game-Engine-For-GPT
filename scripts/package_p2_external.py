@@ -25,7 +25,10 @@ for entry in manifest["files"]:
     path = root / entry["path"]
     assert path.stat().st_size == entry["bytes"], entry["path"]
     assert hashlib.sha256(path.read_bytes()).hexdigest() == entry["sha256"], entry["path"]
-compiler = subprocess.check_output(["rustc", "-vV"], text=True)
+try:
+    compiler = subprocess.check_output(["rustc", "-vV"], text=True)
+except (OSError, subprocess.CalledProcessError):
+    raise SystemExit("BLOCKED: rustc is unavailable or cannot start; install the compiler listed in MANIFEST.json") from None
 if compiler != manifest["rustc"]:
     raise SystemExit("BLOCKED: compiler differs from compiler-pinned MANIFEST.json")
 if args.check:

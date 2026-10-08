@@ -57,5 +57,7 @@ bugs with smallest public reproduction and expected/observed result, public API
 clarity feedback, and whether the external P2 gate is accepted. Include unexecuted
 areas explicitly. The user returns this report to the implementation session.
 
-Codex has run internal verification and package self-checks only. **External gate:
-UNVERIFIED until this separate user-run test report arrives.**
+The original SDK was a candidate with external_gate UNVERIFIED at packaging time.
+The user has now returned an independent23/23 PASS public Core report; that gate
+is ACCEPTED. Codex did not perform the external test. Legacy execution remains
+UNVERIFIED. Retain this instruction sheet for future independently evaluated artifacts.

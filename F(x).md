@@ -27,7 +27,8 @@ tokens after full validation. Numeric limits and public Rust surface:
 ## Experimental Pentomino P2 typed Core (contract2 / save2)
 
 Additive `ge4g_pentomino::p2`; no schema1/2 or ABI1 identifier migration.
-P2 is an internal completion candidate; external GPT Work acceptance is UNVERIFIED.
+P2 internal acceptance and external public Core GPT Work23/23 are accepted.
+External legacy execution remains UNVERIFIED.
 Exact API/bounds: `docs/pentomino/P2_CONTRACT.md`.
 
 | Identifier | Owner / persistence | Implemented contract |
@@ -48,7 +49,7 @@ Serialized refs identify a restored timeline; old runtime handles remain stale
 even when deterministic rewind reproduces future refs. Retained event refs block
 unsafe removal. Legacy World/presentation/save/resume stay authoritative outside
 Core. Continuous delegated legacy execution, Views/Gameplay and dynamic loading
-are unimplemented; source-free consumer acceptance remains UNVERIFIED.
+are unimplemented; public Core source-free consumer acceptance is complete; external legacy is UNVERIFIED.
 
 CLI/control/ABI transport stays v1. Game/scene/replay/snapshot/save data supports explicit v1 and FlatLand v2. The first table preserves the v1 baseline; FlatLand additions follow below. This registry records identifiers that are actually implemented and cross subsystem/serialization boundaries. Entity positions use 60 subpixels per pixel; scene authoring and test assertion coordinates use pixels.
 

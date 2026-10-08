@@ -1,7 +1,8 @@
 # P2 외부 테스트 Quickstart
 
 별도의 GPT Work 세션에 ZIP만 전달하세요. GE4G 내부 구현 저장소나 내부 테스트를
-함께 제공하지 마세요. P2는 외부 검증을 기다리는 완료 후보입니다.
+함께 제공하지 마세요. P2 공개 Core SDK는 사용자의 별도 외부 테스트23/23 PASS로 승인됐습니다.
+기존 ZIP/MANIFEST의 후보·UNVERIFIED 표기는 배포 당시 기록으로 유지됩니다.
 
 1. 새 작업 디렉터리에 ZIP을 풀고 `MANIFEST.json`의 compiler/target을 확인합니다.
    현재 SDK는 Linux x86_64용이며 정확히 같은 Rust compiler가 필요합니다.

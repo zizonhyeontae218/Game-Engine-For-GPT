@@ -1,9 +1,9 @@
 # P2 game-data Tiny Core contract
 
-Baseline main `2d1ffd0`, GE4G0.3.0-alpha.1. **FROZEN FOR IMPLEMENTATION / runtime UNVERIFIED**. Architect released
+Baseline main `2d1ffd0`, GE4G0.3.0-alpha.1. **IMPLEMENTED / PUBLIC CORE EXTERNAL GATE ACCEPTED**. Architect released
 ownership; auditor identified two MEDIUM gaps and parent integrated the precise
-ordinal/bounded-writer fixes before technical acceptance. Runtime acceptance
-requires actual evidence and the separate external GPT Work gate. User P2 covers retention isolation, Scene/Entity, typed records/
+ordinal/bounded-writer fixes before technical acceptance. Internal acceptance and the user's separate source-free Core23/23 report are recorded in P2_RUNDOWN.md.
+External legacy execution remains UNVERIFIED. User P2 covers retention isolation, Scene/Entity, typed records/
 actions and a legacy compatibility bridge. P3 owns Camera & View/Format.
 
 ## Compatibility and dependency direction
@@ -25,7 +25,7 @@ Data-only imports, schema1/2, ABI1, legacy saves/resume and authoritative Rust
 simulation remain. Linked host-installed trusted native plugins only; native
 sandboxing/panic/process recovery remain UNVERIFIED.
 
-## Exact public types (proposed)
+## Implemented public types
 
 All serialized structs/enums deny unknown fields. Enum serde representation is
 adjacent tagged `type`/`value`, snake_case variants. Types are Clone/Debug/Eq;
@@ -94,7 +94,7 @@ read access to that provider's records/events/objects and permits live refs to
 its objects, never write authority. Self reads/refs are implicit. Actions are
 visible to their declaring plugin only; no Core gameplay interpretation.
 
-## Exact proposed methods
+## Implemented public methods
 
 ```rust
 pub trait CorePlugin {
@@ -429,6 +429,26 @@ Debug/Display/std::error::Error. Detail truncates safely at4096 UTF-8 bytes;
 underlying Core error code is preserved in detail, without swallowed failures.
 Sources exceeding field/object/action bounds fail explicitly.
 
+## Error codes for isolated public violations
+
+These clarify implemented behavior; no Core behavior or signature changes.
+For inputs with several violations, do not infer unspecified error precedence.
+
+| Public operation / isolated violation | Error code |
+|---|---|
+| set/emit: missing/extra field, undeclared schema, wrong type/ref tag, declared string/bytes/list bound or i64 range | InvalidRecord |
+| set/emit: schema-valid Record exceeds canonical64KiB | BudgetExceeded |
+| callback: commands4096 or emitted events128 exceeded | BudgetExceeded |
+| step: valid next tick but frame has129 actions, duplicate/unknown action, wrong type/range | InvalidInput |
+| step: past/current target tick / future target tick | InputAlreadyCommitted / InputOutOfSequence |
+| select: unknown owner / undeclared schema | StaleHandle / UndeclaredKey |
+| typed correctly tagged reference targets a dead incarnation / unbound owner | InvalidReference / PermissionDenied |
+
+For example, String max_bytes6 accepts `한글` (6 UTF-8 bytes), while `한글a`
+(7 bytes) is InvalidRecord. A schema-valid larger payload whose whole canonical
+Record exceeds64KiB is BudgetExceeded. These are distinct limits. Any rejected
+transaction mutation still poisons its callback and rolls back the commit.
+
 ## Acceptance and completion status
 
 Required executable evidence: unchanged26 scalar tests; B whole retained history/
@@ -445,8 +465,10 @@ action mapping, then canonical save2 restore/re-select equality. Unicode scene
 `항구` must survive as source-name data with reversible hashed-key lookup, never
 ASCII-truncated. Command/artifact evidence belongs to parent rundown.
 
-All P2 functionality/tests are **UNVERIFIED** here. Public docs/artifacts plus a
-separate source-free GPT Work session and user's returned evidence are required
-before P2 final acceptance. No in-repo agent can self-certify that gate. P2 is a
-completion candidate; no P3 view implementation, gameplay plugins, Forge,
-automatic platform expansion or final release is claimed.
+P2 internal acceptance and the external public Core SDK gate are complete:
+workspace116 PASS and the user's separate source-free consumer23/23 PASS.
+The external report validates the identical Core rlib hash/source commit. Legacy
+adapter/four-game regression is internally verified; external legacy execution
+remains UNVERIFIED. Full report and package-provenance limits: P2_RUNDOWN.md.
+No in-repo agent self-certified the external gate. No P3 implementation, gameplay,
+Forge, automatic platform expansion or final release is claimed.

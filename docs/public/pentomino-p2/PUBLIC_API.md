@@ -68,6 +68,26 @@ structured keys; direct nonempty `serde_json::to_vec(ReadFrame)` is not a define
 wire API. Convert entries to your own declared array/envelope if needed. The
 canonical portable persistence API is `CoreHost::save`, not ReadFrame JSON.
 
+## Error codes for isolated public violations
+
+These clarify implemented behavior; no Core behavior or signature changes.
+For inputs with several violations, do not infer unspecified error precedence.
+
+| Public operation / isolated violation | Error code |
+|---|---|
+| set/emit: missing/extra field, undeclared schema, wrong type/ref tag, declared string/bytes/list bound or i64 range | InvalidRecord |
+| set/emit: schema-valid Record exceeds canonical64KiB | BudgetExceeded |
+| callback: commands4096 or emitted events128 exceeded | BudgetExceeded |
+| step: valid next tick but frame has129 actions, duplicate/unknown action, wrong type/range | InvalidInput |
+| step: past/current target tick / future target tick | InputAlreadyCommitted / InputOutOfSequence |
+| select: unknown owner / undeclared schema | StaleHandle / UndeclaredKey |
+| typed correctly tagged reference targets a dead incarnation / unbound owner | InvalidReference / PermissionDenied |
+
+For example, String max_bytes6 accepts `한글` (6 UTF-8 bytes), while `한글a`
+(7 bytes) is InvalidRecord. A schema-valid larger payload whose whole canonical
+Record exceeds64KiB is BudgetExceeded. These are distinct limits. Any rejected
+transaction mutation still poisons its callback and rolls back the commit.
+
 ## Legacy public boundary
 
 The separate `ge4g-pentomino-legacy` crate exposes `LegacyBridge`,

@@ -11,11 +11,10 @@ RNG/events, rollback, discovery and canonical save1. Merged.
 
 **P2 Complete game-data Tiny Core:** owner history isolation, Scene/Entity identity,
 bounded declarative typed records, tick-bound input actions, save2/discovery and
-explicit legacy snapshot adapter. Internal completion candidate; separate user-run
-external GPT Work verification required. No Camera/View/Format/Gameplay in P2.
+explicit legacy snapshot adapter. Completed: internal acceptance and separate user-run
+public Core GPT Work23/23 accepted; external legacy remains UNVERIFIED. No Camera/View/Format/Gameplay in P2.
 
-**P3 Camera & View/Format:** next focused design/development after the P2 external
-gate. Design camera lifetime/serialization, coordinate transforms, replaceable
+**P3 Camera & View/Format:** next focused design/development following P2 acceptance. Design camera lifetime/serialization, coordinate transforms, replaceable
 views/formats and legacy compatibility outside Tiny Core. Then develop tested
 Classic2D/Side/Vertical Scroll/Top-down contracts. P3 is UNVERIFIED / unimplemented.
 

@@ -40,4 +40,4 @@ All packets follow templates/TASK_PACKET.md scope/contract/acceptance rules. Esc
 
 Parent exclusive:Cargo.toml/Cargo.lock, F(x).md, indexes, plans/packets, P2_SCOUT/AUDIT/RUNDOWN/HANDOFF/STATUS, consumer artifacts/packaging and crates/ge4g-pentomino/examples/**; P2_CONTRACT only after architect releases. Shared integration sequential. All unavailable/unrun behavior UNVERIFIED.
 
-Integration ownership: all role-owned files released to parent after source audit and independent tests. Parent chronology repair sequential; no concurrent source edits. External user gate remains UNVERIFIED.
+Integration ownership: all role-owned files released to parent after source audit and independent tests. Parent chronology repair sequential; no concurrent source edits. External public Core user23/23 gate accepted; legacy outside SDK remains UNVERIFIED.

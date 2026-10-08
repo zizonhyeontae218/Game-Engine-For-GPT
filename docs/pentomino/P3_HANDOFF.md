@@ -1,8 +1,8 @@
 # P3 handoff — Camera & View/Format focused development
 
 **Next stage is Camera & View/Format. P2 does not implement P3.**
-First receive/address the user's separate GPT Work P2 report. Keep the P2 ExecPlan
-active until that gate is accepted. P2 candidate source is
+The user's separate public Core GPT Work23/23 report is accepted; P2 ExecPlan
+is completed. External legacy execution remains UNVERIFIED. P2 source is
 `48d7f4aa6932c9031afee722e0c58f7756b864c8`; package/commands in P2_RUNDOWN.md.
 No final release, merge, platform expansion or signed client is implied.
 

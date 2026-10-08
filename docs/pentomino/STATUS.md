@@ -26,7 +26,7 @@ deterministic RNG, transactional failure rollback, discovery and canonical save/
 atomic restore. P1_CONTRACT.md specifies its implemented scalar public surface.
 P0_API_PROPOSAL.md is the broader proposal, not shipped API.
 
-P2 completion candidate adds `ge4g_pentomino::p2::CoreHost`: per-owner event
+Completed P2 adds `ge4g_pentomino::p2::CoreHost`: per-owner event
 history256/pending128, Scene/Entity identity/lifetime, bounded declarative typed
 records, next-tick bool/bounded-i64 actions, transactional rollback, save2 and
 public discovery. P1/root scalar API and save1 remain unchanged (including global
@@ -38,15 +38,16 @@ objects/records via public transactions. Imported plugin ticks are no-op snapsho
 not continuously delegated legacy gameplay. Existing game/CLI/client execution
 uses inherited FlatLand code. Preserve schema/save/ABI1 and release/0.2.
 
-External source-free GPT Work acceptance is UNVERIFIED until the user's separate
-report arrives. See P2_RUNDOWN.md for concrete internal evidence and
+External source-free public Core GPT Work23/23 is ACCEPTED from the user's
+separate report; the tested Core rlib hash matches the delivered SDK. External
+legacy runtime/game execution remains UNVERIFIED. See P2_RUNDOWN.md for concrete internal evidence and
 ../public/pentomino-p2/ for public test package instructions. Camera/View/
 Format, Gameplay, dynamic loading and client execution through Core are
 unimplemented / UNVERIFIED. P2 is not a final release or client support expansion.
 
 ## Next slice
 
-Receive and address the user's external P2 GPT Work report first. P3 is focused
+P2 acceptance is complete. P3 is focused
 Camera & View/Format design and implementation outside Tiny Core; P3_HANDOFF.md
 defines the boundary. Follow Core → View/Format → Gameplay; Forge belongs to0.4.
 No P3 code is implemented in P2. Preserve deterministic Rust authority/data-only

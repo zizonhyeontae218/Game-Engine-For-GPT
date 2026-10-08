@@ -5,10 +5,11 @@
 
 Pentomino는 GE4G 0.3.0의 버전명입니다. Tiny Core → View/Format → Gameplay
 순서로 엔진을 모듈화합니다. P0 설계와 P1의 독립 `ge4g-pentomino` 호스트가
-병합됐습니다. P2 완료 후보는 별도 `p2::CoreHost`에 Scene/Entity, bounded typed
+병합됐습니다. P2는 별도 `p2::CoreHost`에 Scene/Entity, bounded typed
 records/input actions, 플러그인별 history와 save2를 구현합니다. 별도의 legacy
 adapter는 기존 World의 검증된 스냅샷을 가져오며 기존 실행 권위를 유지합니다.
-외부 GPT Work 검증은 UNVERIFIED이며 Camera & View/Format은 다음 P3입니다.
+외부 GPT Work의 공개 Core SDK23/23 PASS를 반영해 P2를 완료했습니다.
+레거시 외부 실행은 UNVERIFIED이며 Camera & View/Format은 다음 P3입니다.
 
 - [현재 개발 상태와 다음 작업](docs/pentomino/STATUS.md)
 - [P1 공개 계약](docs/pentomino/P1_CONTRACT.md) · [P1 검증 기록](docs/pentomino/P1_RUNDOWN.md)
