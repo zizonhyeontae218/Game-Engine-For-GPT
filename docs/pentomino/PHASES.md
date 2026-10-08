@@ -1,13 +1,26 @@
-# Milestones without assumptions about programming language
+# Pentomino milestones — current user scope
 
-**P0 Map 0.2 → 0.3:** Scout records source tree, entrypoint, build/test, game examples, inferred engine interfaces, dependency graph. Architect drafts contracts with explicit uncertainty; preserve compatibility if feasible.
+The user's P2 request supersedes the bootstrap phase numbering. Preserve
+Tiny Core → View/Format → Gameplay; a handoff does not implement P3.
 
-**P1 Tiny Core:** Establish lifecycle boundaries for scene/entity, event, resource, input, serialization, plugin loader and public discovery. Freeze the smallest needed v0 API; test plugin load/unload and clear failure cases. Do not bake in camera/combat rules.
+**P0 Map 0.2 → 0.3:** verified source/build/test inventory and initial architecture.
+Merged; historical evidence retained.
 
-**P2 View/Format:** In separate libraries, expose Side View, Vertical Scroll, Top-down (2D sprite with 3D scene support) and improved Classic 2D. Work out coordinate transforms, camera behavior, layer mapping, required backend capabilities and compatibility tests. Don't start gameplay plugins until at least one tested view contract is usable.
+**P1 Scalar lifecycle host:** isolated deterministic lifecycle, scoped i64 resources,
+RNG/events, rollback, discovery and canonical save1. Merged.
 
-**P3 Gameplay:** Turn-based combat first, then realtime combat, open world, interaction/platformer. Each plugin has a manifest/capability description and can be removed without disabling unrelated systems. Test mixed mode compositions after required pieces exist.
+**P2 Complete game-data Tiny Core:** owner history isolation, Scene/Entity identity,
+bounded declarative typed records, tick-bound input actions, save2/discovery and
+explicit legacy snapshot adapter. Internal completion candidate; separate user-run
+external GPT Work verification required. No Camera/View/Format/Gameplay in P2.
 
-**P4 Alpha & hardening:** publish docs/SDK examples; physically separated consumer tests; contract audits and regression/benchmark measurements. Include minor Core/main-plugin optimization in each subsequent release when justified by evidence.
+**P3 Camera & View/Format:** next focused design/development after the P2 external
+gate. Design camera lifetime/serialization, coordinate transforms, replaceable
+views/formats and legacy compatibility outside Tiny Core. Then develop tested
+Classic2D/Side/Vertical Scroll/Top-down contracts. P3 is UNVERIFIED / unimplemented.
 
-Every phase returns a Rundown. Stage completion is based on tests/gates, not number of files written.
+**Later Gameplay:** turn combat, realtime combat, open world, interaction/platformer
+as independent plugins after view contracts exist. Forge/generation remain0.4.
+Alpha hardening and separate consumer checks apply at every milestone.
+
+Every phase returns a Rundown with executed commands/artifacts/observations.

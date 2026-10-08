@@ -1,0 +1,331 @@
+{
+  "source_commit": "48d7f4aa6932c9031afee722e0c58f7756b864c8",
+  "version": "0.3.0-alpha.1",
+  "contract": 2,
+  "save": 2,
+  "external_gpt_work": "UNVERIFIED",
+  "env": {
+    "compiler": "Rust/Cargo1.99.0",
+    "PKG_CONFIG_PATH": "/workspace/scratch/pentomino-build-deps/alsa/usr/lib/x86_64-linux-gnu/pkgconfig",
+    "legacy_sdk": "Official Debian libasound2-dev1.2.14 extracted locally; no system installation"
+  },
+  "checks": [
+    {
+      "name": "fmt",
+      "command": [
+        "cargo",
+        "fmt",
+        "--all",
+        "--check"
+      ],
+      "exit_code": 0,
+      "log": "fmt.log",
+      "artifact": "48d7f4aa6932c9031afee722e0c58f7756b864c8",
+      "status": "PASS",
+      "observed": "exit0; no diagnostics"
+    },
+    {
+      "name": "clippy-workspace",
+      "command": [
+        "cargo",
+        "clippy",
+        "--locked",
+        "--workspace",
+        "--all-targets",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 0,
+      "log": "clippy-workspace.log",
+      "artifact": "48d7f4aa6932c9031afee722e0c58f7756b864c8",
+      "status": "PASS",
+      "observed": "Checking ge4g-core v0.3.0-alpha.1 (/workspace/GE4G/crates/ge4g-core)\n    Checking ge4g-pentomino v0.3.0-alpha.1 (/workspace/GE4G/crates/ge4g-pentomino)\n    Checking ge4g-project v0.3.0-alpha.1 (/workspace/GE4G/crates/ge4g-project)\n    Checking ge4g-runtime v0.3.0-alpha.1 (/workspace/GE4G/crates/ge4g-runtime)\n    Checking ge4g-render2d v0.3.0-alpha.1 (/workspace/GE4G/crates/ge4g-render2d)\n    Checking ge4g-platform v0.3.0-alpha.1 (/workspace/GE4G/crates/ge4g-platform)\n    Checking ge4g-client v0.3.0-alpha.1 (/workspace/GE4G/crates/ge4g-client)\n    Checking ge4g-pentomino-legacy v0.3.0-alpha.1 (/workspace/GE4G/crates/ge4g-pentomino-legacy)\n    Checking ge4g-cli v0.3.0-alpha.1 (/workspace/GE4G/crates/ge4g-cli)\n    Finished `dev` profile [unoptimized + debuginfo] target(s) in 7.24s"
+    },
+    {
+      "name": "test-workspace",
+      "command": [
+        "cargo",
+        "test",
+        "--locked",
+        "--workspace"
+      ],
+      "exit_code": 0,
+      "log": "test-workspace.log",
+      "artifact": "48d7f4aa6932c9031afee722e0c58f7756b864c8",
+      "status": "PASS",
+      "observed": {
+        "passed": 116,
+        "failed": 0
+      }
+    },
+    {
+      "name": "clippy-headless",
+      "command": [
+        "cargo",
+        "clippy",
+        "--locked",
+        "-p",
+        "ge4g-cli",
+        "--no-default-features",
+        "--all-targets",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 0,
+      "log": "clippy-headless.log",
+      "artifact": "48d7f4aa6932c9031afee722e0c58f7756b864c8",
+      "status": "PASS",
+      "observed": "Checking ge4g-project v0.3.0-alpha.1 (/workspace/GE4G/crates/ge4g-project)\n    Checking ge4g-runtime v0.3.0-alpha.1 (/workspace/GE4G/crates/ge4g-runtime)\n    Checking ge4g-render2d v0.3.0-alpha.1 (/workspace/GE4G/crates/ge4g-render2d)\n    Checking ge4g-platform v0.3.0-alpha.1 (/workspace/GE4G/crates/ge4g-platform)\n    Checking ge4g-cli v0.3.0-alpha.1 (/workspace/GE4G/crates/ge4g-cli)\n    Finished `dev` profile [unoptimized + debuginfo] target(s) in 3.86s"
+    },
+    {
+      "name": "test-headless",
+      "command": [
+        "cargo",
+        "test",
+        "--locked",
+        "-p",
+        "ge4g-cli",
+        "--no-default-features"
+      ],
+      "exit_code": 0,
+      "log": "test-headless.log",
+      "artifact": "48d7f4aa6932c9031afee722e0c58f7756b864c8",
+      "status": "PASS",
+      "observed": {
+        "passed": 9,
+        "failed": 0
+      }
+    },
+    {
+      "name": "public-example",
+      "command": [
+        "cargo",
+        "run",
+        "--locked",
+        "-p",
+        "ge4g-pentomino",
+        "--example",
+        "p2_public"
+      ],
+      "exit_code": 0,
+      "log": "public-example.log",
+      "artifact": "48d7f4aa6932c9031afee722e0c58f7756b864c8",
+      "status": "PASS",
+      "observed": {
+        "ok": true,
+        "contract": 2,
+        "ticks": 301,
+        "per_owner_retained": 256,
+        "dropped": 44,
+        "hash": "4d5861d952b99cc1f9aadb86874638870ad17ccbb4ac879f5281b87d7284c65e"
+      }
+    },
+    {
+      "name": "boundaries",
+      "command": [
+        "python3",
+        "scripts/check_p2_boundaries.py"
+      ],
+      "exit_code": 0,
+      "log": "boundaries.log",
+      "artifact": "48d7f4aa6932c9031afee722e0c58f7756b864c8",
+      "status": "PASS",
+      "observed": "{\"ok\": true, \"core_transitive_engine_dependencies\": [], \"adapter_direction\": \"legacy -> adapter -> typed core\", \"p1_tests_sha256\": \"ce87260ccd1c7c5fe98daac774d70db90f7c6aed981c6c1767e953a288e8461a\", \"compatibility_baseline\": \"2d1ffd060389109f341fb5854ce07890f445f3f9\"}"
+    },
+    {
+      "name": "pentaworks",
+      "command": [
+        "python3",
+        "scripts/validate_pentaworks.py"
+      ],
+      "exit_code": 0,
+      "log": "pentaworks.log",
+      "artifact": "48d7f4aa6932c9031afee722e0c58f7756b864c8",
+      "status": "PASS",
+      "observed": "PASS: project config, 10 custom Codex roles, 2 skills, design/brief/report templates\nNOT TESTED: actual Codex spawning, GE4G runtime, plugin functionality or release gates"
+    },
+    {
+      "name": "tooling",
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests"
+      ],
+      "exit_code": 0,
+      "log": "tooling.log",
+      "artifact": "48d7f4aa6932c9031afee722e0c58f7756b864c8",
+      "status": "PASS",
+      "observed": ".....\n----------------------------------------------------------------------\nRan 5 tests in 0.003s\n\nOK"
+    },
+    {
+      "name": "release-consistency",
+      "command": [
+        "python3",
+        "scripts/release_consistency.py",
+        "--self-test"
+      ],
+      "exit_code": 0,
+      "log": "release-consistency.log",
+      "artifact": "48d7f4aa6932c9031afee722e0c58f7756b864c8",
+      "status": "PASS",
+      "observed": "Pentomino0.3.0-alpha.1 consistency: 21 current documents and release identity passed; historical documents excluded"
+    },
+    {
+      "name": "legacy-basement_demo",
+      "command": [
+        "cargo",
+        "run",
+        "--locked",
+        "-p",
+        "ge4g-cli",
+        "--",
+        "test",
+        "examples/basement_demo",
+        "--json"
+      ],
+      "exit_code": 0,
+      "log": "legacy-basement_demo.log",
+      "artifact": "48d7f4aa6932c9031afee722e0c58f7756b864c8",
+      "status": "PASS",
+      "observed": {
+        "errors": [],
+        "ok": true,
+        "results": [
+          {
+            "assertions_checked": 7,
+            "deterministic": true,
+            "deterministic_sha256": "33e06a98c9b675d0773594343a7168930720be2aa78b6c357831d6bcb47330d7",
+            "frame_rgba_sha256": "38cc4352e7160dcf9104cbe19acd709e36d8165989b3c99d8b6611f0f76e932b",
+            "golden_checked": true,
+            "name": "basement_journey",
+            "ok": true,
+            "png_capture": true,
+            "save_reload": true,
+            "ticks": 160
+          }
+        ],
+        "schema_version": 1,
+        "summary": "GE4G test: 1 of 1 passed"
+      }
+    },
+    {
+      "name": "legacy-flatland_pacman",
+      "command": [
+        "cargo",
+        "run",
+        "--locked",
+        "-p",
+        "ge4g-cli",
+        "--",
+        "test",
+        "examples/flatland_pacman",
+        "--json"
+      ],
+      "exit_code": 0,
+      "log": "legacy-flatland_pacman.log",
+      "artifact": "48d7f4aa6932c9031afee722e0c58f7756b864c8",
+      "status": "PASS",
+      "observed": {
+        "errors": [],
+        "ok": true,
+        "results": [
+          {
+            "assertions_checked": 1,
+            "deterministic": true,
+            "deterministic_sha256": "6535e0208ca1c679b418ebb457fc16f7c0cd95c094c7f2fe2a89bc4c19bd7f84",
+            "frame_rgba_sha256": "a0be5c7fc85ca45c9dd8a54e0fa1bfc6c355a1e7e1d78a7ce5598b447fa43546",
+            "golden_checked": true,
+            "name": "journey",
+            "ok": true,
+            "png_capture": true,
+            "save_reload": true,
+            "ticks": 30
+          }
+        ],
+        "schema_version": 1,
+        "summary": "GE4G test: 1 of 1 passed"
+      }
+    },
+    {
+      "name": "legacy-flatland_signal_yard",
+      "command": [
+        "cargo",
+        "run",
+        "--locked",
+        "-p",
+        "ge4g-cli",
+        "--",
+        "test",
+        "examples/flatland_signal_yard",
+        "--json"
+      ],
+      "exit_code": 0,
+      "log": "legacy-flatland_signal_yard.log",
+      "artifact": "48d7f4aa6932c9031afee722e0c58f7756b864c8",
+      "status": "PASS",
+      "observed": {
+        "errors": [],
+        "ok": true,
+        "results": [
+          {
+            "assertions_checked": 1,
+            "deterministic": true,
+            "deterministic_sha256": "cff01b8298891ff87b7b5872d8517b544b5fe22744962c990696b3faafe2ebde",
+            "frame_rgba_sha256": "f50923d16622d3ee8232739c821d2e8cc6e98acaca9b0dc2c9c174604962a987",
+            "golden_checked": true,
+            "name": "signal-yard-corpus",
+            "ok": true,
+            "png_capture": true,
+            "save_reload": true,
+            "ticks": 714
+          }
+        ],
+        "schema_version": 1,
+        "summary": "GE4G test: 1 of 1 passed"
+      }
+    },
+    {
+      "name": "legacy-flatland_harbor",
+      "command": [
+        "cargo",
+        "run",
+        "--locked",
+        "-p",
+        "ge4g-cli",
+        "--",
+        "test",
+        "examples/flatland_harbor",
+        "--json"
+      ],
+      "exit_code": 0,
+      "log": "legacy-flatland_harbor.log",
+      "artifact": "48d7f4aa6932c9031afee722e0c58f7756b864c8",
+      "status": "PASS",
+      "observed": {
+        "errors": [],
+        "ok": true,
+        "results": [
+          {
+            "assertions_checked": 1,
+            "deterministic": true,
+            "deterministic_sha256": "b70a35486d940fe8a7586e062ead5b3189a22578fa3d3dc55f1173ef84ebc135",
+            "frame_rgba_sha256": "568334e7d0aaf36ebd4ed958f431dbfb1da0713e2f1ba4dc3a29f5bc084448a5",
+            "golden_checked": true,
+            "name": "harbor-final-regression",
+            "ok": true,
+            "png_capture": true,
+            "save_reload": true,
+            "ticks": 420
+          }
+        ],
+        "schema_version": 1,
+        "summary": "GE4G test: 1 of 1 passed"
+      }
+    }
+  ]
+}

@@ -5,12 +5,15 @@
 
 Pentomino는 GE4G 0.3.0의 버전명입니다. Tiny Core → View/Format → Gameplay
 순서로 엔진을 모듈화합니다. P0 설계와 P1의 독립 `ge4g-pentomino` 호스트가
-병합됐습니다. 플러그인 등록/언로드, 결정적 RNG, 실패 복구와 save/restore는
-scalar subset에 구현됐고, Scene/Entity/input actions, View/Format, Gameplay 및
-기존 게임 실행 경로와의 연결은 아직 미구현입니다.
+병합됐습니다. P2 완료 후보는 별도 `p2::CoreHost`에 Scene/Entity, bounded typed
+records/input actions, 플러그인별 history와 save2를 구현합니다. 별도의 legacy
+adapter는 기존 World의 검증된 스냅샷을 가져오며 기존 실행 권위를 유지합니다.
+외부 GPT Work 검증은 UNVERIFIED이며 Camera & View/Format은 다음 P3입니다.
 
 - [현재 개발 상태와 다음 작업](docs/pentomino/STATUS.md)
 - [P1 공개 계약](docs/pentomino/P1_CONTRACT.md) · [P1 검증 기록](docs/pentomino/P1_RUNDOWN.md)
+- [P2 공개 SDK 안내](docs/public/pentomino-p2/README.md) · [P2 공개 계약](docs/pentomino/P2_CONTRACT.md)
+- [P2 Rundown](docs/pentomino/P2_RUNDOWN.md) · [P3 인계](docs/pentomino/P3_HANDOFF.md)
 - [작업자 시작 안내](QUICKSTART.ko.md) · [인수인계](docs/pentomino/HANDOFF.md)
 - [0.2 유지보수 브랜치](https://github.com/zizonhyeontae218/Game-Engine-For-GPT/tree/release/0.2)
   · [0.2.0 정식 릴리스](https://github.com/zizonhyeontae218/Game-Engine-For-GPT/releases/tag/v0.2.0)

@@ -1,0 +1,4 @@
+   Compiling ge4g-pentomino v0.3.0-alpha.1 (/workspace/GE4G/crates/ge4g-pentomino)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.53s
+     Running `target/debug/examples/p2_public`
+{"ok":true,"contract":2,"ticks":301,"per_owner_retained":256,"dropped":44,"hash":"4d5861d952b99cc1f9aadb86874638870ad17ccbb4ac879f5281b87d7284c65e"}

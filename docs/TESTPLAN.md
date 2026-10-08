@@ -5,7 +5,9 @@ See [Pentomino status](pentomino/STATUS.md) for implemented scope and next work.
 The FlatLand material below is the inherited implementation/released 0.2 baseline.
 Its historical versions, delivery instructions and evidence are not a new alpha release.
 Existing acceptance checks remain regressions; also run
-`cargo test --locked -p ge4g-pentomino` for the experimental scalar host.
+`cargo test --locked -p ge4g-pentomino` for unchanged P1 plus typed P2 contracts,
+`cargo test --locked -p ge4g-pentomino-legacy` for the compatibility boundary,
+and `python3 scripts/check_p2_boundaries.py` for P2 dependency/preservation checks.
 Android/Windows remain the client verification matrix. No alpha binary is published here.
 
 ## FlatLand 0.2.0 acceptance

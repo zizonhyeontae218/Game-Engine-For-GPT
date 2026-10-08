@@ -3,7 +3,10 @@
 현재 상태는 STATUS.md를 먼저 읽는다. P0/P1은 main에 병합됐고 main은
 0.3.0-alpha.1 개발선이다. 아래 설치 당시 0.2 출발점은 역사적 근거다.
 0.2 유지보수는 release/0.2에서 진행한다. 현재 클라이언트는 알파 버전이며
-Pentomino host로 게임을 실행하는 연결은 아직 미구현이다.
+Pentomino host로 게임을 연속 실행하는 연결은 아직 미구현이다. P2의 별도
+adapter는 검증된 legacy World 스냅샷만 Core에 투영한다. 현재 P2 완료 후보와
+외부 검증 상태는 P2_RUNDOWN.md, 다음 Camera & View/Format은 P3_HANDOFF.md를
+읽는다. 아래 시작 절차와 설치 당시 관찰은 역사적 문맥이다.
 
 확인일: 2026-10-08. 이번 작업은 PentaWorks 설치/인수인계 설정이다.
 0.3 엔진 구현, 버전 변경, 제품 재배포는 아직 하지 않았다.
@@ -91,8 +94,9 @@ Rust headless 검사 후 기본/feature 빌드 출력이 덮어써지는 점도 
 작업자 실제 spawn과 새 클라이언트의 권한 적용은 실행 시 별도로 확인한다.
 
 consumer는 공개 문서/배포물만 별도 source-free workspace와 새 세션에서
-받는다. consumer/ALLOWLIST.example.txt는 아직 실제 공개 목록이 아니며,
-stage_consumer_bundle.py만으로 OS 수준 격리가 이루어지지 않는다.
+받는다. consumer/ALLOWLIST.example.txt는 예시다. P2 공개 안내는
+docs/public/pentomino-p2/, SDK 생성은 scripts/package_p2_external.py를 사용한다.
+패키지 생성만으로 OS 수준 격리가 이루어지지 않는다.
 
 ## 근거와 복구 링크
 

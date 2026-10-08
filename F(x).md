@@ -22,8 +22,33 @@ schema1/schema2 and ABI1. No legacy identifier changes.
 Install/tick/restore use atomic staging. Restore requires the exact installed
 descriptor/binding set and complete current-tick pending history, and revokes old
 tokens after full validation. Numeric limits and public Rust surface:
-`docs/pentomino/P1_CONTRACT.md`. Views, Scene/Entity contracts, input actions,
-gameplay composition, dynamic loading and source-free consumer remain UNVERIFIED.
+`docs/pentomino/P1_CONTRACT.md`. This compatibility namespace is unchanged.
+
+## Experimental Pentomino P2 typed Core (contract2 / save2)
+
+Additive `ge4g_pentomino::p2`; no schema1/2 or ABI1 identifier migration.
+P2 is an internal completion candidate; external GPT Work acceptance is UNVERIFIED.
+Exact API/bounds: `docs/pentomino/P2_CONTRACT.md`.
+
+| Identifier | Owner / persistence | Implemented contract |
+|---|---|---|
+| SchemaId / ActionId | descriptor / save2-discovery | Distinct dotted ASCII IDs <=128 bytes; globally unique declarations |
+| RecordKey(owner,local) / Record(schema,fields) | plugin / save2 | Exact declarative fields; bounded bool/i64/UTF8/bytes/refs/lists; own writer |
+| SceneRef / EntityRef | allocator / save2 | owner+local+incarnation; scene identity only; entity adds scene scope |
+| next_identity | Core / save2 | Checked global serial starts1 for both kinds; restore resumes saved counter exactly |
+| CoreOwnerToken / SceneHandle / EntityHandle | Core / runtime only | Opaque host+generation; stale on remove/recreate/restore; never saved |
+| InputFrame.target_tick / actions | caller / last_input save2 | Exact next tick; sorted unique bool/bounded-i64; absent stays absent |
+| history.emitted / dropped / ordinal | plugin / save2 | Independent newest256 suffix; ordinal=dropped+i; emitted=dropped+retained |
+| CoreEvent.sequence / next_sequence | Core / save2 | Checked lifetime sequence=sum(active emitted)+retired; nondecreasing global ticks |
+| retired_emitted / purged_retained | Core / save2 | Removed-owner lifetime/retained counts; purged<=retired; B history unchanged |
+| contract_version / format_version | Core / artifact | Exactly2.0.0 /2; capped canonical8MiB JSON; save1 VersionMismatch |
+| legacy hashed IDs | adapter / projection | SHA256 label keys; Unicode names as string metadata; refs remapped at install |
+
+Serialized refs identify a restored timeline; old runtime handles remain stale
+even when deterministic rewind reproduces future refs. Retained event refs block
+unsafe removal. Legacy World/presentation/save/resume stay authoritative outside
+Core. Continuous delegated legacy execution, Views/Gameplay and dynamic loading
+are unimplemented; source-free consumer acceptance remains UNVERIFIED.
 
 CLI/control/ABI transport stays v1. Game/scene/replay/snapshot/save data supports explicit v1 and FlatLand v2. The first table preserves the v1 baseline; FlatLand additions follow below. This registry records identifiers that are actually implemented and cross subsystem/serialization boundaries. Entity positions use 60 subpixels per pixel; scene authoring and test assertion coordinates use pixels.
 

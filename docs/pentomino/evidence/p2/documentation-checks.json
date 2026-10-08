@@ -1,0 +1,34 @@
+[
+  {
+    "name": "current-release-consistency",
+    "command": [
+      "python3",
+      "scripts/release_consistency.py",
+      "--self-test"
+    ],
+    "exit_code": 0,
+    "artifact": "48d7f4aa6932c9031afee722e0c58f7756b864c8+evidence-docs",
+    "observed": "Pentomino0.3.0-alpha.1 consistency: 21 current documents and release identity passed; historical documents excluded"
+  },
+  {
+    "name": "current-doc-links",
+    "command": [
+      "python3",
+      "-c",
+      "from pathlib import Path; import re; paths=[Path('docs/pentomino')/n for n in ['P2_RUNDOWN.md','P2_AUDIT.md','P3_HANDOFF.md']]; [(None if t.startswith(('http:','https:','#')) else (_ for _ in ()).throw(AssertionError(str(p)+':'+t)) if not (p.parent/t).exists() else None) for p in paths for t in re.findall(r'\\[[^\\]]+\\]\\(([^)]+)\\)',p.read_text())]; print('Local links PASS')"
+    ],
+    "exit_code": 0,
+    "artifact": "48d7f4aa6932c9031afee722e0c58f7756b864c8+evidence-docs",
+    "observed": "Local links PASS"
+  },
+  {
+    "name": "filetree",
+    "command": [
+      "python3 scripts/filetree.py update",
+      "python3 scripts/filetree.py lint"
+    ],
+    "exit_code": 0,
+    "artifact": "48d7f4a+evidence-docs",
+    "observed": "586-file index updated; lint exit0"
+  }
+]
