@@ -176,6 +176,9 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `crates/ge4g-client/tests/final_resume.rs` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-core/Cargo.toml` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-core/src/lib.rs` — Engine source, package configuration or behavioral verification.
+- `crates/ge4g-pentomino/Cargo.toml` — Engine source, package configuration or behavioral verification.
+- `crates/ge4g-pentomino/src/lib.rs` — Engine source, package configuration or behavioral verification.
+- `crates/ge4g-pentomino/tests/lifecycle_contract.rs` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-platform/Cargo.toml` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-platform/src/audio.rs` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-platform/src/lib.rs` — Engine source, package configuration or behavioral verification.
@@ -237,6 +240,8 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `docs/exec-plans/completed/flatland.md` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/completed/flutter-client.md` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/completed/pentaworks-agent-setup.md` — Repository file; inspect only when relevant to the task.
+- `docs/exec-plans/completed/pentomino-p1-packets.md` — Repository file; inspect only when relevant to the task.
+- `docs/exec-plans/completed/pentomino-p1.md` — Repository file; inspect only when relevant to the task.
 - `docs/pentomino/BOOTSTRAP_PACKETS.md` — Repository file; inspect only when relevant to the task.
 - `docs/pentomino/BRIEF.md` — Repository file; inspect only when relevant to the task.
 - `docs/pentomino/GATES.md` — Repository file; inspect only when relevant to the task.
@@ -245,6 +250,9 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `docs/pentomino/P0_AUDIT.md` — Repository file; inspect only when relevant to the task.
 - `docs/pentomino/P0_RUNDOWN.md` — Repository file; inspect only when relevant to the task.
 - `docs/pentomino/P0_SCOUT.md` — Repository file; inspect only when relevant to the task.
+- `docs/pentomino/P1_AUDIT.md` — Repository file; inspect only when relevant to the task.
+- `docs/pentomino/P1_CONTRACT.md` — Repository file; inspect only when relevant to the task.
+- `docs/pentomino/P1_RUNDOWN.md` — Repository file; inspect only when relevant to the task.
 - `docs/pentomino/PHASES.md` — Repository file; inspect only when relevant to the task.
 - `docs/pentomino/PUBLIC_CONTRACT_PROPOSAL.md` — Repository file; inspect only when relevant to the task.
 - `docs/pentomino/ROUTING.md` — Repository file; inspect only when relevant to the task.

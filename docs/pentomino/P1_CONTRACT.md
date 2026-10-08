@@ -1,7 +1,7 @@
 # P1 scalar lifecycle contract freeze
 
 2026-10-08; baseline `52e75c0`, branch `pentomino/p1-lifecycle`.
-Status: **TECHNICALLY ACCEPTED FREEZE / runtime UNVERIFIED**. Architect
+Status: **TECHNICALLY ACCEPTED FREEZE / scalar slice IMPLEMENTED**. Architect
 released ownership; independent auditor reviewed it; parent integrated two LOW
 consistency corrections before implementation. Executed evidence is recorded
 separately in P1_RUNDOWN.md. This document specifies the first implementation slice only.
@@ -15,7 +15,7 @@ camera/genre code. Existing adapters, packages, saves, schemas, ABI1, version an
 Android signing identity remain untouched. Only host-installed linked Rust
 plugins are accepted; imported games remain data-only. No dynamic code loading.
 
-Proposed Rust signatures (public names frozen here; implementation pending):
+Implemented scalar Rust signatures (execution evidence in P1_RUNDOWN.md):
 
 ```rust
 pub trait Plugin {
@@ -282,7 +282,8 @@ the shared256 budget and is not an independence promise. Dependency graph must
 show no engine crate imports.
 Actual test commands/results belong to parent verification log, not this freeze.
 
-All tests/features here are **UNVERIFIED until executed**. Broad P0 schemas,
+The26 public scalar lifecycle tests have executed successfully; exact evidence
+and unrun checks are in P1_RUNDOWN.md. This does not validate broader features. Broad P0 schemas,
 Scene/Entity and typed references, actions/input mapping, format/view replacement,
 gameplay extraction/composition, external source-free consumer proof, full legacy
 platform regression and Windows ZIP root cause are **UNVERIFIED / out of this
