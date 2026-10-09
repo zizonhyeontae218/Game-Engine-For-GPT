@@ -94,6 +94,13 @@ consumer는 공개 문서/배포물만 별도 source-free workspace와 새 세�
 받는다. consumer/ALLOWLIST.example.txt는 아직 실제 공개 목록이 아니며,
 stage_consumer_bundle.py만으로 OS 수준 격리가 이루어지지 않는다.
 
+## 저장소 정리 후 진입점
+
+2026-10-09 사용자가 기존 테스트 전부 완료를 보고했다. 과거 실패/NOT RUN은 당시 기록으로
+보존하며 이 정리에서 기능 구현 완료로 바꾸지 않는다. 병합된 P0/P1 브랜치를 정리하고
+진행 중인 P2/P3 PR은 유지한다. README → docs/README.md → STATUS.md 순서로 진입한다.
+공개 다운로드는 GitHub Releases이며 Drive는 비공개 보관/서명 백업이다.
+
 ## 근거와 복구 링크
 
 - [Drive Soul.md](https://drive.google.com/file/d/1uolemYGUhF3RgQ9OxWtKa-GJrjnsWfCf/view)

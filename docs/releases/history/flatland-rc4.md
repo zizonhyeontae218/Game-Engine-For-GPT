@@ -1,8 +1,10 @@
+> 역사 기록: 이 문서의 버전·배포 링크·검증 상태는 당시 기준이며 현재 안내는 [릴리즈 목차](../README.md)를 따른다.
+
 # Basement 0.2 — FlatLand 0.2.0-rc.4
 
 Stabilization candidate; never final 0.2.0. Flutter 0.2.0-rc.4+6, Android versionCode6.
 Supported client releases: Android and Windows only until 0.3.0 development begins.
-All rc1/rc2/rc3 binaries are preserved. [Historical rc3 evidence](releases/flatland-rc3.md).
+All rc1/rc2/rc3 binaries are preserved. [Historical rc3 evidence](flatland-rc3.md).
 
 ## Changes
 
@@ -20,7 +22,7 @@ Six built-in cosmetic presets: strike, slash, projectile, burst, heal, guard. Na
 results are committed once; typed FX drive lunge/effect/red flash/recoil/interpolated HP.
 Unskipped feedback locks battle input. Saving/skipping never reapplies combat or rewards.
 
-[바람항 공방 / Harbor Workshop](../examples/flatland_harbor/README.md) is independently
+[바람항 공방 / Harbor Workshop](../../../examples/flatland_harbor/README.md) is independently
 created content with original CC0 art/audio/map and an asset-license manifest. Four
 under-authored buildings, minimal NPC/opponent and sprite-free projectile demonstrate
 fallbacks. Interiors, push/fixed/pass bodies, quests, inventory, battle and save remain.

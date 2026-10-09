@@ -11,8 +11,8 @@ signed alpha delivery or physical acceptance is claimed.
   here in bounded reviewed slices; completing the full engine is not a prerequisite
   for main integration.
 - release/0.2: FlatLand maintenance baseline, initially
-  293ba513f5727d4a7a0a59476c9a98eb193aaa25. The released v0.2.0 tag and Drive
-  artifacts are unchanged. Maintenance fixes can be selectively ported to main;
+  293ba513f5727d4a7a0a59476c9a98eb193aaa25. The released v0.2.0 tag and original binary bytes
+  are unchanged; public delivery moves to GitHub Releases. Maintenance fixes can be selectively ported to main;
   never bulk-merge alpha version/architecture changes back into release/0.2.
 - Short milestone branches/PRs target main. Old P0/P1 branch names are historical.
   Save/archive/schema migration decisions are explicit, not inferred from version.
