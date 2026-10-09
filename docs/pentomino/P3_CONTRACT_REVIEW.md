@@ -35,5 +35,5 @@ bounded source before cloning and derives renderer parameters from CameraFrame.
 The old unsafe renderer is never a fallback for unsupported native transforms.
 
 Discovery and independent behavior results are internal evidence; public GPT Work
-consumer gate remains PENDING. Larger custom selection lookup complexity and
+consumer gate is now PASS by user report on2026-10-09. Larger custom selection lookup complexity and
 cross-platform float identity are limitations, not verified optimizations.

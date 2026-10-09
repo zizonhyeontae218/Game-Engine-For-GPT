@@ -34,6 +34,6 @@ cloning or entering the old renderer. Trusted linked callbacks are not sandboxed
 
 ## Next
 
-P2 and P3 are accepted for main integration. Proceed to NEXT.md after confirming
+P2 PR #3 and P3 PR #4 are merged into main. Proceed to NEXT.md after confirming
 merged HEAD/CI. Do not repeat their implementation or external acceptance. No final
 0.3 release, platform expansion, full3D renderer or Forge implementation is implied.

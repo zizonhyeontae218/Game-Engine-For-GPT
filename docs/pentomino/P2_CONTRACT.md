@@ -1,3 +1,5 @@
+> 2026-10-09: 기존 P2 테스트 전체는 사용자 보고로 PASS 처리됐다. 과거 23/23 보고서의 범위와 당시 UNVERIFIED는 역사 기록으로 구분한다. 구현 계약·플랫폼 보장 범위가 확대된 것은 아니다.
+
 # P2 game-data Tiny Core contract
 
 Baseline main `2d1ffd0`, GE4G0.3.0-alpha.1. **IMPLEMENTED / PUBLIC CORE EXTERNAL GATE ACCEPTED**. Architect released

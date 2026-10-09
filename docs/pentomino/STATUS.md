@@ -15,12 +15,12 @@ signed alpha delivery or physical acceptance is claimed.
   are unchanged; public delivery moves to GitHub Releases. Maintenance fixes can be selectively ported to main;
   never bulk-merge alpha version/architecture changes back into release/0.2.
 - Merged P0/P1 branch refs were removed on 2026-10-09; commits and closed PRs remain.
-  P2 PR #3 is integrated first; stacked P3 PR #4 follows into main.
+  P2 PR #3 and P3 PR #4 are merged; completed milestone refs are historical.
   Save/archive/schema migration decisions are explicit, not inferred from version.
 
 ## Implemented and next
 
-P0–P3 are accepted for main integration through PR #3 then PR #4. P2 adds identity,
+P0–P3 are merged into main. P2 PR #3 merge: bc475561; P3 PR #4 merge: fa10ddfe. P2 adds identity,
 typed records/actions, independent owner histories and save2/discovery. P3 adds
 independent View/Format, multiple Cameras, coordinate transforms and saved smooth
 transitions. P1 scalar/save1 and legacy runtime/schema/save/ABI1 remain preserved.
@@ -29,7 +29,8 @@ All P2/P3 tests are PASS by user report on 2026-10-09. This acceptance is separa
 from stored CI logs and the earlier P2 external Core23/23 report. Full3D GPU rendering,
 continuous legacy gameplay delegation and Gameplay plugins remain unimplemented.
 
-Next: a removable turn-combat Gameplay plugin. Read [NEXT.md](NEXT.md), P2_CONTRACT.md
+Next: minimum Gameplay/native bridge contracts, a small turn-combat integration
+probe, then Android and embedded Windows deliverables once that boundary is stable. Read [NEXT.md](NEXT.md), P2_CONTRACT.md
 and P3_CONTRACT.md before choosing work. Do not repeat P0–P3. Forge remains0.4.
 
 ## Verification and release policy

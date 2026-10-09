@@ -103,7 +103,7 @@ docs/public/pentomino-p2/, SDK 생성은 scripts/package_p2_external.py를 사�
 
 2026-10-09 사용자가 기존 테스트 전부 완료를 보고했다. 과거 실패/NOT RUN은 당시 기록으로
 보존하며 이 정리에서 기능 구현 완료로 바꾸지 않는다. 병합된 P0/P1 브랜치를 정리하고
-P2/P3는 사용자 테스트 성공 보고 후 순서대로 병합한다. README → docs/README.md → STATUS.md 순서로 진입한다.
+P2/P3는 사용자 테스트 성공 보고 후 PR #3 → #4 순서로 main에 병합됐다. README → docs/README.md → STATUS.md 순서로 진입한다.
 공개 다운로드는 GitHub Releases이며 Drive는 비공개 보관/서명 백업이다.
 
 ## 근거와 복구 링크

@@ -21,7 +21,7 @@ Actions 아티팩트는 CI 검증용입니다. 서명되지 않은 Android CI AP
 
 ## 현재 개발 범위
 
-P0–P3를 통합합니다. Tiny Core는 Scene/Entity identity, typed records, inputs,
+P0–P3가 main에 병합됐습니다. Tiny Core는 Scene/Entity identity, typed records, inputs,
 per-owner history와 save2/discovery를 제공합니다. P3는 독립 View/Format과 다중
 Camera, 좌표 변환, 저장 가능한 부드러운 2.5D 전환을 제공합니다.
 기존 FlatLand runtime과 P1 scalar/save1은 유지합니다. Gameplay 플러그인과

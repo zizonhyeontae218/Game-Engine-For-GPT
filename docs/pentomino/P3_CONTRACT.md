@@ -2,10 +2,10 @@
 
 **FROZEN v1 — parent integration after independent Math/Transform and Core
 Boundary design reviews. Internal implementation/acceptance are verified by
-P3_RUNDOWN.md; EXTERNAL VALIDATION PENDING.** Baseline accepted P2 `2159304`
+P3_RUNDOWN.md; external tests PASS by user report (2026-10-09).** Baseline accepted P2 `2159304`
 on the stacked `pentomino/p3-camera` branch; main/P2 merge status must remain
 explicit in the parent plan. P2 public Core external23/23 is accepted, external
-legacy execution remains UNVERIFIED. Both independent design reviews accepted the corrected contract; review
+legacy tests additionally accepted by user report (2026-10-09). Both independent design reviews accepted the corrected contract; review
 evidence is P3_CONTRACT_REVIEW.md. No Tiny Core change is required.
 
 The observable result is the same authoritative game with a replaceable way

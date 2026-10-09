@@ -1,3 +1,5 @@
+> 2026-10-09: 기존 P2 테스트 전체는 사용자 보고로 PASS 처리됐다. 과거 23/23 보고서의 범위와 당시 UNVERIFIED는 역사 기록으로 구분한다. 구현 계약·플랫폼 보장 범위가 확대된 것은 아니다.
+
 # External GPT Work tester instructions
 
 Test this P2 candidate in a **separate GPT Work session/workspace** using only this
