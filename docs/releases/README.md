@@ -6,7 +6,7 @@
 ## 0.2.0 배포 파일
 
 2026-10-09: 비공개 Drive의 원본 14개 파일을 복구하고 모두 기존 크기·SHA256과 대조했습니다.
-GitHub Actions에서 공개 릴리즈 첨부를 복구합니다. 실제 첨부 여부는 릴리즈 Assets에서 확인하세요.
+GitHub Actions에서 공개 릴리즈 첨부를 복구했고 **Assets 17개**를 확인했습니다.
 태그·원본 APK 서명·실행 파일 바이트는 유지하며 C SDK와 AgentKit을 추가합니다.
 
 | 파일 | 용도 |
@@ -24,6 +24,8 @@ Windows는 ZIP 안의 DLL·data 디렉터리를 함께 유지합니다. Android 
 `dev.ge4g.ge4g_client`, 0.2.0은 versionCode8이며 기존 고정 인증서를 사용합니다.
 원본 `SHA256SUMS.txt`와 `README-ko.txt`도 역사 기록으로 보존합니다.
 추가 SDK의 C 예제 검증은 별도 복구 워크플로의 결과이며 원래 0.2 테스트와 구분합니다.
+[Windows 복구·C 예제 검증 PASS](https://github.com/zizonhyeontae218/Game-Engine-For-GPT/actions/runs/37923840175).
+공개 첨부된 원본 14개도 GitHub가 제공하는 크기·SHA256으로 다시 대조했습니다.
 
 ## 버전과 공개 기준
 

@@ -30,13 +30,18 @@ Stable AgentKit uses v0.2.0 source; 0.3 roles are already installed on main.
 
 ## Progress
 
-Documentation and local checks complete. Release recovery CI and remote verification next.
+Complete: documentation and local checks, merged P0/P1 ref removal, Windows C
+validate/open and release recovery CI, public release body and 17 attached assets.
+P2/P3 remain open; stable tag and original binaries are unchanged.
 
 ## Verification log
 
 2026-10-09: settings validation PASS (10 roles, 2 skills), Python tests 7/7 PASS,
 release consistency PASS (21 current documents), no broken relative Markdown links,
 original release files 14/14 match recorded sizes and SHA256.
+Windows recovery run 37923840175 PASS. GitHub assets 17/17 present; originals
+14/14 match both API sizes and published SHA256 digests. New C SDK and AgentKit
+include provenance and versioned source respectively. No new test checklist added.
 
 ## Handoff
 

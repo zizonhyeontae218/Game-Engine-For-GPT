@@ -14,7 +14,8 @@ signed alpha delivery or physical acceptance is claimed.
   293ba513f5727d4a7a0a59476c9a98eb193aaa25. The released v0.2.0 tag and original binary bytes
   are unchanged; public delivery moves to GitHub Releases. Maintenance fixes can be selectively ported to main;
   never bulk-merge alpha version/architecture changes back into release/0.2.
-- Short milestone branches/PRs target main. Old P0/P1 branch names are historical.
+- Merged P0/P1 branch refs were removed on 2026-10-09; commits and closed PRs remain.
+  P2 PR #3 targets main. P3 draft PR #4 is stacked on P2, not directly on main.
   Save/archive/schema migration decisions are explicit, not inferred from version.
 
 ## Implemented and missing
@@ -35,11 +36,12 @@ indefinite second product on main; replace them only through verified slices.
 
 ## Next slice
 
-Design minimum Scene/Entity/input and format-facing records/selection against
-P1, with architect proposal and auditor review before implementation. Define the
-legacy compatibility boundary; then integrate one removable Classic2D/Top-down
-view. Follow Core → View/Format → Gameplay; Forge belongs to 0.4. Avoid a big-bang
-rewrite, preserving deterministic Rust authority and data-only imported games.
+First review the open [P2 Tiny Core PR #3](https://github.com/zizonhyeontae218/Game-Engine-For-GPT/pull/3)
+and stacked [P3 Camera draft PR #4](https://github.com/zizonhyeontae218/Game-Engine-For-GPT/pull/4).
+Do not rebuild their work or describe unmerged features as main capabilities.
+Continue from their reviewed contracts/evidence, then define the next bounded slice.
+Follow Core → View/Format → Gameplay; Forge belongs to 0.4. Preserve deterministic
+Rust authority and data-only imported games.
 
 ## Verification and release policy
 
@@ -55,5 +57,6 @@ rewrite, preserving deterministic Rust authority and data-only imported games.
 - Android application ID and pinned signing certificate are preserved. Build
   number 9 exceeds the historical 0.2 build number 8. Existing binaries/keys are
   untouched. No signing or deployment is performed during this branch transition.
-- The past Windows ZIP fixture digest failure remains an unresolved intermittent
-  issue; later successful CI runs do not establish its timestamp cause or repair.
+- Existing test checklists are complete by the user's 2026-10-09 report. Historical
+  Windows ZIP fixture failure evidence remains in HANDOFF.md; this repository
+  cleanup does not claim a new investigation or feature implementation.

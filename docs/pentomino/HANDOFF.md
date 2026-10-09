@@ -5,8 +5,8 @@
 0.2 유지보수는 release/0.2에서 진행한다. 현재 클라이언트는 알파 버전이며
 Pentomino host로 게임을 실행하는 연결은 아직 미구현이다.
 
-확인일: 2026-10-08. 이번 작업은 PentaWorks 설치/인수인계 설정이다.
-0.3 엔진 구현, 버전 변경, 제품 재배포는 아직 하지 않았다.
+갱신일: 2026-10-09. P0/P1과 버전 전환·저장소 정리를 반영했다.
+아래 2026-10-08 설치 당시 출발점과 실패 증거는 역사 기록이다.
 
 ## 우선순위와 시작 순서
 
@@ -16,15 +16,16 @@ BRIEF.md의 0.3 목표 순으로 읽는다. BRIEF는 첨부 PentaWorks의 설계
 
 퀵스타트의 첫 작업 지시문을 받으면 다시 시작 허가를 묻지 않고:
 
-1. git status/HEAD/remotes와 실제 도구를 확인한다. 사용자 변경은 보존한다.
+1. git status/HEAD/remotes와 실제 도구, 열린 PR #3(P2)·#4(P3)를 확인한다.
+   P3는 P2에 쌓인 draft이며 중복 구현하지 않는다. 사용자 변경은 보존한다.
 2. pentomino_scout를 읽기 전용으로 호출한다. BOOTSTRAP_PACKETS.md의 P0-S를
    사용하여 실제 모듈·API·테스트·경계 위험을 조사한다.
 3. .agent/PLANS.md에 맞는 active ExecPlan을 작성하고 Tiny Core → View/Format →
    Gameplay 마일스톤을 정한다. 파일 소유권은 TASK_PACKET.md로 배정한다.
 4. pentomino_architect의 최소 공개 API 초안 → pentomino_auditor 독립 검토.
-   부모가 검토 결과를 통합한 뒤 P1의 작은 구현 단위로 진행한다.
+   부모가 검토 결과를 통합한 뒤 진행 중인 PR을 고려해 다음 작은 구현 단위로 진행한다.
 5. 기능/테스트 증거를 GATES.md 및 RUNDOWN.md에 기록한다. 증거 없는 항목은
-   UNVERIFIED. P0 조사/문서 결과만으로 P1 구현 완료를 주장하지 않는다.
+   UNVERIFIED. 완료된 P0/P1을 반복하거나 미병합 PR의 기능을 main 구현으로 주장하지 않는다.
 
 이전 Soul.md의 “즉시 0.3을 열지 말 것”은 당시 인수인계 작업의 범위였다.
 현재 사용자는 다음 작업자가 명시적인 퀵스타트 지시로 0.3을 시작하도록
