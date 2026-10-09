@@ -1,0 +1,20 @@
+name: Restore FlatLand release assets
+on:
+  workflow_dispatch:
+    inputs:
+      downloads:
+        description: 'JSON mapping of the 14 original artifact names to temporary download URLs'
+        required: true
+permissions:
+  contents: write
+jobs:
+  restore:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: ilammy/msvc-dev-cmd@v1
+      - run: python scripts/restore_flatland_release.py
+        env:
+          GH_TOKEN: ${{ github.token }}

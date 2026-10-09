@@ -1,8 +1,10 @@
+> 2026-10-09: 사용자가 P2/P3 테스트 전부 성공을 보고했다. 기존 로그·패키지 생성 당시의 PENDING/UNVERIFIED는 역사 기록이며 이번 완료 근거는 사용자 보고다. Codex가 새 외부/실기기 테스트를 실행한 것은 아니다.
+
 # Rundown — Pentomino P3 Camera / internal candidate891306b
 
 **TL;DR:** 같은 Core 게임 상태를 유지하면서 Camera/View를 교체하는 독립 계층을
 완성했다. 기본 smooth2.5D 전환과 기존 다섯 번째 데모의 실제 화면·저장 연속성을
-내부 검증했다. **EXTERNAL VALIDATION PENDING**.
+내부 검증했다. **EXTERNAL VALIDATION PASS — 사용자 보고(2026-10-09)**.
 
 ## Status
 
@@ -19,7 +21,7 @@
 | Structured discovery | PASS | public consumer capability/requirements selection tests |
 | Mixed2D+3D representation | PARTIAL | native3D math/Model/Background/Billboard; full GPU renderer 미구현 |
 | Performance | PASS (측정 범위) |1/16/32camera,256visible,4096real source selection; uplift 주장 없음 |
-| External GPT Work | UNVERIFIED | 별도 세션 보고서 대기 |
+| External GPT Work | PASS (USER_REPORTED) | 2026-10-09 사용자 P2/P3 전체 테스트 성공 확인 |
 
 ## Architecture
 
@@ -68,7 +70,7 @@ internal-checks.json 및 *.log.
 - FILETREE update/lint: PASS at candidate integration.
 
 기존 P1/P2 테스트는 삭제·약화·변경하지 않았다. Linux-hosted Rust 인프라 검사이며
-Flutter/Dart 및 실제 Android/Windows device 검사는 UNVERIFIED이다.
+Flutter/Dart 및 Android/Windows 검증 완료는 2026-10-09 사용자 보고로 반영했다. 저장된 자동 검증 로그와 구분한다.
 
 ## Defects Found
 

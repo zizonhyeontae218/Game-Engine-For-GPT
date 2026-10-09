@@ -55,7 +55,7 @@ Do not read every document before every edit.
 - Generic mobile controls are a joystick and Z, X, C, Space; packaged game presets may omit unused buttons using layout schema 2. Touch layouts are versioned JSON with live profile switching/editing. Game-specific mappings are persisted separately from layout JSON and game save state.
 - A valid live profile change releases held inputs before applying it; an invalid edit retains the last valid profile and reports the error. Backgrounding, focus loss and touch cancellation release inputs.
 - Prove imports, native play, live mappings and embedded desktop packaging with executable evidence. Report each platform's actual build/device verification honestly.
-- Deliver requested demo builds through the connected Google Drive: `Demos/<engine version>/<build version>/` (for example `Demos/Basement 0.2 FlatLand/0.2.0-rc.1/`). Reuse verified folders, upload the portable game and platform packages with instructions/checksums, verify the uploaded files, and return Drive links. Workspace file links are not downloadable for this user. Preserve existing Drive sharing permissions.
+- Publish requested public demos and engine releases as GitHub Release assets: signed Android runner, embedded Windows example, portable game + editable source, C SDK/example, AgentKit, licenses and SHA256 checksums. Verify uploaded names, sizes and hashes. Actions artifacts are CI evidence, not permanent downloads. Private Drive remains a signing-key/history backup; never require Drive permissions for public releases or change existing sharing.
 
 ## Working style
 
@@ -130,11 +130,12 @@ main targets Pentomino 0.3.0 alpha; the latest stable release remains FlatLand 0
 P1 preserves the scalar host subset documented in P1_CONTRACT.md. P2 adds the
 experimental typed p2::CoreHost and explicit legacy snapshot adapter; read
 P2_CONTRACT.md and P2_RUNDOWN.md. External public Core GPT Work23/23 accepted;
-external legacy execution remains UNVERIFIED. P2 milestone is accepted.
+all P2/P3 tests additionally accepted by user report on 2026-10-09.
 P3 Camera/View internal candidate is implemented outside Core: four View policies,
 multiCamera/default smooth2.5D/local save/discovery and existing fifth fixture.
-Read P3_CONTRACT.md/P3_RUNDOWN.md. EXTERNAL VALIDATION PENDING; gameplay remains
-unimplemented. P2 PR3 is open and P3 stacks on accepted P2; inspect actual main.
+Read P3_CONTRACT.md/P3_RUNDOWN.md. All P2/P3 tests are PASS by user report
+(2026-10-09); next work is the removable turn-combat Gameplay slice in NEXT.md.
+Gameplay remains unimplemented; verify actual merged HEAD before starting.
 When the user invokes `$pentomino-orchestrate`, read
 `docs/pentomino/HANDOFF.md` and `docs/pentomino/BRIEF.md`, then dispatch
 `pentomino_scout` read-only before architecture or implementation.
@@ -152,8 +153,9 @@ wait-for-new-instructions note does not cancel a subsequent explicit P0 start.
 - Use `docs/pentomino/GATES.md` for contract/release changes and
   `templates/RUNDOWN.md` for results. Unimplemented behavior or unrun checks are
   UNVERIFIED. Tooling checks do not prove the engine works.
-- Preserve the known tag Windows test failure in the handoff; investigate fixture
-  ZIP bytes/timestamps without weakening digest/save validation.
+- Preserve the historical tag Windows test failure in the handoff. The user reported
+  all existing tests completed on 2026-10-09; record this separately from CI evidence
+  and do not restart resolved work or weaken digest/save validation.
 - Reconsider platform support explicitly in the 0.3 plan; do not automatically
   enable suspended client jobs.
 - External consumer validation requires a separate source-free workspace/session

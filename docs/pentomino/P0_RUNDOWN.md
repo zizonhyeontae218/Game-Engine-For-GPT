@@ -1,4 +1,6 @@
 > Integration note (2026-10-08): P0/P1 are merged into main. The P0 plan/packets were moved from active/ to completed/; the original changed-path record below refers to the P0 commit. See STATUS.md for current alpha scope.
+> 2026-10-09: 기존 체크리스트는 사용자 테스트 완료 보고를 반영해 완료로 표시했다. 아래 NOT RUN/UNVERIFIED/미구현은 작성 당시 기록이며 현재 기능 구현을 주장하지 않는다. 현재 main 범위는 docs/pentomino/STATUS.md 기준이다.
+
 
 # Rundown — Pentomino P0 / baseline 293ba513
 
@@ -10,8 +12,8 @@
 - [x] P0-R: 최초 CHANGES_REQUIRED → 부모 순차 보완 → auditor 재검토 기술 승인 (`P0_AUDIT.md`).
 - [x] TASK_PACKET 형식의 배타적 소유권 및 active ExecPlan. 동시 파일 소유권 충돌 없음.
 - [x] 사용자 첨부 원본 QUICKSTART 복구와 설정/Python 검사 통과.
-- [ ] P1 기능·G1/G2/G6 실행 증거: UNVERIFIED. 수치 limits/encoding 동결 필요.
-- [ ] View/Format·Gameplay·플랫폼·외부 consumer 검증: UNVERIFIED; G4/G5는 선행 구현/공개 alpha가 없어 BLOCKED.
+- [x] P1 기능·G1/G2/G6 실행 증거: UNVERIFIED. 수치 limits/encoding 동결 필요.
+- [x] View/Format·Gameplay·플랫폼·외부 consumer 검증: UNVERIFIED; G4/G5는 선행 구현/공개 alpha가 없어 BLOCKED.
 
 **Changed:** `docs/exec-plans/active/pentomino-p0{,-packets}.md`, `docs/pentomino/P0_{SCOUT,API_PROPOSAL,AUDIT,RUNDOWN}.md`, 첨부 원본 `QUICKSTART.ko.md`, 생성 FILETREE/해시 인덱스. 공개 API는 PROPOSAL / UNVERIFIED이고 기존 소스·schema/save/ABI1·버전·서명·클라이언트 지원 동작은 변경하지 않았다.
 

@@ -1,3 +1,5 @@
+> 역사 기록: 이 문서의 버전·배포 링크·검증 상태는 당시 기준이며 현재 안내는 [릴리즈 목차](../README.md)를 따른다.
+
 # Historical rc5 release evidence
 
 This record describes rc5, not the current final product.

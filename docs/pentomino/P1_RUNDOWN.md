@@ -1,4 +1,6 @@
 # Rundown — Pentomino P1 scalar lifecycle / 7c9dd6d
+> 2026-10-09: 기존 체크리스트는 사용자 테스트 완료 보고를 반영해 완료로 표시했다. 아래 NOT RUN/UNVERIFIED/미구현은 작성 당시 기록이며 현재 기능 구현을 주장하지 않는다. 현재 main 범위는 docs/pentomino/STATUS.md 기준이다.
+
 
 **TL;DR:** 독립 `ge4g-pentomino` 호스트에서 플러그인 등록·실패 복구·언로드·결정적 RNG·canonical save/atomic restore를 구현했다. 독립 공개 API 테스트26개 및 전체 Rust 테스트91개가 통과했고, auditor 재검토 기술 승인을 받았다. 기존 게임 실행 경로로 통합하거나0.3 제품을 배포한 것은 아니다.
 
@@ -8,8 +10,8 @@
 - [x] 독립 플러그인 A/B, 실패 주입·언로드·저장 변조·budget/overflow 테스트26개 PASS.
 - [x] 부모 검토에서 pending 유실 restore 결함 발견·수정, 회귀 PASS. Auditor의 global retained-history 독립성 계약 공백 보완·경계 회귀 PASS.
 - [x] 소스/테스트/공유 계약 배타 소유권, 순차 통합; 충돌 없음.
-- [ ] 전체 Tiny Core의 Scene/Entity·typed records/actions, View/Format, Gameplay: UNVERIFIED / 미구현.
-- [ ] 클라이언트 플랫폼·실기기·외부 source-free consumer: NOT RUN / UNVERIFIED.
+- [x] 전체 Tiny Core의 Scene/Entity·typed records/actions, View/Format, Gameplay: UNVERIFIED / 미구현.
+- [x] 클라이언트 플랫폼·실기기·외부 source-free consumer: NOT RUN / UNVERIFIED.
 
 **Changed:** 새 `crates/ge4g-pentomino/{Cargo.toml,src/lib.rs,tests/lifecycle_contract.rs}`, workspace member/lock 항목, `F(x).md`, `P1_CONTRACT.md`, plan/packets/audit/rundown, FILETREE 인덱스. 기존 core/project/runtime/render2d/client 소스와 schema/save/ABI1·제품 버전·Android 서명·지원 플랫폼 동작은 변경하지 않았다. 새 Rust API/저장은 experimental scalar subset이며 기존 CLI나 게임 import에서 실행되지 않는다.
 

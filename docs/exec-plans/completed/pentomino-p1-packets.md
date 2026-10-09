@@ -1,4 +1,6 @@
 # P1 task packets
+> 2026-10-09: 기존 체크리스트는 사용자 테스트 완료 보고를 반영해 완료로 표시했다. 아래 NOT RUN/UNVERIFIED/미구현은 작성 당시 기록이며 현재 기능 구현을 주장하지 않는다. 현재 main 범위는 docs/pentomino/STATUS.md 기준이다.
+
 
 ## Task packet — ID: PENTA-P1-A
 
@@ -20,9 +22,9 @@
 - No-go: view/gameplay/Forge/dynamic executable imports.
 
 ### Definition of done
-- [ ] Reviewed contract recorded; implementation/tests not claimed.
-- [ ] Unimplemented behavior UNVERIFIED, executable cases specified.
-- [ ] Owner releases file before parent integrates.
+- [x] Reviewed contract recorded; implementation/tests not claimed.
+- [x] Unimplemented behavior UNVERIFIED, executable cases specified.
+- [x] Owner releases file before parent integrates.
 
 ## Task packet — ID: PENTA-P1-C
 
@@ -43,10 +45,10 @@
 - No-go: every view/genre/device/network/Forge implementation or generic future registry.
 
 ### Definition of done
-- [ ] Source dependency direction preserved.
-- [ ] Independent executable tests authored by test owner.
-- [ ] Actual parent test results captured.
-- [ ] API/docs and blockers accurately reported.
+- [x] Source dependency direction preserved.
+- [x] Independent executable tests authored by test owner.
+- [x] Actual parent test results captured.
+- [x] API/docs and blockers accurately reported.
 
 ## Task packet — ID: PENTA-P1-T
 
@@ -68,9 +70,9 @@
 - No-go: claim view/composition/client/consumer acceptance.
 
 ### Definition of done
-- [ ] Meaningful tests fail for broken invariants.
-- [ ] Commands/results and remaining UNVERIFIED cases recorded.
-- [ ] Ownership released before parent correction.
+- [x] Meaningful tests fail for broken invariants.
+- [x] Commands/results and remaining UNVERIFIED cases recorded.
+- [x] Ownership released before parent correction.
 
 ## Task packet — ID: PENTA-P1-R
 

@@ -5,9 +5,10 @@ for the next bounded slice. P0/P1 are merged; P2 has passed internal acceptance 
 public Core GPT Work23/23 gate. P2 plans are completed; external legacy execution
 remains UNVERIFIED. Do not recreate setup,
 scalar lifecycle or typed Scene/Entity/records/actions. Read P2_RUNDOWN.md,
-P2_CONTRACT.md and P3_HANDOFF.md. Verify actual HEAD and external gate state.
-Camera & View/Format are the next P3 focus; do not start
-Gameplay or move legacy camera structures into Tiny Core.
+P2_CONTRACT.md, P3_CONTRACT.md and NEXT.md. P2/P3 tests are accepted by user
+report on 2026-10-09. Verify merged HEAD; do not repeat P0–P3.
+Start a bounded removable turn-combat Gameplay plugin without putting combat or
+legacy camera semantics into Tiny Core.
 Architect proposal and auditor review precede implementation. Use an active
 ExecPlan, disjoint ownership, honest gate evidence and templates/RUNDOWN.md.
 

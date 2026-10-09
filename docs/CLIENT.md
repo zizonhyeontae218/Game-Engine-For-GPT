@@ -136,13 +136,12 @@ CI now builds an unsigned APK. The user authorized one final reinstall for rc.1 
 
 ## Demo delivery
 
-Deliver demo files to the user's connected Google Drive under
-`Demos/<engine version>/<build version>/`, starting with
-`Demos/Basement 0.2 FlatLand/0.2.0-alpha.1/`. Reuse existing verified folders and retain
-older versions. Include the portable `.ge4g`, available platform packages, installation
-instructions and checksum manifest. Read back file names, parents and byte counts
-before giving the user the Drive folder/file links; internal workspace paths do not
-provide usable downloads for this user. Preserve existing sharing permissions.
+Publish public demos as versioned GitHub Release assets. Include the signed Android
+runner, embedded Windows game, portable `.ge4g`, editable sample source, C SDK,
+AgentKit, licenses and SHA256 manifest. Verify file names, sizes and checksums after
+upload. Actions artifacts are temporary CI evidence; private Drive is only a backup
+for historical delivery and signing material. Do not change its sharing permissions.
+See [release distribution](releases/README.md).
 
 ## Full 0.2 client
 

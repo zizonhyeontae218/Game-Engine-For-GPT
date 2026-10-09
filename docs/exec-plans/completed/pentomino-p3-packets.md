@@ -1,3 +1,5 @@
+> 2026-10-09: 사용자가 P2/P3 테스트 전부 성공을 보고했다. 기존 로그·패키지 생성 당시의 PENDING/UNVERIFIED는 역사 기록이며 이번 완료 근거는 사용자 보고다. Codex가 새 외부/실기기 테스트를 실행한 것은 아니다.
+
 # P3 bounded task packets — Camera/View/Format
 
 Common: inherit task/skill constraints. Escalate overlap/private Core needed,

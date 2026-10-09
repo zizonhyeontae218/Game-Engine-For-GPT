@@ -1,4 +1,6 @@
 > Archived after P0/P1 main integration on 2026-10-08. The baseline/tool results below are historical. Current alpha scope and next work are in docs/pentomino/STATUS.md.
+> 2026-10-09: 기존 체크리스트는 사용자 테스트 완료 보고를 반영해 완료로 표시했다. 아래 NOT RUN/UNVERIFIED/미구현은 작성 당시 기록이며 현재 기능 구현을 주장하지 않는다. 현재 main 범위는 docs/pentomino/STATUS.md 기준이다.
+
 
 # Pentomino P0 task packets
 
@@ -23,11 +25,11 @@
 - No-go / v0.4 boundary: no functionality or Forge work.
 
 ### Definition of done
-- [ ] Scope and dependency direction preserved.
-- [ ] Executable tests added / updated: NOT_APPLICABLE (read-only).
-- [ ] Actual inventory commands/results captured; engine tests NOT RUN/UNVERIFIED.
-- [ ] API/docs updated: parent integration only.
-- [ ] Handoff includes blockers/unknowns.
+- [x] Scope and dependency direction preserved.
+- [x] Executable tests added / updated: NOT_APPLICABLE (read-only).
+- [x] Actual inventory commands/results captured; engine tests NOT RUN/UNVERIFIED.
+- [x] API/docs updated: parent integration only.
+- [x] Handoff includes blockers/unknowns.
 
 ## Task packet — ID: PENTA-P0-A
 
@@ -50,11 +52,11 @@
 - No-go / v0.4 boundary: no Forge, marketplace, network updater or executable imported plugins.
 
 ### Definition of done
-- [ ] Scope and dependency direction preserved.
-- [ ] Executable tests added / updated: NOT_APPLICABLE for P0; specify future tests.
-- [ ] Actual tests NOT RUN/UNVERIFIED recorded.
-- [ ] API proposal labels unimplemented behavior UNVERIFIED.
-- [ ] Handoff includes blockers/unknowns.
+- [x] Scope and dependency direction preserved.
+- [x] Executable tests added / updated: NOT_APPLICABLE for P0; specify future tests.
+- [x] Actual tests NOT RUN/UNVERIFIED recorded.
+- [x] API proposal labels unimplemented behavior UNVERIFIED.
+- [x] Handoff includes blockers/unknowns.
 
 ## Task packet — ID: PENTA-P0-R
 
@@ -77,11 +79,11 @@
 - No-go / v0.4 boundary: no consumer certification or implementation.
 
 ### Definition of done
-- [ ] Scope and dependency direction preserved.
-- [ ] Executable tests added / updated: NOT_APPLICABLE; identify required tests.
-- [ ] Actual runtime tests NOT RUN/UNVERIFIED.
-- [ ] Public contract review delivered to parent.
-- [ ] Handoff includes blockers/unknowns.
+- [x] Scope and dependency direction preserved.
+- [x] Executable tests added / updated: NOT_APPLICABLE; identify required tests.
+- [x] Actual runtime tests NOT RUN/UNVERIFIED.
+- [x] Public contract review delivered to parent.
+- [x] Handoff includes blockers/unknowns.
 
 **Escalate immediately if:** ownership overlap, unsupported assumptions, private API requirement, ABI break, failed isolation or destructive action.
 

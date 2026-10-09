@@ -1,9 +1,9 @@
-# P3 Camera/View handoff — external validation pending
+# P3 Camera/View handoff — accepted
 
-P2 public Core GPT Work23/23 is accepted. P3 internal implementation and
-source-independent tests are complete as a candidate; **EXTERNAL VALIDATION
-PENDING**. Do not declare external validation performed by repository workers.
-See P3_RUNDOWN.md, P3_CONTRACT.md and ../public/pentomino-p3/.
+P2/P3 tests are PASS by user report on 2026-10-09. P3 internal CI was already
+successful; external acceptance is user-reported, not performed by repository workers.
+Read P3_RUNDOWN.md, P3_CONTRACT.md and NEXT.md. The next slice is a removable
+turn-combat Gameplay plugin, preserving Core/View boundaries.
 
 ## Keep these boundaries
 
@@ -34,10 +34,6 @@ cloning or entering the old renderer. Trusted linked callbacks are not sandboxed
 
 ## Next
 
-Finish separate GPT Work public-consumer validation with SDK hashes/raw test
-sources/logs and fix any blocking reproducers before P3 acceptance. Main remains
-P0/P1; accepted P2 PR3 is open, P3 PR stacks on P2 until integration. No automatic
-main merge, final release, client deployment/signing or platform expansion occurs.
-After acceptance, Gameplay plugins can begin as separately designed consumers;
-combat/world/interaction/platformer/Forge/generation are unimplemented. Windows
-historical ZIP timestamp/digest intermittent cause/fix remains UNVERIFIED.
+P2 and P3 are accepted for main integration. Proceed to NEXT.md after confirming
+merged HEAD/CI. Do not repeat their implementation or external acceptance. No final
+0.3 release, platform expansion, full3D renderer or Forge implementation is implied.

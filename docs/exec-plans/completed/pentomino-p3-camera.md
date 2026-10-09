@@ -1,3 +1,5 @@
+> 2026-10-09: 사용자가 P2/P3 테스트 전부 성공을 보고했다. 기존 로그·패키지 생성 당시의 PENDING/UNVERIFIED는 역사 기록이며 이번 완료 근거는 사용자 보고다. Codex가 새 외부/실기기 테스트를 실행한 것은 아니다.
+
 # Pentomino P3 Camera — replaceable Camera/View/Format completion candidate
 
 ## Outcome
@@ -5,7 +7,7 @@ Read-only presentation consumers on P2, independent multi-camera/view lifecycle,
 explicit transforms/projections, four view families, deterministic composable
 behaviors and default smooth2.5D transitions. Existing fifth legacy demo is the
 2.5D acceptance fixture. Prepare external source-free SDK; remain EXTERNAL
-VALIDATION PENDING until user's separate GPT Work evidence returns.
+VALIDATION PASS by user report on 2026-10-09.
 
 ## Context
 Start clean accepted P2 HEAD2159304, Core artifact48d7f4a alpha1. main2d1ffd0
@@ -65,7 +67,7 @@ Source-free SDKb43a251 produced:194declaredfiles/196ZIPentries,29,765,917bytes.
 Unpacked native/fifth examples and compiler/hash selfchecks PASS internally.
 Drive upload/download SHAe462a726… matches. Draft PR4 stacks on P2. New CI
 shallow-history defect fixed with fetch-depth0;0c8bbdb acceptance/AndroidSUCCESS,
-WindowslaterSUCCESS run37805427365; oldpendingcapture+latestobservationretained. External Gate is PENDING; plan remains active until
+WindowslaterSUCCESS run37805427365; oldpendingcapture+latestobservationretained. Historical external gate was pending; it is now accepted by user report. Original continuation:
 separate GPT Work evidence, no milestone completion claimed.
 
 ## Verification log
@@ -76,4 +78,4 @@ workspace150PASS, new34PASS; all fivelegacy replay/frame/save checks PASS.
 
 ## Handoff
 Parent owns manifests/locks/contracts/docs/indexes/public artifacts/integration.
-Roles/files in pentomino-p3-packets.md. Keep active through external Gate.
+Roles/files in pentomino-p3-packets.md. Completed after user acceptance on 2026-10-09.

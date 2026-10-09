@@ -1,6 +1,6 @@
 # PentaWorks v1.0 — 한국어 실행 안내
 
-**현재 상태:** main = GE4G 0.3.0 Pentomino 알파 개발선. P0/P1과 에이전트 설정은 이미 병합됐다. `docs/pentomino/STATUS.md`부터 읽고 다음 작업을 시작한다.
+**현재 상태:** main = GE4G 0.3.0 Pentomino 알파 개발선. P0–P3와 에이전트 설정은 통합됐다. `docs/pentomino/STATUS.md`부터 읽고 다음 작업을 시작한다.
 
 ## 적용
 
@@ -8,8 +8,9 @@
 설정 파일을 다시 복사하거나 P0/P1을 반복하지 않는다.
 
 ```text
-$pentomino-orchestrate를 사용해 GE4G 0.3.0 Pentomino 알파의 다음 Tiny Core 작업을 시작해.
-docs/pentomino/STATUS.md와 P1_CONTRACT.md를 읽고, 완료된 P0/P1은 반복하지 마.
+$pentomino-orchestrate를 사용해 GE4G 0.3.0 Pentomino 알파의 다음 Gameplay 작업을 시작해.
+docs/pentomino/STATUS.md, NEXT.md, P2_CONTRACT.md, P3_CONTRACT.md를 읽고,
+완료된 P0–P3는 반복하지 마. 첫 Gameplay slice는 교체 가능한 턴 전투 플러그인으로 잡아.
 실제 저장소의 언어, 빌드 시스템, 테스트와 모듈 구성을 확인하기 위해
 pentomino_scout를 읽기 전용으로 먼저 호출해.
 내부 구현을 추측하지 말고, docs/pentomino/BRIEF.md에 맞춰
