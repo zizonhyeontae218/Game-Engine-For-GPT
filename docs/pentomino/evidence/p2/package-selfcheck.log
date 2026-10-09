@@ -1,0 +1,5 @@
+COMMAND: python3 run_public.py --check
+{"checksums": "PASS", "compiler": "PASS", "commit": "48d7f4aa6932c9031afee722e0c58f7756b864c8", "external_gate": "UNVERIFIED"}
+COMMAND: python3 run_public.py
+COMMAND: rustc --edition=2024 /workspace/scratch/p2-public-unpacked-48d7f4a/examples/p2_public.rs --extern ge4g_pentomino=/workspace/scratch/p2-public-unpacked-48d7f4a/lib/libge4g_pentomino-8f6ad56adc69f70b.rlib -L dependency=/workspace/scratch/p2-public-unpacked-48d7f4a/lib -o /workspace/scratch/p2-public-unpacked-48d7f4a/consumer-output
+{"ok":true,"contract":2,"ticks":301,"per_owner_retained":256,"dropped":44,"hash":"4d5861d952b99cc1f9aadb86874638870ad17ccbb4ac879f5281b87d7284c65e"}

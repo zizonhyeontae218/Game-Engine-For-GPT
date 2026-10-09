@@ -177,9 +177,19 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `crates/ge4g-client/tests/final_resume.rs` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-core/Cargo.toml` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-core/src/lib.rs` — Engine source, package configuration or behavioral verification.
+- `crates/ge4g-pentomino-legacy/Cargo.toml` — Engine source, package configuration or behavioral verification.
+- `crates/ge4g-pentomino-legacy/src/lib.rs` — Engine source, package configuration or behavioral verification.
+- `crates/ge4g-pentomino-legacy/tests/bridge_contract.rs` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-pentomino/Cargo.toml` — Engine source, package configuration or behavioral verification.
+- `crates/ge4g-pentomino/examples/p2_public.rs` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-pentomino/src/lib.rs` — Engine source, package configuration or behavioral verification.
+- `crates/ge4g-pentomino/src/p2/host.rs` — Engine source, package configuration or behavioral verification.
+- `crates/ge4g-pentomino/src/p2/mod.rs` — Engine source, package configuration or behavioral verification.
+- `crates/ge4g-pentomino/src/p2/transaction.rs` — Engine source, package configuration or behavioral verification.
+- `crates/ge4g-pentomino/src/p2/types.rs` — Engine source, package configuration or behavioral verification.
+- `crates/ge4g-pentomino/src/p2/validation.rs` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-pentomino/tests/lifecycle_contract.rs` — Engine source, package configuration or behavioral verification.
+- `crates/ge4g-pentomino/tests/p2_contract.rs` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-platform/Cargo.toml` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-platform/src/audio.rs` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-platform/src/lib.rs` — Engine source, package configuration or behavioral verification.
@@ -245,6 +255,8 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `docs/exec-plans/completed/pentomino-p0.md` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/completed/pentomino-p1-packets.md` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/completed/pentomino-p1.md` — Repository file; inspect only when relevant to the task.
+- `docs/exec-plans/completed/pentomino-p2-packets.md` — Repository file; inspect only when relevant to the task.
+- `docs/exec-plans/completed/pentomino-p2.md` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/completed/repository-cleanup.md` — Repository file; inspect only when relevant to the task.
 - `docs/pentomino/BOOTSTRAP_PACKETS.md` — Repository file; inspect only when relevant to the task.
 - `docs/pentomino/BRIEF.md` — Repository file; inspect only when relevant to the task.
@@ -257,11 +269,47 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `docs/pentomino/P1_AUDIT.md` — Repository file; inspect only when relevant to the task.
 - `docs/pentomino/P1_CONTRACT.md` — Repository file; inspect only when relevant to the task.
 - `docs/pentomino/P1_RUNDOWN.md` — Repository file; inspect only when relevant to the task.
+- `docs/pentomino/P2_AUDIT.md` — Repository file; inspect only when relevant to the task.
+- `docs/pentomino/P2_CONTRACT.md` — Repository file; inspect only when relevant to the task.
+- `docs/pentomino/P2_RUNDOWN.md` — Repository file; inspect only when relevant to the task.
+- `docs/pentomino/P2_SCOUT.md` — Repository file; inspect only when relevant to the task.
+- `docs/pentomino/P3_HANDOFF.md` — Repository file; inspect only when relevant to the task.
 - `docs/pentomino/PHASES.md` — Repository file; inspect only when relevant to the task.
 - `docs/pentomino/PUBLIC_CONTRACT_PROPOSAL.md` — Repository file; inspect only when relevant to the task.
 - `docs/pentomino/ROUTING.md` — Repository file; inspect only when relevant to the task.
 - `docs/pentomino/SETUP.md` — Repository file; inspect only when relevant to the task.
 - `docs/pentomino/STATUS.md` — Repository file; inspect only when relevant to the task.
+- `docs/pentomino/evidence/p2/boundaries.log` — Repository file; inspect only when relevant to the task.
+- `docs/pentomino/evidence/p2/chronology-fixed.log` — Repository file; inspect only when relevant to the task.
+- `docs/pentomino/evidence/p2/clippy-headless.log` — Repository file; inspect only when relevant to the task.
+- `docs/pentomino/evidence/p2/clippy-workspace.log` — Repository file; inspect only when relevant to the task.
+- `docs/pentomino/evidence/p2/current-doc-links.log` — Repository file; inspect only when relevant to the task.
+- `docs/pentomino/evidence/p2/current-release-consistency.log` — Repository file; inspect only when relevant to the task.
+- `docs/pentomino/evidence/p2/documentation-checks.json` — Repository file; inspect only when relevant to the task.
+- `docs/pentomino/evidence/p2/external/P2_External_Test_Report.ko.md` — Repository file; inspect only when relevant to the task.
+- `docs/pentomino/evidence/p2/external/acceptance.json` — Repository file; inspect only when relevant to the task.
+- `docs/pentomino/evidence/p2/external/ci-before-acceptance.json` — Repository file; inspect only when relevant to the task.
+- `docs/pentomino/evidence/p2/external/followup-checks.json` — Repository file; inspect only when relevant to the task.
+- `docs/pentomino/evidence/p2/fmt.log` — Repository file; inspect only when relevant to the task.
+- `docs/pentomino/evidence/p2/legacy-basement_demo.log` — Repository file; inspect only when relevant to the task.
+- `docs/pentomino/evidence/p2/legacy-flatland_harbor.log` — Repository file; inspect only when relevant to the task.
+- `docs/pentomino/evidence/p2/legacy-flatland_pacman.log` — Repository file; inspect only when relevant to the task.
+- `docs/pentomino/evidence/p2/legacy-flatland_signal_yard.log` — Repository file; inspect only when relevant to the task.
+- `docs/pentomino/evidence/p2/package-selfcheck.log` — Repository file; inspect only when relevant to the task.
+- `docs/pentomino/evidence/p2/package.json` — Repository file; inspect only when relevant to the task.
+- `docs/pentomino/evidence/p2/pentaworks.log` — Repository file; inspect only when relevant to the task.
+- `docs/pentomino/evidence/p2/public-example.log` — Repository file; inspect only when relevant to the task.
+- `docs/pentomino/evidence/p2/release-consistency.log` — Repository file; inspect only when relevant to the task.
+- `docs/pentomino/evidence/p2/test-headless.log` — Repository file; inspect only when relevant to the task.
+- `docs/pentomino/evidence/p2/test-workspace.log` — Repository file; inspect only when relevant to the task.
+- `docs/pentomino/evidence/p2/tooling.log` — Repository file; inspect only when relevant to the task.
+- `docs/pentomino/evidence/p2/user-completion-2026-10-09.json` — Repository file; inspect only when relevant to the task.
+- `docs/pentomino/evidence/p2/verification.json` — Repository file; inspect only when relevant to the task.
+- `docs/public/pentomino-p2/EXTERNAL_TESTER_TASK.md` — Repository file; inspect only when relevant to the task.
+- `docs/public/pentomino-p2/PLUGIN_DISCOVERY.md` — Repository file; inspect only when relevant to the task.
+- `docs/public/pentomino-p2/PUBLIC_API.md` — Repository file; inspect only when relevant to the task.
+- `docs/public/pentomino-p2/QUICKSTART.ko.md` — Repository file; inspect only when relevant to the task.
+- `docs/public/pentomino-p2/README.md` — Repository file; inspect only when relevant to the task.
 - `docs/releases/README.md` — Repository file; inspect only when relevant to the task.
 - `docs/releases/flatland-final-drive.json` — Repository file; inspect only when relevant to the task.
 - `docs/releases/flatland-final-landscape-proof.json` — Repository file; inspect only when relevant to the task.
@@ -529,6 +577,7 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `packaging/arch/ge4g.png` — Repository file; inspect only when relevant to the task.
 - `scripts/bundle_desktop.py` — Repository file; inspect only when relevant to the task.
 - `scripts/check_gate_report.py` — Repository file; inspect only when relevant to the task.
+- `scripts/check_p2_boundaries.py` — Repository file; inspect only when relevant to the task.
 - `scripts/client_icons.py` — Repository file; inspect only when relevant to the task.
 - `scripts/client_smoke.py` — Repository file; inspect only when relevant to the task.
 - `scripts/context_benchmark.py` — Repository file; inspect only when relevant to the task.
@@ -540,6 +589,7 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `scripts/make_signal_yard_assets.py` — Repository file; inspect only when relevant to the task.
 - `scripts/pack_game.py` — Repository file; inspect only when relevant to the task.
 - `scripts/package.py` — Bundle a built executable, demo and user documentation.
+- `scripts/package_p2_external.py` — Repository file; inspect only when relevant to the task.
 - `scripts/release_consistency.py` — Repository file; inspect only when relevant to the task.
 - `scripts/restore_flatland_release.py` — Repository file; inspect only when relevant to the task.
 - `scripts/sign_android.py` — Repository file; inspect only when relevant to the task.

@@ -1,0 +1,3 @@
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.07s
+     Running `target/debug/ge4g test examples/flatland_signal_yard --json`
+{"errors":[],"ok":true,"results":[{"assertions_checked":1,"deterministic":true,"deterministic_sha256":"cff01b8298891ff87b7b5872d8517b544b5fe22744962c990696b3faafe2ebde","frame_rgba_sha256":"f50923d16622d3ee8232739c821d2e8cc6e98acaca9b0dc2c9c174604962a987","golden_checked":true,"name":"signal-yard-corpus","ok":true,"png_capture":true,"save_reload":true,"ticks":714}],"schema_version":1,"summary":"GE4G test: 1 of 1 passed"}

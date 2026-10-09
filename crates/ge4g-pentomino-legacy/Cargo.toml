@@ -1,0 +1,12 @@
+[package]
+name = "ge4g-pentomino-legacy"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+ge4g-pentomino = { path = "../ge4g-pentomino" }
+ge4g-core = { path = "../ge4g-core" }
+ge4g-project = { path = "../ge4g-project" }
+ge4g-runtime = { path = "../ge4g-runtime" }
+sha2.workspace = true

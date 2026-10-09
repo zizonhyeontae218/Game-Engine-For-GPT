@@ -18,30 +18,18 @@ signed alpha delivery or physical acceptance is claimed.
   P2 PR #3 targets main. P3 draft PR #4 is stacked on P2, not directly on main.
   Save/archive/schema migration decisions are explicit, not inferred from version.
 
-## Implemented and missing
+## Implemented and next
 
-P0 discovery/review and P1 scalar lifecycle are integrated. The ge4g-pentomino
-crate has no dependency on legacy core/project/runtime/render2d/client crates.
-P1 includes registration, exact capability bindings, unload, scoped resources,
-deterministic RNG, transactional failure rollback, discovery and canonical save/
-atomic restore. P1_CONTRACT.md specifies its implemented scalar public surface.
-P0_API_PROPOSAL.md is the broader proposal, not shipped API.
+P0/P1 and P2 Tiny Core are integrated through PR #3. P2 adds Scene/Entity identity,
+bounded typed records, next-tick input actions, per-owner history, save2/discovery,
+and a separate immutable legacy snapshot adapter. P1 scalar/save1 remains intact.
+Read P2_CONTRACT.md for the exact implemented surface.
 
-Scene/Entity/input actions, format-facing typed records, view adapters, gameplay
-plugins, CLI/client execution integration and external source-free consumer
-acceptance are still UNVERIFIED / unimplemented. Existing games and CLI/client
-execution use inherited FlatLand code. Do not label a legacy sample a Pentomino
-host demo. The inherited paths are retained for reuse and regression, not as an
-indefinite second product on main; replace them only through verified slices.
-
-## Next slice
-
-First review the open [P2 Tiny Core PR #3](https://github.com/zizonhyeontae218/Game-Engine-For-GPT/pull/3)
-and stacked [P3 Camera draft PR #4](https://github.com/zizonhyeontae218/Game-Engine-For-GPT/pull/4).
-Do not rebuild their work or describe unmerged features as main capabilities.
-Continue from their reviewed contracts/evidence, then define the next bounded slice.
-Follow Core → View/Format → Gameplay; Forge belongs to 0.4. Preserve deterministic
-Rust authority and data-only imported games.
+The user reported all P2/P3 tests successful on 2026-10-09. This is user-reported
+acceptance, separate from stored CI logs and the earlier P2 external Core23/23 report.
+P3 Camera/View PR #4 is the next integration; Gameplay remains unimplemented.
+Legacy games continue using the preserved FlatLand runtime. The snapshot adapter
+does not continuously delegate legacy gameplay to Core.
 
 ## Verification and release policy
 

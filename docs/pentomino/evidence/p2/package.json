@@ -1,0 +1,18 @@
+{
+  "commit": "48d7f4aa6932c9031afee722e0c58f7756b864c8",
+  "archive": "GE4G-0.3.0-alpha.1-P2-public-48d7f4a.zip",
+  "sha256": "717c27399d794b8a2a8615070a06ae3a19ae6c640492b76215f0f940ae89e6d0",
+  "bytes": 10561896,
+  "drive_zip": "https://drive.google.com/file/d/1vC9BBFuC3Hl_7miMpUqlMrF3WpyBTlTn/view",
+  "drive_checksum": "https://drive.google.com/file/d/1xsfj3U9D_92jzTU4-BMDo7iGyqkEZp73/view",
+  "drive_folder": "https://drive.google.com/drive/folders/16wssB_R38mzEdhVYL9OkpdnjX1sBoAB-",
+  "readback": "Downloaded uploaded Drive ZIP; SHA256 equality PASS; checksum text readback matches uploaded filename",
+  "build_command": "python3 scripts/package_p2_external.py --out /workspace/scratch/ge4g-p2-public-48d7f4a",
+  "selfcheck_commands": [
+    "python3 run_public.py --check",
+    "python3 run_public.py"
+  ],
+  "selfcheck": "internal packaging PASS; public example301 ok:true; sources only public example",
+  "external_gpt_work": "UNVERIFIED",
+  "drive_tester": "https://drive.google.com/file/d/1xBohcFFmmm8ZxrSc8VHnCuG9trMB_riT/view"
+}

@@ -1,0 +1,89 @@
+[
+  {
+    "check": "missing-rustc",
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "/workspace/scratch/p2-public-unpacked-48d7f4a/feedback_runner.py",
+      "--check"
+    ],
+    "environment": "PATH empty",
+    "status": "PASS",
+    "process_exit": 1,
+    "observed": "BLOCKED: rustc is unavailable or cannot start; install the compiler listed in MANIFEST.json",
+    "scope": "internal runner feedback only; Core rlib unchanged; external23 not rerun"
+  },
+  {
+    "check": "installed-rustc",
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "/workspace/scratch/p2-public-unpacked-48d7f4a/feedback_runner.py",
+      "--check"
+    ],
+    "environment": "exact original compiler",
+    "status": "PASS",
+    "process_exit": 0,
+    "observed": "{\"checksums\": \"PASS\", \"compiler\": \"PASS\", \"commit\": \"48d7f4aa6932c9031afee722e0c58f7756b864c8\", \"external_gate\": \"UNVERIFIED\"}",
+    "scope": "internal runner feedback only; Core rlib unchanged; external23 not rerun"
+  },
+  {
+    "check": "release-consistency",
+    "command": [
+      "python3",
+      "scripts/release_consistency.py",
+      "--self-test"
+    ],
+    "status": "PASS",
+    "process_exit": 0,
+    "observed": "Pentomino0.3.0-alpha.1 consistency: 21 current documents and release identity passed; historical documents excluded",
+    "artifact": "48d7f4a Core unchanged + external acceptance docs/runner"
+  },
+  {
+    "check": "pentaworks",
+    "command": [
+      "python3",
+      "scripts/validate_pentaworks.py"
+    ],
+    "status": "PASS",
+    "process_exit": 0,
+    "observed": "PASS: project config, 10 custom Codex roles, 2 skills, design/brief/report templates\nNOT TESTED: actual Codex spawning, GE4G runtime, plugin functionality or release gates",
+    "artifact": "48d7f4a Core unchanged + external acceptance docs/runner"
+  },
+  {
+    "check": "tooling",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests"
+    ],
+    "status": "PASS",
+    "process_exit": 0,
+    "observed": ".....\n----------------------------------------------------------------------\nRan 5 tests in 0.003s\n\nOK",
+    "artifact": "48d7f4a Core unchanged + external acceptance docs/runner"
+  },
+  {
+    "check": "boundaries",
+    "command": [
+      "python3",
+      "scripts/check_p2_boundaries.py"
+    ],
+    "status": "PASS",
+    "process_exit": 0,
+    "observed": "{\"ok\": true, \"core_transitive_engine_dependencies\": [], \"adapter_direction\": \"legacy -> adapter -> typed core\", \"p1_tests_sha256\": \"ce87260ccd1c7c5fe98daac774d70db90f7c6aed981c6c1767e953a288e8461a\", \"compatibility_baseline\": \"2d1ffd060389109f341fb5854ce07890f445f3f9\"}",
+    "artifact": "48d7f4a Core unchanged + external acceptance docs/runner"
+  },
+  {
+    "check": "document-links",
+    "command": "resolve relative Markdown links in README, P2_RUNDOWN, P3_HANDOFF, public README",
+    "status": "PASS",
+    "observed": "all referenced local paths exist; Core/adapter/manifests/lock unchanged from externally-tested Core implementation"
+  },
+  {
+    "check": "filetree",
+    "command": "python3 scripts/filetree.py update; python3 scripts/filetree.py lint",
+    "status": "PASS",
+    "observed": "post-acceptance navigation/index regenerated and lint clean"
+  }
+]

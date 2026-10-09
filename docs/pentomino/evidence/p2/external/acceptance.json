@@ -1,0 +1,24 @@
+{
+  "status": "ACCEPTED",
+  "scope": "public Core SDK; external legacy execution excluded",
+  "authority": "user-supplied separate GPT Work report; not executed by implementation Codex",
+  "sdk_commit": "48d7f4aa6932c9031afee722e0c58f7756b864c8",
+  "reported_commands": [
+    "rustc -vV",
+    "python3 run_public.py --check",
+    "python3 run_public.py",
+    "python3 run_public.py --source external_tests.rs --test",
+    "./consumer-output --nocapture",
+    "python3 run_public.py --source api_error_probe.rs"
+  ],
+  "observed_in_report": "23 passed;0 failed;6 public SDK challenges PASS;no blocking functional defect",
+  "core_rlib_sha256": "bd0b89a7855ccd5cf6ad8b5839002cbe3f79c38c875e4559e70eba9fe2c8bd35",
+  "core_hash_verification": "matches delivered compiled Core artifact exactly",
+  "report_sha256": "2335b81beadbd65f039ef9ebccd854865aa1607d62ca5f29d61b0b8738b29f1b",
+  "delivered_archive_sha256": "717c27399d794b8a2a8615070a06ae3a19ae6c640492b76215f0f940ae89e6d0",
+  "reported_archive_sha256": "da0c744914c910479d49a5dbe017526e8366736cede1931515f2e2b851e9c76d",
+  "package_provenance": "User confirmed ZIP was recompressed; archive digests intentionally differ. Identical delivered/tested Core rlib hash verified. Reported manifest count30 vs delivered32 retained as reported; full repacked manifest not provided.",
+  "raw_consumer_tests_logs": "Listed in report but not attached to this implementation session; not independently rerun",
+  "external_legacy": "UNVERIFIED",
+  "user_clarification": "재압축했어"
+}

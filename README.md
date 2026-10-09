@@ -21,10 +21,11 @@ Actions 아티팩트는 CI 검증용입니다. 서명되지 않은 Android CI AP
 
 ## 현재 개발 범위
 
-P0 설계와 P1의 독립 scalar 호스트가 main에 병합됐습니다. 플러그인 등록·언로드,
-결정적 RNG, 실패 복구, save/restore를 구현했습니다. main의 Scene/Entity/input actions,
-View/Format, Gameplay 및 기존 게임 실행 경로와의 연결은 후속 개발 범위입니다.
-진행 중인 P2/P3 PR은 병합 전까지 main의 구현으로 안내하지 않습니다.
+P0/P1과 P2 Tiny Core를 통합합니다. P2는 Scene/Entity identity, typed records,
+next-tick inputs, per-owner history, save2/discovery와 별도 legacy snapshot adapter를
+제공합니다. P1 scalar API/save1과 기존 FlatLand 실행 경로는 유지합니다.
+Camera/View/Format은 진행 중인 P3 PR, Gameplay는 후속 개발 범위입니다.
+[P2 공개 계약](docs/pentomino/P2_CONTRACT.md)을 참고하세요.
 
 | 개발선 | 용도 |
 |---|---|
