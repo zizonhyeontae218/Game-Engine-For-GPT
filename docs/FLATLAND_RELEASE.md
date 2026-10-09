@@ -49,16 +49,16 @@ are not physical audio-device acceptance.
 
 ## Download
 
-[Final0.2.0 Drive folder](https://drive.google.com/drive/folders/1iJPNZLzYvo3CRjxqfKQAOmqC0vNIjM_f).14 uploaded files were read back for correct
-names/sizes/parents and download availability, retaining existing sharing policy.
-The folder includes signed Android APK, embedded Windows ZIP, portable Harbor.ge4g,
-sample source, Korean instructions, checksums, asset/license manifests, real rendered
-capture evidence and verification/proof JSON. Historical release folders are intact.
+[GitHub v0.2.0 release](https://github.com/zizonhyeontae218/Game-Engine-For-GPT/releases/tag/v0.2.0)
+is the public distribution entrypoint. The original 14 files are recovered byte-for-byte;
+C SDK and AgentKit are separate additions. Current upload status and artifact roles
+are documented in [release distribution](releases/README.md). Original Drive delivery
+metadata is retained as historical provenance, not a public download requirement.
 
 | Artifact | SHA256 |
 |---|---|
-| [GE4G-FlatLand-0.2.0-Android.apk](https://drive.google.com/file/d/1LH9q72iOc0p-sPDOOMzNix9r4dY1vue8/view?usp=drivesdk) | `772d9dbae32ec32840e525b2df27233a9dc3412bc524b9488d9cf555bfa9775c` |
-| [GE4G-Harbor-0.2.0-Windows.zip](https://drive.google.com/file/d/1nE5YNpWSVvgcWM2zbPyim1EL1fTRax6S/view?usp=drivesdk) | `bc080ab5d623c632ca1c1fc40a739bb13d34166c6056eeb01cbfaf890a72d61b` |
-| [FlatLand-Harbor-0.2.0.ge4g](https://drive.google.com/file/d/1m0MXEL2Bj8In6-6TFsRJUnBb_yYWaV0o/view?usp=drivesdk) | `1ec1630ec9e6eed3f4a6ade1609955184b285f416738ce58a77a6d31e97ac23d` |
+| [GE4G-FlatLand-0.2.0-Android.apk](https://github.com/zizonhyeontae218/Game-Engine-For-GPT/releases/download/v0.2.0/GE4G-FlatLand-0.2.0-Android.apk) | `772d9dbae32ec32840e525b2df27233a9dc3412bc524b9488d9cf555bfa9775c` |
+| [GE4G-Harbor-0.2.0-Windows.zip](https://github.com/zizonhyeontae218/Game-Engine-For-GPT/releases/download/v0.2.0/GE4G-Harbor-0.2.0-Windows.zip) | `bc080ab5d623c632ca1c1fc40a739bb13d34166c6056eeb01cbfaf890a72d61b` |
+| [FlatLand-Harbor-0.2.0.ge4g](https://github.com/zizonhyeontae218/Game-Engine-For-GPT/releases/download/v0.2.0/FlatLand-Harbor-0.2.0.ge4g) | `1ec1630ec9e6eed3f4a6ade1609955184b285f416738ce58a77a6d31e97ac23d` |
 
-[Full verification metadata](releases/flatland-final-verification.json) · [Landscape world/battle/bubble proof](releases/flatland-final-landscape-proof.json) · [Delivery manifest](releases/flatland-final-drive.json).
+[Full verification metadata](releases/flatland-final-verification.json) · [Landscape world/battle/bubble proof](releases/flatland-final-landscape-proof.json) · [Original private-Drive delivery provenance](releases/flatland-final-drive.json).

@@ -1,57 +1,19 @@
-> Installed in the actual GE4G repository. Use the root QUICKSTART.ko.md and HANDOFF.md. The repository README.md and AGENTS.md were preserved/merged. This file retains the supplied package overview; generic copy instructions below apply only to manual installation elsewhere.
+# 설치된 PentaWorks v1.0 설정
 
-# PentaWorks v1.0 — GE4G Pentomino Codex Worker Set
+GE4G main에는 역할 10개와 스킬 2개가 이미 설치됐습니다. 파일을 다시 복사하거나
+P0/P1을 반복하지 않습니다. [현재 상태](STATUS.md)와 [퀵스타트 명령](../../QUICKSTART.ko.md)을 사용하세요.
 
-An agent-first, contract-gated worker system for **GE4G v0.3 Pentomino**. This repository overlay configures Codex; it does **not** itself implement the game engine.
+| 경로 | 용도 |
+|---|---|
+| `.codex/config.toml` | 프로젝트 역할 설정, 동시 작업자 최대 3명 |
+| `.codex/agents/*.toml` | 작업자 10명, 모델을 고정하지 않고 부모 설정 상속 |
+| `.agents/skills/pentomino-orchestrate/SKILL.md` | 작업 배분과 계약 검토 |
+| `.agents/skills/pentomino-consumer-eval/SKILL.md` | 별도 워크스페이스의 공개 배포물 평가 |
+| `AGENTS.md`, `docs/pentomino/` | 저장소 규칙, 구현 범위와 계약 |
+| `templates/`, `scripts/validate_pentaworks.py` | 보고 형식과 설정 검증 |
 
-## Install
-
-Copy the **contents** of this folder into the root of the existing GE4G repository (do not overwrite project-specific `AGENTS.md` or `.codex/config.toml` without merging them). Restart Codex if custom roles do not appear.
-
-- `.codex/agents/*.toml`: 10 project-scoped Codex subagents.
-- `.codex/config.toml`: conservative concurrency cap (three children).
-- `.agents/skills/pentomino-orchestrate/SKILL.md`: work-order orchestration.
-- `.agents/skills/pentomino-consumer-eval/SKILL.md`: isolated consumer test procedure.
-- `AGENTS.md`: concise project-wide rules; detailed workflows live in skills/docs.
-- `docs/pentomino/`: source-aligned scope, architecture gates, responsibility matrix, example dispatches.
-- `templates/`: work packets, handoff and release evidence.
-- `scripts/`: self-validation, consumer-safe packaging, release gate evidence check.
-
-## Start
-
-From a new Codex session in the GE4G repository:
-
-```text
-Use $pentomino-orchestrate. Inspect this repository as GE4G v0.3 Pentomino. First dispatch pentomino_scout for a read-only architecture map; create a bounded milestone plan for Tiny Core → View/Format → Gameplay. Do not assume a programming language or create speculative engine APIs. Produce a Rundown and first verified task packet.
-```
-
-To validate only these configuration files:
-
-```bash
-python3 scripts/validate_pentaworks.py
-python3 -m unittest discover -s tests -v
-```
-
-> **Important:** Passing bundle validation does not mean GE4G engine or plugin tests passed. Gate evidence remains BLOCKED/UNVERIFIED until real engine tests run.
-
-## Routine
-
-1. **Survey:** Scout identifies actual folders, language, build tools, tested behavior.
-2. **Specify:** Architect records boundary proposals and acceptance tests; parent approves any core ABI breaking change.
-3. **Build:** Route small, file-disjoint tasks to Core / View / Plugin / Test workers. Never assume parallel edits of shared files are safe.
-4. **Challenge:** Auditor reviews module boundaries; Consumer tests released public artifacts from a *different workspace*.
-5. **Ship:** Perf checks regressions; Release builds evidence and Rundown.
-
-For small tasks use one worker or the main agent, not ten. Default maximum open subagents is 3; change it only when file ownership is separated and benefits are clear.
-
-## Source & implementation policy
-
-The attached document is named **GE4G v0.3 Pentomino**; this bundle retains its `GE4G` spelling. If the actual repository calls itself `GE4C`, normalize only after inspecting repo identity, not by guessing. The system is implementation-language agnostic. API names and manifests in these documents are **contract proposals**, not existing engine functions.
-
-**Out of scope for v0.3:** story/world setting generation, 2D/3D asset synthesis/processing, Forge features (v0.4 Mr. Smith).
-
-## Limits
-
-Project-scoped agent support and available models depend on the current Codex client. The TOML intentionally does not pin models. Parent runtime sandbox/approval overrides may supersede individual agent defaults. A true black-box consumer test requires launching Codex **separately from the GE4G source checkout**, inside an isolated workspace containing only allowlisted public docs and distributable binaries/packages.
-
-Documentation: https://learn.chatgpt.com/docs/agent-configuration/subagents and https://learn.chatgpt.com/docs/build-skills
+새 Codex 세션에서 프로젝트 설정을 신뢰한 뒤 역할/스킬 발견을 확인합니다.
+다른 저장소로 옮길 때는 기존 AGENTS.md·Codex 설정을 덮어쓰지 말고 병합합니다.
+설정 검증은 `python3 scripts/validate_pentaworks.py`로 수행하며 엔진 기능 검증과 구분합니다.
+Consumer는 공개 파일만 갖춘 별도 워크스페이스에서 실행합니다. 전체 소스 AgentKit은
+엔진 개발용이므로 source-free Consumer 배포물로 사용하지 않습니다.

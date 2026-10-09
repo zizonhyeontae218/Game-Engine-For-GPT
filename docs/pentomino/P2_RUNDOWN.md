@@ -1,3 +1,5 @@
+> 2026-10-09 갱신: 사용자가 P2/P3 테스트 전부 성공을 보고했다. 기존 실행 로그와 당시 UNVERIFIED는 역사 기록으로 유지한다.
+
 # Rundown — GE4G v0.3 Pentomino P2 / 48d7f4a
 
 **TL;DR:** P2 Tiny Core와 별도 legacy snapshot adapter를 구현했고 workspace116개
@@ -22,8 +24,9 @@ FlatLand maintenance: `293ba513f5727d4a7a0a59476c9a98eb193aaa25` (unchanged).
 - [x] P1 26개 테스트 및 원래 root 구현 보존, schema/save/ABI1·release/0.2 유지.
 - [x] 내부 검증·독립 감사·공개 예제·source-free ZIP과 업로드 후 checksum 확인.
 - [x] 외부 GPT Work 공개 Core SDK: **23/23 PASS / Gate ACCEPTED** — 사용자 보고서.
-- [ ] 외부 레거시 실행: **UNVERIFIED** — 보고서 승인 범위에서 제외.
-- [ ] Camera/View/Format/Gameplay: **미구현, UNVERIFIED — P3 이후**.
+- [x] 외부 레거시 실행을 포함한 기존 P2 테스트: **PASS — 2026-10-09 사용자 완료 보고**. 기존 23/23 보고서와 별도 근거.
+
+Camera/View/Format은 P3, Gameplay는 후속 구현 범위이며 테스트 완료와 기능 구현을 구분한다.
 
 **Changed — 변경된 public contracts**
 

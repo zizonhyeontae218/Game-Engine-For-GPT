@@ -1,3 +1,5 @@
+> 역사 기록: 이 문서의 버전·배포 링크·검증 상태는 당시 기준이며 현재 안내는 [릴리즈 목차](../README.md)를 따른다.
+
 # Historical development notes — superseded by current release notes
 
 Statements below describe their dated implementation stages, not the current product.
@@ -5,11 +7,11 @@ Statements below describe their dated implementation stages, not the current pro
 # Current candidate — Basement 0.2 FlatLand v0.2 rc3
 
 This is **0.2.0-rc.3**, not a final 0.2.0 release. The previous claimed final has been
-reclassified as [rc2](releases/flatland-rc2.md); its Drive folder is `0.2.0-rc.2`.
+reclassified as [rc2](flatland-rc2.md); its Drive folder is `0.2.0-rc.2`.
 rc3 adds the Nuvema Town layout demo, dedicated sprite battle/move/PP/bag presentation,
 visible CPU camera projection and opt-in hold-to-walk controls at 48/72px/s.
 Android keeps the rc1/rc2 certificate and application ID and increments versionCode to5.
-See [rc3 evidence](FLATLAND_RELEASE.md). New hardware acceptance remains separate from
+See [rc3 evidence](../../FLATLAND_RELEASE.md). New hardware acceptance remains separate from
 compiled builds and automated desktop execution.
 
 ---

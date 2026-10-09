@@ -1,11 +1,13 @@
+> 역사 기록: 이 문서의 버전·배포 링크·검증 상태는 당시 기준이며 현재 안내는 [릴리즈 목차](../README.md)를 따른다.
+
 # Basement 0.2 — FlatLand v0.2 rc3
 
 Candidate `0.2.0-rc.3`, Android build5. Previous delivery is archived as
-[rc2](releases/flatland-rc2.md); there is no final 0.2.0 release in this work.
+[rc2](flatland-rc2.md); there is no final 0.2.0 release in this work.
 
 ## Playable demo
 
-[마름꽃마을 / Nuvema Field Study](../examples/flatland_nuvema/README.md) rebuilds
+[마름꽃마을 / Nuvema Field Study](https://github.com/zizonhyeontae218/Game-Engine-For-GPT/tree/ed3301c7af12ac36dd0b5074d79693d203aeeb28) rebuilds
 Pokémon Black's opening town layout with original CC0 graphics: northwest lab, central
 player house, two southern friend houses, northern path, railed coastal overlook.
 Buildings have playable interiors and correct named exits. The village has a walking NPC.

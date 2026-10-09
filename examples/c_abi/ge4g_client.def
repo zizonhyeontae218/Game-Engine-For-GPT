@@ -1,0 +1,6 @@
+LIBRARY ge4g_client
+EXPORTS
+    ge4g_abi_version
+    ge4g_request_json
+    ge4g_free_string
+    ge4g_frame_copy

@@ -1,3 +1,5 @@
+> 역사 기록: 이 문서의 버전·배포 링크·검증 상태는 당시 기준이며 현재 안내는 [릴리즈 목차](../README.md)를 따른다.
+
 > Reclassified as **0.2.0-rc.2** by the user. The original APK bytes/versionCode4 remain unchanged. This build is not a final 0.2.0 release.
 
 # Basement 0.2 — FlatLand rc2 (archived)

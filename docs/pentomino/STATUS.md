@@ -11,55 +11,31 @@ signed alpha delivery or physical acceptance is claimed.
   here in bounded reviewed slices; completing the full engine is not a prerequisite
   for main integration.
 - release/0.2: FlatLand maintenance baseline, initially
-  293ba513f5727d4a7a0a59476c9a98eb193aaa25. The released v0.2.0 tag and Drive
-  artifacts are unchanged. Maintenance fixes can be selectively ported to main;
+  293ba513f5727d4a7a0a59476c9a98eb193aaa25. The released v0.2.0 tag and original binary bytes
+  are unchanged; public delivery moves to GitHub Releases. Maintenance fixes can be selectively ported to main;
   never bulk-merge alpha version/architecture changes back into release/0.2.
-- Short milestone branches/PRs target main. Old P0/P1 branch names are historical.
+- Merged P0/P1 branch refs were removed on 2026-10-09; commits and closed PRs remain.
+  P2 PR #3 targets main. P3 draft PR #4 is stacked on P2, not directly on main.
   Save/archive/schema migration decisions are explicit, not inferred from version.
 
-## Implemented and missing
+## Implemented and next
 
-P0 discovery/review and P1 scalar lifecycle are integrated. The ge4g-pentomino
-crate has no dependency on legacy core/project/runtime/render2d/client crates.
-P1 includes registration, exact capability bindings, unload, scoped resources,
-deterministic RNG, transactional failure rollback, discovery and canonical save/
-atomic restore. P1_CONTRACT.md specifies its implemented scalar public surface.
-P0_API_PROPOSAL.md is the broader proposal, not shipped API.
+P0/P1 and P2 Tiny Core are integrated through PR #3. P2 adds Scene/Entity identity,
+bounded typed records, next-tick input actions, per-owner history, save2/discovery,
+and a separate immutable legacy snapshot adapter. P1 scalar/save1 remains intact.
+Read P2_CONTRACT.md for the exact implemented surface.
 
-Completed P2 adds `ge4g_pentomino::p2::CoreHost`: per-owner event
-history256/pending128, Scene/Entity identity/lifetime, bounded declarative typed
-records, next-tick bool/bounded-i64 actions, transactional rollback, save2 and
-public discovery. P1/root scalar API and save1 remain unchanged (including global
-retention); opt into P2 for the corrected independent budgets.
-
-`ge4g-pentomino-legacy` is a separate compatibility adapter: authoritative legacy
-World stays outside Core callbacks; immutable projections initialize actual Core
-objects/records via public transactions. Imported plugin ticks are no-op snapshots,
-not continuously delegated legacy gameplay. Existing game/CLI/client execution
-uses inherited FlatLand code. Preserve schema/save/ABI1 and release/0.2.
-
-External source-free public Core GPT Work23/23 is ACCEPTED from the user's
-separate report; the tested Core rlib hash matches the delivered SDK. External
-legacy runtime/game execution remains UNVERIFIED. See P2_RUNDOWN.md for concrete internal evidence and
-../public/pentomino-p2/ for public test package instructions. Camera/View/
-Format, Gameplay, dynamic loading and client execution through Core are
-unimplemented / UNVERIFIED. P2 is not a final release or client support expansion.
-
-## Next slice
-
-P2 acceptance is complete. P3 is focused
-Camera & View/Format design and implementation outside Tiny Core; P3_HANDOFF.md
-defines the boundary. Follow Core → View/Format → Gameplay; Forge belongs to0.4.
-No P3 code is implemented in P2. Preserve deterministic Rust authority/data-only
-imports and existing legacy behavior through verified adapter slices.
+The user reported all P2/P3 tests successful on 2026-10-09. This is user-reported
+acceptance, separate from stored CI logs and the earlier P2 external Core23/23 report.
+P3 Camera/View PR #4 is the next integration; Gameplay remains unimplemented.
+Legacy games continue using the preserved FlatLand runtime. The snapshot adapter
+does not continuously delegate legacy gameplay to Core.
 
 ## Verification and release policy
 
 - Existing workspace fmt/clippy/test, headless CLI and four legacy replay/frame
   checks remain required regressions; new host tests are part of the workspace.
-- cargo test --locked -p ge4g-pentomino verifies unchanged P1 and typed P2.
-- cargo test --locked -p ge4g-pentomino-legacy verifies projection/replay boundary.
-- python3 scripts/check_p2_boundaries.py verifies dependency/preservation direction.
+- cargo test --locked -p ge4g-pentomino verifies the current scalar host only.
 - Android/Windows are the current client CI matrix; no automatic platform expansion.
 - scripts/release_consistency.py checks alpha manifests/lockfile and branch-facing
   documentation while retaining historical FlatLand documentation sanity checks.
@@ -69,5 +45,6 @@ imports and existing legacy behavior through verified adapter slices.
 - Android application ID and pinned signing certificate are preserved. Build
   number 9 exceeds the historical 0.2 build number 8. Existing binaries/keys are
   untouched. No signing or deployment is performed during this branch transition.
-- The past Windows ZIP fixture digest failure remains an unresolved intermittent
-  issue; later successful CI runs do not establish its timestamp cause or repair.
+- Existing test checklists are complete by the user's 2026-10-09 report. Historical
+  Windows ZIP fixture failure evidence remains in HANDOFF.md; this repository
+  cleanup does not claim a new investigation or feature implementation.

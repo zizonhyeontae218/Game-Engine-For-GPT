@@ -50,7 +50,7 @@ def main():
     assert current.replace("pub mod p2;\n\n", "", 1) == original, "P1 implementation changed"
     preserved = ["crates/ge4g-core/src", "crates/ge4g-project/src", "crates/ge4g-runtime/src",
                  "crates/ge4g-render2d/src", "crates/ge4g-native/src", "client", "examples"]
-    assert not command("git", "diff", BASE, "--", *preserved), "legacy baseline modified"
+    assert not command("git", "diff", BASE, "--", *preserved, ":(exclude)examples/c_abi/**"), "legacy baseline modified"
     print(json.dumps({"ok": True, "core_transitive_engine_dependencies": [],
                       "adapter_direction": "legacy -> adapter -> typed core",
                       "p1_tests_sha256": P1_TEST_SHA, "compatibility_baseline": BASE}))

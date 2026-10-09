@@ -10,6 +10,7 @@
 ```text
 $pentomino-orchestrate를 사용해 GE4G 0.3.0 Pentomino 알파의 다음 Tiny Core 작업을 시작해.
 docs/pentomino/STATUS.md와 P1_CONTRACT.md를 읽고, 완료된 P0/P1은 반복하지 마.
+진행 중인 PR #3(P2 Tiny Core)과 #4(P3 Camera)를 먼저 확인하고 중복 구현하지 마.
 실제 저장소의 언어, 빌드 시스템, 테스트와 모듈 구성을 확인하기 위해
 pentomino_scout를 읽기 전용으로 먼저 호출해.
 내부 구현을 추측하지 말고, docs/pentomino/BRIEF.md에 맞춰

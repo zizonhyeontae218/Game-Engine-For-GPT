@@ -21,6 +21,7 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `.gitattributes` — Repository file; inspect only when relevant to the task.
 - `.github/workflows/ci.yml` — Clean-checkout headless and window acceptance CI.
 - `.github/workflows/client.yml` — Repository file; inspect only when relevant to the task.
+- `.github/workflows/restore-flatland-release.yml` — Repository file; inspect only when relevant to the task.
 - `.gitignore` — Repository file; inspect only when relevant to the task.
 - `00_MASTER_CONCEPT.md` — Canonical GE4G concept and design philosophy.
 - `AGENTS.md` — Compact agent routing and non-negotiable repository rules.
@@ -233,6 +234,7 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `docs/FLATLAND_RELEASE.md` — Repository file; inspect only when relevant to the task.
 - `docs/FLATLAND_SPEC.md` — Repository file; inspect only when relevant to the task.
 - `docs/LAUNCHER_PHILOSOPHY.md` — Repository file; inspect only when relevant to the task.
+- `docs/README.md` — Repository file; inspect only when relevant to the task.
 - `docs/RELEASE_NOTES.md` — Release evidence and honest human acceptance status.
 - `docs/RESEARCH_BASIS.md` — Research basis for the agent setup.
 - `docs/TESTPLAN.md` — Acceptance and deterministic verification plan.
@@ -255,6 +257,7 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `docs/exec-plans/completed/pentomino-p1.md` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/completed/pentomino-p2-packets.md` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/completed/pentomino-p2.md` — Repository file; inspect only when relevant to the task.
+- `docs/exec-plans/completed/repository-cleanup.md` — Repository file; inspect only when relevant to the task.
 - `docs/pentomino/BOOTSTRAP_PACKETS.md` — Repository file; inspect only when relevant to the task.
 - `docs/pentomino/BRIEF.md` — Repository file; inspect only when relevant to the task.
 - `docs/pentomino/GATES.md` — Repository file; inspect only when relevant to the task.
@@ -300,27 +303,33 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `docs/pentomino/evidence/p2/test-headless.log` — Repository file; inspect only when relevant to the task.
 - `docs/pentomino/evidence/p2/test-workspace.log` — Repository file; inspect only when relevant to the task.
 - `docs/pentomino/evidence/p2/tooling.log` — Repository file; inspect only when relevant to the task.
+- `docs/pentomino/evidence/p2/user-completion-2026-10-09.json` — Repository file; inspect only when relevant to the task.
 - `docs/pentomino/evidence/p2/verification.json` — Repository file; inspect only when relevant to the task.
 - `docs/public/pentomino-p2/EXTERNAL_TESTER_TASK.md` — Repository file; inspect only when relevant to the task.
 - `docs/public/pentomino-p2/PLUGIN_DISCOVERY.md` — Repository file; inspect only when relevant to the task.
 - `docs/public/pentomino-p2/PUBLIC_API.md` — Repository file; inspect only when relevant to the task.
 - `docs/public/pentomino-p2/QUICKSTART.ko.md` — Repository file; inspect only when relevant to the task.
 - `docs/public/pentomino-p2/README.md` — Repository file; inspect only when relevant to the task.
-- `docs/releases/development-history-through-rc4.md` — Repository file; inspect only when relevant to the task.
+- `docs/releases/README.md` — Repository file; inspect only when relevant to the task.
 - `docs/releases/flatland-final-drive.json` — Repository file; inspect only when relevant to the task.
 - `docs/releases/flatland-final-landscape-proof.json` — Repository file; inspect only when relevant to the task.
 - `docs/releases/flatland-final-portrait-proof.json` — Repository file; inspect only when relevant to the task.
 - `docs/releases/flatland-final-verification.json` — Repository file; inspect only when relevant to the task.
-- `docs/releases/flatland-rc2.md` — Repository file; inspect only when relevant to the task.
-- `docs/releases/flatland-rc3.md` — Repository file; inspect only when relevant to the task.
-- `docs/releases/flatland-rc4.md` — Repository file; inspect only when relevant to the task.
-- `docs/releases/flatland-rc5.md` — Repository file; inspect only when relevant to the task.
+- `docs/releases/history/README.md` — Repository file; inspect only when relevant to the task.
+- `docs/releases/history/development-history-through-rc4.md` — Repository file; inspect only when relevant to the task.
+- `docs/releases/history/flatland-rc2.md` — Repository file; inspect only when relevant to the task.
+- `docs/releases/history/flatland-rc3.md` — Repository file; inspect only when relevant to the task.
+- `docs/releases/history/flatland-rc4.md` — Repository file; inspect only when relevant to the task.
+- `docs/releases/history/flatland-rc5.md` — Repository file; inspect only when relevant to the task.
 - `examples/basement_demo/asset-licenses.json` — Playable reference demo data, replay or inspected framebuffer golden.
 - `examples/basement_demo/ge4g.toml` — Playable reference demo data, replay or inspected framebuffer golden.
 - `examples/basement_demo/golden/room_b.png` — Playable reference demo data, replay or inspected framebuffer golden.
 - `examples/basement_demo/replays/journey.json` — Playable reference demo data, replay or inspected framebuffer golden.
 - `examples/basement_demo/scenes/room_a.json5` — Playable reference demo data, replay or inspected framebuffer golden.
 - `examples/basement_demo/scenes/room_b.json5` — Playable reference demo data, replay or inspected framebuffer golden.
+- `examples/c_abi/README.md` — Repository file; inspect only when relevant to the task.
+- `examples/c_abi/ge4g_client.def` — Repository file; inspect only when relevant to the task.
+- `examples/c_abi/main.c` — Repository file; inspect only when relevant to the task.
 - `examples/flatland_harbor/README.md` — Repository file; inspect only when relevant to the task.
 - `examples/flatland_harbor/asset-licenses.json` — Repository file; inspect only when relevant to the task.
 - `examples/flatland_harbor/assets/walker_down_0.png` — Repository file; inspect only when relevant to the task.
@@ -582,6 +591,7 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `scripts/package.py` — Bundle a built executable, demo and user documentation.
 - `scripts/package_p2_external.py` — Repository file; inspect only when relevant to the task.
 - `scripts/release_consistency.py` — Repository file; inspect only when relevant to the task.
+- `scripts/restore_flatland_release.py` — Repository file; inspect only when relevant to the task.
 - `scripts/sign_android.py` — Repository file; inspect only when relevant to the task.
 - `scripts/stage_consumer_bundle.py` — Repository file; inspect only when relevant to the task.
 - `scripts/validate_pentaworks.py` — Repository file; inspect only when relevant to the task.
@@ -593,4 +603,6 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `templates/HANDOFF.md` — Repository file; inspect only when relevant to the task.
 - `templates/RUNDOWN.md` — Repository file; inspect only when relevant to the task.
 - `templates/TASK_PACKET.md` — Repository file; inspect only when relevant to the task.
+- `tests/test_c_example.py` — Repository file; inspect only when relevant to the task.
+- `tests/test_release_recovery.py` — Repository file; inspect only when relevant to the task.
 - `tests/test_tooling.py` — Repository file; inspect only when relevant to the task.
