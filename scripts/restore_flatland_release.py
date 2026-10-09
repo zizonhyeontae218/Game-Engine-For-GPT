@@ -21,8 +21,8 @@ def download(name, url, expected, folder):
     try:
         with urllib.request.urlopen(url, timeout=120) as response:
             data = response.read()
-    except Exception:
-        raise RuntimeError("Download failed: " + name) from None
+    except Exception as error:
+        raise RuntimeError(f"Download failed ({type(error).__name__}): {name}") from None
     if len(data) != expected["bytes"] or hashlib.sha256(data).hexdigest() != expected["sha256"]:
         raise ValueError("Original checksum mismatch: " + name)
     (folder / name).write_bytes(data)
@@ -30,9 +30,12 @@ def download(name, url, expected, folder):
 
 def main():
     manifest = json.loads((ROOT / "docs/releases/flatland-final-drive.json").read_text())
-    urls = json.loads(os.environ["RELEASE_DOWNLOADS"])
+    event = json.loads(Path(os.environ["GITHUB_EVENT_PATH"]).read_text(encoding="utf-8"))
+    urls = json.loads(event["inputs"]["downloads"])
     if set(urls) != {item["name"] for item in manifest}:
         raise ValueError("Exactly the 14 recorded public artifacts are required")
+    for url in urls.values():
+        print("::add-mask::" + url, flush=True)
     folder = ROOT / "dist/release-recovery"
     folder.mkdir(parents=True, exist_ok=True)
     for item in manifest:
@@ -44,7 +47,8 @@ def main():
     for name in ("main.c", "ge4g_client.def"):
         (sdk / name).write_bytes((ROOT / "examples/c_abi" / name).read_bytes())
     (sdk / "include").mkdir(exist_ok=True)
-    (sdk / "include/ge4g_client.h").write_bytes((ROOT / "crates/ge4g-client/include/ge4g_client.h").read_bytes())
+    header = subprocess.check_output(["git", "show", TAG + ":crates/ge4g-client/include/ge4g_client.h"], cwd=ROOT)
+    (sdk / "include/ge4g_client.h").write_bytes(header)
     with zipfile.ZipFile(folder / "GE4G-Harbor-0.2.0-Windows.zip") as archive:
         (sdk / "ge4g_client.dll").write_bytes(archive.read("ge4g-harbor-windows/ge4g_client.dll"))
     # Only checksum-verified sample files are extracted; reject paths leaving the SDK.
@@ -89,7 +93,8 @@ def main():
             "then validate and replay-test it using ge4g-cli.\n"
             "Pentomino 0.3 development roles belong to main; clone main and use QUICKSTART.ko.md.\n"
             "No private signing key or Drive access is required.\n")
-    files = sorted(path for path in folder.iterdir() if path.is_file())
+    files = sorted([folder / item["name"] for item in manifest] +
+                   [folder / "GE4G-0.2.0-C-SDK-Windows.zip", kit])
     # Preserve the original SHA256SUMS.txt; include the two new packages in a separate manifest.
     sums = folder / "GE4G-0.2.0-SHA256SUMS.txt"
     sums.write_text("".join(hashlib.sha256(path.read_bytes()).hexdigest() + "  " + path.name + "\n"
