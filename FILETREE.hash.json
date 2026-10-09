@@ -536,7 +536,7 @@
   "scripts/pack_game.py": "7c2f16902d0c49bacfbf66e32d1c2ed30571637ee36305deb57e1ece5213f2fb",
   "scripts/package.py": "bbd081eed534c97241196029cfa3ab754e52f89e4bf90b155b7ce1d012abe433",
   "scripts/release_consistency.py": "00d3308d543779030413505e1e3cf0da2f1255bda2539384a5393216dcceb9e9",
-  "scripts/restore_flatland_release.py": "76bec9553dcda8c8ef9dcf4a67d920371995ef29e1feca676ce0acf9757310e8",
+  "scripts/restore_flatland_release.py": "0b79747ed33def4b6ffa698014d67df6f62370f3bb372438746d9d162fa019a5",
   "scripts/sign_android.py": "b385d639e440373c52f56e337ec0c4d1cbff633974c514bbdcc99aa595657c85",
   "scripts/stage_consumer_bundle.py": "2c2ccb0077df7a775c43337e8423a378032d5dcacb9e5e1e2bef2c0aa4b58abe",
   "scripts/validate_pentaworks.py": "fd7441548db5f3db09608b7dae545b73c867b32e0c19800c3b5ab619c93e3cc3",

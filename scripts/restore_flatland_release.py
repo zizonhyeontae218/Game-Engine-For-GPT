@@ -19,10 +19,12 @@ def download(name, url, expected, folder):
     if parsed.scheme != "https" or not parsed.hostname or not parsed.hostname.endswith(".oaiusercontent.com"):
         raise ValueError("Expected a temporary artifact download URL")
     try:
-        with urllib.request.urlopen(url, timeout=120) as response:
+        request = urllib.request.Request(url, headers={"User-Agent": "GE4G-Release-Recovery/1.0"})
+        with urllib.request.urlopen(request, timeout=120) as response:
             data = response.read()
     except Exception as error:
-        raise RuntimeError(f"Download failed ({type(error).__name__}): {name}") from None
+        status = getattr(error, "code", type(error).__name__)
+        raise RuntimeError(f"Download failed ({status}): {name}") from None
     if len(data) != expected["bytes"] or hashlib.sha256(data).hexdigest() != expected["sha256"]:
         raise ValueError("Original checksum mismatch: " + name)
     (folder / name).write_bytes(data)
