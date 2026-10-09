@@ -1,0 +1,8 @@
+COMMAND: cargo clippy --locked -p ge4g-cli --no-default-features --all-targets -- -D warnings
+    Checking ge4g-core v0.3.0-alpha.1 (/workspace/GE4G/crates/ge4g-core)
+    Checking ge4g-project v0.3.0-alpha.1 (/workspace/GE4G/crates/ge4g-project)
+    Checking ge4g-render2d v0.3.0-alpha.1 (/workspace/GE4G/crates/ge4g-render2d)
+    Checking ge4g-runtime v0.3.0-alpha.1 (/workspace/GE4G/crates/ge4g-runtime)
+    Checking ge4g-platform v0.3.0-alpha.1 (/workspace/GE4G/crates/ge4g-platform)
+    Checking ge4g-cli v0.3.0-alpha.1 (/workspace/GE4G/crates/ge4g-cli)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1.29s

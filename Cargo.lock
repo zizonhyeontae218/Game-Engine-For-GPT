@@ -570,6 +570,33 @@ dependencies = [
 ]
 
 [[package]]
+name = "ge4g-pentomino-view"
+version = "0.3.0-alpha.1"
+dependencies = [
+ "ge4g-pentomino",
+ "serde",
+ "serde_json",
+ "sha2",
+ "thiserror 2.0.21",
+]
+
+[[package]]
+name = "ge4g-pentomino-view-legacy"
+version = "0.3.0-alpha.1"
+dependencies = [
+ "ge4g-core",
+ "ge4g-pentomino",
+ "ge4g-pentomino-legacy",
+ "ge4g-pentomino-view",
+ "ge4g-project",
+ "ge4g-render2d",
+ "ge4g-runtime",
+ "serde",
+ "serde_json",
+ "sha2",
+]
+
+[[package]]
 name = "ge4g-platform"
 version = "0.3.0-alpha.1"
 dependencies = [

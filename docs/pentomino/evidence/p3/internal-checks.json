@@ -1,0 +1,133 @@
+{
+  "status": "PASS",
+  "checks": [
+    {
+      "name": "fmt",
+      "command": [
+        "cargo",
+        "fmt",
+        "--all",
+        "--check"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.349,
+      "log": "fmt.log"
+    },
+    {
+      "name": "clippy",
+      "command": [
+        "cargo",
+        "clippy",
+        "--locked",
+        "--workspace",
+        "--all-targets",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 10.206,
+      "log": "clippy.log"
+    },
+    {
+      "name": "workspace-tests",
+      "command": [
+        "cargo",
+        "test",
+        "--locked",
+        "--workspace"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 62.709,
+      "log": "workspace-tests.log"
+    },
+    {
+      "name": "headless-clippy",
+      "command": [
+        "cargo",
+        "clippy",
+        "--locked",
+        "-p",
+        "ge4g-cli",
+        "--no-default-features",
+        "--all-targets",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 1.33,
+      "log": "headless-clippy.log"
+    },
+    {
+      "name": "headless-tests",
+      "command": [
+        "cargo",
+        "test",
+        "--locked",
+        "-p",
+        "ge4g-cli",
+        "--no-default-features"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.568,
+      "log": "headless-tests.log"
+    },
+    {
+      "name": "p2-boundaries",
+      "command": [
+        "python3",
+        "scripts/check_p2_boundaries.py"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.205,
+      "log": "p2-boundaries.log"
+    },
+    {
+      "name": "p3-boundaries",
+      "command": [
+        "python3",
+        "scripts/check_p3_boundaries.py"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.167,
+      "log": "p3-boundaries.log"
+    },
+    {
+      "name": "release-consistency",
+      "command": [
+        "python3",
+        "scripts/release_consistency.py",
+        "--self-test"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.069,
+      "log": "release-consistency.log"
+    },
+    {
+      "name": "python-tests",
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.089,
+      "log": "python-tests.log"
+    },
+    {
+      "name": "pentaworks",
+      "command": [
+        "python3",
+        "scripts/validate_pentaworks.py"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.034,
+      "log": "pentaworks.log"
+    }
+  ]
+}

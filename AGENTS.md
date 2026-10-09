@@ -130,8 +130,12 @@ main targets Pentomino 0.3.0 alpha; the latest stable release remains FlatLand 0
 P1 preserves the scalar host subset documented in P1_CONTRACT.md. P2 adds the
 experimental typed p2::CoreHost and explicit legacy snapshot adapter; read
 P2_CONTRACT.md and P2_RUNDOWN.md. External public Core GPT Work23/23 accepted;
-external legacy execution remains UNVERIFIED. P2 milestone is accepted.
-Camera & View/Format belong to P3; gameplay remains unimplemented. Read STATUS.md.
+all P2/P3 tests additionally accepted by user report on 2026-10-09.
+P3 Camera/View internal candidate is implemented outside Core: four View policies,
+multiCamera/default smooth2.5D/local save/discovery and existing fifth fixture.
+Read P3_CONTRACT.md/P3_RUNDOWN.md. All P2/P3 tests are PASS by user report
+(2026-10-09); next work is the removable turn-combat Gameplay slice in NEXT.md.
+Gameplay remains unimplemented; verify actual merged HEAD before starting.
 When the user invokes `$pentomino-orchestrate`, read
 `docs/pentomino/HANDOFF.md` and `docs/pentomino/BRIEF.md`, then dispatch
 `pentomino_scout` read-only before architecture or implementation.

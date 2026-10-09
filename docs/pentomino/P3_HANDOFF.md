@@ -1,38 +1,39 @@
-# P3 handoff — Camera & View/Format focused development
+# P3 Camera/View handoff — accepted
 
-**Next stage is Camera & View/Format. P2 does not implement P3.**
-The user's separate public Core GPT Work23/23 report is accepted; P2 ExecPlan
-is completed. External legacy execution remains UNVERIFIED. P2 source is
-`48d7f4aa6932c9031afee722e0c58f7756b864c8`; package/commands in P2_RUNDOWN.md.
-No final release, merge, platform expansion or signed client is implied.
+P2/P3 tests are PASS by user report on 2026-10-09. P3 internal CI was already
+successful; external acceptance is user-reported, not performed by repository workers.
+Read P3_RUNDOWN.md, P3_CONTRACT.md and NEXT.md. The next slice is a removable
+turn-combat Gameplay plugin, preserving Core/View boundaries.
 
-## Verified boundary to retain
+## Keep these boundaries
 
-- P2 CoreHost contract2/save2 contains identity/lifetime, bounded declarative typed
-  data, RNG/events, actions, lifecycle and discovery. No position, size, orientation,
-  camera/viewport/sprite/layer/coordinate or gameplay role is intrinsic to objects.
-- P1 root Host/save1 remains a separate unchanged scalar compatibility surface.
-- LegacyBridge owns authoritative World outside callbacks. Typed imports are
-  immutable snapshots; existing legacy runtime remains the real game execution.
-  Presentation and legacy save/resume are preserved outside Core.
-- ABI1, project/save schema1/2, release/0.2 and historical binaries/Android identity
-  remain preserved. Windows ZIP fixture timestamp/digest failure cause is UNVERIFIED.
+Native ge4g-pentomino-view only reads selected P2 ReadFrame. P1/root save1 and
+P2/save2 source/contracts/tests, existing schema/save/ABI1 and release/0.2 remain
+unchanged. Presentation save1 is separate. Camera-local targets/transition state,
+follow/shake/active-camera settings never enter Tiny Core.
 
-## P3 design before implementation
+ge4g-pentomino-view-legacy imports current legacy World as a bounded immutable
+ordinary source plugin, with real Core Scene/Entity allocations and source data.
+It does not continuously delegate legacy gameplay. Real existing fifth Nuvema
+assets render from native CameraFrame via the bounded orthographic subset,
+including intermediate Blended weight0. General perspective/rotation projection
+works natively but the unchanged legacy raster adapter explicitly rejects it.
+Never execute legacy view menus to prove camera invariance: they also alter
+plane/elevation/state. Project ground/building geometry and upright feet before
+composition; never warp a completed framebuffer.
 
-Use read-only scout for actual legacy camera/render/view/save seams; architect
-proposes a minimal public camera/view/format contract, auditor checks isolation,
-ownership, deterministic save/replay, bounds and explicit compatibility. Parent
-freezes the contract and assigns disjoint files before implementation.
+## Precision and validation lessons
 
-Design camera identity/lifetime and persistence, coordinate transforms, view
-selection/switching, layer/asset/backend capabilities and removable view behavior
-in separate plugins/adapters. Keep presentation changes from altering authoritative
-simulation/identity/RNG/collision or existing legacy saves. Decide compatibility
-and migration explicitly; do not temporarily add camera structs to Tiny Core.
-Test one vertical public view slice before extending Classic2D, Side, Vertical
-Scroll and Top-down. 3D interpretation requires its own supported contract/evidence.
+Near/far independent interpolation failed at valid minimum-width large-near
+endpoints; interpolate positive width, outward-round inward samples, clamp convex
+roundoff and retain exact endpoints. View replacement validates saved transition
+endpoints under the new policy. Float-roundtrip restore validates quaternion bits
+without renormalization. Follow tracks all World axes, masks only final View axes.
+Null legacy health fields are valid. All unsafe source/renderer paths reject before
+cloning or entering the old renderer. Trusted linked callbacks are not sandboxed.
 
-All these features are currently UNVERIFIED / unimplemented. Gameplay plugins
-(combat/world/interaction/platformer), Forge, generation and dynamic native loading
-are later work. No preliminary P3 renderer/camera implementation is in the P2 diff.
+## Next
+
+P2 and P3 are accepted for main integration. Proceed to NEXT.md after confirming
+merged HEAD/CI. Do not repeat their implementation or external acceptance. No final
+0.3 release, platform expansion, full3D renderer or Forge implementation is implied.

@@ -21,17 +21,19 @@ Actions 아티팩트는 CI 검증용입니다. 서명되지 않은 Android CI AP
 
 ## 현재 개발 범위
 
-P0/P1과 P2 Tiny Core를 통합합니다. P2는 Scene/Entity identity, typed records,
-next-tick inputs, per-owner history, save2/discovery와 별도 legacy snapshot adapter를
-제공합니다. P1 scalar API/save1과 기존 FlatLand 실행 경로는 유지합니다.
-Camera/View/Format은 진행 중인 P3 PR, Gameplay는 후속 개발 범위입니다.
-[P2 공개 계약](docs/pentomino/P2_CONTRACT.md)을 참고하세요.
+P0–P3를 통합합니다. Tiny Core는 Scene/Entity identity, typed records, inputs,
+per-owner history와 save2/discovery를 제공합니다. P3는 독립 View/Format과 다중
+Camera, 좌표 변환, 저장 가능한 부드러운 2.5D 전환을 제공합니다.
+기존 FlatLand runtime과 P1 scalar/save1은 유지합니다. Gameplay 플러그인과
+전체 3D renderer는 아직 구현 범위에 포함되지 않습니다.
+[P2 계약](docs/pentomino/P2_CONTRACT.md) · [P3 계약](docs/pentomino/P3_CONTRACT.md) ·
+[다음 작업](docs/pentomino/NEXT.md).
 
 | 개발선 | 용도 |
 |---|---|
 | `main` | GE4G 0.3.0 Pentomino 알파 개발 |
 | `release/0.2` | FlatLand 0.2 안정판 유지보수 |
-| `pentomino/p2-tiny-core`, `pentomino/p3-camera` | 진행 중인 마일스톤 PR |
+| P0–P3 | 완료된 마일스톤. 새 작업은 main에서 시작 |
 
 Rust workspace는 `0.3.0-alpha.1`, Flutter는 `0.3.0-alpha.1+9`입니다.
 Android·Windows가 현재 클라이언트 검증 대상입니다. 기존 앱 ID와 서명 인증서를 유지합니다.

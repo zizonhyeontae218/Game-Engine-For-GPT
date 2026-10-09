@@ -1,0 +1,150 @@
+{
+  "source_base": "2159304ad464db488731592f643b21147708a0fb",
+  "results": [
+    {
+      "command": [
+        "target/debug/ge4g",
+        "test",
+        "examples/basement_demo",
+        "--json"
+      ],
+      "exit_code": 0,
+      "observed": {
+        "errors": [],
+        "ok": true,
+        "results": [
+          {
+            "assertions_checked": 7,
+            "deterministic": true,
+            "deterministic_sha256": "33e06a98c9b675d0773594343a7168930720be2aa78b6c357831d6bcb47330d7",
+            "frame_rgba_sha256": "38cc4352e7160dcf9104cbe19acd709e36d8165989b3c99d8b6611f0f76e932b",
+            "golden_checked": true,
+            "name": "basement_journey",
+            "ok": true,
+            "png_capture": true,
+            "save_reload": true,
+            "ticks": 160
+          }
+        ],
+        "schema_version": 1,
+        "summary": "GE4G test: 1 of 1 passed"
+      }
+    },
+    {
+      "command": [
+        "target/debug/ge4g",
+        "test",
+        "examples/flatland_pacman",
+        "--json"
+      ],
+      "exit_code": 0,
+      "observed": {
+        "errors": [],
+        "ok": true,
+        "results": [
+          {
+            "assertions_checked": 1,
+            "deterministic": true,
+            "deterministic_sha256": "6535e0208ca1c679b418ebb457fc16f7c0cd95c094c7f2fe2a89bc4c19bd7f84",
+            "frame_rgba_sha256": "a0be5c7fc85ca45c9dd8a54e0fa1bfc6c355a1e7e1d78a7ce5598b447fa43546",
+            "golden_checked": true,
+            "name": "journey",
+            "ok": true,
+            "png_capture": true,
+            "save_reload": true,
+            "ticks": 30
+          }
+        ],
+        "schema_version": 1,
+        "summary": "GE4G test: 1 of 1 passed"
+      }
+    },
+    {
+      "command": [
+        "target/debug/ge4g",
+        "test",
+        "examples/flatland_signal_yard",
+        "--json"
+      ],
+      "exit_code": 0,
+      "observed": {
+        "errors": [],
+        "ok": true,
+        "results": [
+          {
+            "assertions_checked": 1,
+            "deterministic": true,
+            "deterministic_sha256": "cff01b8298891ff87b7b5872d8517b544b5fe22744962c990696b3faafe2ebde",
+            "frame_rgba_sha256": "f50923d16622d3ee8232739c821d2e8cc6e98acaca9b0dc2c9c174604962a987",
+            "golden_checked": true,
+            "name": "signal-yard-corpus",
+            "ok": true,
+            "png_capture": true,
+            "save_reload": true,
+            "ticks": 714
+          }
+        ],
+        "schema_version": 1,
+        "summary": "GE4G test: 1 of 1 passed"
+      }
+    },
+    {
+      "command": [
+        "target/debug/ge4g",
+        "test",
+        "examples/flatland_harbor",
+        "--json"
+      ],
+      "exit_code": 0,
+      "observed": {
+        "errors": [],
+        "ok": true,
+        "results": [
+          {
+            "assertions_checked": 1,
+            "deterministic": true,
+            "deterministic_sha256": "b70a35486d940fe8a7586e062ead5b3189a22578fa3d3dc55f1173ef84ebc135",
+            "frame_rgba_sha256": "568334e7d0aaf36ebd4ed958f431dbfb1da0713e2f1ba4dc3a29f5bc084448a5",
+            "golden_checked": true,
+            "name": "harbor-final-regression",
+            "ok": true,
+            "png_capture": true,
+            "save_reload": true,
+            "ticks": 420
+          }
+        ],
+        "schema_version": 1,
+        "summary": "GE4G test: 1 of 1 passed"
+      }
+    },
+    {
+      "command": [
+        "target/debug/ge4g",
+        "test",
+        "examples/flatland_nuvema",
+        "--json"
+      ],
+      "exit_code": 0,
+      "observed": {
+        "errors": [],
+        "ok": true,
+        "results": [
+          {
+            "assertions_checked": 1,
+            "deterministic": true,
+            "deterministic_sha256": "b3ffcfd382ac39e9527244552bc6073321b91b2634f9c961b099e3eb3aef7e51",
+            "frame_rgba_sha256": "9a57d2fad6c3a96ecf1e4f1378b751729325b1907f5c89319ada082f4df361c3",
+            "golden_checked": true,
+            "name": "nuvema-feature-journey",
+            "ok": true,
+            "png_capture": true,
+            "save_reload": true,
+            "ticks": 1957
+          }
+        ],
+        "schema_version": 1,
+        "summary": "GE4G test: 1 of 1 passed"
+      }
+    }
+  ]
+}

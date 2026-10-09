@@ -79,3 +79,14 @@ back on open failure. Typed incompatible saves are archived and opened fresh; on
 confirmed successful activation retires inactive content. Library manager is separate
 from embedded game presentation. Speakers resolve in Rust; Flutter renders optional
 headers and never owns simulation or save-compatibility decisions.
+
+## Pentomino P3 read-only presentation boundary
+
+`p2::CoreHost::select -> ReadFrame -> FormatPlugin -> ViewHost/Camera -> RenderFrame`
+uses separate ge4g-pentomino-view. Tiny Core has no camera/render dependency.
+ViewHost owns independent multiCamera tick/behavior/transition state and canonical
+presentation save1; removing/replacing a View changes only this state. See
+pentomino/P3_CONTRACT.md. ge4g-pentomino-view-legacy imports bounded immutable
+source snapshots through ordinary Core APIs and maps supported native CameraFrame
+output to cloned render-only legacy data. Existing runtime/render2d remain unchanged.
+This is not continuous legacy gameplay delegation or a full renderer rewrite.

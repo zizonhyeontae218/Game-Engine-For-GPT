@@ -1,0 +1,2 @@
+COMMAND: target/debug/ge4g test examples/flatland_pacman --json
+{"errors":[],"ok":true,"results":[{"assertions_checked":1,"deterministic":true,"deterministic_sha256":"6535e0208ca1c679b418ebb457fc16f7c0cd95c094c7f2fe2a89bc4c19bd7f84","frame_rgba_sha256":"a0be5c7fc85ca45c9dd8a54e0fa1bfc6c355a1e7e1d78a7ce5598b447fa43546","golden_checked":true,"name":"journey","ok":true,"png_capture":true,"save_reload":true,"ticks":30}],"schema_version":1,"summary":"GE4G test: 1 of 1 passed"}

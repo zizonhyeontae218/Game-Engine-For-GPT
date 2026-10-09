@@ -1,0 +1,501 @@
+{
+  "milestone": "P3 Camera internal candidate",
+  "production_commit": "891306b993b05206fa01c8c90bc367dda14cd1f7",
+  "tooling_ci_commit": "0c8bbdbdf1cde6281a8344dea2065cde70bb2cf6",
+  "sdk_commit": "b43a251d78ecc55c3605b98874aee04888327ceb",
+  "external_validation": "EXTERNAL VALIDATION PENDING",
+  "internal_rust_tests": {
+    "passed": 150,
+    "failed": 0,
+    "new_independent_native": 27,
+    "new_independent_fifth": 7
+  },
+  "internal_checks": {
+    "status": "PASS",
+    "checks": [
+      {
+        "name": "fmt",
+        "command": [
+          "cargo",
+          "fmt",
+          "--all",
+          "--check"
+        ],
+        "exit_code": 0,
+        "duration_seconds": 0.349,
+        "log": "fmt.log"
+      },
+      {
+        "name": "clippy",
+        "command": [
+          "cargo",
+          "clippy",
+          "--locked",
+          "--workspace",
+          "--all-targets",
+          "--",
+          "-D",
+          "warnings"
+        ],
+        "exit_code": 0,
+        "duration_seconds": 10.206,
+        "log": "clippy.log"
+      },
+      {
+        "name": "workspace-tests",
+        "command": [
+          "cargo",
+          "test",
+          "--locked",
+          "--workspace"
+        ],
+        "exit_code": 0,
+        "duration_seconds": 62.709,
+        "log": "workspace-tests.log"
+      },
+      {
+        "name": "headless-clippy",
+        "command": [
+          "cargo",
+          "clippy",
+          "--locked",
+          "-p",
+          "ge4g-cli",
+          "--no-default-features",
+          "--all-targets",
+          "--",
+          "-D",
+          "warnings"
+        ],
+        "exit_code": 0,
+        "duration_seconds": 1.33,
+        "log": "headless-clippy.log"
+      },
+      {
+        "name": "headless-tests",
+        "command": [
+          "cargo",
+          "test",
+          "--locked",
+          "-p",
+          "ge4g-cli",
+          "--no-default-features"
+        ],
+        "exit_code": 0,
+        "duration_seconds": 0.568,
+        "log": "headless-tests.log"
+      },
+      {
+        "name": "p2-boundaries",
+        "command": [
+          "python3",
+          "scripts/check_p2_boundaries.py"
+        ],
+        "exit_code": 0,
+        "duration_seconds": 0.205,
+        "log": "p2-boundaries.log"
+      },
+      {
+        "name": "p3-boundaries",
+        "command": [
+          "python3",
+          "scripts/check_p3_boundaries.py"
+        ],
+        "exit_code": 0,
+        "duration_seconds": 0.167,
+        "log": "p3-boundaries.log"
+      },
+      {
+        "name": "release-consistency",
+        "command": [
+          "python3",
+          "scripts/release_consistency.py",
+          "--self-test"
+        ],
+        "exit_code": 0,
+        "duration_seconds": 0.069,
+        "log": "release-consistency.log"
+      },
+      {
+        "name": "python-tests",
+        "command": [
+          "python3",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "tests",
+          "-v"
+        ],
+        "exit_code": 0,
+        "duration_seconds": 0.089,
+        "log": "python-tests.log"
+      },
+      {
+        "name": "pentaworks",
+        "command": [
+          "python3",
+          "scripts/validate_pentaworks.py"
+        ],
+        "exit_code": 0,
+        "duration_seconds": 0.034,
+        "log": "pentaworks.log"
+      }
+    ]
+  },
+  "legacy_regressions": "legacy-regressions.json",
+  "source_audits": "../../P3_CONTRACT_REVIEW.md",
+  "package": "external-package.json",
+  "drive": "drive-receipt.json",
+  "ci_observed": {
+    "statusCheckRollup": [
+      {
+        "__typename": "CheckRun",
+        "completedAt": "0001-01-01T00:00:00Z",
+        "conclusion": "",
+        "detailsUrl": "https://github.com/zizonhyeontae218/Game-Engine-For-GPT/actions/runs/37805427365/job/113408628503",
+        "name": "windows",
+        "startedAt": "2026-10-08T16:01:34Z",
+        "status": "IN_PROGRESS",
+        "workflowName": "GE4G Flutter clients"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-08T16:03:41Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/zizonhyeontae218/Game-Engine-For-GPT/actions/runs/37805427292/job/113408318520",
+        "name": "acceptance",
+        "startedAt": "2026-10-08T16:00:54Z",
+        "status": "COMPLETED",
+        "workflowName": "Basement acceptance"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-08T16:03:31Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/zizonhyeontae218/Game-Engine-For-GPT/actions/runs/37805413378/job/113408271184",
+        "name": "acceptance",
+        "startedAt": "2026-10-08T16:00:48Z",
+        "status": "COMPLETED",
+        "workflowName": "Basement acceptance"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-08T16:07:47Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/zizonhyeontae218/Game-Engine-For-GPT/actions/runs/37805427365/job/113408628929",
+        "name": "android",
+        "startedAt": "2026-10-08T16:01:34Z",
+        "status": "COMPLETED",
+        "workflowName": "GE4G Flutter clients"
+      }
+    ],
+    "client_run_latest_observation": {
+      "conclusion": "success",
+      "jobs": [
+        {
+          "completedAt": "2026-10-08T16:10:34Z",
+          "conclusion": "success",
+          "databaseId": 113408628503,
+          "name": "windows",
+          "startedAt": "2026-10-08T16:01:34Z",
+          "status": "completed",
+          "steps": [
+            {
+              "conclusion": "success",
+              "name": "Set up job",
+              "number": 1,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/checkout@v4",
+              "number": 2,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run ilammy/msvc-dev-cmd@v1",
+              "number": 3,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run dtolnay/rust-toolchain@stable",
+              "number": 4,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run subosito/flutter-action@v2",
+              "number": 5,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run python -m pip install Pillow",
+              "number": 6,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run cargo build --locked -p ge4g-cli",
+              "number": 7,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run python scripts/pack_game.py examples/basement_demo --game-id demo.basement --validator target/debug/ge4g.exe --out dist/basement-demo.ge4g",
+              "number": 8,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run python scripts/pack_game.py examples/flatland_pacman --game-id demo.flatland.pacman --version 0.2.0 --validator target/debug/ge4g.exe --out dist/flatland-pacman.ge4g",
+              "number": 9,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run python scripts/pack_game.py examples/flatland_signal_yard --game-id demo.flatland.signal-yard --version 0.2.0 --validator target/debug/ge4g.exe --out dist/flatland-signal-yard.ge4g",
+              "number": 10,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run python scripts/pack_game.py examples/flatland_harbor --game-id demo.flatland.harbor --version 0.2.0 --validator target/debug/ge4g.exe --out dist/flatland-harbor.ge4g",
+              "number": 11,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run python scripts/windows_utf8_regression.py --prepare",
+              "number": 12,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run flutter pub get",
+              "number": 13,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run flutter analyze",
+              "number": 14,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run flutter test",
+              "number": 15,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run flutter build windows --release",
+              "number": 16,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run python scripts/bundle_desktop.py --client client/build/windows/x64/runner/Release --game dist/basement-demo.ge4g --platform windows --out dist/ge4g-basement-windows",
+              "number": 17,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/upload-artifact@v4",
+              "number": 18,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run python scripts/bundle_desktop.py --client client/build/windows/x64/runner/Release --game dist/flatland-pacman.ge4g --platform windows --out dist/ge4g-flatland-windows",
+              "number": 19,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/upload-artifact@v4",
+              "number": 20,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run python scripts/bundle_desktop.py --client client/build/windows/x64/runner/Release --game dist/flatland-signal-yard.ge4g --platform windows --out dist/ge4g-signal-yard-windows",
+              "number": 21,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/upload-artifact@v4",
+              "number": 22,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run python scripts/bundle_desktop.py --client client/build/windows/x64/runner/Release --game dist/flatland-harbor.ge4g --platform windows --out dist/ge4g-harbor-windows",
+              "number": 23,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run python scripts/windows_utf8_regression.py --launch",
+              "number": 24,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/upload-artifact@v4",
+              "number": 25,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/upload-artifact@v4",
+              "number": 26,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Post Run subosito/flutter-action@v2",
+              "number": 51,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Post Run actions/checkout@v4",
+              "number": 52,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Complete job",
+              "number": 53,
+              "status": "completed"
+            }
+          ],
+          "url": "https://github.com/zizonhyeontae218/Game-Engine-For-GPT/actions/runs/37805427365/job/113408628503"
+        },
+        {
+          "completedAt": "2026-10-08T16:07:47Z",
+          "conclusion": "success",
+          "databaseId": 113408628929,
+          "name": "android",
+          "startedAt": "2026-10-08T16:01:34Z",
+          "status": "completed",
+          "steps": [
+            {
+              "conclusion": "success",
+              "name": "Set up job",
+              "number": 1,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/checkout@v4",
+              "number": 2,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/setup-java@v4",
+              "number": 3,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run android-actions/setup-android@v3",
+              "number": 4,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run dtolnay/rust-toolchain@stable",
+              "number": 5,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run subosito/flutter-action@v2",
+              "number": 6,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run flutter pub get",
+              "number": 7,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run flutter build apk --release",
+              "number": 8,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/upload-artifact@v4",
+              "number": 9,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Post Run subosito/flutter-action@v2",
+              "number": 16,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Post Run actions/setup-java@v4",
+              "number": 17,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Post Run actions/checkout@v4",
+              "number": 18,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Complete job",
+              "number": 19,
+              "status": "completed"
+            }
+          ],
+          "url": "https://github.com/zizonhyeontae218/Game-Engine-For-GPT/actions/runs/37805427365/job/113408628929"
+        }
+      ],
+      "status": "completed"
+    }
+  },
+  "evidence_file_sha256": {
+    "basement_demo-regression.log": "53a35104da0b396901453ec04f5e6460ac53ecb0cb423de04b739526701a53eb",
+    "ci-shallow-baseline-failure.log": "42dc810806ebb58aea715d58fdf977bec42b5b335794523f3c1b9d5fb2039ead",
+    "clippy.log": "261efd19c00b2fc8082e505b41915ee47ac005db8882a6da245ac6d171a302cc",
+    "fifth-baseline.log": "a69c683a8133295218c10c8538bb27a9ad8cab8658e821cb4473546f7a75195e",
+    "fifth-camera-example.log": "086868b7c0a02ce0157b6f5323f3a8ccffe3c19492713ad1651bf55d29530736",
+    "flatland_harbor-regression.log": "b108e90bab019c67616dcdd1ba5377c7e273684111e9f57c2a367cf910b567a4",
+    "flatland_nuvema-regression.log": "ebd031a3b09508abf8793904d4d9107d1b66ce5bfa1f616232504b72c9bd18a6",
+    "flatland_pacman-regression.log": "56f8753a2f2fa3ccfe94fb6f0d5dba4d809339fe2b4601f5a7c78d2b441cbf49",
+    "flatland_signal_yard-regression.log": "1c802ab489679795a159c430077daae3e6c6f6056bfbb62dc5bfe52afaaf2c19",
+    "fmt.log": "b74f2db488ce7585fee8c086ab445d5e36fb33905e3002422347db53bde44e37",
+    "headless-clippy.log": "a97399c1176a82a122a50c60f552e2a5108d628475703b477ed331eed1f456e1",
+    "headless-tests.log": "5ee1b7129f9a318d4403d53b106fe995c11dd5d4ad2343effed4f8888e5778a1",
+    "lens-prefixed-failure.log": "600f33de3877a8915b43c441de920516b99752b471c78534d461d17883506595",
+    "p2-boundaries.log": "d705b8ca1f073fe20db567ec6d742873bdcd8fd8dd4fb9a8bd2c94a3516cfd0b",
+    "p3-boundaries.log": "6caffc3dfad3b1219497349e90d70622e4bc80967523147dc2975c6dadc77402",
+    "pentaworks.log": "0bed7bf62174bb1bac6d930b9c287b192f43a0a86f4b7baf2aa6b69fac7e601b",
+    "performance.log": "bdabdb24617c388e9d2db0eb258e7da8f548be8c3069f1ae741449d21aa480d2",
+    "public-example.log": "03e9cd2f80d42be1aa0a5c0ceb5b46cd8b9eceb3e4ebb1a6651d93002f340217",
+    "python-tests.log": "eae709064689e5922b9c9a641eb15d28d6eec8d4e7e7b1ac96783da0e98b1e2a",
+    "release-consistency.log": "f8d652fdee563d28a36d396404a93e8b63fc874b7d159a70aa401981f90eaa42",
+    "sdk-check.log": "5da3e5fc1fcd09fea2544684873901252d0059858ef486eaea2acfc5993734f9",
+    "sdk-fifth-example.log": "a41f6871ddef53fa4861ca24e1916698bcc38f762e4cf6658a7587ed2607d661",
+    "sdk-lua-link-failure.log": "54ea5e6777cbbcffaf090114d53f35566efae0d0e16c7d383dc7df7503b680c6",
+    "sdk-native-example.log": "cc13bcd85fbf6c492824bdb68ce9dcf6c25be5487446a0977ef6e272aa7e2b98",
+    "workspace-tests.log": "819088fa49fa354fd74285157e9602dad666bb34639c2b23514c841fdb2b6560"
+  }
+}

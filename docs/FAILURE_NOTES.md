@@ -31,3 +31,18 @@ A real hosted packaged-client smoke exposed tick161 after a nominal 160-step rep
 Python locale-default read_text/subprocess text decoding rejected the Nuvema TOML name
 under Windows cp1252. The packager must decode authored UTF-8 and Rust JSON explicitly
 as UTF-8; never rely on the machine locale. An ASCII-locale package is byte-identical.
+
+## P3 minimum-width projection transition precision
+
+Valid near/far endpoint intervals (.001 minimum, near≈26–59million) failed during
+smooth transition when near/far were interpolated independently: subtraction
+rounded the interval inward. Public probe observed tick8 InvalidProjection with
+exact rollback, independent4096tick test first failed tick2. P3 interpolation now
+lerps positive depth width, clamps convex scalar roundoff and outward-rounds a
+minimum interval with next_up; endpoints retain exact requested variants/values.
+Regression: ge4g-pentomino-view/tests/independent_contract.rs. Do not weaken .001
+validation or swallow a failed camera tick. P3_RUNDOWN.md contains evidence.
+
+Legacy valid noncombat actors serialize hp/hp_max:null; P3 preflight accepts null
+while bounding numeric health values. Smooth orthographic transitions emit Blended
+weight0 intermediate lens and require equivalent orthographic compatibility handling.

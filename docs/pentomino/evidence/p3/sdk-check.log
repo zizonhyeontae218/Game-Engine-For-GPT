@@ -1,0 +1,2 @@
+COMMAND: python3 /workspace/scratch/p3-sourcefree-lua-complete/run_public.py --check
+{"checksums": "PASS", "compiler": "PASS", "commit": "b43a251d78ecc55c3605b98874aee04888327ceb", "external_gate": "UNVERIFIED"}

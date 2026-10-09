@@ -1,0 +1,139 @@
+{
+  "batches": 5,
+  "claim": "observed workload costs only; no cross-release speedup claim",
+  "external_validation": "PENDING",
+  "iterations_per_batch": 100,
+  "large_selection": {
+    "entities": 4096,
+    "ns_per_call_5_batches": [
+      4845246,
+      4866925,
+      4828491,
+      4902866,
+      4847835
+    ],
+    "owners": 16
+  },
+  "measurements": [
+    {
+      "authoritative_step_ns_per_call_5_batches": [
+        7970,
+        7167,
+        6997,
+        7099,
+        7142
+      ],
+      "camera_update_ns_per_call_5_batches": [
+        9835,
+        9773,
+        9087,
+        9578,
+        9754
+      ],
+      "cameras": 1,
+      "core_selection_ns_per_call_5_batches": [
+        717,
+        661,
+        659,
+        656,
+        652
+      ],
+      "core_unchanged_by_camera_updates": true,
+      "entities": 1,
+      "authoritative_step_ns_per_call_median": 7142,
+      "camera_update_ns_per_call_median": 9754,
+      "core_selection_ns_per_call_median": 659
+    },
+    {
+      "authoritative_step_ns_per_call_5_batches": [
+        635531,
+        660803,
+        635943,
+        637974,
+        644517
+      ],
+      "camera_update_ns_per_call_5_batches": [
+        377336,
+        359968,
+        368081,
+        361274,
+        359981
+      ],
+      "cameras": 1,
+      "core_selection_ns_per_call_5_batches": [
+        175783,
+        166169,
+        173261,
+        167052,
+        179125
+      ],
+      "core_unchanged_by_camera_updates": true,
+      "entities": 256,
+      "authoritative_step_ns_per_call_median": 637974,
+      "camera_update_ns_per_call_median": 361274,
+      "core_selection_ns_per_call_median": 173261
+    },
+    {
+      "authoritative_step_ns_per_call_5_batches": [
+        673512,
+        633031,
+        685242,
+        669114,
+        702969
+      ],
+      "camera_update_ns_per_call_5_batches": [
+        1410014,
+        1399486,
+        1508847,
+        1397564,
+        1392183
+      ],
+      "cameras": 16,
+      "core_selection_ns_per_call_5_batches": [
+        163716,
+        171324,
+        163628,
+        164296,
+        166971
+      ],
+      "core_unchanged_by_camera_updates": true,
+      "entities": 256,
+      "authoritative_step_ns_per_call_median": 673512,
+      "camera_update_ns_per_call_median": 1399486,
+      "core_selection_ns_per_call_median": 164296
+    },
+    {
+      "authoritative_step_ns_per_call_5_batches": [
+        654944,
+        679063,
+        672040,
+        654689,
+        657732
+      ],
+      "camera_update_ns_per_call_5_batches": [
+        2747957,
+        2795828,
+        2746357,
+        2674073,
+        2697129
+      ],
+      "cameras": 32,
+      "core_selection_ns_per_call_5_batches": [
+        176685,
+        172442,
+        171124,
+        169629,
+        163423
+      ],
+      "core_unchanged_by_camera_updates": true,
+      "entities": 256,
+      "authoritative_step_ns_per_call_median": 657732,
+      "camera_update_ns_per_call_median": 2746357,
+      "core_selection_ns_per_call_median": 171124
+    }
+  ],
+  "profile": "release",
+  "target": "x86_64",
+  "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+  "processor": "INTEL(R) XEON(R) PLATINUM 8573C"
+}

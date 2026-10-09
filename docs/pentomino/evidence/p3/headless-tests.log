@@ -1,0 +1,23 @@
+COMMAND: cargo test --locked -p ge4g-cli --no-default-features
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 9 tests
+test a_manifest_filename_can_be_used_from_the_project_directory ... ok
+test errors_never_claim_unwritten_capture_and_json_argument_errors_are_structured ... ok
+test invalid_scene_version_and_missing_references_fail_with_context ... ok
+test png_pixels_match_the_canonical_frame_and_debug_is_distinct ... ok
+test project_test_checks_golden_and_reports_failed_assertions ... ok
+test save_restart_restores_values_and_corruption_is_explicit ... ok
+test textured_sprites_and_camera_use_the_same_cpu_capture_path ... ok
+test headless_journey_is_repeatable_and_exports_real_state_and_events ... ok
+test trace_filters_preserve_order_and_schema_commands_are_machine_readable ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.45s
+
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.09s
+     Running unittests src/main.rs (target/debug/deps/ge4g-d416170839a143f0)
+     Running tests/acceptance.rs (target/debug/deps/acceptance-38d32c36963168f7)

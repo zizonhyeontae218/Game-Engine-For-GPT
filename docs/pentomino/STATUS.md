@@ -15,21 +15,22 @@ signed alpha delivery or physical acceptance is claimed.
   are unchanged; public delivery moves to GitHub Releases. Maintenance fixes can be selectively ported to main;
   never bulk-merge alpha version/architecture changes back into release/0.2.
 - Merged P0/P1 branch refs were removed on 2026-10-09; commits and closed PRs remain.
-  P2 PR #3 targets main. P3 draft PR #4 is stacked on P2, not directly on main.
+  P2 PR #3 is integrated first; stacked P3 PR #4 follows into main.
   Save/archive/schema migration decisions are explicit, not inferred from version.
 
 ## Implemented and next
 
-P0/P1 and P2 Tiny Core are integrated through PR #3. P2 adds Scene/Entity identity,
-bounded typed records, next-tick input actions, per-owner history, save2/discovery,
-and a separate immutable legacy snapshot adapter. P1 scalar/save1 remains intact.
-Read P2_CONTRACT.md for the exact implemented surface.
+P0–P3 are accepted for main integration through PR #3 then PR #4. P2 adds identity,
+typed records/actions, independent owner histories and save2/discovery. P3 adds
+independent View/Format, multiple Cameras, coordinate transforms and saved smooth
+transitions. P1 scalar/save1 and legacy runtime/schema/save/ABI1 remain preserved.
 
-The user reported all P2/P3 tests successful on 2026-10-09. This is user-reported
-acceptance, separate from stored CI logs and the earlier P2 external Core23/23 report.
-P3 Camera/View PR #4 is the next integration; Gameplay remains unimplemented.
-Legacy games continue using the preserved FlatLand runtime. The snapshot adapter
-does not continuously delegate legacy gameplay to Core.
+All P2/P3 tests are PASS by user report on 2026-10-09. This acceptance is separate
+from stored CI logs and the earlier P2 external Core23/23 report. Full3D GPU rendering,
+continuous legacy gameplay delegation and Gameplay plugins remain unimplemented.
+
+Next: a removable turn-combat Gameplay plugin. Read [NEXT.md](NEXT.md), P2_CONTRACT.md
+and P3_CONTRACT.md before choosing work. Do not repeat P0–P3. Forge remains0.4.
 
 ## Verification and release policy
 

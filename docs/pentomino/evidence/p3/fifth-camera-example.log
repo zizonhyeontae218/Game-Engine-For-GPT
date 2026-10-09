@@ -1,0 +1,5 @@
+COMMAND: cargo run --locked -p ge4g-pentomino-view-legacy --example fifth_demo
+{"core_hash":"d94b70a2b9e332a8271598d0c1c55deb9363e6502d89de488b34ae0c031d8dda","default_smooth":true,"entities":82,"external_validation":"PENDING","fixture":"existing fifth flatland_nuvema","legacy_snapshot_bytes_preserved":true,"midpoint_save_restore_continuation":true,"output":"/workspace/scratch/p3-fifth-frames","remove_reinstall":true,"rgba_sha256":{"balcony_transition":"6626570ef23bd00aa93fa9ac8cabb69e7ec303a6cd0d2facd4064fc1a148b429","depth":"69ad697149f9466388f7a0d46668c950ac890c52f4344d29d09f37958491e380","midpoint":"bb9fc07e18a2ff67bd7bf163cf674dcf476ebe77d73633fb20c1125b762e557a","plan":"929e8b4d3c7aea909d0a156e91b000c2491e2a9aee18a82f28096a2b54887b59"},"scene_identity":{"incarnation":1,"local":"s_50ac81f970325a3e011f2437818adde426e1278dee5670dd359edfca43a72d79","owner":"acceptance.nuvema"},"whole_core_bytes_preserved":true}
+   Compiling ge4g-pentomino-view-legacy v0.3.0-alpha.1 (/workspace/GE4G/crates/ge4g-pentomino-view-legacy)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.97s
+     Running `target/debug/examples/fifth_demo`

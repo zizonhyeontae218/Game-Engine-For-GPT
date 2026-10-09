@@ -1,0 +1,2 @@
+COMMAND: python3 scripts/release_consistency.py --self-test
+Pentomino0.3.0-alpha.1 consistency: 21 current documents and release identity passed; historical documents excluded

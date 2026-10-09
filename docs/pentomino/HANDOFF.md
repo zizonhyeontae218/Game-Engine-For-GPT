@@ -5,7 +5,7 @@
 0.2 유지보수는 release/0.2에서 진행한다. 현재 클라이언트는 알파 버전이며
 Pentomino host로 게임을 연속 실행하는 연결은 아직 미구현이다. P2의 별도
 adapter는 검증된 legacy World 스냅샷만 Core에 투영한다. 현재 P2 완료 후보와
-외부 검증 상태는 P2_RUNDOWN.md, 다음 Camera & View/Format은 P3_HANDOFF.md를
+P2/P3 테스트 완료는 사용자 보고(2026-10-09)로 반영했다. 다음 Gameplay는 NEXT.md를
 읽는다. 아래 시작 절차와 설치 당시 관찰은 역사적 문맥이다.
 
 갱신일: 2026-10-09. P0/P1과 버전 전환·저장소 정리를 반영했다.
@@ -19,8 +19,8 @@ BRIEF.md의 0.3 목표 순으로 읽는다. BRIEF는 첨부 PentaWorks의 설계
 
 퀵스타트의 첫 작업 지시문을 받으면 다시 시작 허가를 묻지 않고:
 
-1. git status/HEAD/remotes와 실제 도구, 열린 PR #3(P2)·#4(P3)를 확인한다.
-   P3는 P2에 쌓인 draft이며 중복 구현하지 않는다. 사용자 변경은 보존한다.
+1. git status/HEAD/remotes와 실제 도구, PR #3(P2)·#4(P3)의 병합 상태를 확인한다.
+   완료된 P0–P3를 반복하지 않는다. NEXT.md부터 다음 Gameplay를 정한다. 사용자 변경은 보존한다.
 2. pentomino_scout를 읽기 전용으로 호출한다. BOOTSTRAP_PACKETS.md의 P0-S를
    사용하여 실제 모듈·API·테스트·경계 위험을 조사한다.
 3. .agent/PLANS.md에 맞는 active ExecPlan을 작성하고 Tiny Core → View/Format →
@@ -103,7 +103,7 @@ docs/public/pentomino-p2/, SDK 생성은 scripts/package_p2_external.py를 사�
 
 2026-10-09 사용자가 기존 테스트 전부 완료를 보고했다. 과거 실패/NOT RUN은 당시 기록으로
 보존하며 이 정리에서 기능 구현 완료로 바꾸지 않는다. 병합된 P0/P1 브랜치를 정리하고
-진행 중인 P2/P3 PR은 유지한다. README → docs/README.md → STATUS.md 순서로 진입한다.
+P2/P3는 사용자 테스트 성공 보고 후 순서대로 병합한다. README → docs/README.md → STATUS.md 순서로 진입한다.
 공개 다운로드는 GitHub Releases이며 Drive는 비공개 보관/서명 백업이다.
 
 ## 근거와 복구 링크

@@ -1,0 +1,26 @@
+GE4G Pentomino P3 — 외부 GPT Work 테스트 요청
+
+P3 외부 테스트가 필요합니다. 상태: EXTERNAL VALIDATION PENDING.
+compiled source-free SDK와 기존 다섯 번째 Nuvema 콘텐츠 fixture입니다.
+engine repository/internal implementation/existing tests를 읽지 않는 새 GPT Work
+세션에서 ZIP 내부 EXTERNAL_TESTER_TASK.md를 따르고 새 consumer tests를 작성하세요.
+문서·기본 example 통과만으로 PASS를 선언하지 마세요.
+
+ZIP: GE4G-P3-camera-public.zip (ZIP_LZMA,29,765,917bytes)
+SHA256: e462a7268c19805ca36dc2aec304476e4d034054d6122a536d97e8f82e80f178
+SDK commit: b43a251d78ecc55c3605b98874aee04888327ceb
+Manifest194파일 + MANIFEST/SHA256SUMS = ZIP196파일.
+Exact rustc1.99.0 b940084d7, x86_64-unknown-linux-gnu, LLVM23.1.1.
+내부 packaging selfcheck는 통과했지만 외부 검증이 아닙니다.
+
+python3 -m zipfile -e GE4G-P3-camera-public.zip p3-sdk
+cd p3-sdk
+python3 run_public.py --check
+python3 run_public.py
+python3 run_public.py --example fifth_demo
+python3 run_public.py --source my_camera_tests.rs --test
+
+보고서에는 ZIP/library SHA256, 실행 명령, 새 테스트 source/rawlogs, 실제 관찰과
+PASS/FAIL/BLOCKED/UNVERIFIED를 남겨 주세요. 재압축했다면 그 사실도 기록하세요.
+Camera/View 제거·교체 및 기본 smooth/instant/retarget/save continuation 동안
+Core identity/records/RNG/event가 보존되는지 실제로 검증해야 합니다.
