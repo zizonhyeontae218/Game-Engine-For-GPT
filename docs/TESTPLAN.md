@@ -13,6 +13,13 @@ python3 scripts/check_p3_boundaries.py, public p3_public/fifth_demo examples and
 existing flatland_nuvema CLI replay regression. P3 external consumer gate is PENDING.
 Android/Windows remain the client verification matrix. No alpha binary is published here.
 
+P4 adds ge4g-pentomino-gameplay/native workspace tests, additive C ABI and public
+consumer checks. Run python3 scripts/check_p4_boundaries.py, the p4_public example
+and samples/pentomino_p4/consumer.py against the built native library. The CI
+workflow also compiles the C header smoke and runs a source-free packaged consumer.
+These are internal checks; separate-session external certification is UNVERIFIED.
+Exact commands/results: pentomino/P4_RUNDOWN.md and evidence/p4.
+
 ## FlatLand 0.2.0 acceptance
 
 Supported clients: Android and Windows only. Linux-hosted Rust/headless and Android

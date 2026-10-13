@@ -1,0 +1,4 @@
+   Compiling ge4g-pentomino-native v0.3.0-alpha.1 (/workspace/Game-Engine-For-GPT/crates/ge4g-pentomino-native)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1.14s
+     Running `target/debug/examples/p4_public samples/pentomino_p4/game.json /tmp/ge4g-p4-frames`
+{"battle":{"attack_count":5,"hp":[6,0],"turn":0,"winner":0},"core_tick":10,"frame_sha256":"6ef9dc3aaff45923a9a346d1fd7e71e0dbdef9efc0c1541d7654751f61f9f0f4","logical_step":5,"ok":true,"records":3,"renderer":"ge4g-render2d via P3 render_legacy"}

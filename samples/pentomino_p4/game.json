@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "width": 160,
+  "height": 96,
+  "tick_hz": 60,
+  "attack_control": "attack",
+  "fighters": [
+    {"id": "blue", "hp": 12, "damage": 4, "position": [40, 72], "color": [48, 144, 255, 255]},
+    {"id": "red", "hp": 11, "damage": 3, "position": [120, 72], "color": [255, 80, 72, 255]}
+  ]
+}

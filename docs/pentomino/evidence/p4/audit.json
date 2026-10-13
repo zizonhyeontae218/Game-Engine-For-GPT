@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "role": "pentomino_auditor",
+  "scope": "Independent read-only design/source review and narrow public native tests; not platform/external consumer certification",
+  "findings": [
+    {"severity": "HIGH", "problem": "Empty input with detached rules required absent rules history", "status": "FIXED", "regression": "literal_gameplay_removal_preserves_carrier_identity_and_reattaches_in_place"},
+    {"severity": "HIGH", "problem": "Canonical progressed battle status accepted at initial logical/Core tick", "status": "FIXED", "regression": "canonical_but_impossible_status_and_extra_carrier_records_are_atomic"},
+    {"severity": "HIGH", "problem": "Unsupported saved camera accepted only by headless mode", "status": "FIXED", "regression": "unsupported_canonical_camera_and_future_endpoint_are_rejected_in_both_modes"},
+    {"severity": "MEDIUM", "problem": "Decision tick followed by empty application tick accepted as complete bridge boundary", "status": "FIXED", "regression": "canonical_even_tick_cannot_claim_an_unapplied_phase_one_decision"}
+  ],
+  "final_review": "No unresolved HIGH/MEDIUM within reviewed scope",
+  "independent_narrow_command": "cargo test --locked -p ge4g-pentomino-native",
+  "independent_narrow_result": "PASS 14/14"
+}

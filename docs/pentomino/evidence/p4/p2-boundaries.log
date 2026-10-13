@@ -1,0 +1,1 @@
+{"ok": true, "core_transitive_engine_dependencies": [], "adapter_direction": "legacy -> adapter -> typed core", "p1_tests_sha256": "ce87260ccd1c7c5fe98daac774d70db90f7c6aed981c6c1767e953a288e8461a", "compatibility_baseline": "2d1ffd060389109f341fb5854ce07890f445f3f9"}

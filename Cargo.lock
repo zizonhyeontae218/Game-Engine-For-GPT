@@ -559,6 +559,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "ge4g-pentomino-gameplay"
+version = "0.3.0-alpha.1"
+dependencies = [
+ "ge4g-pentomino",
+ "serde",
+ "serde_json",
+ "sha2",
+]
+
+[[package]]
 name = "ge4g-pentomino-legacy"
 version = "0.3.0-alpha.1"
 dependencies = [
@@ -567,6 +577,23 @@ dependencies = [
  "ge4g-project",
  "ge4g-runtime",
  "sha2",
+]
+
+[[package]]
+name = "ge4g-pentomino-native"
+version = "0.3.0-alpha.1"
+dependencies = [
+ "ge4g-core",
+ "ge4g-pentomino",
+ "ge4g-pentomino-gameplay",
+ "ge4g-pentomino-view",
+ "ge4g-pentomino-view-legacy",
+ "ge4g-project",
+ "ge4g-render2d",
+ "serde",
+ "serde_json",
+ "sha2",
+ "thiserror 2.0.21",
 ]
 
 [[package]]
