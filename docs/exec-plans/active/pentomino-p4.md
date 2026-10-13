@@ -57,8 +57,9 @@ proposal: two Core ticks per logical input, decision Events then carrier Actions
 Authority provider remains independent and survives actual CoreHost::remove.
 Auditor found four real defects; all are fixed with independent regression tests.
 Workspace fmt/clippy/test (169), P2/P3/P4 checks, five legacy golden replays,
-public examples, C linkage and ctypes calls PASS. Source-free packaging, PR and
-remote CI finalization remain next. External new-session Consumer certification
+public examples, C linkage and ctypes calls PASS. Source-free SDK packaging and out-of-tree C/ctypes runs PASS.
+PR #5 is open; implementation commit51a9a17 acceptance CI38414171986 PASS.
+Current client CI state is captured separately; no P4 client integration is claimed. External new-session Consumer certification
 cannot be supplied by ordinary in-repo workers and remains UNVERIFIED.
 
 ## Verification log

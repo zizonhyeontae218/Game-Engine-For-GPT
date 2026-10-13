@@ -7,7 +7,10 @@ FlatLand 게임 실행을 대체 구현이라고 부르지 않았고 Core/기존
 
 Status: **PARTIAL**. 구현·내부 검증은 PASS. 독립 새 세션/source-free Consumer
 인증은 UNVERIFIED이며 내부 공개-API 예제나 packaged selfcheck로 대체하지 않는다.
-PR/원격 CI 및 packaged SDK의 최종 링크·해시는 evidence/p4에 기록한다.
+[PR #5](https://github.com/zizonhyeontae218/Game-Engine-For-GPT/pull/5) 생성 완료.
+구현 commit `51a9a17`의 [원격 acceptance CI](https://github.com/zizonhyeontae218/Game-Engine-For-GPT/actions/runs/38414171986)
+PASS. SDK selfcheck와 실제 source-free C/ctypes 실행도 PASS.
+외부 인증 이외의 요청된 구현 산출물은 준비됐다.
 
 Checklist:
 
@@ -35,6 +38,10 @@ Validation:
   PASS. [명령·결과](evidence/p4/checks.json).
 - Basement, Pac-Man, Signal Yard, Harbor, Nuvema replay: 모두 PASS. 실제
   deterministic SHA256/golden RGBA/PNG/save-reload 결과를 개별 legacy 로그에 보존.
+- 소스 없는 `/workspace/ge4g-p4-public-sdk`에서 공개 C 헤더 compile/link와
+  cdylib ctypes Consumer 실행: PASS. 소비자 런타임은 engine source를 읽지 않는다.
+  SDK ZIP SHA256 `7d7651d7a762af7fa6e97f30745b5a160575d7ecad212997b29b68532d793864`.
+  [manifest](evidence/p4/sdk-manifest.json), [source-free 결과](evidence/p4/sourcefree-result.json).
 - C header compile/link smoke와 실제 cdylib ctypes Consumer: PASS.
   [Consumer 로그](evidence/p4/ffi-consumer.log), [C 로그](evidence/p4/c-smoke.log).
 - P4 public 예제: 5회 공격, Core Tick10, HP `[6,0]`, winner0. 실제 PNG
