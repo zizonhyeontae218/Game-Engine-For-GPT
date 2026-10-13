@@ -1,30 +1,34 @@
-# 다음 작업 — Gameplay 첫 slice
+# 다음 작업 — P5 Turn Combat
 
-P0–P3는 완료됐다. P2/P3 기존 테스트는 2026-10-09 사용자 보고로 모두 PASS 처리했다.
-저장된 CI 로그와 사용자 외부 테스트 완료 근거는 구분한다. 정식 0.3 출시를 뜻하지 않는다.
+P0–P3는 main에 병합됐고 기존 테스트는 2026-10-09 사용자 보고로 PASS 처리됐다.
+P4 작업 브랜치에는 최소 Gameplay·네이티브 연결이 구현돼 실제 Rust/C 호출과
+CPU 프레임을 검증했다. 현재 병합·CI·외부 인증 상태는 P4_RUNDOWN.md에서 확인한다.
+내부 검증 성공은 정식 0.3 출시나 Android/Windows 실행물 완성을 뜻하지 않는다.
 
-## 순서와 먼저 앱을 확장하지 않는 이유
+## P4에서 이어갈 실제 경계
 
-Core/View 테스트만으로는 앱의 입력·프레임 전달·저장·세션 종료에서 생기는 연결 문제를
-확인할 수 없다. 작은 실행 검증은 그 빈틈을 찾기 위해 필요하지만, 공개 경계가 바뀌는
-동안 큰 게임과 모바일 UI를 먼저 만들면 반복 패치가 늘어난다. 아래 순서로 범위를 제한한다.
+- 영속 StateProvider와 제거 가능한 TurnCombat은 공개 P2 API만 사용한다.
+  입력 한 번은 결정 Event Tick과 적용 Action Tick의 두 단계다.
+- NativeBridge가 실제 CoreHost/ViewHost/CameraFrame/CPU 프레임을 연결한다.
+  저장2와 Presentation 저장1은 독립 문자열이며 세션 복원은 전체 staging 후 교체한다.
+- 공개 관측은 구조화된 Map 키를 JSON 객체로 쓰지 않고 정렬된 DTO 배열을 쓴다.
+- Gameplay 제거는 실제 CoreHost::remove이고, 전투 권위 상태·Scene/Entity는
+  StateProvider에 남는다. ABI1·FlatLand 게임/저장 호환성은 유지한다.
+- 독립 새 세션/source-free Consumer 인증은 내부 packaged consumer 재현과
+  구분한다. P4 SDK와 새 Consumer 테스트로 외부 근거를 남긴다.
 
-1. **최소 Gameplay·네이티브 연결 계약부터 정한다.** 최신 main과 P2/P3 계약을 읽고
-   architect/auditor가 입력·조회 자료의 직렬화·프레임·세션·저장 경계를 검토한다.
-   현재 ReadFrame은 Rust typed DTO이며 앱으로 그대로 JSON 전송할 수 있다고 가정하지 않는다.
-   기존 ABI1, schema/save, data-only 게임 가져오기와 앱 서명 호환성을 보존한다.
-2. **교체 가능한 턴 전투 플러그인과 작은 연결 검증을 만든다.** P2 records/actions/events와
-   P3 ReadFrame·View/Camera를 사용한다. 두 전투자의 공격/종료 정도로 범위를 제한한다.
-   전투 규칙은 Tiny Core 밖에 두며 legacy gameplay를 Core에서 호출하지 않는다.
-   헤드리스 리플레이, 저장/복원, 실패 복구, 제거/재설치, View 교체 시 상태 보존을 검증한다.
-   네이티브 호출로 입력→틱→프레임→저장→종료 경계를 확인해 계약의 빈틈을 수정한다.
-3. **그 경계가 안정되면 실제 실행물을 만든다.** 기존 Flutter 앱을 재사용한 Android 최소
-   실행 레이어와 게임·실행기·런타임이 내장된 Windows 예제를 한 묶음으로 완성한다.
-   작은 게임 하나를 실제로 조작하고 저장/복원할 수 있어야 한다. 이 첫 게임에 전 Gameplay
-   기능을 넣지 않는다. 플랫폼 검증과 서명·체크섬을 마친 뒤 함께 알파 배포한다.
+## 순서
 
-그 다음 realtime combat → open world → interaction/platformer 순서로 독립 플러그인을 늘린다.
-Full3D renderer, 플랫폼 확대, Forge/스토리·자산 생성은 이 첫 slice에 포함하지 않는다.
-Forge는 0.4다. 엔진 전체를 다시 쓰거나 완료된 P0–P3를 반복하지 않는다.
+1. P4_CONTRACT/P4_HANDOFF와 최신 main/PR 상태를 확인한다. P0–P3를 반복하지 않는다.
+2. P5에서 더 풍부한 턴 액션·효과·비용·결과 규칙을 작은 JSON 기반 플러그인으로
+   확장한다. 전투 규칙을 Tiny Core에 넣지 않으며 변경된 계약과 저장 migration을
+   architect/auditor가 검토한다. 원자성·결정론·권위 상태 보존 회귀를 유지한다.
+3. 네이티브 경계가 안정되면 기존 Flutter 클라이언트를 재사용해 Android 최소
+   실행 레이어와 게임·실행기·런타임이 내장된 Windows Playable Alpha를 검증한다.
+   실제 조작·저장/복원·종료, 빌드/서명/체크섬과 플랫폼별 근거가 필요하다.
 
-[현재 상태](STATUS.md) · [P2 계약](P2_CONTRACT.md) · [P3 계약](P3_CONTRACT.md)
+Realtime combat, open world, interaction/platformer는 이후 독립 플러그인 작업이다.
+Full3D renderer·플랫폼 확대·Forge/스토리·자산 생성은 P4/P5 첫 경계에 포함하지 않는다.
+Forge는 0.4다.
+
+[현재 상태](STATUS.md) · [P4 계약](P4_CONTRACT.md) · [P4 검증](P4_RUNDOWN.md) · [P5 Handoff](P4_HANDOFF.md)

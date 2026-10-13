@@ -134,8 +134,10 @@ all P2/P3 tests additionally accepted by user report on 2026-10-09.
 P3 Camera/View internal candidate is implemented outside Core: four View policies,
 multiCamera/default smooth2.5D/local save/discovery and existing fifth fixture.
 Read P3_CONTRACT.md/P3_RUNDOWN.md. All P2/P3 tests are PASS by user report
-(2026-10-09); next work is the removable turn-combat Gameplay slice in NEXT.md.
-Gameplay remains unimplemented; verify actual merged HEAD before starting.
+(2026-10-09). P4 branch candidate implements a minimal removable TurnCombat
+plugin and native bridge; read P4_CONTRACT.md/P4_RUNDOWN.md/P4_HANDOFF.md.
+Internal execution is verified; separate-session external consumer certification
+remains UNVERIFIED. P5 expands Turn Combat; verify actual merged HEAD before starting.
 When the user invokes `$pentomino-orchestrate`, read
 `docs/pentomino/HANDOFF.md` and `docs/pentomino/BRIEF.md`, then dispatch
 `pentomino_scout` read-only before architecture or implementation.

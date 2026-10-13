@@ -1,0 +1,114 @@
+ Downloading crates ...
+  Downloaded anstyle-query v1.1.5
+  Downloaded arrayvec v0.7.8
+  Downloaded alsa-sys v0.3.1
+  Downloaded anstream v1.0.0
+  Downloaded alsa v0.9.1
+  Downloaded bytemuck v1.25.2
+  Downloaded clap_derive v4.6.7
+  Downloaded dasp_sample v0.11.0
+  Downloaded anstyle-parse v1.0.0
+  Downloaded encoding_rs v0.8.42
+  Downloaded extended v0.1.0
+  Downloaded clap v4.6.7
+  Downloaded clap_lex v1.1.1
+  Downloaded core_detect v1.0.0
+  Downloaded cpal v0.16.0
+  Downloaded is_terminal_polyfill v1.70.2
+  Downloaded lazy_static v1.5.1
+  Downloaded heck v0.5.0
+  Downloaded multiversion_no_op v1.0.0
+  Downloaded num-bigint v0.4.8
+  Downloaded log v0.4.34
+  Downloaded num-rational v0.4.2
+  Downloaded strsim v0.11.1
+  Downloaded symphonia-codec-pcm v0.5.5
+  Downloaded num-integer v0.1.47
+  Downloaded simdutf8 v0.1.5
+  Downloaded symphonia-codec-vorbis v0.5.5
+  Downloaded symphonia-format-ogg v0.5.5
+  Downloaded symphonia-core v0.5.5
+  Downloaded symphonia-metadata v0.5.5
+  Downloaded x11-dl v2.21.0
+  Downloaded anstyle v1.0.14
+  Downloaded symphonia v0.5.5
+  Downloaded clap_builder v4.6.7
+  Downloaded symphonia-utils-xiph v0.5.5
+  Downloaded utf8parse v0.2.2
+  Downloaded minifb v0.28.0
+  Downloaded colorchoice v1.0.5
+  Downloaded symphonia-format-riff v0.5.5
+  Downloaded raw-window-handle v0.6.2
+  Downloaded rodio v0.21.1
+   Compiling syn v3.0.6
+   Compiling num-traits v0.2.19
+    Checking once_cell v1.21.4
+    Checking tempfile v3.27.0
+    Checking ordered-float v2.10.1
+   Compiling encoding_rs v0.8.42
+    Checking lazy_static v1.5.1
+    Checking log v0.4.34
+    Checking arrayvec v0.7.8
+    Checking bytemuck v1.25.2
+    Checking symphonia-core v0.5.5
+    Checking simdutf8 v0.1.5
+   Compiling multiversion_no_op v1.0.0
+    Checking core_detect v1.0.0
+   Compiling serde_derive v1.0.229
+   Compiling thiserror-impl v2.0.21
+    Checking thiserror v2.0.21
+    Checking symphonia-metadata v0.5.5
+   Compiling alsa-sys v0.3.1
+    Checking symphonia-utils-xiph v0.5.5
+    Checking num-integer v0.1.47
+   Compiling x11-dl v2.21.0
+    Checking extended v0.1.0
+   Compiling cpal v0.16.0
+    Checking symphonia-format-riff v0.5.5
+    Checking num-bigint v0.4.8
+    Checking serde v1.0.229
+    Checking alsa v0.9.1
+    Checking serde_spanned v0.6.9
+    Checking schemars v0.8.22
+    Checking toml_datetime v0.6.11
+    Checking ge4g-core v0.3.0-alpha.1 (/workspace/Game-Engine-For-GPT/crates/ge4g-core)
+    Checking toml_edit v0.22.27
+    Checking json5 v0.4.1
+    Checking serde-value v0.7.0
+    Checking mlua v0.11.6
+    Checking toml v0.8.23
+    Checking ge4g-project v0.3.0-alpha.1 (/workspace/Game-Engine-For-GPT/crates/ge4g-project)
+    Checking ge4g-pentomino v0.3.0-alpha.1 (/workspace/Game-Engine-For-GPT/crates/ge4g-pentomino)
+    Checking ge4g-pentomino-view v0.3.0-alpha.1 (/workspace/Game-Engine-For-GPT/crates/ge4g-pentomino-view)
+    Checking ge4g-runtime v0.3.0-alpha.1 (/workspace/Game-Engine-For-GPT/crates/ge4g-runtime)
+    Checking ge4g-render2d v0.3.0-alpha.1 (/workspace/Game-Engine-For-GPT/crates/ge4g-render2d)
+    Checking symphonia-codec-vorbis v0.5.5
+    Checking symphonia-format-ogg v0.5.5
+    Checking symphonia-codec-pcm v0.5.5
+   Compiling minifb v0.28.0
+    Checking dasp_sample v0.11.0
+    Checking ge4g-pentomino-view-legacy v0.3.0-alpha.1 (/workspace/Game-Engine-For-GPT/crates/ge4g-pentomino-view-legacy)
+    Checking utf8parse v0.2.2
+    Checking anstyle-parse v1.0.0
+    Checking symphonia v0.5.5
+    Checking ge4g-pentomino-gameplay v0.3.0-alpha.1 (/workspace/Game-Engine-For-GPT/crates/ge4g-pentomino-gameplay)
+    Checking num-rational v0.4.2
+    Checking colorchoice v1.0.5
+    Checking anstyle v1.0.14
+    Checking raw-window-handle v0.6.2
+    Checking anstyle-query v1.1.5
+    Checking is_terminal_polyfill v1.70.2
+    Checking anstream v1.0.0
+    Checking rodio v0.21.1
+    Checking clap_lex v1.1.1
+   Compiling heck v0.5.0
+    Checking strsim v0.11.1
+    Checking clap_builder v4.6.7
+   Compiling clap_derive v4.6.7
+    Checking ge4g-pentomino-legacy v0.3.0-alpha.1 (/workspace/Game-Engine-For-GPT/crates/ge4g-pentomino-legacy)
+    Checking ge4g-platform v0.3.0-alpha.1 (/workspace/Game-Engine-For-GPT/crates/ge4g-platform)
+    Checking ge4g-pentomino-native v0.3.0-alpha.1 (/workspace/Game-Engine-For-GPT/crates/ge4g-pentomino-native)
+    Checking ge4g-client v0.3.0-alpha.1 (/workspace/Game-Engine-For-GPT/crates/ge4g-client)
+    Checking clap v4.6.7
+    Checking ge4g-cli v0.3.0-alpha.1 (/workspace/Game-Engine-For-GPT/crates/ge4g-cli)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 17.97s

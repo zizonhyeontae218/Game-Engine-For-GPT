@@ -1,0 +1,333 @@
+{
+  "version": 1,
+  "baseline": "8622034d1f0082a3178dc2e7262539a50a064c26",
+  "implementation_commit": "51a9a17785fc8140028dc10ed36065b878513e78",
+  "branch": "feature/pentomino-p4-native-bridge",
+  "status": "PARTIAL",
+  "internal_acceptance": "PASS",
+  "external_new_session_consumer": "UNVERIFIED",
+  "workspace_tests": 169,
+  "new_gameplay_tests": 5,
+  "new_native_tests": 14,
+  "checks": [
+    {
+      "label": "p2-boundaries",
+      "command": [
+        "python3",
+        "scripts/check_p2_boundaries.py"
+      ],
+      "exit_code": 0,
+      "result": "PASS",
+      "log": "p2-boundaries.log"
+    },
+    {
+      "label": "p3-boundaries",
+      "command": [
+        "python3",
+        "scripts/check_p3_boundaries.py"
+      ],
+      "exit_code": 0,
+      "result": "PASS",
+      "log": "p3-boundaries.log"
+    },
+    {
+      "label": "p4-boundaries",
+      "command": [
+        "python3",
+        "scripts/check_p4_boundaries.py"
+      ],
+      "exit_code": 0,
+      "result": "PASS",
+      "log": "p4-boundaries.log"
+    },
+    {
+      "label": "p3-public",
+      "command": [
+        "cargo",
+        "run",
+        "--locked",
+        "-p",
+        "ge4g-pentomino-view",
+        "--example",
+        "p3_public"
+      ],
+      "exit_code": 0,
+      "result": "PASS",
+      "log": "p3-public.log"
+    },
+    {
+      "label": "p3-fifth",
+      "command": [
+        "cargo",
+        "run",
+        "--locked",
+        "-p",
+        "ge4g-pentomino-view-legacy",
+        "--example",
+        "fifth_demo",
+        "--",
+        "examples/flatland_nuvema",
+        "/tmp/ge4g-p4-p3-fifth"
+      ],
+      "exit_code": 0,
+      "result": "PASS",
+      "log": "p3-fifth.log"
+    },
+    {
+      "label": "p4-public",
+      "command": [
+        "cargo",
+        "run",
+        "--locked",
+        "-p",
+        "ge4g-pentomino-native",
+        "--example",
+        "p4_public",
+        "--",
+        "samples/pentomino_p4/game.json",
+        "/tmp/ge4g-p4-frames"
+      ],
+      "exit_code": 0,
+      "result": "PASS",
+      "log": "p4-public.log"
+    },
+    {
+      "label": "headless-clippy",
+      "command": [
+        "cargo",
+        "clippy",
+        "--locked",
+        "-p",
+        "ge4g-cli",
+        "--no-default-features",
+        "--all-targets",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 0,
+      "result": "PASS",
+      "log": "headless-clippy.log"
+    },
+    {
+      "label": "headless-test",
+      "command": [
+        "cargo",
+        "test",
+        "--locked",
+        "-p",
+        "ge4g-cli",
+        "--no-default-features"
+      ],
+      "exit_code": 0,
+      "result": "PASS",
+      "log": "headless-test.log"
+    },
+    {
+      "label": "release-consistency",
+      "command": [
+        "python3",
+        "scripts/release_consistency.py",
+        "--self-test"
+      ],
+      "exit_code": 0,
+      "result": "PASS",
+      "log": "release-consistency.log"
+    },
+    {
+      "label": "pentaworks",
+      "command": [
+        "python3",
+        "scripts/validate_pentaworks.py"
+      ],
+      "exit_code": 0,
+      "result": "PASS",
+      "log": "pentaworks.log"
+    },
+    {
+      "label": "python-tests",
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ],
+      "exit_code": 0,
+      "result": "PASS",
+      "log": "python-tests.log"
+    },
+    {
+      "label": "legacy-basement_demo",
+      "command": [
+        "cargo",
+        "run",
+        "--locked",
+        "-p",
+        "ge4g-cli",
+        "--",
+        "test",
+        "examples/basement_demo",
+        "--json"
+      ],
+      "exit_code": 0,
+      "result": "PASS",
+      "log": "legacy-basement_demo.log"
+    },
+    {
+      "label": "legacy-flatland_pacman",
+      "command": [
+        "cargo",
+        "run",
+        "--locked",
+        "-p",
+        "ge4g-cli",
+        "--",
+        "test",
+        "examples/flatland_pacman",
+        "--json"
+      ],
+      "exit_code": 0,
+      "result": "PASS",
+      "log": "legacy-flatland_pacman.log"
+    },
+    {
+      "label": "legacy-flatland_signal_yard",
+      "command": [
+        "cargo",
+        "run",
+        "--locked",
+        "-p",
+        "ge4g-cli",
+        "--",
+        "test",
+        "examples/flatland_signal_yard",
+        "--json"
+      ],
+      "exit_code": 0,
+      "result": "PASS",
+      "log": "legacy-flatland_signal_yard.log"
+    },
+    {
+      "label": "legacy-flatland_harbor",
+      "command": [
+        "cargo",
+        "run",
+        "--locked",
+        "-p",
+        "ge4g-cli",
+        "--",
+        "test",
+        "examples/flatland_harbor",
+        "--json"
+      ],
+      "exit_code": 0,
+      "result": "PASS",
+      "log": "legacy-flatland_harbor.log"
+    },
+    {
+      "label": "legacy-flatland_nuvema",
+      "command": [
+        "cargo",
+        "run",
+        "--locked",
+        "-p",
+        "ge4g-cli",
+        "--",
+        "test",
+        "examples/flatland_nuvema",
+        "--json"
+      ],
+      "exit_code": 0,
+      "result": "PASS",
+      "log": "legacy-flatland_nuvema.log"
+    },
+    {
+      "label": "fmt",
+      "command": [
+        "cargo",
+        "fmt",
+        "--all",
+        "--check"
+      ],
+      "exit_code": 0,
+      "result": "PASS",
+      "log": "fmt.log"
+    },
+    {
+      "label": "clippy-workspace",
+      "command": [
+        "cargo",
+        "clippy",
+        "--locked",
+        "--workspace",
+        "--all-targets",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 0,
+      "result": "PASS",
+      "log": "clippy-workspace.log"
+    },
+    {
+      "label": "test-workspace",
+      "command": [
+        "cargo",
+        "test",
+        "--locked",
+        "--workspace"
+      ],
+      "exit_code": 0,
+      "result": "PASS",
+      "log": "test-workspace.log"
+    },
+    {
+      "label": "filetree",
+      "command": [
+        "python3",
+        "scripts/filetree.py",
+        "lint"
+      ],
+      "exit_code": 0,
+      "result": "PASS",
+      "log": "filetree-final.log"
+    }
+  ],
+  "sourcefree_sdk_selfcheck": "PASS",
+  "sourcefree_sdk_commit": "51a9a17785fc8140028dc10ed36065b878513e78",
+  "sdk_zip_sha256": "7d7651d7a762af7fa6e97f30745b5a160575d7ecad212997b29b68532d793864",
+  "sdk_local_path": "/workspace/ge4g-p4-public-sdk.zip",
+  "sourcefree_consumer": "sourcefree-result.json",
+  "pr": "https://github.com/zizonhyeontae218/Game-Engine-For-GPT/pull/5",
+  "ci_at_implementation_commit": [
+    {
+      "workflow": "Basement acceptance",
+      "event": "pull_request",
+      "status": "completed",
+      "url": "https://github.com/zizonhyeontae218/Game-Engine-For-GPT/actions/runs/38414171986",
+      "conclusion": "success",
+      "evidence": "ci-acceptance.json"
+    },
+    {
+      "workflow": "GE4G Flutter clients",
+      "event": "pull_request",
+      "status": "in_progress",
+      "url": "https://github.com/zizonhyeontae218/Game-Engine-For-GPT/actions/runs/38414172289",
+      "conclusion": "",
+      "evidence": "ci-clients.json"
+    }
+  ],
+  "compatibility": "P0-P3 and legacy source/tests unchanged; additive ABI; dependency versions preserved",
+  "platform_scope": "Linux-hosted native development only; no client/platform/release certification",
+  "limitations": [
+    "Thread-affine C sessions",
+    "Two fixed Core ticks per logical input",
+    "JSON RGBA and full candidate staging",
+    "Existing orthographic CPU subset",
+    "Trusted native callbacks, not malicious-process sandbox"
+  ],
+  "sourcefree_ci_artifacts": "ci-artifacts.json"
+}

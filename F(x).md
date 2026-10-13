@@ -156,3 +156,18 @@ local presentation tick, base/transition endpoints/progress, tracking history an
 keyed shake count are presentation state, saved independently from P2 Core.
 CameraStatus.current is base; CameraFrame.target is effective presentation pose.
 Exact contracts/limits: docs/pentomino/P3_CONTRACT.md. External gate PENDING.
+
+## Experimental P4 native bridge (contract1)
+
+- `p4.state` owns persistent status fields hp0/hp1/turn/winner/attack_count,
+  `position_0`/`position_1`, actual fighter EntityRefs and Scene `s_`+SHA256(`p4_arena`).
+- `p4.battle_state` is the carrier's read capability; `p4.turn_combat` is the
+  independently removable rule owner with attack Action and decision Events.
+- `p4.arena` View and `p4.camera` are presentation-only IDs. Core logical
+  boundary is two fixed ticks/input; independent presentation ticks are saved.
+- P4 save envelope version1 stores exact Core save2 and presentation save1
+  strings separately plus config binding/seed/clocks/attachment/View family.
+- Native session IDs are runtime-only process-unique routing handles, never
+  persisted or reused after close. Existing ABI1 IDs/saves remain unchanged.
+
+Exact limits, authority/removal behavior and additive C ABI: P4_CONTRACT.md.

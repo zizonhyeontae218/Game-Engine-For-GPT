@@ -24,9 +24,12 @@ Actions 아티팩트는 CI 검증용입니다. 서명되지 않은 Android CI AP
 P0–P3가 main에 병합됐습니다. Tiny Core는 Scene/Entity identity, typed records, inputs,
 per-owner history와 save2/discovery를 제공합니다. P3는 독립 View/Format과 다중
 Camera, 좌표 변환, 저장 가능한 부드러운 2.5D 전환을 제공합니다.
-기존 FlatLand runtime과 P1 scalar/save1은 유지합니다. Gameplay 플러그인과
-전체 3D renderer는 아직 구현 범위에 포함되지 않습니다.
+기존 FlatLand runtime과 P1 scalar/save1은 유지합니다. P4 작업 브랜치에는 최소
+턴 전투 Gameplay와 네이티브 세션·입력·프레임·저장 연결이 구현됐습니다.
+내부 검증과 외부 새 세션 Consumer 인증은 구분하며, 전체 3D renderer와
+Android/Windows Playable Alpha 실행물은 이번 범위에 포함되지 않습니다.
 [P2 계약](docs/pentomino/P2_CONTRACT.md) · [P3 계약](docs/pentomino/P3_CONTRACT.md) ·
+[P4 계약·검증](docs/pentomino/P4_RUNDOWN.md) ·
 [다음 작업](docs/pentomino/NEXT.md).
 
 | 개발선 | 용도 |

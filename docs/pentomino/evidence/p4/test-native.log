@@ -1,0 +1,34 @@
+   Compiling ge4g-pentomino-native v0.3.0-alpha.1 (/workspace/Game-Engine-For-GPT/crates/ge4g-pentomino-native)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.15s
+     Running unittests src/lib.rs (target/debug/deps/ge4g_pentomino_native-d0a4c3126c310025)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/native_contract.rs (target/debug/deps/native_contract-fb8ab05e06d79198)
+
+running 12 tests
+test canonical_but_impossible_status_and_extra_carrier_records_are_atomic ... ok
+test camera_and_view_changes_leave_entire_core_save_unchanged ... ok
+test close_invalidates_all_operations_and_foreign_bridge_handles ... ok
+test canonical_even_tick_cannot_claim_an_unapplied_phase_one_decision ... ok
+test declarative_control_mapping_and_content_binding_are_enforced ... ok
+test literal_gameplay_removal_preserves_carrier_identity_and_reattaches_in_place ... ok
+test real_frame_observation_rows_and_decision_events_follow_actual_attack ... ok
+test combined_save_restores_midflight_camera_and_deterministic_continuation ... ok
+test separate_save_failures_and_forged_clocks_do_not_replace_active_session ... ok
+test strict_json_and_invalid_inputs_are_atomic_and_retryable ... ok
+test same_seed_trace_and_headless_have_identical_core_authority ... ok
+test unsupported_canonical_camera_and_future_endpoint_are_rejected_in_both_modes ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.34s
+
+     Running tests/native_ffi.rs (target/debug/deps/native_ffi-e7b7cdec65acaade)
+
+running 2 tests
+test exported_abi_delivers_actual_native_frames_and_owned_response_lifetime ... ok
+test exported_abi_rejects_null_invalid_bytes_versions_and_bad_input_atomically ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.11s
+

@@ -1,0 +1,21 @@
+[package]
+name = "ge4g-pentomino-native"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[lib]
+crate-type = ["rlib", "cdylib", "staticlib"]
+
+[dependencies]
+ge4g-pentomino = { path = "../ge4g-pentomino" }
+ge4g-pentomino-gameplay = { path = "../ge4g-pentomino-gameplay" }
+ge4g-pentomino-view = { path = "../ge4g-pentomino-view" }
+ge4g-pentomino-view-legacy = { path = "../ge4g-pentomino-view-legacy" }
+ge4g-core = { path = "../ge4g-core" }
+ge4g-project = { path = "../ge4g-project" }
+ge4g-render2d = { path = "../ge4g-render2d" }
+serde.workspace = true
+serde_json.workspace = true
+sha2.workspace = true
+thiserror.workspace = true

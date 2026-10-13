@@ -17,6 +17,7 @@ main은 **0.3.0 Pentomino 알파**, 안정판은 **0.2.0 FlatLand**입니다.
 - [현재 main 상태](pentomino/STATUS.md) · [인수인계](pentomino/HANDOFF.md)
 - [다음 Gameplay 작업](pentomino/NEXT.md) · [범위](pentomino/BRIEF.md)
 - [P1 계약](pentomino/P1_CONTRACT.md) · [P2 계약](pentomino/P2_CONTRACT.md) · [P3 계약](pentomino/P3_CONTRACT.md)
+- [P4 네이티브 계약](pentomino/P4_CONTRACT.md) · [P4 검증](pentomino/P4_RUNDOWN.md) · [P5 Handoff](pentomino/P4_HANDOFF.md)
 - [아키텍처](ARCHITECTURE.md) · [검증 기준](TESTPLAN.md)
 - [역할 설정 안내](pentomino/SETUP.md) · [파일 지도](../FILETREE.md)
 

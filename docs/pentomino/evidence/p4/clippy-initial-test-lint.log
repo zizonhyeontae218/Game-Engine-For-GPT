@@ -1,0 +1,12 @@
+    Checking ge4g-pentomino-native v0.3.0-alpha.1 (/workspace/Game-Engine-For-GPT/crates/ge4g-pentomino-native)
+error: using `chunks_exact` with a constant chunk size
+  --> crates/ge4g-pentomino-native/tests/native_contract.rs:99:14
+   |
+99 |             .chunks_exact(4)
+   |              ^^^^^^^^^^^^^^^ help: consider using `as_chunks` instead: `as_chunks::<4>().0.iter()`
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#chunks_exact_to_as_chunks
+   = note: `-D clippy::chunks-exact-to-as-chunks` implied by `-D warnings`
+   = help: to override `-D warnings` add `#[allow(clippy::chunks_exact_to_as_chunks)]`
+
+error: could not compile `ge4g-pentomino-native` (test "native_contract") due to 1 previous error

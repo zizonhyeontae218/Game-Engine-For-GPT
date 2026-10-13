@@ -1,0 +1,67 @@
+   Compiling serde_core v1.0.229
+   Compiling memchr v2.8.3
+   Compiling libc v0.2.189
+   Compiling ucd-trie v0.1.7
+   Compiling simd-adler32 v0.3.10
+   Compiling pest v2.9.2
+   Compiling serde v1.0.229
+   Compiling serde_json v1.0.151
+   Compiling adler2 v2.0.1
+   Compiling pest_meta v2.9.2
+   Compiling which v8.0.6
+   Compiling hashbrown v0.17.1
+   Compiling equivalent v1.0.2
+   Compiling indexmap v2.14.2
+   Compiling luajit-src v210.6.6+707c12b
+   Compiling pest_generator v2.9.2
+   Compiling crc32fast v1.5.2
+   Compiling miniz_oxide v0.9.1
+   Compiling toml_datetime v0.6.11
+   Compiling serde_spanned v0.6.9
+   Compiling toml_write v0.1.2
+   Compiling linux-raw-sys v0.12.1
+   Compiling dyn-clone v1.0.20
+   Compiling bitflags v2.13.2
+   Compiling winnow v0.7.15
+   Compiling rustix v1.1.5
+   Compiling toml_edit v0.22.27
+   Compiling schemars v0.8.22
+   Compiling mlua-sys v0.10.0
+   Compiling flate2 v1.1.10
+   Compiling pest_derive v2.9.2
+   Compiling num-traits v0.2.19
+   Compiling getrandom v0.4.3
+   Compiling miniz_oxide v0.8.9
+   Compiling fdeflate v0.3.7
+   Compiling smallvec v1.16.2
+   Compiling once_cell v1.21.4
+   Compiling fastrand v2.5.0
+   Compiling bitflags v1.3.2
+   Compiling scopeguard v1.2.0
+   Compiling lock_api v0.4.14
+   Compiling tempfile v3.27.0
+   Compiling png v0.17.16
+   Compiling parking_lot_core v0.9.12
+   Compiling ordered-float v2.10.1
+   Compiling json5 v0.4.1
+   Compiling typeid v1.0.3
+   Compiling toml v0.8.23
+   Compiling ge4g-core v0.3.0-alpha.1 (/workspace/Game-Engine-For-GPT/crates/ge4g-core)
+   Compiling ge4g-project v0.3.0-alpha.1 (/workspace/Game-Engine-For-GPT/crates/ge4g-project)
+   Compiling erased-serde v0.4.10
+   Compiling serde-value v0.7.0
+   Compiling parking_lot v0.12.5
+   Compiling ge4g-pentomino v0.3.0-alpha.1 (/workspace/Game-Engine-For-GPT/crates/ge4g-pentomino)
+   Compiling bstr v1.13.1
+   Compiling either v1.18.0
+   Compiling rustc-hash v2.1.3
+   Compiling mlua v0.11.6
+   Compiling ge4g-render2d v0.3.0-alpha.1 (/workspace/Game-Engine-For-GPT/crates/ge4g-render2d)
+   Compiling ge4g-runtime v0.3.0-alpha.1 (/workspace/Game-Engine-For-GPT/crates/ge4g-runtime)
+   Compiling ge4g-pentomino-view v0.3.0-alpha.1 (/workspace/Game-Engine-For-GPT/crates/ge4g-pentomino-view)
+   Compiling ge4g-pentomino-view-legacy v0.3.0-alpha.1 (/workspace/Game-Engine-For-GPT/crates/ge4g-pentomino-view-legacy)
+   Compiling ge4g-pentomino-gameplay v0.3.0-alpha.1 (/workspace/Game-Engine-For-GPT/crates/ge4g-pentomino-gameplay)
+   Compiling ge4g-pentomino-native v0.3.0-alpha.1 (/workspace/Game-Engine-For-GPT/crates/ge4g-pentomino-native)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 26.79s
+     Running `target/debug/examples/p4_public samples/pentomino_p4/game.json /tmp/ge4g-p4-frames`
+{"battle":{"attack_count":5,"hp":[6,0],"turn":0,"winner":0},"core_tick":10,"frame_sha256":"6ef9dc3aaff45923a9a346d1fd7e71e0dbdef9efc0c1541d7654751f61f9f0f4","logical_step":5,"ok":true,"records":3,"renderer":"ge4g-render2d via P3 render_legacy"}

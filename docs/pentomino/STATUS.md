@@ -27,11 +27,20 @@ transitions. P1 scalar/save1 and legacy runtime/schema/save/ABI1 remain preserve
 
 All P2/P3 tests are PASS by user report on 2026-10-09. This acceptance is separate
 from stored CI logs and the earlier P2 external Core23/23 report. Full3D GPU rendering,
-continuous legacy gameplay delegation and Gameplay plugins remain unimplemented.
+continuous legacy gameplay delegation remain unimplemented.
 
-Next: minimum Gameplay/native bridge contracts, a small turn-combat integration
-probe, then Android and embedded Windows deliverables once that boundary is stable. Read [NEXT.md](NEXT.md), P2_CONTRACT.md
-and P3_CONTRACT.md before choosing work. Do not repeat P0–P3. Forge remains0.4.
+P4 branch candidate adds a removable two-fighter Gameplay plugin, staged native
+sessions and additive `ge4g_p4_v1` C ABI. Actual P2 input/events/authority, P3
+CameraFrame, existing CPU pixels, separate save2/save1, removal and shutdown run
+through public APIs. Internal Rust/FFI/regression evidence is PASS; independent
+new-session source-free consumer certification remains UNVERIFIED. No claim that
+P4 is already merged or that Android/Windows Playable Alpha is delivered.
+Read [P4_CONTRACT.md](P4_CONTRACT.md), [P4_RUNDOWN.md](P4_RUNDOWN.md) and
+[P4_HANDOFF.md](P4_HANDOFF.md).
+
+Next: P5 richer Turn Combat, then Android and embedded Windows deliverables once
+the boundary is stable. Read [NEXT.md](NEXT.md), P2/P3/P4 contracts before choosing
+work. Do not repeat P0–P3. Forge remains0.4.
 
 ## Verification and release policy
 
