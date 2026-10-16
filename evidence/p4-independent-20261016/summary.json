@@ -1,0 +1,37 @@
+{
+  "candidate": "72d49a63f730e2a3ee2032e83948894e4fd480ba",
+  "sdk_artifact": 11823886424,
+  "sdk_suite_groups": {
+    "PASS": 24,
+    "FAIL": 0
+  },
+  "local_build_suite_groups": {
+    "PASS": 13,
+    "FAIL": 0
+  },
+  "workspace_rust_tests": {
+    "PASS": 169,
+    "FAIL": 0
+  },
+  "headless_cli_rust_tests": {
+    "PASS": 9,
+    "FAIL": 0
+  },
+  "additional_c_owned_response_test": {
+    "PASS": 1,
+    "FAIL": 0,
+    "responses_freed": 302
+  },
+  "not_tested_gates": [
+    "Windows P4 native client/device",
+    "Android P4 native client/device",
+    "ASan instrumented execution (build blocked)",
+    "Valgrind execution (loader symbols blocked)",
+    "TSan execution",
+    "filesystem-enforced blind consumer certification",
+    "multi-hour endurance"
+  ],
+  "confirmed_engine_defects": [],
+  "production_changes": false,
+  "approval": "Linux native functional scope passes; unrestricted final/platform/blind certification remains withheld."
+}

@@ -1,0 +1,50 @@
+   Compiling pest_derive v2.9.2
+    Checking toml v0.8.23
+    Checking mlua-sys v0.10.0
+    Checking ge4g-pentomino-view v0.3.0-alpha.1 (/workspace/scratch/0645066e1811/repo/crates/ge4g-pentomino-view)
+    Checking num-integer v0.1.47
+    Checking symphonia-metadata v0.5.5
+    Checking alsa-sys v0.3.1
+    Checking extended v0.1.0
+    Checking mlua v0.11.6
+    Checking symphonia-codec-pcm v0.5.5
+    Checking dasp_sample v0.11.0
+    Checking num-bigint v0.4.8
+    Checking alsa v0.9.1
+    Checking json5 v0.4.1
+    Checking symphonia-utils-xiph v0.5.5
+    Checking symphonia-format-riff v0.5.5
+    Checking utf8parse v0.2.2
+    Checking symphonia-format-ogg v0.5.5
+    Checking symphonia-codec-vorbis v0.5.5
+    Checking ge4g-project v0.3.0-alpha.1 (/workspace/scratch/0645066e1811/repo/crates/ge4g-project)
+    Checking anstyle-parse v1.0.0
+    Checking x11-dl v2.21.0
+    Checking ge4g-pentomino-gameplay v0.3.0-alpha.1 (/workspace/scratch/0645066e1811/repo/crates/ge4g-pentomino-gameplay)
+    Checking symphonia v0.5.5
+    Checking is_terminal_polyfill v1.70.2
+    Checking colorchoice v1.0.5
+    Checking anstyle v1.0.14
+    Checking anstyle-query v1.1.5
+    Checking raw-window-handle v0.6.2
+    Checking anstream v1.0.0
+    Checking clap_lex v1.1.1
+    Checking strsim v0.11.1
+    Checking clap_builder v4.6.7
+    Checking cpal v0.16.0
+    Checking num-rational v0.4.2
+    Checking ge4g-pentomino v0.3.0-alpha.1 (/workspace/scratch/0645066e1811/repo/crates/ge4g-pentomino)
+    Checking rodio v0.21.1
+    Checking clap v4.6.7
+    Checking ge4g-core v0.3.0-alpha.1 (/workspace/scratch/0645066e1811/repo/crates/ge4g-core)
+    Checking minifb v0.28.0
+    Checking ge4g-runtime v0.3.0-alpha.1 (/workspace/scratch/0645066e1811/repo/crates/ge4g-runtime)
+    Checking ge4g-render2d v0.3.0-alpha.1 (/workspace/scratch/0645066e1811/repo/crates/ge4g-render2d)
+    Checking ge4g-pentomino-view-legacy v0.3.0-alpha.1 (/workspace/scratch/0645066e1811/repo/crates/ge4g-pentomino-view-legacy)
+    Checking ge4g-pentomino-legacy v0.3.0-alpha.1 (/workspace/scratch/0645066e1811/repo/crates/ge4g-pentomino-legacy)
+    Checking ge4g-platform v0.3.0-alpha.1 (/workspace/scratch/0645066e1811/repo/crates/ge4g-platform)
+    Checking ge4g-client v0.3.0-alpha.1 (/workspace/scratch/0645066e1811/repo/crates/ge4g-client)
+    Checking ge4g-cli v0.3.0-alpha.1 (/workspace/scratch/0645066e1811/repo/crates/ge4g-cli)
+    Checking ge4g-pentomino-native v0.3.0-alpha.1 (/workspace/scratch/0645066e1811/repo/crates/ge4g-pentomino-native)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 8.78s
+EXIT=0

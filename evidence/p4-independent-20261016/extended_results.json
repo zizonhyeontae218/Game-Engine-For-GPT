@@ -1,0 +1,218 @@
+[
+  {
+    "name": "15 request limits/deep JSON",
+    "status": "PASS",
+    "details": {
+      "exact_24MiB": "accepted",
+      "24MiB_plus_1": "budget_exceeded",
+      "deep_json": "rejected"
+    },
+    "seconds": 0.392
+  },
+  {
+    "name": "16 configuration/resource extrema",
+    "status": "PASS",
+    "details": {
+      "invalid_configs_rejected": 21,
+      "max_viewport_rgba_bytes": 1048576,
+      "u64_max_seed": "PASS"
+    },
+    "seconds": 0.803
+  },
+  {
+    "name": "17 save boundary mutation atomicity",
+    "status": "PASS",
+    "details": {
+      "mutations_rejected_atomically": 19
+    },
+    "seconds": 0.931
+  },
+  {
+    "name": "18 malformed/structured fuzz",
+    "status": "PASS",
+    "details": {
+      "random_bytes": 2000,
+      "structured_invalid_inputs": 500,
+      "seed": 888168
+    },
+    "seconds": 0.157
+  },
+  {
+    "name": "19 eight-thread isolation/capacity",
+    "status": "PASS",
+    "details": {
+      "threads": 8,
+      "simultaneously_live_sessions": 128,
+      "steps": 800,
+      "unique_handles": 128
+    },
+    "seconds": 1.363
+  },
+  {
+    "name": "20 four-process replay",
+    "status": "PASS",
+    "details": {
+      "processes": 4,
+      "steps_each": 100,
+      "equal_save_sha256": "f8018315fcba6b73b2b3af09830ea61e3c1dc446b3ff5b389cea6f002ce85d22"
+    },
+    "seconds": 1.718
+  },
+  {
+    "name": "21 attack-history rollover",
+    "status": "PASS",
+    "details": {
+      "attacks": 300,
+      "restore_checkpoints": 10,
+      "final": {
+        "attack_count": 300,
+        "hp": [
+          9850,
+          9850
+        ],
+        "turn": 0,
+        "winner": -1
+      }
+    },
+    "seconds": 26.682
+  },
+  {
+    "name": "22 10000-step soak/latency",
+    "status": "PASS",
+    "details": {
+      "headless": {
+        "steps": 5000,
+        "p50_ms": 7.3595160000081705,
+        "p95_ms": 15.791110000009212,
+        "samples": [
+          {
+            "step": 1000,
+            "median_last_100_ms": 9.329334000000244,
+            "rss_kib": 44300
+          },
+          {
+            "step": 2000,
+            "median_last_100_ms": 5.5588139999827035,
+            "rss_kib": 44300
+          },
+          {
+            "step": 3000,
+            "median_last_100_ms": 5.792287500014481,
+            "rss_kib": 44300
+          },
+          {
+            "step": 4000,
+            "median_last_100_ms": 7.545360500046172,
+            "rss_kib": 44300
+          },
+          {
+            "step": 5000,
+            "median_last_100_ms": 6.467098999991094,
+            "rss_kib": 44300
+          }
+        ],
+        "last_first_latency_ratio": 1.210408825840212
+      },
+      "linked": {
+        "steps": 5000,
+        "p50_ms": 6.548421499985579,
+        "p95_ms": 12.58372000000918,
+        "samples": [
+          {
+            "step": 1000,
+            "median_last_100_ms": 7.920075500010171,
+            "rss_kib": 44300
+          },
+          {
+            "step": 2000,
+            "median_last_100_ms": 5.756561999987753,
+            "rss_kib": 44300
+          },
+          {
+            "step": 3000,
+            "median_last_100_ms": 6.020857000009983,
+            "rss_kib": 44300
+          },
+          {
+            "step": 4000,
+            "median_last_100_ms": 7.704369000009592,
+            "rss_kib": 44300
+          },
+          {
+            "step": 5000,
+            "median_last_100_ms": 6.10864199998673,
+            "rss_kib": 44300
+          }
+        ],
+        "last_first_latency_ratio": 0.8651291810154589
+      }
+    },
+    "seconds": 80.509
+  },
+  {
+    "name": "23 1001-session memory churn",
+    "status": "PASS",
+    "details": {
+      "cycles": 1001,
+      "samples": [
+        {
+          "cycles": 0,
+          "rss_kib": 44300
+        },
+        {
+          "cycles": 100,
+          "rss_kib": 44300
+        },
+        {
+          "cycles": 200,
+          "rss_kib": 44300
+        },
+        {
+          "cycles": 300,
+          "rss_kib": 44300
+        },
+        {
+          "cycles": 400,
+          "rss_kib": 44300
+        },
+        {
+          "cycles": 500,
+          "rss_kib": 44300
+        },
+        {
+          "cycles": 600,
+          "rss_kib": 44300
+        },
+        {
+          "cycles": 700,
+          "rss_kib": 44300
+        },
+        {
+          "cycles": 800,
+          "rss_kib": 44300
+        },
+        {
+          "cycles": 900,
+          "rss_kib": 44300
+        },
+        {
+          "cycles": 1000,
+          "rss_kib": 44300
+        }
+      ],
+      "rss_growth_after_warmup_kib": 0,
+      "threshold_kib": 16384
+    },
+    "seconds": 2.363
+  },
+  {
+    "name": "24 randomized cameras/views",
+    "status": "PASS",
+    "details": {
+      "camera_cases": 128,
+      "view_families": 4,
+      "cross_mode": "equal observations"
+    },
+    "seconds": 8.305
+  }
+]

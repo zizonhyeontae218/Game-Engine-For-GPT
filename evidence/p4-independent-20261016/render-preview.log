@@ -1,0 +1,3 @@
+0 b21c52050cf1052af6cbf55fc46f367d1828fcd42ebdf995f17b6e92fd28ebb4 {'attack_count': 0, 'hp': [12, 11], 'turn': 0, 'winner': -1}
+5 7afa8a8720cfd8246906fd0b1672381d59b80965745ff9d8325e81f8f301e8b3 {'attack_count': 4, 'hp': [6, 3], 'turn': 0, 'winner': -1}
+6 6ef9dc3aaff45923a9a346d1fd7e71e0dbdef9efc0c1541d7654751f61f9f0f4 {'attack_count': 5, 'hp': [6, 0], 'turn': 0, 'winner': 0}

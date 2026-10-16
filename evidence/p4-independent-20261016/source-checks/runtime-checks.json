@@ -1,0 +1,148 @@
+[
+  {
+    "name": "p4-example",
+    "command": [
+      "cargo",
+      "run",
+      "--locked",
+      "-p",
+      "ge4g-pentomino-native",
+      "--example",
+      "p4_public",
+      "--",
+      "samples/pentomino_p4/game.json",
+      "../source-checks/p4-frames"
+    ],
+    "exit": 0,
+    "seconds": 0.19991307600002983
+  },
+  {
+    "name": "p3-example",
+    "command": [
+      "cargo",
+      "run",
+      "--locked",
+      "-p",
+      "ge4g-pentomino-view",
+      "--example",
+      "p3_public"
+    ],
+    "exit": 0,
+    "seconds": 9.235113816000023
+  },
+  {
+    "name": "p3-fifth",
+    "command": [
+      "cargo",
+      "run",
+      "--locked",
+      "-p",
+      "ge4g-pentomino-view-legacy",
+      "--example",
+      "fifth_demo",
+      "--",
+      "examples/flatland_nuvema",
+      "../source-checks/p3-frames"
+    ],
+    "exit": 0,
+    "seconds": 2.113153204000014
+  },
+  {
+    "name": "headless-cli-tests",
+    "command": [
+      "cargo",
+      "test",
+      "--locked",
+      "-p",
+      "ge4g-cli",
+      "--no-default-features"
+    ],
+    "exit": 0,
+    "seconds": 15.508533898999985
+  },
+  {
+    "name": "legacy-basement_demo",
+    "command": [
+      "cargo",
+      "run",
+      "--locked",
+      "-p",
+      "ge4g-cli",
+      "--no-default-features",
+      "--",
+      "test",
+      "examples/basement_demo",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 11.066057938000029
+  },
+  {
+    "name": "legacy-flatland_pacman",
+    "command": [
+      "cargo",
+      "run",
+      "--locked",
+      "-p",
+      "ge4g-cli",
+      "--no-default-features",
+      "--",
+      "test",
+      "examples/flatland_pacman",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.9689347160000352
+  },
+  {
+    "name": "legacy-flatland_signal_yard",
+    "command": [
+      "cargo",
+      "run",
+      "--locked",
+      "-p",
+      "ge4g-cli",
+      "--no-default-features",
+      "--",
+      "test",
+      "examples/flatland_signal_yard",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 4.098469182999963
+  },
+  {
+    "name": "legacy-flatland_harbor",
+    "command": [
+      "cargo",
+      "run",
+      "--locked",
+      "-p",
+      "ge4g-cli",
+      "--no-default-features",
+      "--",
+      "test",
+      "examples/flatland_harbor",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 1.9273343109999814
+  },
+  {
+    "name": "legacy-flatland_nuvema",
+    "command": [
+      "cargo",
+      "run",
+      "--locked",
+      "-p",
+      "ge4g-cli",
+      "--no-default-features",
+      "--",
+      "test",
+      "examples/flatland_nuvema",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 15.260375735999958
+  }
+]

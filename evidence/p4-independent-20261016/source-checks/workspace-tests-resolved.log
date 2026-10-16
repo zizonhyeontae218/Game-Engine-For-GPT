@@ -1,0 +1,406 @@
+   Compiling ge4g-platform v0.3.0-alpha.1 (/workspace/scratch/0645066e1811/repo/crates/ge4g-platform)
+   Compiling ge4g-pentomino-legacy v0.3.0-alpha.1 (/workspace/scratch/0645066e1811/repo/crates/ge4g-pentomino-legacy)
+   Compiling ge4g-pentomino-view-legacy v0.3.0-alpha.1 (/workspace/scratch/0645066e1811/repo/crates/ge4g-pentomino-view-legacy)
+   Compiling ge4g-cli v0.3.0-alpha.1 (/workspace/scratch/0645066e1811/repo/crates/ge4g-cli)
+   Compiling ge4g-pentomino-native v0.3.0-alpha.1 (/workspace/scratch/0645066e1811/repo/crates/ge4g-pentomino-native)
+   Compiling ge4g-runtime v0.3.0-alpha.1 (/workspace/scratch/0645066e1811/repo/crates/ge4g-runtime)
+   Compiling ge4g-client v0.3.0-alpha.1 (/workspace/scratch/0645066e1811/repo/crates/ge4g-client)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 3.62s
+     Running unittests src/main.rs (target/debug/deps/ge4g-6537d0be446a0387)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/acceptance.rs (target/debug/deps/acceptance-2a8996703f617e64)
+
+running 9 tests
+test a_manifest_filename_can_be_used_from_the_project_directory ... ok
+test invalid_scene_version_and_missing_references_fail_with_context ... ok
+test errors_never_claim_unwritten_capture_and_json_argument_errors_are_structured ... ok
+test save_restart_restores_values_and_corruption_is_explicit ... ok
+test textured_sprites_and_camera_use_the_same_cpu_capture_path ... ok
+test png_pixels_match_the_canonical_frame_and_debug_is_distinct ... ok
+test headless_journey_is_repeatable_and_exports_real_state_and_events ... ok
+test project_test_checks_golden_and_reports_failed_assertions ... ok
+test trace_filters_preserve_order_and_schema_commands_are_machine_readable ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.17s
+
+     Running unittests src/lib.rs (target/debug/deps/ge4g_client-2e87d1b48760d109)
+
+running 3 tests
+test tests::c_strings_errors_and_named_button_release_are_real ... ok
+test tests::flatland_native_replay_selective_observation_and_resume_match_rust ... ok
+test tests::client_replay_and_frame_equal_the_authoritative_headless_runtime ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.51s
+
+     Running tests/final_resume.rs (target/debug/deps/final_resume-4a67c31c83f4c1fc)
+
+running 1 test
+test only_content_revision_failure_exposes_typed_archive_reason ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.27s
+
+     Running unittests src/lib.rs (target/debug/deps/ge4g_core-fa6e8e11b7c126bd)
+
+running 3 tests
+test tests::opposing_actions_cancel ... ok
+test tests::swept_aabb_does_not_tunnel_and_allows_edge_sliding ... ok
+test tests::state_types_and_namespaces_are_enforced ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (target/debug/deps/ge4g_pentomino-06c107a07cde3fdd)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/lifecycle_contract.rs (target/debug/deps/lifecycle_contract-be9d1f929149133c)
+
+running 26 tests
+test context_tick_is_current_for_init_and_target_for_step ... ok
+test checked_tick_and_sequence_overflows_do_not_wrap_or_publish_initialization ... ok
+test dependency_reads_pre_tick_resources_and_pending_events_and_blocks_remove ... ok
+test canonical_restore_preserves_pending_replay_and_reissues_all_tokens ... ok
+test descriptor_and_plugin_limits_are_exposed_and_enforced_before_init ... ok
+test independent_unload_reinstall_preserves_equal_tick_projection ... ok
+test identifier_content_binding_and_error_utf8_limits_validate_exactly ... ok
+test init_failure_leaks_no_descriptor_records_rng_events_and_retry_is_clean ... ok
+test owner_tokens_reject_cross_host_removed_reinstalled_and_restored_generations ... ok
+test independent_current_tick_projection_survives_shared_history_retention_boundary ... ok
+test event_history_eviction_and_owner_purge_preserve_global_accounting ... ok
+test registration_dependency_validation_is_atomic_and_precedes_initialize ... ok
+test pending_cannot_omit_current_tick_history_and_history_ticks_cannot_regress ... ok
+test restore_exact_binding_mismatch_keeps_live_tokens ... ok
+test rejected_ticks_do_not_mutate_state_and_the_expected_tick_remains_usable ... ok
+test empty_descriptors_and_all_64_resource_records_are_valid_scalar_boundaries ... ok
+test restore_immutable_content_seed_and_exact_descriptors_must_match ... ok
+test invalid_event_ownership_pending_accounting_and_resource_wire_values_reject_atomically ... ok
+test command_budget_boundary_and_event_commit_and_pending_bounds_are_atomic ... ok
+test save_plugin_arrays_must_be_sorted_unique_and_versions_exact ... ok
+test splitmix_stream_matches_seeded_public_definition_and_independent_installation ... ok
+test swallowed_over_budget_draws_poison_and_roll_back_rng ... ok
+test undeclared_provider_read_is_denied_without_tick_mutation ... ok
+test whole_tick_failure_rolls_back_earlier_plugin_rng_events_and_is_retryable ... ok
+test swallowed_invalid_operations_poison_transaction ... ok
+test malformed_noncanonical_duplicate_unknown_oversized_saves_are_atomic ... ok
+
+test result: ok. 26 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests/p2_contract.rs (target/debug/deps/p2_contract-3664d088e33fc7ea)
+
+running 21 tests
+test late_cross_owner_ref_and_nested_history_ref_cannot_publish_dangling_objects ... ok
+test core_limits_and_wire_tag_malformed_records_are_explicit ... ok
+test deletion_recreation_crosshost_restore_and_abandoned_timeline_handles ... ok
+test nested_record_refs_require_exact_live_kind_incarnation_and_provider_grant ... ok
+test action_unique_types_bounds_visibility_sorting_absence_and_saved_frame_replay ... ok
+test restore_rejects_global_event_sequence_tick_regression_across_owners ... ok
+test provider_objects_allow_bound_child_refs_block_removal_and_deny_foreign_writes ... ok
+test aggregate_input_frame128_boundary_and_identity_overflow_are_atomic ... ok
+test retained_event_references_prevent_delete_and_swallowed_reference_error_is_atomic ... ok
+test scene_with_live_child_cannot_be_removed_without_cascade ... ok
+test schema_definition_depth_bounds_duplicate_schema_and_actions_reject_before_init ... ok
+test select_empty_flags_schema_filters_and_unknown_ids_obey_host_authority ... ok
+test save_owner_ordinal_suffix_pending_completeness_global_counts_and_actions_validate ... ok
+test legal_field_and_list_values_over_64k_reject_before_accepted_state_clone ... ok
+test typed_bool_integer_utf8_bytes_homogeneous_lists_roundtrip_and_reject_exactly ... ok
+test canonical_save2_roundtrip_hash_continuation_and_malformed_atomic_rejection ... ok
+test whole_init_tick_rolls_back_objects_identity_rng_events_and_last_input_retry ... ok
+test scene_entity_record_commands_and_per_owner_event_limits_have_exact_boundaries ... ok
+test owner_full_history_pending_counters_and_rng_are_isolated_past_global_256 ... ok
+test aggregate_over_8mib_install_is_atomic_and_existing_tokens_remain_valid ... ok
+test aggregate_tick_growth_over_8mib_rolls_back_rng_records_input_and_owner_token ... ok
+
+test result: ok. 21 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.99s
+
+     Running unittests src/lib.rs (target/debug/deps/ge4g_pentomino_gameplay-2434b4cd5626fa65)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/public_contract.rs (target/debug/deps/public_contract-51485ecb7b2014e7)
+
+running 5 tests
+test configuration_and_restored_semantics_reject_unknown_fields_and_invalid_objects ... ok
+test invalid_scalar_batch_and_attack_are_atomic_and_decision_validation_is_strict ... ok
+test pending_decision_save_restore_replays_actual_event_without_hidden_plugin_state ... ok
+test two_phase_actual_records_actions_events_and_battle_end ... ok
+test deterministic_replay_save_resume_and_rules_unload_keeps_authority ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+
+     Running unittests src/lib.rs (target/debug/deps/ge4g_pentomino_legacy-a46239bfeb6fcb4a)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/bridge_contract.rs (target/debug/deps/bridge_contract-9a6a8a13d3fe03ff)
+
+running 4 tests
+test post_tick_projection_limit_and_legacy_error_both_roll_back_authoritative_world ... ok
+test malformed_replay_buttons_action_bounds_and_forged_projection_fail_explicitly ... ok
+test bridge_replay_candidates_match_direct_world_advance_for_all_four_games ... ok
+test four_actual_games_install_typed_scene_entity_state_input_and_roundtrip_save2 ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.34s
+
+     Running unittests src/lib.rs (target/debug/deps/ge4g_pentomino_native-b2f33101bbe4829d)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/native_contract.rs (target/debug/deps/native_contract-8dad412485f2d6b6)
+
+running 12 tests
+test close_invalidates_all_operations_and_foreign_bridge_handles ... ok
+test real_frame_observation_rows_and_decision_events_follow_actual_attack ... ok
+test canonical_but_impossible_status_and_extra_carrier_records_are_atomic ... ok
+test canonical_even_tick_cannot_claim_an_unapplied_phase_one_decision ... ok
+test camera_and_view_changes_leave_entire_core_save_unchanged ... ok
+test declarative_control_mapping_and_content_binding_are_enforced ... ok
+test literal_gameplay_removal_preserves_carrier_identity_and_reattaches_in_place ... ok
+test strict_json_and_invalid_inputs_are_atomic_and_retryable ... ok
+test separate_save_failures_and_forged_clocks_do_not_replace_active_session ... ok
+test unsupported_canonical_camera_and_future_endpoint_are_rejected_in_both_modes ... ok
+test combined_save_restores_midflight_camera_and_deterministic_continuation ... ok
+test same_seed_trace_and_headless_have_identical_core_authority ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.24s
+
+     Running tests/native_ffi.rs (target/debug/deps/native_ffi-72fc5d30a0450df2)
+
+running 2 tests
+test exported_abi_delivers_actual_native_frames_and_owned_response_lifetime ... ok
+test exported_abi_rejects_null_invalid_bytes_versions_and_bad_input_atomically ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.11s
+
+     Running unittests src/lib.rs (target/debug/deps/ge4g_pentomino_view-bc1c3d78c838f9de)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/independent_contract.rs (target/debug/deps/independent_contract-b401c81bbcb2cc7b)
+
+running 27 tests
+test arbitrary_mesh_billboard_and_background_descriptors_use_real_perspective_math ... ok
+test equivalent_negative_zero_inputs_have_one_canonical_presentation_image ... ok
+test follow_tracks_all_world_axes_before_rotated_sheared_side_policy ... ok
+test follow_dead_zone_tracking_filter_and_bounds_are_composed ... ok
+test changing_view_transform_does_not_become_entity_world_velocity ... ok
+test hot_replace_preserves_active_camera_and_transition_while_changing_policy ... ok
+test inactive_camera_accepts_smooth_target_without_advancing_progress ... ok
+test malformed_missing_wrong_typed_duplicate_and_stale_selection_are_rejected ... ok
+test four_formats_extract_real_core_records_and_distinct_follow_policies ... ok
+test canonical_save_rejects_unknown_fields_noncanonical_bytes_and_mismatched_install_atomically ... ok
+test rejects_nan_infinite_singular_and_extreme_bounds_without_panics ... ok
+test invalid_tick_change_follow_reference_and_plugin_failure_roll_back_whole_host ... ok
+test instant_retarget_and_inactive_freeze_are_explicit ... ok
+test recursive_unknown_camera_save_fields_are_rejected_without_losing_progress ... ok
+test seeded_well_conditioned_3d_transform_projection_roundtrips ... ok
+test replacement_failure_and_cross_view_active_set_leave_exact_old_save ... ok
+test pure_plugin_failure_and_oversized_result_rollback_already_staged_cameras ... ok
+test removal_replacement_and_reinstall_preserve_whole_core_and_independent_camera ... ok
+test replacement_validates_inactive_transition_endpoint_under_new_follow_axes ... ok
+test world_view_camera_screen_roundtrip_and_real_perspective_depth_scaling ... ok
+test structured_discovery_is_enough_to_choose_view_projection_and_behaviors ... ok
+test two_cameras_have_independent_transforms_viewports_and_active_sets ... ok
+test smooth_is_default_for_pose_viewing_mode_and_projection_and_is_tick_based ... ok
+test midpoint_save_restore_replays_nondecimal_rotation_follow_and_shake_exactly ... ok
+test core_rng_and_event_continuation_match_control_after_camera_activity ... ok
+test budgets_identifiers_and_invalid_configuration_are_atomic ... ok
+test smooth_minimum_depth_interval_at_large_near_never_rounds_below_valid_gap ... ok
+
+test result: ok. 27 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.00s
+
+     Running unittests src/lib.rs (target/debug/deps/ge4g_pentomino_view_legacy-099a0d1781499a70)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/independent_fifth_fixture.rs (target/debug/deps/independent_fifth_fixture-24d6e9a9d1fc5210)
+
+running 7 tests
+test compatibility_rejects_unsupported_perspective_rotation_and_unsafe_source_parameters ... ok
+test new_source_importer_can_coexist_with_original_p2_legacy_adapter ... ok
+test compatibility_rejects_camera_from_another_scene_and_accepts_zero_weight_blend ... ok
+test fifth_content_is_imported_into_actual_core_allocations_with_state_and_feet ... ok
+test actual_native_camera_drives_legacy_pixels_and_upright_feet_without_gameplay_mutation ... ok
+test fifth_importer_bounded_state_and_long_owner_fail_without_source_mutation ... ok
+test fifth_transition_midpoint_restore_deterministic_continuation_and_reinstall_preserve_core ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.64s
+
+     Running unittests src/lib.rs (target/debug/deps/ge4g_platform-42284a6984dcf701)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (target/debug/deps/ge4g_project-a401be4f5fc319bb)
+
+running 2 tests
+test tests::future_versions_are_rejected ... ok
+test tests::replay_intervals_are_half_open_and_unknown_actions_fail ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (target/debug/deps/ge4g_render2d-bc6e7f5c7bc03eee)
+
+running 4 tests
+test projection::tests::feet_stay_at_target_anchor_and_vertical_sprites_never_shear ... ok
+test tests::integer_alpha_blends_and_clips ... ok
+test contact::tests::feet_contact_overrides_player_layer_and_visual_top_with_stable_ties ... ok
+test tests::transparent_destination_preserves_straight_rgba ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (target/debug/deps/ge4g_runtime-6388f8cbdd83b058)
+
+running 6 tests
+test tests::high_speed_motion_cannot_skip_walls_or_door_triggers ... ok
+test tests::interaction_is_edge_triggered_and_state_change_is_not_duplicated ... ok
+test tests::save_version_and_key_migrations_are_never_silently_assumed ... ok
+test tests::movement_collision_and_replay_are_real_and_deterministic ... ok
+test tests::save_reload_checks_types_without_partial_mutation ... ok
+test tests::event_memory_is_bounded_and_reports_loss ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.10s
+
+     Running tests/final_speakers.rs (target/debug/deps/final_speakers-e461500e349508bd)
+
+running 1 test
+test bubble_speaker_is_optional_resolved_metadata_and_resume_exact ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.29s
+
+     Running tests/flatland.rs (target/debug/deps/flatland-bad38cfaee94b4d4)
+
+running 8 tests
+test transactional_push_chains_and_pass_fixed_policies ... ok
+test conditions_popup_and_once_rewards_survive_exact_resume ... ok
+test lua_failures_roll_back_motion_state_tick_and_events ... ok
+test animated_frames_direction_and_resume_use_the_authoritative_tick ... ok
+test power_contact_timer_expiry_lives_and_clear_have_real_outcomes ... ok
+test every_authored_food_cell_is_reachable_and_grid_turns_wait_for_intersections ... ok
+test a_corrupted_resume_cannot_remove_hp_or_place_the_player_inside_a_wall ... ok
+test maze_walls_are_not_entities_and_ghosts_move_deterministically ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.45s
+
+     Running tests/polish.rs (target/debug/deps/polish-4c6569ab94b6fe40)
+
+running 4 tests
+test walking_releases_at_one_cell_faces_blocked_objects_and_uses_authored_pace ... ok
+test explicit_view_changes_are_presentation_only_and_save_projection ... ok
+test battle_has_native_sprites_pp_hit_frames_and_exact_resume_through_result ... ok
+test town_journey_completes_every_station_and_minimal_frames_match_full_observation ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 6.18s
+
+     Running tests/rc4.rs (target/debug/deps/rc4-17836e8f0a12d51f)
+
+running 9 tests
+test step_walk_recovers_after_mid_cell_actor_obstruction ... ok
+test opposite_input_reverses_mid_cell_without_an_extra_forward_cell ... ok
+test minimal_buildings_and_actor_render_top_depth_and_follow_anchor ... ok
+test step_input_newest_wins_buffers_and_release_does_not_add_a_cell ... ok
+test cosmetic_skip_does_not_repeat_damage_pp_or_rng ... ok
+test persistent_hp_pp_resume_fx_lock_rewards_and_fainted_reset ... ok
+test view_is_simulation_invariant_with_motion_and_collision ... ok
+test fainted_combatant_stays_zero_until_explicit_reset_and_rewards_are_once ... ok
+test persistent_view_survives_goto_scoped_camera_save_and_scene_without_local_preset ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.06s
+
+     Running tests/rc5.rs (target/debug/deps/rc5-4e923afb7d583470)
+
+running 4 tests
+test truthful_building_semantics_reject_unimplemented_directions ... ok
+test every_contact_shadow_is_below_opaque_actor_and_depth_occlusion_tracks_feet ... ok
+test semantic_footprint_defaults_solid_and_view_cannot_grant_roof_access ... ok
+test three_actor_bubbles_resume_once_and_camera_is_scoped_and_eased ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.32s
+
+     Running tests/systems.rs (target/debug/deps/systems-4af99e4a8d1806ae)
+
+running 11 tests
+test melee_hits_once_per_attack_then_drops_once ... ok
+test inventory_quest_reward_is_once_and_bad_batches_roll_back ... ok
+test invalid_choices_and_event_cycles_are_atomic ... ok
+test replay_command_and_failed_tick_roll_back_together ... ok
+test projectile_hits_swept_target_but_not_through_wall_or_plane ... ok
+test closing_map_on_an_actor_and_corrupt_event_parent_are_rejected ... ok
+test rng_repeats_after_resume_and_lua_fault_restores_it ... ok
+test choice_wait_and_battle_resume_to_exact_parent ... ok
+test patch_revision_conflicts_and_invalid_changes_preserve_authored_bytes ... ok
+test cutscene_clip_advances_while_parent_is_frozen_and_restores_atlas ... ok
+test full_signal_yard_corpus_is_deterministic_and_saves_at_every_choice ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.77s
+
+   Doc-tests ge4g_client
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests ge4g_core
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests ge4g_pentomino
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests ge4g_pentomino_gameplay
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests ge4g_pentomino_legacy
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests ge4g_pentomino_native
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests ge4g_pentomino_view
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests ge4g_pentomino_view_legacy
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests ge4g_platform
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests ge4g_project

@@ -1,0 +1,18 @@
+{
+  "baseline": "8622034d1f0082a3178dc2e7262539a50a064c26",
+  "candidate": "72d49a63f730e2a3ee2032e83948894e4fd480ba",
+  "protected_paths": [
+    "crates/ge4g-pentomino",
+    "crates/ge4g-pentomino-view",
+    "crates/ge4g-pentomino-legacy",
+    "crates/ge4g-pentomino-view-legacy",
+    "crates/ge4g-core",
+    "crates/ge4g-client",
+    "crates/ge4g-runtime",
+    "client",
+    "examples"
+  ],
+  "changed_paths": [],
+  "android_certificate": "d6d5ca948e5c1ed644478d7c4c3243efcfcbc30a196f03c39ef7af7118fc00d4",
+  "method": "source diff only; not package/device signing verification"
+}
