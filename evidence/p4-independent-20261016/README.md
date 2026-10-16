@@ -77,6 +77,6 @@ python3 extended_p4_test.py
 
 ## 정리와 판정
 
-영구 증거와 Issue #6 반영 후 추출된 임시 WORK_HANDOFF.md만 삭제한다. 공식 docs/pentomino/P4_HANDOFF.md와 원본 감사 ZIP은 보존한다. 실행 완료 여부는 cleanup.json/Issue 정리 댓글을 따른다.
+영구 증거와 Issue #6 반영 후 추출된 임시 WORK_HANDOFF.md만 삭제한다. 공식 docs/pentomino/P4_HANDOFF.md와 원본 감사 ZIP은 보존한다. cleanup.json에 추출본 삭제 완료를 기록했다. Drive/GitHub 임시 Handoff 복사본은 만들지 않았다.
 
 Linux P4 기능 검증은 PASS다. 플랫폼/계측/엄격한 blind 인증을 포함한 최종 포괄 승인은 보류한다. PR #5 병합·정식 릴리즈·P5 기능 개발은 수행하지 않았다.

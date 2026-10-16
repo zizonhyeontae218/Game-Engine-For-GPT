@@ -1,0 +1,17 @@
+{
+  "status": "COMPLETE",
+  "deleted": [
+    "prior-audit/WORK_HANDOFF.md"
+  ],
+  "deleted_file_sha256": "af0b016107114afdc335e1514a7da331972095e43e43f9f59a1f01aa51b90359",
+  "permanent_evidence_before_deletion": "GitHub PR7 commit9fd3e3d84b70608a5dbda0010598bfcb4d015997 and Issue6 QA result comment",
+  "preserved": [
+    "original GE4G_P4_independent_audit.zip (including immutable original contents)",
+    "docs/pentomino/P4_HANDOFF.md",
+    "independent tests/raw logs/results/images",
+    "CI SDK artifact bytes"
+  ],
+  "drive_temporary_copies_created": false,
+  "github_temporary_handoff_copies_created": false,
+  "other_temporary_handoff_files_found": false
+}

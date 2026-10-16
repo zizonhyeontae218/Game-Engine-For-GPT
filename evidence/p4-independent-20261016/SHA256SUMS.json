@@ -1,8 +1,8 @@
 [
   {
     "path": "README.md",
-    "bytes": 7376,
-    "sha256": "8c16b29d0917be765357c9d645d95261e4384c3ed564c794999ff5b129338e80"
+    "bytes": 7424,
+    "sha256": "6fe598f3cf0310746f5284bc8e40eff67f10686abb884b212f687531bbdea9d9"
   },
   {
     "path": "apt-install-retry.log",
@@ -28,6 +28,11 @@
     "path": "ci-platform-jobs.json",
     "bytes": 8334,
     "sha256": "fc61b576ce7a90eaedeab0fc1a84557acafb10054b0ceb37c619ceb9f26f817b"
+  },
+  {
+    "path": "cleanup.json",
+    "bytes": 668,
+    "sha256": "1002650fdf311fe3f49ec2a0c112893accf08256e7cf88dd294615cd6e0a7a42"
   },
   {
     "path": "drive-review.md",

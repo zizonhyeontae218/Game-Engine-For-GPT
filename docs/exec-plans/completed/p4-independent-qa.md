@@ -23,7 +23,7 @@ Keep independent scripts, raw outputs, hashes, environment, platform status and 
 - Use repository scripts/filetree.py to preserve its established manifest format.
 
 ## Progress
-SDK 24/24 groups PASS; local build13/13 groups, workspace169/169 and headless CLI9/9 PASS. C ownership302 responses freed. No product defect reproduced. ASan/Valgrind execution blocked before tests;7 residual gates documented. Rust/tooling and local build dependencies provisioned. Evidence publication/Issue cleanup pending.
+SDK 24/24 groups PASS; local build13/13 groups, workspace169/169 and headless CLI9/9 PASS. C ownership302 responses freed. No product defect reproduced. ASan/Valgrind execution blocked before tests;7 residual gates documented. Rust/tooling and local build dependencies provisioned. Evidence published in PR7 and Issue6; extracted temporary WORK_HANDOFF.md removed afterward. Final cleanup ledger: evidence/p4-independent-20261016/cleanup.json.
 
 ## Verification log
 Baseline: python3 independent_p4_test.py (in independent-run): 14 PASS, 0 FAIL.

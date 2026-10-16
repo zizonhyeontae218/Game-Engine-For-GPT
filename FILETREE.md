@@ -266,7 +266,6 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `docs/TESTPLAN.md` — Acceptance and deterministic verification plan.
 - `docs/benchmarks/flatland-task-context.json` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/active/.gitkeep` — Repository file; inspect only when relevant to the task.
-- `docs/exec-plans/active/p4-independent-qa.md` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/active/pentomino-p4.md` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/completed/.gitkeep` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/completed/basement.md` — Repository file; inspect only when relevant to the task.
@@ -277,6 +276,7 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `docs/exec-plans/completed/flatland-rc5.md` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/completed/flatland.md` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/completed/flutter-client.md` — Repository file; inspect only when relevant to the task.
+- `docs/exec-plans/completed/p4-independent-qa.md` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/completed/pentaworks-agent-setup.md` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/completed/pentomino-main-transition.md` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/completed/pentomino-p0-packets.md` — Repository file; inspect only when relevant to the task.
@@ -459,6 +459,7 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `evidence/p4-independent-20261016/baseline-final.log` — Repository file; inspect only when relevant to the task.
 - `evidence/p4-independent-20261016/baseline.log` — Repository file; inspect only when relevant to the task.
 - `evidence/p4-independent-20261016/ci-platform-jobs.json` — Repository file; inspect only when relevant to the task.
+- `evidence/p4-independent-20261016/cleanup.json` — Repository file; inspect only when relevant to the task.
 - `evidence/p4-independent-20261016/drive-review.md` — Repository file; inspect only when relevant to the task.
 - `evidence/p4-independent-20261016/environment.json` — Repository file; inspect only when relevant to the task.
 - `evidence/p4-independent-20261016/extended.log` — Repository file; inspect only when relevant to the task.
