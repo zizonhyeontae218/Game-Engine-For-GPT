@@ -1,0 +1,77 @@
+{
+  "test_count": 13,
+  "pass_count": 13,
+  "fail_count": 0,
+  "lib_sha256": "60c5153af5fe30d7ab6db0c345c5ca9b13f1656ee1e44879685e94ac5ffdf088",
+  "artifact_sha256": "af98895c3baf92fb502b13951b056d85ad558f5eb4c915b6d5177c41cbf8600c",
+  "candidate": "GE4G P4 public SDK produced from GitHub Actions run 38414825262 (PR checkout merge commit 62b7118a477d40341bb8a64221d0adca70dddbce; PR source SHA 72d49a63f730e2a3ee2032e83948894e4fd480ba)",
+  "independent_source_free": false,
+  "environment": "Linux x86_64 Python ctypes cc; test process imports no engine source. QA agent has source/toolchain access; not an enforced blind environment.",
+  "tests": [
+    {
+      "name": "02 independent C11 linking",
+      "status": "PASS",
+      "seconds": 0.106
+    },
+    {
+      "name": "03 ABI envelope/discovery/frame",
+      "status": "PASS",
+      "seconds": 0.0373
+    },
+    {
+      "name": "04 alternating battle model+golden RGBA",
+      "status": "PASS",
+      "seconds": 0.076
+    },
+    {
+      "name": "05 deterministic multi-session replay",
+      "status": "PASS",
+      "seconds": 0.5036
+    },
+    {
+      "name": "06 invalid-input transaction rollback",
+      "status": "PASS",
+      "seconds": 0.3536
+    },
+    {
+      "name": "07 corrupt save transaction rollback",
+      "status": "PASS",
+      "seconds": 0.3819
+    },
+    {
+      "name": "08 true gameplay detach/reinstall",
+      "status": "PASS",
+      "seconds": 0.0976
+    },
+    {
+      "name": "09 camera/view+transition rollback",
+      "status": "PASS",
+      "seconds": 0.3024
+    },
+    {
+      "name": "10 session capacity/lifecycle",
+      "status": "PASS",
+      "seconds": 0.0412
+    },
+    {
+      "name": "11 thread confinement",
+      "status": "PASS",
+      "seconds": 0.0055
+    },
+    {
+      "name": "12 cross-mode restore+content binding",
+      "status": "PASS",
+      "seconds": 0.0542
+    },
+    {
+      "name": "13 independent randomized battle model 24 configs",
+      "status": "PASS",
+      "seconds": 0.5297
+    },
+    {
+      "name": "14 malformed input fuzz 80 cases",
+      "status": "PASS",
+      "seconds": 0.0066
+    }
+  ]
+}

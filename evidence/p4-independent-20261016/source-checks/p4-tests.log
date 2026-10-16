@@ -1,0 +1,89 @@
+   Compiling syn v3.0.6
+   Compiling num-traits v0.2.19
+   Compiling once_cell v1.21.4
+   Compiling mlua-sys v0.10.0
+   Compiling tempfile v3.27.0
+   Compiling ordered-float v2.10.1
+   Compiling serde_derive v1.0.229
+   Compiling thiserror-impl v2.0.21
+   Compiling thiserror v2.0.21
+   Compiling serde v1.0.229
+   Compiling toml_datetime v0.6.11
+   Compiling serde_spanned v0.6.9
+   Compiling ge4g-pentomino v0.3.0-alpha.1 (/workspace/scratch/0645066e1811/repo/crates/ge4g-pentomino)
+   Compiling schemars v0.8.22
+   Compiling json5 v0.4.1
+   Compiling serde-value v0.7.0
+   Compiling toml_edit v0.22.27
+   Compiling mlua v0.11.6
+   Compiling ge4g-core v0.3.0-alpha.1 (/workspace/scratch/0645066e1811/repo/crates/ge4g-core)
+   Compiling toml v0.8.23
+   Compiling ge4g-project v0.3.0-alpha.1 (/workspace/scratch/0645066e1811/repo/crates/ge4g-project)
+   Compiling ge4g-pentomino-gameplay v0.3.0-alpha.1 (/workspace/scratch/0645066e1811/repo/crates/ge4g-pentomino-gameplay)
+   Compiling ge4g-pentomino-view v0.3.0-alpha.1 (/workspace/scratch/0645066e1811/repo/crates/ge4g-pentomino-view)
+   Compiling ge4g-render2d v0.3.0-alpha.1 (/workspace/scratch/0645066e1811/repo/crates/ge4g-render2d)
+   Compiling ge4g-runtime v0.3.0-alpha.1 (/workspace/scratch/0645066e1811/repo/crates/ge4g-runtime)
+   Compiling ge4g-pentomino-view-legacy v0.3.0-alpha.1 (/workspace/scratch/0645066e1811/repo/crates/ge4g-pentomino-view-legacy)
+   Compiling ge4g-pentomino-native v0.3.0-alpha.1 (/workspace/scratch/0645066e1811/repo/crates/ge4g-pentomino-native)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 23.60s
+     Running unittests src/lib.rs (target/debug/deps/ge4g_pentomino_gameplay-746579386db0db3c)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/public_contract.rs (target/debug/deps/public_contract-07ad3a80681c509f)
+
+running 5 tests
+test configuration_and_restored_semantics_reject_unknown_fields_and_invalid_objects ... ok
+test invalid_scalar_batch_and_attack_are_atomic_and_decision_validation_is_strict ... ok
+test pending_decision_save_restore_replays_actual_event_without_hidden_plugin_state ... ok
+test two_phase_actual_records_actions_events_and_battle_end ... ok
+test deterministic_replay_save_resume_and_rules_unload_keeps_authority ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+
+     Running unittests src/lib.rs (target/debug/deps/ge4g_pentomino_native-26981b1435f2c5cb)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/native_contract.rs (target/debug/deps/native_contract-51285c1967ef9a3f)
+
+running 12 tests
+test close_invalidates_all_operations_and_foreign_bridge_handles ... ok
+test real_frame_observation_rows_and_decision_events_follow_actual_attack ... ok
+test canonical_but_impossible_status_and_extra_carrier_records_are_atomic ... ok
+test canonical_even_tick_cannot_claim_an_unapplied_phase_one_decision ... ok
+test declarative_control_mapping_and_content_binding_are_enforced ... ok
+test camera_and_view_changes_leave_entire_core_save_unchanged ... ok
+test literal_gameplay_removal_preserves_carrier_identity_and_reattaches_in_place ... ok
+test strict_json_and_invalid_inputs_are_atomic_and_retryable ... ok
+test unsupported_canonical_camera_and_future_endpoint_are_rejected_in_both_modes ... ok
+test combined_save_restores_midflight_camera_and_deterministic_continuation ... ok
+test separate_save_failures_and_forged_clocks_do_not_replace_active_session ... ok
+test same_seed_trace_and_headless_have_identical_core_authority ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.22s
+
+     Running tests/native_ffi.rs (target/debug/deps/native_ffi-0e7093c609616009)
+
+running 2 tests
+test exported_abi_delivers_actual_native_frames_and_owned_response_lifetime ... ok
+test exported_abi_rejects_null_invalid_bytes_versions_and_bad_input_atomically ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.21s
+
+   Doc-tests ge4g_pentomino_gameplay
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests ge4g_pentomino_native
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

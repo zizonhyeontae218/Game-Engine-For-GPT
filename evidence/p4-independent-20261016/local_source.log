@@ -1,0 +1,14 @@
+PASS 02 independent C11 linking
+PASS 03 ABI envelope/discovery/frame
+PASS 04 alternating battle model+golden RGBA
+PASS 05 deterministic multi-session replay
+PASS 06 invalid-input transaction rollback
+PASS 07 corrupt save transaction rollback
+PASS 08 true gameplay detach/reinstall
+PASS 09 camera/view+transition rollback
+PASS 10 session capacity/lifecycle
+PASS 11 thread confinement
+PASS 12 cross-mode restore+content binding
+PASS 13 independent randomized battle model 24 configs
+PASS 14 malformed input fuzz 80 cases
+RESULT 13 PASS 0 FAIL

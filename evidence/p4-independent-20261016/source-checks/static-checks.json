@@ -1,0 +1,45 @@
+[
+  {
+    "name": "fmt",
+    "command": [
+      "cargo",
+      "fmt",
+      "--all",
+      "--check"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "release-selftest",
+    "command": [
+      "python3",
+      "scripts/release_consistency.py",
+      "--self-test"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "p2-boundaries",
+    "command": [
+      "python3",
+      "scripts/check_p2_boundaries.py"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "p3-boundaries",
+    "command": [
+      "python3",
+      "scripts/check_p3_boundaries.py"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "p4-boundaries",
+    "command": [
+      "python3",
+      "scripts/check_p4_boundaries.py"
+    ],
+    "exit": 0
+  }
+]

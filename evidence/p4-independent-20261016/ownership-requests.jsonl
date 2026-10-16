@@ -1,0 +1,302 @@
+{"version": 1, "command": {"op": "create", "config": {"version": 1, "width": 160, "height": 96, "tick_hz": 60, "attack_control": "attack", "fighters": [{"id": "blue", "hp": 12, "damage": 4, "position": [40, 72], "color": [48, 144, 255, 255]}, {"id": "red", "hp": 11, "damage": 3, "position": [120, 72], "color": [255, 80, 72, 255]}]}, "seed": 42, "mode": "linked"}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 1, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 2, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 3, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 4, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 5, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 6, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 7, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 8, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 9, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 10, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 11, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 12, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 13, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 14, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 15, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 16, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 17, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 18, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 19, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 20, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 21, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 22, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 23, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 24, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 25, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 26, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 27, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 28, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 29, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 30, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 31, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 32, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 33, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 34, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 35, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 36, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 37, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 38, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 39, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 40, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 41, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 42, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 43, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 44, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 45, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 46, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 47, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 48, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 49, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 50, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 51, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 52, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 53, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 54, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 55, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 56, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 57, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 58, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 59, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 60, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 61, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 62, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 63, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 64, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 65, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 66, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 67, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 68, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 69, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 70, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 71, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 72, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 73, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 74, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 75, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 76, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 77, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 78, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 79, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 80, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 81, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 82, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 83, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 84, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 85, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 86, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 87, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 88, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 89, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 90, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 91, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 92, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 93, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 94, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 95, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 96, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 97, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 98, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 99, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "step", "session": 1, "input": {"version": 1, "target_step": 100, "controls": []}}}
+{"version": 1, "command": {"op": "frame", "session": 1}}
+{"version": 1, "command": {"op": "save", "session": 1}}
+{"version": 1, "command": {"op": "close", "session": 1}}

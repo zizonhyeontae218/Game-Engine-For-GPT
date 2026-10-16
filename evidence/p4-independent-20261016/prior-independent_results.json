@@ -1,0 +1,82 @@
+{
+  "test_count": 14,
+  "pass_count": 14,
+  "fail_count": 0,
+  "lib_sha256": "c5f81138a559154e287c0710daf497b04484f6cc37906a51ddc5713b75e8b822",
+  "artifact_sha256": "af98895c3baf92fb502b13951b056d85ad558f5eb4c915b6d5177c41cbf8600c",
+  "candidate": "GE4G P4 public SDK produced from GitHub Actions run 38414825262 (PR checkout merge commit 62b7118a477d40341bb8a64221d0adca70dddbce; PR source SHA 72d49a63f730e2a3ee2032e83948894e4fd480ba)",
+  "independent_source_free": true,
+  "environment": "linux-x86_64 python3 ctypes cc; no Rust code or compiler, no engine source",
+  "tests": [
+    {
+      "name": "01 integrity digest+full manifest",
+      "status": "PASS",
+      "seconds": 0.4535
+    },
+    {
+      "name": "02 independent C11 linking",
+      "status": "PASS",
+      "seconds": 0.0385
+    },
+    {
+      "name": "03 ABI envelope/discovery/frame",
+      "status": "PASS",
+      "seconds": 0.0216
+    },
+    {
+      "name": "04 alternating battle model+golden RGBA",
+      "status": "PASS",
+      "seconds": 0.0524
+    },
+    {
+      "name": "05 deterministic multi-session replay",
+      "status": "PASS",
+      "seconds": 0.3609
+    },
+    {
+      "name": "06 invalid-input transaction rollback",
+      "status": "PASS",
+      "seconds": 0.2219
+    },
+    {
+      "name": "07 corrupt save transaction rollback",
+      "status": "PASS",
+      "seconds": 0.28
+    },
+    {
+      "name": "08 true gameplay detach/reinstall",
+      "status": "PASS",
+      "seconds": 0.0764
+    },
+    {
+      "name": "09 camera/view+transition rollback",
+      "status": "PASS",
+      "seconds": 0.2182
+    },
+    {
+      "name": "10 session capacity/lifecycle",
+      "status": "PASS",
+      "seconds": 0.0306
+    },
+    {
+      "name": "11 thread confinement",
+      "status": "PASS",
+      "seconds": 0.0044
+    },
+    {
+      "name": "12 cross-mode restore+content binding",
+      "status": "PASS",
+      "seconds": 0.039
+    },
+    {
+      "name": "13 independent randomized battle model 24 configs",
+      "status": "PASS",
+      "seconds": 0.3832
+    },
+    {
+      "name": "14 malformed input fuzz 80 cases",
+      "status": "PASS",
+      "seconds": 0.0048
+    }
+  ]
+}

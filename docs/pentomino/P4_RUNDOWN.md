@@ -82,3 +82,18 @@ Known Limitations:
 Next: [P4_HANDOFF.md](P4_HANDOFF.md)의 P5 Turn Combat 계약·규칙 확장을 진행하고,
 독립 source-free Consumer 시험 결과를 수집한다. 이후 Playable Alpha 플랫폼
 연결을 실제로 검증한다. Tiny Core에 전투 규칙을 넣거나 P0–P3를 반복하지 않는다.
+
+
+## 2026-10-16 별도 Work QA 결과
+
+지정 CI SDK에서 기존14+확장10=24/24그룹, 새 로컬 빌드13/13그룹,
+workspace169/169 및 별도 headless CLI9/9를 직접 검증했다. 재현 결함0개,
+제품 코드 변경0개. 1만스텝·300회 전투/이력 경계·128동시세션·4프로세스·
+JSON/저장/카메라 퍼징 및 메모리 관측을 포함한다.
+
+[독립 QA Rundown](../../evidence/p4-independent-20261016/README.md)에 원본 로그와
+집계 단위, 환경/해시, 실패한 도구 준비 시도 및7개 NOT TESTED 게이트를 보존했다.
+SDK만 사용하는 out-of-tree 실행이지만 이 QA 에이전트는 소스 접근이 가능했으므로
+접근까지 차단한 blind consumer 인증을 충족했다고 주장하지 않는다.
+Windows/Android P4 실행·ASan/Valgrind/TSan·수시간 endurance는 미검증이다.
+Linux P4 기능 검증은 PASS, 포괄 최종 인증은 보류. PR5 병합/릴리즈 없음.
