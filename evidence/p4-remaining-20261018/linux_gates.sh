@@ -22,7 +22,10 @@ if [[ "$1" == address || "$1" == thread ]]; then
   export ASAN_OPTIONS=detect_leaks=1:detect_stack_use_after_return=1:halt_on_error=1
   export TSAN_OPTIONS=halt_on_error=1
   cargo +nightly test --locked -Zbuild-std --target x86_64-unknown-linux-gnu -p ge4g-pentomino-gameplay -p ge4g-pentomino-native --tests -- --nocapture
-  find "$CARGO_TARGET_DIR/x86_64-unknown-linux-gnu/debug/deps" -maxdepth 1 -type f -executable -exec sha256sum '{}' \; > "$out/binaries.sha256"
+  # New nightly Cargo places test executables in debug/build/<crate>/<hash>/out.
+  # Cover both old deps and new build layouts without assuming either path.
+  find "$CARGO_TARGET_DIR/x86_64-unknown-linux-gnu/debug" -type f -executable -exec sha256sum '{}' \; > "$out/binaries.sha256"
+  test -s "$out/binaries.sha256"
 else
   # Original CI ELF, not a new replacement build. Authenticated gh avoids token output.
   gh api repos/zizonhyeontae218/Game-Engine-For-GPT/actions/artifacts/11823886424/zip > "$out/original-artifact.zip"

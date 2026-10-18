@@ -1,0 +1,60 @@
++ date --iso-8601=seconds
+2026-10-18T15:00:04+00:00
++ uname -a
+Linux runnervmk1d70 6.8.0-1064-azure #72~22.04.1-Ubuntu SMP Wed Jul 22 23:39:45 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux
++ cat /etc/os-release
+PRETTY_NAME="Ubuntu 22.04.5 LTS"
+NAME="Ubuntu"
+VERSION_ID="22.04"
+VERSION="22.04.5 LTS (Jammy Jellyfish)"
+VERSION_CODENAME=jammy
+ID=ubuntu
+ID_LIKE=debian
+HOME_URL="https://www.ubuntu.com/"
+SUPPORT_URL="https://help.ubuntu.com/"
+BUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"
+PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-policy"
+UBUNTU_CODENAME=jammy
++ rustc -vV
+rustc 1.99.0 (b940084d7 2026-09-28)
+binary: rustc
+commit-hash: b940084d7eb6a299eb4bfeb8e34901bc051e7ac4
+commit-date: 2026-09-28
+host: x86_64-unknown-linux-gnu
+release: 1.99.0
+LLVM version: 23.1.1
++ clang --version
+Ubuntu clang version 14.0.0-1ubuntu1.1
+Target: x86_64-pc-linux-gnu
+Thread model: posix
+InstalledDir: /usr/bin
++ valgrind --version
+valgrind-3.18.1
++ git rev-parse HEAD
+118c410995ba0ee5fa51b367ea8497b9eeb0ab15
++ sha256sum Cargo.lock
+bc39c9eb34166beabffd2f7617b844950bb51e72970581dd6cdcb7fe165a71b6  Cargo.lock
++ cp evidence/p4-remaining-20261018/threaded_ffi.rs crates/ge4g-pentomino-native/tests/qa_threaded_ffi.rs
++ [[ valgrind == address ]]
++ [[ valgrind == thread ]]
++ gh api repos/zizonhyeontae218/Game-Engine-For-GPT/actions/artifacts/11823886424/zip
++ echo 'af98895c3baf92fb502b13951b056d85ad558f5eb4c915b6d5177c41cbf8600c  /home/runner/work/_temp/p4-linux-valgrind/original-artifact.zip'
++ sha256sum -c -
+/home/runner/work/_temp/p4-linux-valgrind/original-artifact.zip: OK
++ unzip -q /home/runner/work/_temp/p4-linux-valgrind/original-artifact.zip -d /home/runner/work/_temp/p4-linux-valgrind/artifact
++ mkdir /home/runner/work/_temp/p4-linux-valgrind/sdk
++ unzip -q /home/runner/work/_temp/p4-linux-valgrind/artifact/p4-public-sdk.zip -d /home/runner/work/_temp/p4-linux-valgrind/sdk
++ echo 'c5f81138a559154e287c0710daf497b04484f6cc37906a51ddc5713b75e8b822  /home/runner/work/_temp/p4-linux-valgrind/sdk/libge4g_pentomino_native.so'
++ sha256sum -c -
+/home/runner/work/_temp/p4-linux-valgrind/sdk/libge4g_pentomino_native.so: OK
++ cc -g -std=c11 -Wall -Wextra -Werror evidence/p4-independent-20261016/ownership_stress.c -I/home/runner/work/_temp/p4-linux-valgrind/sdk -L/home/runner/work/_temp/p4-linux-valgrind/sdk -lge4g_pentomino_native -Wl,-rpath,/home/runner/work/_temp/p4-linux-valgrind/sdk -o /home/runner/work/_temp/p4-linux-valgrind/ownership
++ valgrind --leak-check=full --show-leak-kinds=all --errors-for-leak-kinds=definite,indirect --error-exitcode=99 --log-file=/home/runner/work/_temp/p4-linux-valgrind/valgrind-ownership.log /home/runner/work/_temp/p4-linux-valgrind/ownership evidence/p4-independent-20261016/ownership-requests.jsonl
+PASS 302 owned responses freed
++ cc -g -std=c11 -Wall -Wextra -Werror evidence/p4-remaining-20261018/thread_ownership.c -I/home/runner/work/_temp/p4-linux-valgrind/sdk -L/home/runner/work/_temp/p4-linux-valgrind/sdk -lge4g_pentomino_native -pthread -Wl,-rpath,/home/runner/work/_temp/p4-linux-valgrind/sdk -o /home/runner/work/_temp/p4-linux-valgrind/thread-ownership
++ valgrind --leak-check=full --show-leak-kinds=all --errors-for-leak-kinds=definite,indirect --error-exitcode=99 --log-file=/home/runner/work/_temp/p4-linux-valgrind/valgrind-thread.log /home/runner/work/_temp/p4-linux-valgrind/thread-ownership
+PASS 128 owned responses freed; 128 sessions left for thread-exit cleanup
++ sha256sum /home/runner/work/_temp/p4-linux-valgrind/ownership /home/runner/work/_temp/p4-linux-valgrind/thread-ownership
++ date --iso-8601=seconds
+2026-10-18T15:01:48+00:00
++ echo 'GATE EXECUTION PASS'
+GATE EXECUTION PASS

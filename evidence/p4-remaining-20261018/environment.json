@@ -1,0 +1,18 @@
+{
+  "implementation_reference": "72d49a63f730e2a3ee2032e83948894e4fd480ba",
+  "remote_implementation": "72d49a63f730e2a3ee2032e83948894e4fd480ba",
+  "prior_qa": "7258d48e1b02ec2c8bdca9099267bd17da924ecc",
+  "remote_prior_qa": "7258d48e1b02ec2c8bdca9099267bd17da924ecc",
+  "changed_production_inputs": [],
+  "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+  "platform": "Windows-10-10.0.26200-SP0",
+  "windows_library_sha256": "a269b0ceed86be20fa6b588bb389330537a1ee5d81008f67dffb51de52833118",
+  "android_library_sha256": "31c5b178d523bf48358eb5c7ceb8a51b13f1b7f1837e58e864cded286de0df76",
+  "cargo_lock_sha256": "bc39c9eb34166beabffd2f7617b844950bb51e72970581dd6cdcb7fe165a71b6",
+  "existing_worktree_overwritten": false,
+  "worktree": "C:\\Users\\gokon\\Documents\\Codex\\2026-10-18\\ge4g-0-3-p4-github-1\\p4-validation",
+  "paid_service": false,
+  "linux_runner": "standard GitHub-hosted ubuntu-22.04 public repository; no paid runner or service",
+  "drive": "Existing evidence/p4-independent-20261016/drive-review.md read; historical search not repeated",
+  "blind_consumer": "NOT TESTED: available agent spawn/thread interfaces do not offer filesystem/tool read restrictions. New agent would retain host source/tool access; no such agent spawned and no out-of-tree run relabeled."
+}
