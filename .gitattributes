@@ -4,3 +4,5 @@
 *.wav binary
 *.zip binary
 *.ge4g binary
+# Preserve raw cross-platform QA log bytes and their recorded SHA256 values.
+evidence/p4-remaining-20261018/** -text

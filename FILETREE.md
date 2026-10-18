@@ -540,8 +540,15 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `evidence/p4-remaining-20261018/endurance-linked.jsonl` — Repository file; inspect only when relevant to the task.
 - `evidence/p4-remaining-20261018/endurance-linked.stdout` — Repository file; inspect only when relevant to the task.
 - `evidence/p4-remaining-20261018/environment.json` — Repository file; inspect only when relevant to the task.
+- `evidence/p4-remaining-20261018/finalize_evidence.py` — Repository file; inspect only when relevant to the task.
 - `evidence/p4-remaining-20261018/host-monitor.jsonl` — Repository file; inspect only when relevant to the task.
+- `evidence/p4-remaining-20261018/linux-final-run.json` — Repository file; inspect only when relevant to the task.
+- `evidence/p4-remaining-20261018/linux-final/address/binaries.sha256` — Repository file; inspect only when relevant to the task.
+- `evidence/p4-remaining-20261018/linux-final/address/driver.log` — Repository file; inspect only when relevant to the task.
+- `evidence/p4-remaining-20261018/linux-final/thread/binaries.sha256` — Repository file; inspect only when relevant to the task.
+- `evidence/p4-remaining-20261018/linux-final/thread/driver.log` — Repository file; inspect only when relevant to the task.
 - `evidence/p4-remaining-20261018/linux-first-failures.log` — Repository file; inspect only when relevant to the task.
+- `evidence/p4-remaining-20261018/linux-first-run.json` — Repository file; inspect only when relevant to the task.
 - `evidence/p4-remaining-20261018/linux-first/address/binaries.sha256` — Repository file; inspect only when relevant to the task.
 - `evidence/p4-remaining-20261018/linux-first/address/driver.log` — Repository file; inspect only when relevant to the task.
 - `evidence/p4-remaining-20261018/linux-first/thread/binaries.sha256` — Repository file; inspect only when relevant to the task.
@@ -550,6 +557,7 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `evidence/p4-remaining-20261018/linux-first/valgrind/driver.log` — Repository file; inspect only when relevant to the task.
 - `evidence/p4-remaining-20261018/linux-first/valgrind/valgrind-ownership.log` — Repository file; inspect only when relevant to the task.
 - `evidence/p4-remaining-20261018/linux-first/valgrind/valgrind-thread.log` — Repository file; inspect only when relevant to the task.
+- `evidence/p4-remaining-20261018/linux-repeat-start.json` — Repository file; inspect only when relevant to the task.
 - `evidence/p4-remaining-20261018/linux_gates.sh` — Repository file; inspect only when relevant to the task.
 - `evidence/p4-remaining-20261018/monitor.ps1` — Repository file; inspect only when relevant to the task.
 - `evidence/p4-remaining-20261018/native_verify.py` — Repository file; inspect only when relevant to the task.
