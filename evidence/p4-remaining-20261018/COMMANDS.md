@@ -84,3 +84,5 @@ Existing Drive review was reused instead of repeating historical searches.
 Existing broad acceptance workflows automatically triggered by branch pushes were
 cancelled; unchanged169/169 workspace and other completed checks are prior evidence,
 not added to new execution counts.
+
+Final collection: both endurance command sessions returned exit0; supervisor stopped afterwards. No execution was restarted after user steering. Progress polling switched to5minutes; raw harness checkpoints remained30seconds. Run `python evidence/p4-remaining-20261018/finalize_evidence.py`, then `python scripts/filetree.py update` and `python scripts/filetree.py lint`. A fresh detached checkout validates the committed ledger independently of the live worktree.

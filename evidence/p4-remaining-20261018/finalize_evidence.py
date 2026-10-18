@@ -8,6 +8,8 @@ def tests(name,count):
     assert all(t['status']=='PASS' for t in r['tests']);return r
 windows=tests('windows-native.json',9);android=tests('android-native.json',7)
 assert android['abi_calls']==294 and android['exit_code']==0
+exits=read('process-exits.json')
+assert exits['headless']==exits['linked']==0 and not exits['resource_stop_triggered']
 endurance={}
 for mode in ['headless','linked']:
     r=read(f'endurance-{mode}.json')
@@ -21,6 +23,7 @@ for mode in ['headless','linked']:
     assert max(v['rss_kib'] for v in rows)<768*1024
     r['checkpoint_count']=len(rows);r['rss_min_kib']=min(v['rss_kib'] for v in rows);r['rss_max_kib']=max(v['rss_kib'] for v in rows)
     r['max_checkpoint_gap_seconds']=max(b['elapsed_seconds']-a['elapsed_seconds'] for a,b in zip(rows,rows[1:]))
+    assert r['max_checkpoint_gap_seconds']<90, 'Continuity gap requires review; cannot certify continuous endurance'
     endurance[mode]=r
 for name in ['valgrind-ownership.log','valgrind-thread.log']:
     log=(root/'linux-first/valgrind'/name).read_text(encoding='utf-8')

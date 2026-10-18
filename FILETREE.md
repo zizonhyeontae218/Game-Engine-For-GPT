@@ -267,7 +267,6 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `docs/TESTPLAN.md` — Acceptance and deterministic verification plan.
 - `docs/benchmarks/flatland-task-context.json` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/active/.gitkeep` — Repository file; inspect only when relevant to the task.
-- `docs/exec-plans/active/p4-remaining-qa.md` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/active/pentomino-p4.md` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/completed/.gitkeep` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/completed/basement.md` — Repository file; inspect only when relevant to the task.
@@ -279,6 +278,7 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `docs/exec-plans/completed/flatland.md` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/completed/flutter-client.md` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/completed/p4-independent-qa.md` — Repository file; inspect only when relevant to the task.
+- `docs/exec-plans/completed/p4-remaining-qa.md` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/completed/pentaworks-agent-setup.md` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/completed/pentomino-main-transition.md` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/completed/pentomino-p0-packets.md` — Repository file; inspect only when relevant to the task.
@@ -522,6 +522,8 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `evidence/p4-independent-20261016/valgrind-retry.log` — Repository file; inspect only when relevant to the task.
 - `evidence/p4-independent-20261016/valgrind.log` — Repository file; inspect only when relevant to the task.
 - `evidence/p4-remaining-20261018/COMMANDS.md` — Repository file; inspect only when relevant to the task.
+- `evidence/p4-remaining-20261018/README.md` — Repository file; inspect only when relevant to the task.
+- `evidence/p4-remaining-20261018/SHA256SUMS.json` — Repository file; inspect only when relevant to the task.
 - `evidence/p4-remaining-20261018/android-build.log` — Repository file; inspect only when relevant to the task.
 - `evidence/p4-remaining-20261018/android-consumer-build.log` — Repository file; inspect only when relevant to the task.
 - `evidence/p4-remaining-20261018/android-consumer.stderr` — Repository file; inspect only when relevant to the task.
@@ -532,11 +534,14 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `evidence/p4-remaining-20261018/android_consumer.c` — Repository file; inspect only when relevant to the task.
 - `evidence/p4-remaining-20261018/android_verify.py` — Repository file; inspect only when relevant to the task.
 - `evidence/p4-remaining-20261018/artifact-integrity.json` — Repository file; inspect only when relevant to the task.
+- `evidence/p4-remaining-20261018/cleanup.json` — Repository file; inspect only when relevant to the task.
 - `evidence/p4-remaining-20261018/emulator.pid` — Repository file; inspect only when relevant to the task.
 - `evidence/p4-remaining-20261018/emulator.stderr` — Repository file; inspect only when relevant to the task.
 - `evidence/p4-remaining-20261018/emulator.stdout` — Repository file; inspect only when relevant to the task.
+- `evidence/p4-remaining-20261018/endurance-headless.json` — Repository file; inspect only when relevant to the task.
 - `evidence/p4-remaining-20261018/endurance-headless.jsonl` — Repository file; inspect only when relevant to the task.
 - `evidence/p4-remaining-20261018/endurance-headless.stdout` — Repository file; inspect only when relevant to the task.
+- `evidence/p4-remaining-20261018/endurance-linked.json` — Repository file; inspect only when relevant to the task.
 - `evidence/p4-remaining-20261018/endurance-linked.jsonl` — Repository file; inspect only when relevant to the task.
 - `evidence/p4-remaining-20261018/endurance-linked.stdout` — Repository file; inspect only when relevant to the task.
 - `evidence/p4-remaining-20261018/environment.json` — Repository file; inspect only when relevant to the task.
@@ -562,7 +567,10 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `evidence/p4-remaining-20261018/monitor.ps1` — Repository file; inspect only when relevant to the task.
 - `evidence/p4-remaining-20261018/native_verify.py` — Repository file; inspect only when relevant to the task.
 - `evidence/p4-remaining-20261018/ndk-clang.log` — Repository file; inspect only when relevant to the task.
+- `evidence/p4-remaining-20261018/process-exits.json` — Repository file; inspect only when relevant to the task.
 - `evidence/p4-remaining-20261018/rust-install.log` — Repository file; inspect only when relevant to the task.
+- `evidence/p4-remaining-20261018/source-integrity.json` — Repository file; inspect only when relevant to the task.
+- `evidence/p4-remaining-20261018/summary.json` — Repository file; inspect only when relevant to the task.
 - `evidence/p4-remaining-20261018/thread_ownership.c` — Repository file; inspect only when relevant to the task.
 - `evidence/p4-remaining-20261018/threaded_ffi.rs` — Repository file; inspect only when relevant to the task.
 - `evidence/p4-remaining-20261018/windows-build.log` — Repository file; inspect only when relevant to the task.
