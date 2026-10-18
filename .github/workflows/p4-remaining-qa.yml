@@ -1,0 +1,32 @@
+name: P4 remaining instrumentation
+on:
+  push:
+    branches: [qa/p4-remaining-20261018]
+    paths:
+      - .github/workflows/p4-remaining-qa.yml
+      - evidence/p4-remaining-20261018/linux_gates.sh
+      - evidence/p4-remaining-20261018/threaded_ffi.rs
+      - evidence/p4-remaining-20261018/thread_ownership.c
+permissions:
+  contents: read
+  actions: read
+jobs:
+  instrument:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 35
+    strategy:
+      fail-fast: false
+      matrix:
+        gate: [address, thread, valgrind]
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update && sudo apt-get install -y valgrind libc6-dbg clang
+      - name: Execute remaining gate
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: bash evidence/p4-remaining-20261018/linux_gates.sh ${{ matrix.gate }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: p4-linux-${{ matrix.gate }}-${{ github.run_id }}
+          path: ${{ runner.temp }}/p4-linux-${{ matrix.gate }}

@@ -21,6 +21,7 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `.gitattributes` — Repository file; inspect only when relevant to the task.
 - `.github/workflows/ci.yml` — Clean-checkout headless and window acceptance CI.
 - `.github/workflows/client.yml` — Repository file; inspect only when relevant to the task.
+- `.github/workflows/p4-remaining-qa.yml` — Repository file; inspect only when relevant to the task.
 - `.github/workflows/restore-flatland-release.yml` — Repository file; inspect only when relevant to the task.
 - `.gitignore` — Repository file; inspect only when relevant to the task.
 - `00_MASTER_CONCEPT.md` — Canonical GE4G concept and design philosophy.
@@ -266,6 +267,7 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `docs/TESTPLAN.md` — Acceptance and deterministic verification plan.
 - `docs/benchmarks/flatland-task-context.json` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/active/.gitkeep` — Repository file; inspect only when relevant to the task.
+- `docs/exec-plans/active/p4-remaining-qa.md` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/active/pentomino-p4.md` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/completed/.gitkeep` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/completed/basement.md` — Repository file; inspect only when relevant to the task.
@@ -519,6 +521,30 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `evidence/p4-independent-20261016/valgrind-retry-driver.log` — Repository file; inspect only when relevant to the task.
 - `evidence/p4-independent-20261016/valgrind-retry.log` — Repository file; inspect only when relevant to the task.
 - `evidence/p4-independent-20261016/valgrind.log` — Repository file; inspect only when relevant to the task.
+- `evidence/p4-remaining-20261018/android-build.log` — Repository file; inspect only when relevant to the task.
+- `evidence/p4-remaining-20261018/android-consumer-build.log` — Repository file; inspect only when relevant to the task.
+- `evidence/p4-remaining-20261018/android-consumer.stderr` — Repository file; inspect only when relevant to the task.
+- `evidence/p4-remaining-20261018/android-getprop.log` — Repository file; inspect only when relevant to the task.
+- `evidence/p4-remaining-20261018/android-native.json` — Repository file; inspect only when relevant to the task.
+- `evidence/p4-remaining-20261018/android-native.log` — Repository file; inspect only when relevant to the task.
+- `evidence/p4-remaining-20261018/android-target.log` — Repository file; inspect only when relevant to the task.
+- `evidence/p4-remaining-20261018/android_consumer.c` — Repository file; inspect only when relevant to the task.
+- `evidence/p4-remaining-20261018/android_verify.py` — Repository file; inspect only when relevant to the task.
+- `evidence/p4-remaining-20261018/emulator.pid` — Repository file; inspect only when relevant to the task.
+- `evidence/p4-remaining-20261018/emulator.stderr` — Repository file; inspect only when relevant to the task.
+- `evidence/p4-remaining-20261018/emulator.stdout` — Repository file; inspect only when relevant to the task.
+- `evidence/p4-remaining-20261018/endurance-headless.jsonl` — Repository file; inspect only when relevant to the task.
+- `evidence/p4-remaining-20261018/endurance-headless.stdout` — Repository file; inspect only when relevant to the task.
+- `evidence/p4-remaining-20261018/endurance-linked.jsonl` — Repository file; inspect only when relevant to the task.
+- `evidence/p4-remaining-20261018/endurance-linked.stdout` — Repository file; inspect only when relevant to the task.
+- `evidence/p4-remaining-20261018/linux_gates.sh` — Repository file; inspect only when relevant to the task.
+- `evidence/p4-remaining-20261018/native_verify.py` — Repository file; inspect only when relevant to the task.
+- `evidence/p4-remaining-20261018/rust-install.log` — Repository file; inspect only when relevant to the task.
+- `evidence/p4-remaining-20261018/thread_ownership.c` — Repository file; inspect only when relevant to the task.
+- `evidence/p4-remaining-20261018/threaded_ffi.rs` — Repository file; inspect only when relevant to the task.
+- `evidence/p4-remaining-20261018/windows-build.log` — Repository file; inspect only when relevant to the task.
+- `evidence/p4-remaining-20261018/windows-native.json` — Repository file; inspect only when relevant to the task.
+- `evidence/p4-remaining-20261018/windows-native.log` — Repository file; inspect only when relevant to the task.
 - `examples/basement_demo/asset-licenses.json` — Playable reference demo data, replay or inspected framebuffer golden.
 - `examples/basement_demo/ge4g.toml` — Playable reference demo data, replay or inspected framebuffer golden.
 - `examples/basement_demo/golden/room_b.png` — Playable reference demo data, replay or inspected framebuffer golden.

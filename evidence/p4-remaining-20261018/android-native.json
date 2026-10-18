@@ -1,0 +1,43 @@
+{
+  "platform": "Android emulator x86_64; native executable/C ABI, no Flutter UI",
+  "tests": [
+    {
+      "name": "turn_combat_independent",
+      "status": "PASS",
+      "seconds": 0.453
+    },
+    {
+      "name": "invalid_input_atomicity",
+      "status": "PASS",
+      "seconds": 1.484
+    },
+    {
+      "name": "restore_atomicity",
+      "status": "PASS",
+      "seconds": 1.422
+    },
+    {
+      "name": "detach_reinstall",
+      "status": "PASS",
+      "seconds": 0.547
+    },
+    {
+      "name": "camera_and_view_atomicity",
+      "status": "PASS",
+      "seconds": 1.375
+    },
+    {
+      "name": "lifecycle_and_limit",
+      "status": "PASS",
+      "seconds": 0.312
+    },
+    {
+      "name": "headless_restoration_and_binding",
+      "status": "PASS",
+      "seconds": 0.282
+    }
+  ],
+  "abi_calls": 294,
+  "exit_code": 0,
+  "library_sha256": "31c5b178d523bf48358eb5c7ceb8a51b13f1b7f1837e58e864cded286de0df76"
+}

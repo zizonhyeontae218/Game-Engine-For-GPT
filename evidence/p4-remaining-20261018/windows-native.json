@@ -1,0 +1,53 @@
+{
+  "platform": "Windows-10-10.0.26200-SP0",
+  "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+  "library": "C:\\Users\\gokon\\Documents\\Codex\\2026-10-18\\ge4g-0-3-p4-github-1\\p4-validation\\target\\debug\\ge4g_pentomino_native.dll",
+  "sha256": "a269b0ceed86be20fa6b588bb389330537a1ee5d81008f67dffb51de52833118",
+  "tests": [
+    {
+      "name": "ffi_basic",
+      "status": "PASS",
+      "seconds": 0.047
+    },
+    {
+      "name": "turn_combat_independent",
+      "status": "PASS",
+      "seconds": 0.062
+    },
+    {
+      "name": "invalid_input_atomicity",
+      "status": "PASS",
+      "seconds": 0.391
+    },
+    {
+      "name": "restore_atomicity",
+      "status": "PASS",
+      "seconds": 0.437
+    },
+    {
+      "name": "detach_reinstall",
+      "status": "PASS",
+      "seconds": 0.11
+    },
+    {
+      "name": "camera_and_view_atomicity",
+      "status": "PASS",
+      "seconds": 0.343
+    },
+    {
+      "name": "lifecycle_and_limit",
+      "status": "PASS",
+      "seconds": 0.032
+    },
+    {
+      "name": "cross_thread",
+      "status": "PASS",
+      "seconds": 0.0
+    },
+    {
+      "name": "headless_restoration_and_binding",
+      "status": "PASS",
+      "seconds": 0.062
+    }
+  ]
+}
