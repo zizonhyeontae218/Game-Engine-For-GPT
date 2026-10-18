@@ -1,0 +1,21 @@
+{
+  "first_result": "FILETREE.hash.json is stale",
+  "mismatches": [
+    "evidence/p4-remaining-20261018/android-build.log",
+    "evidence/p4-remaining-20261018/android-getprop.log",
+    "evidence/p4-remaining-20261018/android-native.json",
+    "evidence/p4-remaining-20261018/android-native.log",
+    "evidence/p4-remaining-20261018/android-target.log",
+    "evidence/p4-remaining-20261018/artifact-integrity.json",
+    "evidence/p4-remaining-20261018/emulator.pid",
+    "evidence/p4-remaining-20261018/emulator.stdout",
+    "evidence/p4-remaining-20261018/environment.json",
+    "evidence/p4-remaining-20261018/ndk-clang.log",
+    "evidence/p4-remaining-20261018/rust-install.log",
+    "evidence/p4-remaining-20261018/windows-build.log",
+    "evidence/p4-remaining-20261018/windows-native.json",
+    "evidence/p4-remaining-20261018/windows-native.log"
+  ],
+  "cause": "14 previously staged Windows text blobs retained normalized LF in index despite later -text attributes; all mismatches newline-only",
+  "fix": "git add --renormalize evidence/p4-remaining-20261018, preserve original working-file CRLF bytes, verify staged blobs then fresh commit checkout"
+}

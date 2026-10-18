@@ -1,0 +1,8 @@
+{
+  "headless": 0,
+  "linked": 0,
+  "resource_supervisor": "stopped after both completed successfully; no further resource monitoring needed",
+  "emulator": "own read-only instance terminated after Android verification",
+  "resource_stop_triggered": false,
+  "log_polling": "changed to five-minute progress polling after user steering; resource-only sampling every30seconds"
+}

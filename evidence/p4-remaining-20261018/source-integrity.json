@@ -1,0 +1,28 @@
+{
+  "production_diff_command": [
+    "git",
+    "diff",
+    "--name-only",
+    "72d49a63f730e2a3ee2032e83948894e4fd480ba",
+    "--",
+    "Cargo.lock",
+    "Cargo.toml",
+    "crates",
+    "client",
+    "examples",
+    "samples",
+    "docs/pentomino/P4_CONTRACT.md",
+    "docs/pentomino/P4_HANDOFF.md"
+  ],
+  "production_changed_paths": [],
+  "prior_evidence_changed_paths": [],
+  "p4_client_symbol_scan_command": [
+    "rg",
+    "-l",
+    "ge4g_p4|pentomino",
+    "client/lib",
+    "crates/ge4g-client"
+  ],
+  "p4_client_symbol_matches": [],
+  "p4_flutter_integration": "NOT DELIVERED / NOT TESTED"
+}

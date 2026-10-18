@@ -1,0 +1,36 @@
+{
+  "mode": "linked",
+  "elapsed_seconds": 7200.0320000000065,
+  "steps": 67608,
+  "session_step": 1612,
+  "rss_kib": 45912,
+  "latency_window": 4096,
+  "p50_ms": 96.29444999154657,
+  "p95_ms": 125.03349999315105,
+  "p99_ms": 225.37489997921512,
+  "errors": 0,
+  "state_sha256": "0a9709988e9eb0d696f6a53787e3ea1cb6234beefe030cb6b81ad10c20a7d066",
+  "battle": {
+    "hp": [
+      9268,
+      9267
+    ],
+    "turn": 1,
+    "winner": -1,
+    "attack_count": 1465
+  },
+  "cycles": 36,
+  "restores": 1089,
+  "cameras": 532,
+  "detaches": 132,
+  "frames_verified": 4225,
+  "history_boundary_seen": true,
+  "longest_battle_attacks": 19999,
+  "final": true,
+  "status": "PASS",
+  "error": null,
+  "requested_seconds": 7200,
+  "seed": 20261018,
+  "platform": "Windows-10-10.0.26200-SP0",
+  "library_sha256": "a269b0ceed86be20fa6b588bb389330537a1ee5d81008f67dffb51de52833118"
+}

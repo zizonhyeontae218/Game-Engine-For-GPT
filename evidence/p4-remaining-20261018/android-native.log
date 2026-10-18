@@ -1,0 +1,7 @@
+PASS turn_combat_independent
+PASS invalid_input_atomicity
+PASS restore_atomicity
+PASS detach_reinstall
+PASS camera_and_view_atomicity
+PASS lifecycle_and_limit
+PASS headless_restoration_and_binding
