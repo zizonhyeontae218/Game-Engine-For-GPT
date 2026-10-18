@@ -124,7 +124,7 @@
   },
   "confirmed_engine_defects": 0,
   "product_code_changes": 0,
-  "qa_defects_fixed": 1,
+  "qa_defects_fixed": 2,
   "prior_evidence_only": [
     "CI SDK24/24",
     "local13/13",

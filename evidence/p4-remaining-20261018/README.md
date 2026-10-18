@@ -78,6 +78,10 @@ Camera/View는 전체 Core save 불변 및 잘못된 View의 원자성, 재생�
 - **QA 결함1개 수정:** nightly Cargo가 테스트 바이너리를 debug/build/.../out에
   배치해 기존 debug/deps 한정 해시 수집이 실패했다. `33b8193`에서 경로 수집을
   수정했고 ASan/TSan만 한 번 재실행해 성공·해시를 확보했다. Valgrind는 반복하지 않았다.
+- **증거 운반 결함1개 수정:** 새 checkout의 FILETREE 검사에서14개 초기 Windows
+  파일의 CRLF가 기존 Git index에는 LF로 남아 있음을 확인했다. 내용 차이는 줄바꿈뿐이다.
+  원본 파일을 변경하지 않고 새 evidence의 -text 속성으로 index를 재등록했다.
+  최초 불일치 목록은 checkout-ledger-first.json에 보존하고 수정 checkout에서 한 번 재확인한다.
 - F: 현재 spawn/thread 도구에 소스 읽기/도구 allowlist 제한 설정이 없어 독립 소비자
   에이전트의 접근 격리를 보장할 수 없다. 소스를 보지 말라는 지시나 out-of-tree
   실행을 격리 인증으로 재명명하지 않았다.

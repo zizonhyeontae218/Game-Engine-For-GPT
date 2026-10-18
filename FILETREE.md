@@ -534,6 +534,7 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `evidence/p4-remaining-20261018/android_consumer.c` — Repository file; inspect only when relevant to the task.
 - `evidence/p4-remaining-20261018/android_verify.py` — Repository file; inspect only when relevant to the task.
 - `evidence/p4-remaining-20261018/artifact-integrity.json` — Repository file; inspect only when relevant to the task.
+- `evidence/p4-remaining-20261018/checkout-ledger-first.json` — Repository file; inspect only when relevant to the task.
 - `evidence/p4-remaining-20261018/cleanup.json` — Repository file; inspect only when relevant to the task.
 - `evidence/p4-remaining-20261018/emulator.pid` — Repository file; inspect only when relevant to the task.
 - `evidence/p4-remaining-20261018/emulator.stderr` — Repository file; inspect only when relevant to the task.
