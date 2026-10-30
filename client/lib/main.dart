@@ -1,4 +1,5 @@
 import 'battle_screen.dart';
+import 'pentomino_screen.dart';
 
 import 'dart:async';
 import 'dart:convert';
@@ -85,11 +86,17 @@ class GE4GApp extends StatelessWidget {
         overlayColor: Color(0x22000000),
       ),
     ),
-    home: ClientHome(
-      arguments: arguments,
-      engine: engine,
-      dataDirectory: dataDirectory,
-    ),
+    home: arguments.contains('--pentomino')
+        ? PentominoScreen(
+            captureDirectory: arguments.contains('--pentomino-capture')
+                ? Platform.environment['GE4G_SMOKE_OUTPUT']
+                : null,
+          )
+        : ClientHome(
+            arguments: arguments,
+            engine: engine,
+            dataDirectory: dataDirectory,
+          ),
   );
 }
 
@@ -461,6 +468,20 @@ class _ClientHomeState extends State<ClientHome>
                   ],
                 ),
               ),
+            ),
+          const SizedBox(height: 16),
+          if (!embedded)
+            OutlinedButton.icon(
+              key: const Key('pentomino-open'),
+              onPressed: busy
+                  ? null
+                  : () => Navigator.of(context).push(
+                      MaterialPageRoute<void>(
+                        builder: (_) => const PentominoScreen(),
+                      ),
+                    ),
+              icon: const Icon(Icons.play_arrow),
+              label: const Text('PENTOMINO / 턴제 전투'),
             ),
           if (player?.message != null)
             Padding(

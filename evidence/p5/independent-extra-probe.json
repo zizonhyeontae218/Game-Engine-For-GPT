@@ -1,0 +1,10 @@
+{
+  "audit": "P5 public C internal-independent probe",
+  "commands": 301,
+  "retained_history": 256,
+  "tamper_cases": 5,
+  "lifecycle_restore": true,
+  "outcome": "PASS",
+  "elapsed_seconds": 283.234,
+  "scope": "debug reference; source-aware worker, not Blind Consumer"
+}

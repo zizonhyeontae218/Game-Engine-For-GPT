@@ -1,0 +1,22 @@
+    Blocking waiting for file lock on build directory
+   Compiling ge4g-pentomino-native v0.3.0-alpha.1 (/workspace/scratch/79d5dac01d99/ge4g/crates/ge4g-pentomino-native)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 26.02s
+     Running tests/p5_contract.rs (target/debug/deps/p5_contract-78f774584380be59)
+
+running 5 tests
+test handles_are_foreign_to_p4_and_other_p5_registries_and_never_recycled ... ok
+test invalid_duplicate_stale_conflicting_and_detached_commands_preserve_all_domains ... ok
+test save_replay_detects_trace_core_clock_and_camera_tampering_without_mutation ... ok
+test public_sample_manual_oracle_cost_heal_poison_regen_victory_and_replay ... ok
+test resource_failure_and_trace_budget_preserve_state_after_core_history_rollover ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 56.44s
+
+     Running tests/p5_ffi.rs (target/debug/deps/p5_ffi-606e203fbd004194)
+
+running 2 tests
+test null_unknown_fields_invalid_version_and_duplicate_input_are_atomic ... ok
+test actual_c_calls_preserve_frame_buffers_and_validate_thread_and_abi_separation ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.11s
+

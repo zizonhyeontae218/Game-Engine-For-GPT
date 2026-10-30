@@ -162,3 +162,11 @@ wait-for-new-instructions note does not cancel a subsequent explicit P0 start.
   enable suspended client jobs.
 - External consumer validation requires a separate source-free workspace/session
   and public artifacts; ordinary in-repo workers cannot certify it.
+
+## P5 / pre1P6 candidate routing
+
+Read docs/pentomino/P5_CONTRACT.md, P5_RUNDOWN.md and P6_HANDOFF.md for the
+version2 Gameplay/native candidate in PR #9. P4 chain remains unmerged.
+Keep P4 APIs and Core source unchanged; new work lives in gameplay::v2/native::p5.
+P6 user gates are mandatory: after actual pre1P6 delivery, wait for PASS/FIX/CHANGE
+before pre2. No PR merge, signing or release without explicit user authorization.

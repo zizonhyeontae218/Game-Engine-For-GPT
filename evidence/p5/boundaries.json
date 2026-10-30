@@ -1,0 +1,22 @@
+{
+  "release-consistency": {
+    "exit_code": 0,
+    "output": "Pentomino0.3.0-alpha.1 consistency: 21 current documents and release identity passed; historical documents excluded\n"
+  },
+  "p2-boundaries": {
+    "exit_code": 1,
+    "output": "Traceback (most recent call last):\n  File \"/workspace/scratch/79d5dac01d99/ge4g/scripts/check_p2_boundaries.py\", line 60, in <module>\n    main()\n  File \"/workspace/scratch/79d5dac01d99/ge4g/scripts/check_p2_boundaries.py\", line 53, in main\n    assert not command(\"git\", \"diff\", BASE, \"--\", *preserved, \":(exclude)examples/c_abi/**\"), \"legacy baseline modified\"\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: legacy baseline modified\n"
+  },
+  "p3-boundaries": {
+    "exit_code": 1,
+    "output": "Traceback (most recent call last):\n  File \"/workspace/scratch/79d5dac01d99/ge4g/scripts/check_p3_boundaries.py\", line 57, in <module>\n    main()\n  File \"/workspace/scratch/79d5dac01d99/ge4g/scripts/check_p3_boundaries.py\", line 24, in main\n    assert not command(\"git\", \"diff\", baseline[\"source_base\"], \"--\", *preserved, \":(exclude)examples/c_abi/**\"), \"preserved production/test source changed\"\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: preserved production/test source changed\n"
+  },
+  "p4-boundaries": {
+    "exit_code": 0,
+    "output": "{\"ok\": true, \"gameplay_engine_dependencies\": [\"ge4g-pentomino\"], \"native_engine_dependencies\": [\"ge4g-core\", \"ge4g-pentomino\", \"ge4g-pentomino-gameplay\", \"ge4g-pentomino-legacy\", \"ge4g-pentomino-view\", \"ge4g-pentomino-view-legacy\", \"ge4g-project\", \"ge4g-render2d\", \"ge4g-runtime\"], \"abi\": \"ge4g_p4_v1\", \"external_certification\": \"UNVERIFIED\"}\n"
+  },
+  "fmt": {
+    "exit_code": 0,
+    "output": ""
+  }
+}

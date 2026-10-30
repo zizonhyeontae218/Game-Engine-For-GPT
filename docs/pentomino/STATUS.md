@@ -59,3 +59,15 @@ work. Do not repeat P0–P3. Forge remains0.4.
 - Existing test checklists are complete by the user's 2026-10-09 report. Historical
   Windows ZIP fixture failure evidence remains in HANDOFF.md; this repository
   cleanup does not claim a new investigation or feature implementation.
+
+## P5 / pre1P6 development candidate (2026-10-30)
+
+PR #9 stacks on unmerged P4 #8 -> #7 -> #5. Gameplay v2/native P5 is implemented
+and technically accepted in the reviewed scope: workspace181/181, new rules/native
+contracts, actual C/ctypes consumers, five legacy replay/golden checks and an
+independent source-aware audit. See P5_RUNDOWN.md for counts, failures and limits.
+This is not a merge, blind certification, signed release or physical acceptance.
+The existing Flutter client has the pre1P6 sample adapter; actual platform build
+evidence and user acceptance remain separate. No pre2P6 before user PASS.
+P5_CONTRACT.md and P6_HANDOFF.md supersede the old 'next P5' planning paragraph
+for this candidate only; main remains unchanged until explicitly approved merge.

@@ -75,14 +75,17 @@ void main() {
       await library.reorder(2, 0);
       final restarted = GameLibrary(root, (_) {});
       expect((await restarted.list()).map((g) => g.id), ['c', 'a', 'b']);
-      await restarted.importBytes(
-        fixture.package(id: 'a', projectText: 'revisionB', version: '0.2.0'),
+      // An exact duplicate is the same archive bytes. Re-encoding a ZIP can
+      // change timestamp metadata while its files remain identical.
+      final revisionB = fixture.package(
+        id: 'a',
+        projectText: 'revisionB',
+        version: '0.2.0',
       );
+      await restarted.importBytes(revisionB);
       expect(a.directory.existsSync(), false);
       final before = (await restarted.list()).map((g) => g.toJson()).toList();
-      await restarted.importBytes(
-        fixture.package(id: 'a', projectText: 'revisionB', version: '0.2.0'),
-      );
+      await restarted.importBytes(revisionB);
       expect((await restarted.list()).map((g) => g.toJson()).toList(), before);
       expect(Directory('${root.path}/games/a').listSync().length, 1);
       c.directory.deleteSync(recursive: true);
@@ -142,7 +145,8 @@ void main() {
     final root = Directory.systemTemp.createTempSync('ge4g-final-delete-');
     final library = GameLibrary(root, (_) {});
     try {
-      final game = await library.importBytes(fixture.package());
+      final packageBytes = fixture.package();
+      final game = await library.importBytes(packageBytes);
       final save = library.save(game.id)..parent.createSync(recursive: true);
       save.writeAsStringSync('save');
       final settings = library.controls(game.id)..createSync(recursive: true);
@@ -159,7 +163,7 @@ void main() {
       expect(game.directory.parent.existsSync(), false);
       expect(save.readAsStringSync(), 'save');
       expect(settings.existsSync(), true);
-      final installed = await library.importBytes(fixture.package());
+      final installed = await library.importBytes(packageBytes);
       expect(installed.digest, game.digest);
       expect(save.readAsStringSync(), 'save');
       await library.remove(game.id, allData: true);

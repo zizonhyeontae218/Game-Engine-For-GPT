@@ -171,3 +171,14 @@ Exact contracts/limits: docs/pentomino/P3_CONTRACT.md. External gate PENDING.
   persisted or reused after close. Existing ABI1 IDs/saves remain unchanged.
 
 Exact limits, authority/removal behavior and additive C ABI: P4_CONTRACT.md.
+
+## P5 Gameplay v2 identifiers (additive)
+
+- `p5.state`: authoritative provider; owns roster entities, positions and complete
+  status record (HP/resource/poison/regen/turn/outcome/command identity).
+- `p5.turn_combat`: removable rule owner; command decisions only.
+- `p5.battle_state`: provider read capability; not authority transfer.
+- Positive strictly increasing command ID survives rule removal and save/restore;
+  duplicate/stale commands reject. See `docs/pentomino/P5_CONTRACT.md`.
+- P5 config/save version2 and `ge4g_p5_v1_*` native ABI are independent of all
+  P4, P2/P3 and FlatLand versions; there is no implicit save migration.

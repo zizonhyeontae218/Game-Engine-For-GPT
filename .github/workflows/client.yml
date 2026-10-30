@@ -8,7 +8,7 @@ on:
 permissions:
   contents: read
 concurrency:
-  group: ge4g-clients-${{ github.ref }}
+  group: ge4g-clients-${{ github.head_ref || github.ref_name }}
   cancel-in-progress: true
 jobs:
   windows:
@@ -35,8 +35,42 @@ jobs:
         working-directory: client
       - run: flutter test
         working-directory: client
+        env:
+          GE4G_LAYOUT_CAPTURE: ${{ runner.temp }}/pre1p6-layout
       - run: flutter build windows --release
         working-directory: client
+      - name: Start actual Pentomino Windows runtime and capture
+        shell: pwsh
+        run: |
+          $env:GE4G_SMOKE_OUTPUT = "$env:RUNNER_TEMP/pre1p6-native"
+          New-Item -ItemType Directory -Force $env:GE4G_SMOKE_OUTPUT | Out-Null
+          $exe = (Resolve-Path 'client/build/windows/x64/runner/Release/ge4g_client.exe').Path
+          $process = Start-Process -FilePath $exe -ArgumentList '--pentomino','--pentomino-capture' -PassThru
+          try {
+            $marker = Join-Path $env:GE4G_SMOKE_OUTPUT 'pentomino-start-state.json'
+            $deadline = (Get-Date).AddSeconds(90)
+            while (!(Test-Path $marker) -and (Get-Date) -lt $deadline -and !$process.HasExited) { Start-Sleep -Seconds 1 }
+            if (!(Test-Path $marker)) { throw 'Actual P5 native startup/capture did not complete' }
+            $state = Get-Content $marker -Raw | ConvertFrom-Json
+            if ($state.battle.fighters.Count -ne 2 -or $state.battle.turn -ne 0) { throw 'Unexpected authoritative startup state' }
+            if (!(Test-Path (Join-Path $env:GE4G_SMOKE_OUTPUT 'pentomino-start-ui.png'))) { throw 'No actual UI capture' }
+          } finally {
+            if (!$process.HasExited) { Stop-Process -Id $process.Id -Force }
+          }
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ge4g-pre1p6-rendered-evidence
+          path: |
+            ${{ runner.temp }}/pre1p6-native
+            ${{ runner.temp }}/pre1p6-layout
+      - run: python scripts/package_pre1p6.py --client client/build/windows/x64/runner/Release --out dist/ge4g-pre1p6-windows
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ge4g-pre1p6-windows
+          path: |
+            dist/ge4g-pre1p6-windows.zip
+            dist/ge4g-pre1p6-windows.zip.sha256
       - run: python scripts/bundle_desktop.py --client client/build/windows/x64/runner/Release --game dist/basement-demo.ge4g --platform windows --out dist/ge4g-basement-windows
       - uses: actions/upload-artifact@v4
         with:

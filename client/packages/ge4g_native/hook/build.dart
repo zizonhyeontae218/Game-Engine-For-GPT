@@ -73,6 +73,8 @@ Future<void> main(List<String> args) async {
       '--release',
       '-p',
       'ge4g-client',
+      '-p',
+      'ge4g-pentomino-native',
       '--target',
       triple,
       '--target-dir',
@@ -85,23 +87,28 @@ Future<void> main(List<String> args) async {
         'Native Basement build failed for $triple. Install the Rust target with rustup target add $triple.\n${result.stdout}\n${result.stderr}',
       );
     }
-    final filename = os == OS.windows
-        ? 'ge4g_client.dll'
-        : os == OS.iOS
-        ? 'libge4g_client.dylib'
-        : 'libge4g_client.so';
-    final library = targetDir.resolve('$triple/release/$filename');
-    if (!File.fromUri(library).existsSync()) {
-      throw StateError('Cargo did not produce $library');
+    for (final asset in const {
+      'ge4g_native.dart': 'ge4g_client',
+      'p5_native.dart': 'ge4g_pentomino_native',
+    }.entries) {
+      final filename = os == OS.windows
+          ? '${asset.value}.dll'
+          : os == OS.iOS
+          ? 'lib${asset.value}.dylib'
+          : 'lib${asset.value}.so';
+      final library = targetDir.resolve('$triple/release/$filename');
+      if (!File.fromUri(library).existsSync()) {
+        throw StateError('Cargo did not produce $library');
+      }
+      output.assets.code.add(
+        CodeAsset(
+          package: input.packageName,
+          name: asset.key,
+          linkMode: DynamicLoadingBundled(),
+          file: library,
+        ),
+      );
     }
-    output.assets.code.add(
-      CodeAsset(
-        package: input.packageName,
-        name: 'ge4g_native.dart',
-        linkMode: DynamicLoadingBundled(),
-        file: library,
-      ),
-    );
     output.dependencies.addAll([
       root.resolve('Cargo.toml'),
       root.resolve('Cargo.lock'),

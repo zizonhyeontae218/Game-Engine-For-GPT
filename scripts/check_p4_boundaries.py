@@ -35,7 +35,7 @@ def main():
         source = strip.sub(" ", path.read_text())
         assert not re.search(r"\bWorld\b|\bge4g_runtime\b", source), path
         exports = re.findall(r'extern\s+"?\s*C\s*"?\s+fn\s+(\w+)', path.read_text())
-        assert all(name.startswith("ge4g_p4_v1_") for name in exports), exports
+        assert all(name.startswith(("ge4g_p4_v1_", "ge4g_p5_v1_")) for name in exports), exports
     print(json.dumps({"ok": True, "gameplay_engine_dependencies": ["ge4g-pentomino"],
                       "native_engine_dependencies": sorted(native), "abi": "ge4g_p4_v1",
                       "external_certification": "UNVERIFIED"}))

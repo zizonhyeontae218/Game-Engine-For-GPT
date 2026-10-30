@@ -1,0 +1,20 @@
+TRANSCRIBED FROM COMPLETED TOOL OUTPUTS; these probes originally ran as python3 heredocs. Saving scripts/output here does not rerun them.
+
+Working directory: /workspace/scratch/79d5dac01d99/ge4g
+Reviewed source at initial P5 implementation then commit478ed9e; later cosmetic P5 envelope error text modification does not affect tested behavior.
+
+Command: /root/.cargo/bin/cargo test --locked -p ge4g-pentomino-gameplay --test v2_contract -p ge4g-pentomino-native --test p5_contract --test p5_ffi
+v2_contract: 5 passed; 0 failed; finished in0.10s
+p5_contract: 4 passed; 0 failed; finished in0.50s
+p5_ffi: 2 passed; 0 failed; finished in0.10s
+These are independent reruns of existing tests, not11 additional unique test cases.
+
+Original command: python3 - <<'PY' [exact schema_valid_hp_probe.py contents] PY
+Exit0 stdout:
+{"schema_valid_hp_tamper": "PASS rejected", "atomic_save_preservation": "PASS", "error": "invalid_save"}
+
+Original command: python3 - <<'PY' [exact c300_probe.py contents] PY
+Initially pending, temporarily recorded NOT COMPLETED, then final collection returned exit0:
+{"audit": "P5 public C internal-independent probe", "commands": 301, "retained_history": 256, "tamper_cases": 5, "lifecycle_restore": true, "outcome": "PASS", "elapsed_seconds": 283.234}
+The long probe's hp variant uses malformed Value JSON; do not call it schema-valid. The separate short HP probe above preserves correct type/range. Full debug history serialization and repeated300-command restore took283.234s combined; this is not a standalone restore benchmark.
+No product defects reproduced. No repository files edited by auditor.

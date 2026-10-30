@@ -25,6 +25,7 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
+    - assets/pentomino_p5.json
     - assets/default_layouts.json
     - assets/default_bindings.json
     - assets/asset-licenses.json

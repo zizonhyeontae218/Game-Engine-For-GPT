@@ -3,6 +3,8 @@
 //! One attack uses two fixed Core ticks: the rules emit a decision, then the
 //! host translates that pending event into the provider's scalar update actions.
 //! Neither plugin mutates another owner's records or stores hidden mutable state.
+pub mod v2;
+
 use ge4g_pentomino::p2::{
     ActionId, ActionType, ActionValue, CoreContext, CoreDescriptor, CorePlugin, CoreTransaction,
     EntityRef, Error, ErrorCode, FieldType, ObjectRef, ReadFrame, Record, RecordKey, RecordSchema,

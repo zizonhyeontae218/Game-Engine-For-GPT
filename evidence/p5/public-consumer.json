@@ -1,0 +1,16 @@
+{
+  "ok": true,
+  "checks": [
+    "hand-calculated damage, cost, healing, poison timing",
+    "duplicate, wrong target and wrong actor reject atomically",
+    "real rule removal, detached restore and reinstall preserve authority",
+    "victory, full save/restore and deterministic public command replay",
+    "failed restore preserves live canonical save",
+    "close invalidates all live handles"
+  ],
+  "commands": 11,
+  "winner": 0,
+  "initial_frame_sha256": "7da2024f45be68d3fbf97e271b5beab7cbaa07916e598c213d259eebf571687c",
+  "library_sha256": "3674d19de3dc8780a0723daf01fc4ea501affde3c1a760b74c78def0af2bf199",
+  "external_certification": "UNVERIFIED - internal public API reproducibility only"
+}
