@@ -386,20 +386,6 @@ class _ClientHomeState extends State<ClientHome>
           ),
           const SizedBox(height: 8),
           const Text('GameEngineForGPT', style: TextStyle(fontSize: 18)),
-          const SizedBox(height: 16),
-          if (!embedded)
-            OutlinedButton.icon(
-              key: const Key('pentomino-open'),
-              onPressed: busy
-                  ? null
-                  : () => Navigator.of(context).push(
-                      MaterialPageRoute<void>(
-                        builder: (_) => const PentominoScreen(),
-                      ),
-                    ),
-              icon: const Icon(Icons.play_arrow),
-              label: const Text('PENTOMINO / 턴제 전투'),
-            ),
           const SizedBox(height: 32),
           block(
             Column(
@@ -482,6 +468,20 @@ class _ClientHomeState extends State<ClientHome>
                   ],
                 ),
               ),
+            ),
+          const SizedBox(height: 16),
+          if (!embedded)
+            OutlinedButton.icon(
+              key: const Key('pentomino-open'),
+              onPressed: busy
+                  ? null
+                  : () => Navigator.of(context).push(
+                      MaterialPageRoute<void>(
+                        builder: (_) => const PentominoScreen(),
+                      ),
+                    ),
+              icon: const Icon(Icons.play_arrow),
+              label: const Text('PENTOMINO / 턴제 전투'),
             ),
           if (player?.message != null)
             Padding(

@@ -44,8 +44,17 @@ Build actual client; distinguish automated platform evidence from user acceptanc
 - CI 39138891574 failed on older 33b8193 only at filetree hash lint, after
   workspace and five game checks passed. Later 1d96402 repaired committed
   Windows evidence bytes with [skip ci]; current clean checkout lint passes.
-- Architecture review running. Rust toolchain installation in progress;
-  Flutter/Android tools absent locally. Existing GitHub Actions are available.
+- Architecture + independent preimplementation API review completed. Gameplay v2,
+  additive native P5 and existing Flutter adapter implemented in disjoint files.
+- P5 engine technically accepted: workspace181/181, strict Clippy/fmt,
+  five legacy goldens/save-replay,12 new P5 tests, public C/ctypes and independent
+  source-aware audit. Raw evidence and scoped limits are in P5_RUNDOWN.md.
+- PR #9 created against #8. Local Git push lacks credentials; connected GitHub
+  Git-tree/commit/ref APIs published an exactly matching source tree.
+- Initial Windows Flutter analysis found one redundant import; fixed. Latest
+  build source8c7e9e72 is in Actions. Actual pre1P6 delivery remains pending.
+- Local Flutter bootstrap was auto-review rejected for metadata endpoint access;
+  no bypass/retry. Existing GitHub client workflow is the safer build path.
 
 ## Verification log
 - git clone, branch from origin/qa/p4-remaining-20261018: PASS.
