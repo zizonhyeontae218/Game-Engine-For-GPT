@@ -63,6 +63,7 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `client/assets/default_bindings.json` — Repository file; inspect only when relevant to the task.
 - `client/assets/default_layouts.json` — Repository file; inspect only when relevant to the task.
 - `client/assets/licenses/MaterialIcons-CC-BY-4.0.txt` — Repository file; inspect only when relevant to the task.
+- `client/assets/pentomino_p5.json` — Repository file; inspect only when relevant to the task.
 - `client/ios/.gitignore` — Repository file; inspect only when relevant to the task.
 - `client/ios/Flutter/AppFrameworkInfo.plist` — Repository file; inspect only when relevant to the task.
 - `client/ios/Flutter/Debug.xcconfig` — Repository file; inspect only when relevant to the task.
@@ -115,6 +116,7 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `client/lib/game_viewport.dart` — Repository file; inspect only when relevant to the task.
 - `client/lib/main.dart` — Repository file; inspect only when relevant to the task.
 - `client/lib/manual_orientation.dart` — Repository file; inspect only when relevant to the task.
+- `client/lib/pentomino_screen.dart` — Repository file; inspect only when relevant to the task.
 - `client/lib/player.dart` — Repository file; inspect only when relevant to the task.
 - `client/lib/touch_controls.dart` — Repository file; inspect only when relevant to the task.
 - `client/linux/.gitignore` — Repository file; inspect only when relevant to the task.
@@ -135,6 +137,7 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `client/packages/ge4g_native/analysis_options.yaml` — Repository file; inspect only when relevant to the task.
 - `client/packages/ge4g_native/hook/build.dart` — Repository file; inspect only when relevant to the task.
 - `client/packages/ge4g_native/lib/ge4g_native.dart` — Repository file; inspect only when relevant to the task.
+- `client/packages/ge4g_native/lib/p5_native.dart` — Repository file; inspect only when relevant to the task.
 - `client/packages/ge4g_native/pubspec.yaml` — Repository file; inspect only when relevant to the task.
 - `client/pubspec.lock` — Repository file; inspect only when relevant to the task.
 - `client/pubspec.yaml` — Repository file; inspect only when relevant to the task.
@@ -143,6 +146,7 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `client/test/final_ui_test.dart` — Repository file; inspect only when relevant to the task.
 - `client/test/flatland_test.dart` — Repository file; inspect only when relevant to the task.
 - `client/test/library_test.dart` — Repository file; inspect only when relevant to the task.
+- `client/test/pentomino_screen_test.dart` — Repository file; inspect only when relevant to the task.
 - `client/test/player_test.dart` — Repository file; inspect only when relevant to the task.
 - `client/test/polish_test.dart` — Repository file; inspect only when relevant to the task.
 - `client/test/rc4_test.dart` — Repository file; inspect only when relevant to the task.
@@ -180,19 +184,27 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `crates/ge4g-core/src/lib.rs` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-pentomino-gameplay/Cargo.toml` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-pentomino-gameplay/src/lib.rs` — Engine source, package configuration or behavioral verification.
+- `crates/ge4g-pentomino-gameplay/src/v2.rs` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-pentomino-gameplay/tests/public_contract.rs` — Engine source, package configuration or behavioral verification.
+- `crates/ge4g-pentomino-gameplay/tests/v2_contract.rs` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-pentomino-legacy/Cargo.toml` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-pentomino-legacy/src/lib.rs` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-pentomino-legacy/tests/bridge_contract.rs` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-pentomino-native/Cargo.toml` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-pentomino-native/examples/p4_public.rs` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-pentomino-native/include/ge4g_p4_v1.h` — Engine source, package configuration or behavioral verification.
+- `crates/ge4g-pentomino-native/include/ge4g_p5_v1.h` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-pentomino-native/src/ffi.rs` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-pentomino-native/src/lib.rs` — Engine source, package configuration or behavioral verification.
+- `crates/ge4g-pentomino-native/src/p5.rs` — Engine source, package configuration or behavioral verification.
+- `crates/ge4g-pentomino-native/src/p5_ffi.rs` — Engine source, package configuration or behavioral verification.
+- `crates/ge4g-pentomino-native/src/p5_render.rs` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-pentomino-native/src/render.rs` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-pentomino-native/src/types.rs` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-pentomino-native/tests/native_contract.rs` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-pentomino-native/tests/native_ffi.rs` — Engine source, package configuration or behavioral verification.
+- `crates/ge4g-pentomino-native/tests/p5_contract.rs` — Engine source, package configuration or behavioral verification.
+- `crates/ge4g-pentomino-native/tests/p5_ffi.rs` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-pentomino-view-legacy/Cargo.toml` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-pentomino-view-legacy/examples/fifth_demo.rs` — Engine source, package configuration or behavioral verification.
 - `crates/ge4g-pentomino-view-legacy/src/lib.rs` — Engine source, package configuration or behavioral verification.
@@ -267,6 +279,7 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `docs/TESTPLAN.md` — Acceptance and deterministic verification plan.
 - `docs/benchmarks/flatland-task-context.json` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/active/.gitkeep` — Repository file; inspect only when relevant to the task.
+- `docs/exec-plans/active/p5-pre1p6.md` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/active/pentomino-p4.md` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/completed/.gitkeep` — Repository file; inspect only when relevant to the task.
 - `docs/exec-plans/completed/basement.md` — Repository file; inspect only when relevant to the task.
@@ -316,6 +329,8 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `docs/pentomino/P4_HANDOFF.md` — Repository file; inspect only when relevant to the task.
 - `docs/pentomino/P4_PROPOSAL.md` — Repository file; inspect only when relevant to the task.
 - `docs/pentomino/P4_RUNDOWN.md` — Repository file; inspect only when relevant to the task.
+- `docs/pentomino/P5_CONTRACT.md` — Repository file; inspect only when relevant to the task.
+- `docs/pentomino/P5_PROPOSAL.md` — Repository file; inspect only when relevant to the task.
 - `docs/pentomino/PHASES.md` — Repository file; inspect only when relevant to the task.
 - `docs/pentomino/PUBLIC_CONTRACT_PROPOSAL.md` — Repository file; inspect only when relevant to the task.
 - `docs/pentomino/ROUTING.md` — Repository file; inspect only when relevant to the task.
@@ -836,6 +851,9 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `samples/pentomino_p4/consumer.py` — Repository file; inspect only when relevant to the task.
 - `samples/pentomino_p4/game.json` — Repository file; inspect only when relevant to the task.
 - `samples/pentomino_p4/smoke.c` — Repository file; inspect only when relevant to the task.
+- `samples/pentomino_p5/consumer.py` — Repository file; inspect only when relevant to the task.
+- `samples/pentomino_p5/game.json` — Repository file; inspect only when relevant to the task.
+- `samples/pentomino_p5/smoke.c` — Repository file; inspect only when relevant to the task.
 - `scripts/bundle_desktop.py` — Repository file; inspect only when relevant to the task.
 - `scripts/check_gate_report.py` — Repository file; inspect only when relevant to the task.
 - `scripts/check_p2_boundaries.py` — Repository file; inspect only when relevant to the task.
@@ -855,6 +873,8 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `scripts/package_p2_external.py` — Repository file; inspect only when relevant to the task.
 - `scripts/package_p3_external.py` — Repository file; inspect only when relevant to the task.
 - `scripts/package_p4_native.py` — Repository file; inspect only when relevant to the task.
+- `scripts/package_p5_native.py` — Repository file; inspect only when relevant to the task.
+- `scripts/package_pre1p6.py` — Repository file; inspect only when relevant to the task.
 - `scripts/release_consistency.py` — Repository file; inspect only when relevant to the task.
 - `scripts/restore_flatland_release.py` — Repository file; inspect only when relevant to the task.
 - `scripts/sign_android.py` — Repository file; inspect only when relevant to the task.

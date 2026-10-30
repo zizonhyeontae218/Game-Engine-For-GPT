@@ -1,0 +1,17 @@
+{
+  "version": 2,
+  "width": 320,
+  "height": 180,
+  "tick_hz": 60,
+  "fighters": [
+    {"id":"blue","team":0,"hp":32,"resource":12,"attack":6,"defense":2,"speed":10,"position":[64,128],"color":[48,144,255,255]},
+    {"id":"red","team":1,"hp":30,"resource":12,"attack":5,"defense":2,"speed":8,"position":[256,128],"color":[255,80,72,255]}
+  ],
+  "actions": [
+    {"id":"attack","kind":"damage","target":"enemy","cost":0,"power":2,"effect":null,"duration":0},
+    {"id":"poison","kind":"effect","target":"enemy","cost":3,"power":3,"effect":"poison","duration":3},
+    {"id":"heal","kind":"heal","target":"ally","cost":3,"power":10,"effect":null,"duration":0},
+    {"id":"regen","kind":"effect","target":"ally","cost":3,"power":4,"effect":"regen","duration":3},
+    {"id":"rest","kind":"resource","target":"self_only","cost":0,"power":5,"effect":null,"duration":0}
+  ]
+}

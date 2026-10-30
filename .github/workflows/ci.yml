@@ -29,6 +29,16 @@ jobs:
       - run: cargo build --locked -p ge4g-pentomino-native
       - run: python3 samples/pentomino_p4/consumer.py target/debug/libge4g_pentomino_native.so --out $RUNNER_TEMP/p4-consumer
       - run: cc -std=c11 -Wall -Wextra -Werror samples/pentomino_p4/smoke.c -Icrates/ge4g-pentomino-native/include -Ltarget/debug -lge4g_pentomino_native -Wl,-rpath,$PWD/target/debug -o $RUNNER_TEMP/p4-c-smoke && $RUNNER_TEMP/p4-c-smoke
+      - run: python3 samples/pentomino_p5/consumer.py target/debug/libge4g_pentomino_native.so --out $RUNNER_TEMP/p5-consumer
+      - run: cc -std=c11 -Wall -Wextra -Werror samples/pentomino_p5/smoke.c -Icrates/ge4g-pentomino-native/include -Ltarget/debug -lge4g_pentomino_native -Wl,-rpath,$PWD/target/debug -o $RUNNER_TEMP/p5-c-smoke && $RUNNER_TEMP/p5-c-smoke
+      - run: python3 scripts/package_p5_native.py --library target/debug/libge4g_pentomino_native.so --out $RUNNER_TEMP/p5-public-sdk
+      - run: cd $RUNNER_TEMP/p5-public-sdk && python3 consumer.py ./libge4g_pentomino_native.so --out $RUNNER_TEMP/p5-packaged-consumer
+      - uses: actions/upload-artifact@v4
+        with:
+          name: p5-native-public-${{ github.sha }}
+          path: |
+            ${{ runner.temp }}/p5-public-sdk.zip
+            ${{ runner.temp }}/p5-packaged-consumer/result.json
       - run: cargo run --locked -p ge4g-pentomino-view --example p3_public
       - run: cargo run --locked -p ge4g-pentomino-view-legacy --example fifth_demo -- examples/flatland_nuvema $RUNNER_TEMP/p3-fifth-frames
       - run: cargo run --locked -p ge4g-cli -- validate examples/basement_demo --json

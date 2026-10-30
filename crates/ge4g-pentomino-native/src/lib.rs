@@ -1,5 +1,9 @@
 //! P4 native session boundary over public P2/P3 APIs. No FlatLand simulation runs here.
 mod ffi;
+pub mod p5;
+mod p5_ffi;
+mod p5_render;
+pub use p5_ffi::*;
 mod render;
 mod types;
 pub use ffi::*;
