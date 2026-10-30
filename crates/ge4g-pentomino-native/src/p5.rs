@@ -118,6 +118,15 @@ pub struct Request {
 fn err(code: ErrorCode, detail: &str) -> BridgeError {
     BridgeError::new(code, detail)
 }
+fn version(value: u32) -> Result<()> {
+    if value != 1 {
+        return Err(err(
+            ErrorCode::VersionMismatch,
+            "P5 ABI envelope version must be 1",
+        ));
+    }
+    Ok(())
+}
 fn view_id() -> ViewId {
     ViewId::new("p5.arena").expect("static ID")
 }
@@ -154,7 +163,7 @@ fn camera_target(
     config: &GameConfig,
     request: &CameraRequest,
 ) -> Result<presentation::CameraTarget> {
-    crate::version(request.version)?;
+    version(request.version)?;
     if !request.zoom.is_finite()
         || !(0.25..=4.).contains(&request.zoom)
         || !request.tilt.is_finite()
@@ -619,7 +628,7 @@ impl NativeBridge {
             }
             let request: Request = serde_json::from_slice(bytes)
                 .map_err(|e| BridgeError::new(ErrorCode::InvalidInput, e.to_string()))?;
-            crate::version(request.version)?;
+            version(request.version)?;
             self.dispatch(request.command)
         })();
         match result {

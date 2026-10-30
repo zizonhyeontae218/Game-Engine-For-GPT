@@ -8,7 +8,7 @@ on:
 permissions:
   contents: read
 concurrency:
-  group: ge4g-clients-${{ github.ref }}
+  group: ge4g-clients-${{ github.head_ref || github.ref_name }}
   cancel-in-progress: true
 jobs:
   windows:

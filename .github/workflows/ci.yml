@@ -7,6 +7,10 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: ge4g-acceptance-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+
 jobs:
   acceptance:
     runs-on: ubuntu-latest

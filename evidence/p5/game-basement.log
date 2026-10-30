@@ -1,0 +1,11 @@
+   Compiling serde_json v1.0.151
+   Compiling schemars v0.8.22
+   Compiling ge4g-core v0.3.0-alpha.1 (/workspace/scratch/79d5dac01d99/ge4g/crates/ge4g-core)
+   Compiling ge4g-project v0.3.0-alpha.1 (/workspace/scratch/79d5dac01d99/ge4g/crates/ge4g-project)
+   Compiling ge4g-render2d v0.3.0-alpha.1 (/workspace/scratch/79d5dac01d99/ge4g/crates/ge4g-render2d)
+   Compiling ge4g-runtime v0.3.0-alpha.1 (/workspace/scratch/79d5dac01d99/ge4g/crates/ge4g-runtime)
+   Compiling ge4g-platform v0.3.0-alpha.1 (/workspace/scratch/79d5dac01d99/ge4g/crates/ge4g-platform)
+   Compiling ge4g-cli v0.3.0-alpha.1 (/workspace/scratch/79d5dac01d99/ge4g/crates/ge4g-cli)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 10.58s
+     Running `target/debug/ge4g test examples/basement_demo --json`
+{"errors":[],"ok":true,"results":[{"assertions_checked":7,"deterministic":true,"deterministic_sha256":"33e06a98c9b675d0773594343a7168930720be2aa78b6c357831d6bcb47330d7","frame_rgba_sha256":"38cc4352e7160dcf9104cbe19acd709e36d8165989b3c99d8b6611f0f76e932b","golden_checked":true,"name":"basement_journey","ok":true,"png_capture":true,"save_reload":true,"ticks":160}],"schema_version":1,"summary":"GE4G test: 1 of 1 passed"}

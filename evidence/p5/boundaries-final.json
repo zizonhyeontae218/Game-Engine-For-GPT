@@ -1,0 +1,17 @@
+{
+  "p2": {
+    "command": "python3 scripts/check_p2_boundaries.py",
+    "exit_code": 0,
+    "output": "{\"ok\": true, \"core_transitive_engine_dependencies\": [], \"adapter_direction\": \"legacy -> adapter -> typed core\", \"p1_tests_sha256\": \"ce87260ccd1c7c5fe98daac774d70db90f7c6aed981c6c1767e953a288e8461a\", \"compatibility_baseline\": \"2d1ffd060389109f341fb5854ce07890f445f3f9\"}\n"
+  },
+  "p3": {
+    "command": "python3 scripts/check_p3_boundaries.py",
+    "exit_code": 0,
+    "output": "{\"ok\": true, \"baseline\": \"2159304ad464db488731592f643b21147708a0fb\", \"preserved_files\": 31, \"native_engine_dependencies\": [\"ge4g-pentomino\"], \"core_changes\": 0, \"external_validation\": \"USER_REPORTED_PASS\"}\n"
+  },
+  "p4": {
+    "command": "python3 scripts/check_p4_boundaries.py",
+    "exit_code": 0,
+    "output": "{\"ok\": true, \"gameplay_engine_dependencies\": [\"ge4g-pentomino\"], \"native_engine_dependencies\": [\"ge4g-core\", \"ge4g-pentomino\", \"ge4g-pentomino-gameplay\", \"ge4g-pentomino-legacy\", \"ge4g-pentomino-view\", \"ge4g-pentomino-view-legacy\", \"ge4g-project\", \"ge4g-render2d\", \"ge4g-runtime\"], \"abi\": \"ge4g_p4_v1\", \"external_certification\": \"UNVERIFIED\"}\n"
+  }
+}

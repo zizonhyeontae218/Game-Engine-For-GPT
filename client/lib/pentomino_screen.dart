@@ -135,7 +135,14 @@ class _PentominoScreenState extends State<PentominoScreen> {
     final actor = _battle['turn'] as int;
     final relation = _actions[_action]['target'];
     if (relation != 'enemy') return actor;
-    return _fighters.indexWhere((f) => f['team'] != _fighters[actor]['team']);
+    final states = (_battle['fighters'] as List).cast<Map<String, dynamic>>();
+    for (var i = 0; i < _fighters.length; i++) {
+      if (_fighters[i]['team'] != _fighters[actor]['team'] &&
+          (states[i]['hp'] as int) > 0) {
+        return i;
+      }
+    }
+    return actor;
   }
 
   Future<void> _refresh(Map<String, dynamic> observation) async {
