@@ -71,3 +71,11 @@ The existing Flutter client has the pre1P6 sample adapter; actual platform build
 evidence and user acceptance remain separate. No pre2P6 before user PASS.
 P5_CONTRACT.md and P6_HANDOFF.md supersede the old 'next P5' planning paragraph
 for this candidate only; main remains unchanged until explicitly approved merge.
+
+## Final submission checkpoint
+
+P5 technical work and pre1P6 executable submission are complete. Sourcec18adf76;
+engine run41068956609 PASS; client run41068956566 Windows/Android PASS,
+Flutter38/38 and actual native Windows startup/capture PASS. See P6_HANDOFF.md
+submitted checkpoint for exact artifact/hash/run receipts and resolved failures.
+User acceptance PENDING; no pre2, merge, signing or release without authorization.

@@ -97,3 +97,46 @@ hashes full bytes. Reuse exactly one byte array in duplicate import and reinstal
 checks, preserving all assertions and product behavior. The auditor approved
 this eighth exact preservation exception. NDK download ZipFile failure happened
 before Android compilation and remains a separate environment failure.
+
+## Final build acceptance
+
+## Submitted pre1P6 checkpoint — 2026-10-30
+
+**P5 technical implementation complete; pre1P6 executable submitted, user acceptance PENDING.**
+Build source: c18adf76c336ef5a4718283bbc747268724883da.
+Engine run41068956609 and client run41068956566 completed PASS.
+Windows job124108443877 and Android job124108443316 both PASS.
+
+1. Implemented: existing Flutter client + actual linked P5 CPU pixels/state,
+   action/target selection, turns/resources/poison/regen/outcome, restart and
+   temporary in-memory save/restore. Both sample teams are manually controlled.
+2. Actual Windows artifact12984837494, ge4g-pre1p6-windows. Inner ZIP15624093bytes,
+   SHA256 `1411beaeff074e809f39b6317c06d47c0f3c3bc4845dc7fd49bcebead9bd03bd`.
+   Downloaded wrapper and all23 payload hashes verified. Delivered same ZIP as
+   GE4G-pre1P6-windows.zip. Full Flutter runtime/native DLLs included.
+3. Extract everything, run PLAY-PENTOMINO.cmd. No separate engine/CLI install.
+4. Rust181/181, five legacy golden/replay/save checks, public P4/P5 C consumers
+   and independent audit PASS. Flutter analyze and38/38 tests PASS. Actual Windows
+   EXE/native create/frame/startup capture PASS; legacy embedded/UTF-8 job PASS.
+   Native startup PNG+JSON: artifact12984462867, same client run.
+5. User check: launch, select actions/targets, finish one battle; report any
+   screen/input/play issue. Do not repeat automated tamper/duplicate/replay tests.
+6. Simple rectangle/HP-bar sample, no automatic opponent/editor/Full3D.
+   Temporary saves do not persist after process exit. Android APK artifact12984562755
+   built successfully but is unsigned; no install/physical/ARM execution claim.
+   P4 isolated Blind Consumer remains UNVERIFIED. No signing/release/deploy/merge.
+7. Stop for PASS/FIX/CHANGE. No pre2 implementation before user decision.
+   Roadmap remains pre2 platforms,pre3 management,pre4 input/camera/presentation,
+   pre5 durable recovery,pre6 integration,optional pre7 stabilization.
+
+Initial Windows analysis import error and new UI decode/library-position defects
+were corrected. Next run37/38 passed; an old ZIP duplicate fixture encoded fresh
+archives while expecting equal full-byte digests. Reused the identical byte array
+for duplicate/reinstall tests, keeping production hashing and all assertions.
+Final38/38 passed. The auditor approved the eighth exact client fixture exception;
+all other client/P0-P3 sources/tests remain preserved. Android initially hit a
+corrupt NDK download before compilation; final fresh build succeeded.
+
+Actual startup screenshot was visually inspected after narrow/wide layout fixture
+captures; no severe overlap/clipping in reviewed sample. CI graphics and user
+physical acceptance remain separate. Private file-delivery identifiers are omitted.
