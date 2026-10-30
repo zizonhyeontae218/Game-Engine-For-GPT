@@ -23,7 +23,7 @@ def main():
                  "crates/ge4g-render2d/src", "crates/ge4g-client/src", "client", "examples"]
     # P5 intentionally adds this exact client adapter surface; every other legacy
     # and Core file remains byte-preserved. Android identity is separately pinned.
-    p5_client = ['client/lib/main.dart', 'client/lib/pentomino_screen.dart', 'client/packages/ge4g_native/hook/build.dart', 'client/packages/ge4g_native/lib/p5_native.dart', 'client/pubspec.yaml', 'client/assets/pentomino_p5.json', 'client/test/pentomino_screen_test.dart']
+    p5_client = ['client/lib/main.dart', 'client/lib/pentomino_screen.dart', 'client/packages/ge4g_native/hook/build.dart', 'client/packages/ge4g_native/lib/p5_native.dart', 'client/pubspec.yaml', 'client/assets/pentomino_p5.json', 'client/test/pentomino_screen_test.dart', 'client/test/final_library_test.dart']
     exclusions = [":(exclude)examples/c_abi/**", *[":(exclude)" + p for p in p5_client]]
     assert not command("git", "diff", baseline["source_base"], "--", *preserved, *exclusions), "preserved production/test source changed"
     metadata = json.loads(command("cargo", "metadata", "--locked", "--format-version=1"))

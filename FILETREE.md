@@ -596,6 +596,9 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `evidence/p4-remaining-20261018/windows-native.log` — Repository file; inspect only when relevant to the task.
 - `evidence/p4-remaining-20261018/windows-rustc.log` — Repository file; inspect only when relevant to the task.
 - `evidence/p5/SHA256SUMS.json` — Repository file; inspect only when relevant to the task.
+- `evidence/p5/audit-c300.py` — Repository file; inspect only when relevant to the task.
+- `evidence/p5/audit-observed.txt` — Repository file; inspect only when relevant to the task.
+- `evidence/p5/audit-schema-valid-hp.py` — Repository file; inspect only when relevant to the task.
 - `evidence/p5/boundaries-final.json` — Repository file; inspect only when relevant to the task.
 - `evidence/p5/boundaries.json` — Repository file; inspect only when relevant to the task.
 - `evidence/p5/game-basement.log` — Repository file; inspect only when relevant to the task.
@@ -606,6 +609,7 @@ Generated navigation index. It lists files that actually exist; do not predeclar
 - `evidence/p5/headless-clippy.log` — Repository file; inspect only when relevant to the task.
 - `evidence/p5/headless-tests.log` — Repository file; inspect only when relevant to the task.
 - `evidence/p5/independent-audit.md` — Repository file; inspect only when relevant to the task.
+- `evidence/p5/independent-extra-probe.json` — Repository file; inspect only when relevant to the task.
 - `evidence/p5/native-clippy.log` — Repository file; inspect only when relevant to the task.
 - `evidence/p5/native-tests.log` — Repository file; inspect only when relevant to the task.
 - `evidence/p5/public-consumer.json` — Repository file; inspect only when relevant to the task.

@@ -21,7 +21,7 @@ platform build evidence; no user/physical acceptance or signed release is claime
 - Minimal sample and existing Flutter client adapter; no Dart combat simulation.
 
 P0-P3/legacy engine source/tests are byte-preserved. P4 implementation and v1
-Rust/JSON/C/save semantics remain. Seven exact client integration files are
+Rust/JSON/C/save semantics remain. Eight exact client integration/fixture files are
 intentionally exempted from historical whole-client byte-preservation scans;
 all other old client files and Android app ID/certificate checks are preserved.
 No dependencies added and Cargo.lock remains unchanged.
@@ -62,14 +62,16 @@ No separate isolated Blind Consumer certification is claimed.
   fixed its library link; same command then passed181 tests. Failed log is
   workspace-env-failure.log. No product patch was made for this environment issue.
 - Initial P2/P3 scanners correctly flagged the deliberate P5 client additions.
-  Auditor approved the exact seven-file allowlist; engine preservation checks
+  Auditor approved the exact client allowlist; engine preservation checks
   remain. Initial/final boundary results are both retained.
 - LOW UI default target could select a dead enemy with four actors; corrected to
   choose a living enemy. Two-fighter sample behavior unchanged.
 - Local Flutter bootstrap was auto-review blocked for unexpected cloud metadata
   access. No bypass/retry; actual client checks use existing GitHub Actions.
-- An exploratory independent C300+multiple replay probe has no final result and is
-  NOT COMPLETED, never counted as PASS. The separate native270 test completed.
+- The independent four-fighter C probe completed301 commands, retained256
+  history entries, checked5 tamper variants and lifecycle restore:PASS. It took
+  283.234s in debug including repeated full replays; this is a performance limit,
+  not a production latency benchmark. The native270 test is separate evidence.
 
 ## Measured cost and limits
 
@@ -85,3 +87,13 @@ No engine HIGH/MEDIUM defect remains in independently reviewed scope. Dynamic
 plugins are trusted compiled instances, not a DLL loader. Physical ARM, platform
 input/audio, signed Android installation and final public consumer acceptance
 remain outside P5 technical scope. P6_HANDOFF defines <=7 sequential user gates.
+
+## Client regression follow-up
+
+Windows source6e758d5:37 UI tests passed, including both new P5 tests and old
+FlatLand UI. One unchanged duplicate-import fixture failed because it encoded a
+new ZIP twice but expected identical full-archive digest. Production correctly
+hashes full bytes. Reuse exactly one byte array in duplicate import and reinstall
+checks, preserving all assertions and product behavior. The auditor approved
+this eighth exact preservation exception. NDK download ZipFile failure happened
+before Android compilation and remains a separate environment failure.

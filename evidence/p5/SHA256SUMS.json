@@ -1,4 +1,7 @@
 {
+  "audit-c300.py": "c4aa9329d1cfb6dad80365c9a80773cb4ad156ea11318616271fbe8ace6fca02",
+  "audit-observed.txt": "34a6f8ccb2e4a2e9de4bc8fbe65436a735c73b4b87d82eca71ede93e6ac54e8c",
+  "audit-schema-valid-hp.py": "cc7fc54bde2adb4c89bbfcb82868ab15a54d64cb578b061d70993a25b6a8bf40",
   "boundaries-final.json": "362f6098d5c18a969d519064779a09249ac627602a19f452909c18ceef18d977",
   "boundaries.json": "7fe8037f050e5bdf8f040dc850545adf6344bcff4d563914f77648bb8fcc76ab",
   "game-basement.log": "3f5fe25911280c7b266378eaece372d26caa38a831094ca3d2a6868ad9337a49",
@@ -8,7 +11,8 @@
   "game-signal.log": "8d8864abb61eae15beac1425d88b619ff548545370bcc90446b40ad89d17bc88",
   "headless-clippy.log": "033b4659af541baf06e5c35a48b7d548f56d55d5c42eb3ad96b8ea3f54c49cd4",
   "headless-tests.log": "9d0736b0bd30f53223a562afd021e4bf5ecd6708e357b3bae48b35d2658730d7",
-  "independent-audit.md": "34296f49c418074e780e8f27ff1758adacc13c10da787b5f32be9082aa01a532",
+  "independent-audit.md": "13802cd0eb9b3d20fcde57c52dd365f8a8edfa345041bc10cc1a736fc5d17265",
+  "independent-extra-probe.json": "83c2f82050b52f9120b5836456c750ad7a4cecd4ceeaddebcf05bca34ee6c2bd",
   "native-clippy.log": "d23d7361f122f43c4d7e25c65dcd5c89515c1f31ba92a3a6696c0977a28e223c",
   "native-tests.log": "2b260f91464b5548d3df3619fc8ce18546614f4f02fd69d95893e4189762af81",
   "public-consumer.json": "2b3997628bd02e6025976da01296a991914d78d10f9f4f246995ce5f4301d712",
