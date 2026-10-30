@@ -64,3 +64,11 @@ Build actual client; distinguish automated platform evidence from user acceptanc
 ## Handoff
 Use this plan plus P5 contract/proposal and P4_HANDOFF. Parent owns shared
 contracts/manifests/client integration; coding packets have disjoint source paths.
+
+## Final submission checkpoint
+
+P5 technical work and pre1P6 executable submission are complete. Sourcec18adf76;
+engine run41068956609 PASS; client run41068956566 Windows/Android PASS,
+Flutter38/38 and actual native Windows startup/capture PASS. See P6_HANDOFF.md
+submitted checkpoint for exact artifact/hash/run receipts and resolved failures.
+User acceptance PENDING; no pre2, merge, signing or release without authorization.
