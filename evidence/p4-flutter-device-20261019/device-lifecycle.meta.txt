@@ -1,0 +1,1 @@
+duration_seconds=0.604 down_exit=0 home_exit=0 resume_exit=0 up_exit=0 app_pid=6726

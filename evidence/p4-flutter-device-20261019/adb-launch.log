@@ -1,0 +1,7 @@
+Starting: Intent { cmp=dev.ge4g.ge4g_client.p4harness/.MainActivity }
+Status: ok
+LaunchState: COLD
+Activity: dev.ge4g.ge4g_client.p4harness/.MainActivity
+TotalTime: 1373
+WaitTime: 1377
+Complete

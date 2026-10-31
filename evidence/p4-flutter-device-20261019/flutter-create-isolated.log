@@ -1,0 +1,18 @@
+Creating project client\.dart_tool\p4_device_app...
+Resolving dependencies in `client\.dart_tool\p4_device_app`...
+Downloading packages...
+Got dependencies in `client\.dart_tool\p4_device_app`.
+Wrote 35 files.
+
+All done!
+You can find general documentation for Flutter at: https://docs.flutter.dev/
+Detailed API documentation is available at: https://api.flutter.dev/
+If you prefer video documentation, consider: https://www.youtube.com/c/flutterdev
+
+In order to run your application, type:
+
+  $ cd client\.dart_tool\p4_device_app
+  $ flutter run
+
+Your application code is in client\.dart_tool\p4_device_app\lib\main.dart.
+

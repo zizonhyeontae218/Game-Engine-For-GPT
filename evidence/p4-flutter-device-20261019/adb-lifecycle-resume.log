@@ -1,0 +1,7 @@
+Starting: Intent { cmp=dev.ge4g.ge4g_client.p4harness/.MainActivity }
+Warning: Activity not started, its current task has been brought to the front
+Status: ok
+LaunchState: UNKNOWN (0)
+Activity: dev.ge4g.ge4g_client.p4harness/.MainActivity
+WaitTime: 22
+Complete
