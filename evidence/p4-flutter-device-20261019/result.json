@@ -1,0 +1,121 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-19",
+  "timezone": "Asia/Seoul",
+  "publication": {
+    "date": "2026-10-31",
+    "scope": "experiment conditions, plan, procedure and recorded evidence only",
+    "tests_reexecuted": false,
+    "apk_included": false,
+    "implementation_source_included": false,
+    "save_restore_comparison_scope": "battle state only",
+    "close_check_scope": "auxiliary session handle invalidation; main UI session shutdown unverified"
+  },
+  "overall": "PARTIAL_PASS_HARNESS_ONLY",
+  "workspace": "C:/Users/gokon/Documents/personal_Project/GameEngine4GPT",
+  "branch": "qa/p4-flutter-device-continuum-20261019",
+  "baseline_commit": "1d9640200b2da2e790f5d2d25f7590deac10186e",
+  "dispatch": {
+    "thread_id": "01a15481-1cc3-7da0-b0f9-d96632f9665d",
+    "requested_model": "gpt-5.6-sol",
+    "requested_reasoning_effort": "high",
+    "controller_recorded_model": "current Codex session",
+    "server_runtime_model_independently_queryable": false,
+    "billing_inferred": false
+  },
+  "device": {
+    "serial": "R3CW208CWZH",
+    "model": "SM-S918N",
+    "abi": "arm64-v8a",
+    "api": 36,
+    "build_fingerprint": "samsung/dm3qksx/dm3q:16/BP4A.251205.006/S918NKSS8FZI1:user/release-keys"
+  },
+  "application": {
+    "kind": "test-only Flutter debug harness",
+    "package": "dev.ge4g.ge4g_client.p4harness",
+    "version_code": 1,
+    "version_name": "1.0.0",
+    "min_sdk": 24,
+    "target_sdk": 36,
+    "primary_cpu_abi": "arm64-v8a",
+    "installed_side_by_side": true,
+    "production_package": "dev.ge4g.ge4g_client",
+    "production_package_path_preserved": true,
+    "release_signed": false,
+    "debug_certificate_sha256": "0c75b0ffff74c9ccf505365e3a409b0ae54033e2a3afebadbf40560bc524a692"
+  },
+  "artifacts": {
+    "apk": {
+      "path": "evidence/p4-flutter-device-20261019/ge4g-p4-harness-debug.apk",
+      "bytes": 77806394,
+      "sha256": "597aeb4508bbbae99c459ef6df228889208bc8965f8e5882462b9aff51c3e4dd"
+    },
+    "built_native_so": {
+      "elf_class": "ELF64",
+      "elf_type": "DYN",
+      "machine": "AArch64",
+      "bytes": 3786472,
+      "sha256": "4a4dda5350d07bad9f29bca5b5091127005a4765913d4819efd3c0ccda8af2ee"
+    },
+    "packaged_native_so": {
+      "path_in_apk": "lib/arm64-v8a/libge4g_pentomino_native.so",
+      "bytes": 2320288,
+      "sha256": "5484e96049204fa54f4fca7547110d1b0f4b5fe8e4b4e5167fd7561fd562af9f"
+    },
+    "harness_source_sha256": "3212d34bb988bae3ac7a8f563e0f4315e206c6a4bf75c83c5f1dba282cdd4d52",
+    "screenshot": "evidence/p4-flutter-device-20261019/harness-pass.png"
+  },
+  "scenario": {
+    "abi_version": 1,
+    "initial": {"attack_count": 0, "hp": [12, 11], "turn": 0, "winner": -1},
+    "after_attack": {"attack_count": 1, "hp": [12, 7], "turn": 1, "winner": -1},
+    "restored": {"attack_count": 1, "hp": [12, 7], "turn": 1, "winner": -1},
+    "frame": {
+      "width": 160,
+      "height": 96,
+      "rgba_bytes": 61440,
+      "sha256": "b21c52050cf1052af6cbf55fc46f367d1828fcd42ebdf995f17b6e92fd28ebb4",
+      "presented_by_flutter": true,
+      "screenshot_visually_inspected": true
+    },
+    "checks": {
+      "native_arm64_load": true,
+      "initial_state": true,
+      "fixed_damage": true,
+      "two_core_ticks": true,
+      "canonical_frame_shape_and_hash": true,
+      "save_restore": true,
+      "close_invalidates_handle": true,
+      "background_resume_session_alive": true,
+      "held_input_released_on_background": true,
+      "background_did_not_attack": true
+    }
+  },
+  "timing_seconds": {
+    "rust_target_setup": 5.323,
+    "native_first_build": 99.447,
+    "isolated_flutter_project_setup": 5.564,
+    "flutter_first_apk_build": 95.155,
+    "adb_install": 9.298,
+    "cold_launch_command": 1.695,
+    "android_reported_cold_launch_total": 1.373,
+    "scenario_to_result_marker_approx": 1.061,
+    "background_resume_input_scenario": 0.604,
+    "aggregate_deliberate_scenario_wait_approx": 1.665,
+    "failed_log_collector_wait": 30.190,
+    "scenario_and_failed_collector_wait_approx": 31.855
+  },
+  "acceptance": {
+    "production_flutter_p4_integration": "NOT_DELIVERED",
+    "test_harness_flutter_arm64_execution": "PASS",
+    "physical_device_p4_state_and_frame": "PASS",
+    "harness_touch_background_release": "PASS",
+    "production_client_touch_p4_release": "NOT_DELIVERED",
+    "main_ui_session_shutdown": "NOT_TESTED",
+    "release_signing": "NOT_TESTED",
+    "user_acceptance": "NOT_TESTED",
+    "blind_consumer_certification": "NOT_TESTED",
+    "p4_release_acceptance": "WITHHELD"
+  },
+  "known_collection_issue": "The first logcat collector used PowerShell's reserved $PID variable and attached to the wrong host PID. The still-running app process was then identified as PID 6726 and its app-scoped log buffer recovered without reinstalling or rerunning the main scenario."
+}

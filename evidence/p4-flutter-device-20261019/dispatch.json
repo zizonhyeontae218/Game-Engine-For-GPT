@@ -1,0 +1,11 @@
+{
+  "project_id": "8615f24d-d819-43eb-adef-82ab95ab588d",
+  "thread_id": "01a15481-1cc3-7da0-b0f9-d96632f9665d",
+  "host_id": "local",
+  "requested_model": "gpt-5.6-sol",
+  "requested_reasoning_effort": "high",
+  "transport": "Codex Windows app create_thread tool",
+  "creation_result": "threadId and hostId returned; no model error",
+  "task_id": "T-0002",
+  "note": "Requested app model recorded explicitly; not evidence of billed tokens or runtime test success. Controller host-claim labels the model current Codex session; use app/session metadata to verify actual model."
+}

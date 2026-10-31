@@ -1,0 +1,6 @@
+Analyzing main.dart...                                          
+
+  error - The name 'Size' is defined in the libraries 'dart:ffi' and 'dart:ui'. Try using 'as prefix' for one of the import directives, or hiding the name from all but one of the imports - lib\main.dart:18:65 - ambiguous_import
+  error - The type '_RequestNative' given to 'lookupFunction' must be a valid 'dart:ffi' native function type. Try changing the type to only use members for 'dart:ffi' - lib\main.dart:58:40 - must_be_a_native_function_type
+
+2 issues found. (ran in 1.4s)
